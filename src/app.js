@@ -27,16 +27,16 @@ const renderPageHtml = (items) => `
                 </button>
             </div>
         </div>
-        <div class="js-exploration">${items.map((item) =>
-            renderExplorationItemHtml(item)
-        )}</div>
+        <div class="js-exploration">${items
+            .map((item) => renderExplorationItemHtml(item))
+            .join("")}</div>
     </div>
 `;
 
 const render = (el) => {
-    const items = Array.from(document
-        .querySelectorAll("#exploration-items > div"))
-        .map((itemEl) => ({ ...itemEl.dataset }));
+    const items = Array.from(
+        document.querySelectorAll("#exploration-items > div")
+    ).map((itemEl) => ({ ...itemEl.dataset }));
     el.innerHTML = renderPageHtml(items);
 };
 
