@@ -215,13 +215,13 @@ const setup = async () => {
 
     // Load matcap shader
     const asyncTexturesResult = await loadTexturesAsync(
-        ["/assets/3d/cell_matcap_04.png"],
+        ["https://d3b25z3tnybfc4.cloudfront.net/assets/3d/cell_matcap_04.png"],
         scene
     ); // get the texture
     const matCapTexture = asyncTexturesResult[0];
     const matCapMaterial = await NodeMaterial.ParseFromFileAsync(
         "matcap_shader",
-        "/assets/3d/matcap_02.json",
+        "https://d3b25z3tnybfc4.cloudfront.net/assets/3d/matcap_02.json",
         scene
     ); // get the shader material
     matCapMaterial.build(false);
@@ -231,7 +231,7 @@ const setup = async () => {
     // Load locations mesh
     const locationsImportResult = await SceneLoader.ImportMeshAsync(
         "",
-        "/assets/3d/",
+        "https://d3b25z3tnybfc4.cloudfront.net/assets/3d/",
         `${GLB_NAMES.Locations}.glb`,
         scene
     );
@@ -263,7 +263,7 @@ const setup = async () => {
                 const filename = GLB_NAMES[name];
                 const importResult = await SceneLoader.ImportMeshAsync(
                     "",
-                    "/assets/3d/",
+                    "https://d3b25z3tnybfc4.cloudfront.net/assets/3d/",
                     `${filename}.glb`,
                     scene
                 );
