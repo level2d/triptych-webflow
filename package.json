@@ -13,6 +13,15 @@
     "vite": "^4.3.9"
   },
   "dependencies": {
+    "@babylonjs/core": "^6.14.1",
+    "@babylonjs/gui": "^6.14.1",
+    "@babylonjs/gui-editor": "^6.14.1",
+    "@babylonjs/havok": "^1.1.1",
+    "@babylonjs/inspector": "^6.14.1",
+    "@babylonjs/loaders": "^6.14.1",
+    "@babylonjs/materials": "^6.14.1",
+    "@babylonjs/serializers": "^6.14.1",
+    "lodash": "^4.17.21",
     "serve": "^14.2.0"
   }
 }
