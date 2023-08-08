@@ -296,7 +296,6 @@ const setup = async () => {
 
     // animation cache
     const anim = {};
-    anim.orbit_01 = scene.getAnimationGroupByName("orbit_01");
     anim.button_01 = scene.getAnimationGroupByName("button_01");
     anim.socket = scene.getAnimationGroupByName("socket");
     anim.eye = scene.getAnimationGroupByName("eye");
@@ -304,10 +303,8 @@ const setup = async () => {
     anim.lower_lid = scene.getAnimationGroupByName("lower_lid");
     anim.click_eye_01 = scene.getAnimationGroupByName("click_eye_01");
     anim.click_eye_02 = scene.getAnimationGroupByName("click_eye_02");
-    anim.point_deform = scene.getAnimationGroupByName("point_deform");
 
     const autoplayAnimations = [
-        { name: "orbit_01", loop: true },
         { name: "button_01", loop: false },
         { name: "socket", loop: true },
         { name: "eye", loop: true },
@@ -323,7 +320,6 @@ const setup = async () => {
     });
 
     // setup mesh specific actions
-
     // button mesh
     const prepareButtonMesh = function (mesh) {
         mesh.actionManager = new ActionManager(scene);
@@ -349,22 +345,6 @@ const setup = async () => {
     };
     const eyeMesh = boxMeshes.find((mesh) => mesh.name === BOX_NAMES.EYE);
     eyeMesh.getChildMeshes().forEach((mesh) => prepareEyeMesh(mesh));
-
-    // point level mesh
-    const preparePointLevelMesh = function (mesh) {
-        mesh.actionManager = new ActionManager(scene);
-        mesh.actionManager.registerAction(
-            new ExecuteCodeAction(ActionManager.OnPickUpTrigger, function () {
-                anim.point_deform.play();
-            })
-        );
-    };
-    const pointLevelMesh = boxMeshes.find(
-        (mesh) => mesh.name === BOX_NAMES.POINT_LEVEL
-    );
-    pointLevelMesh
-        .getChildMeshes()
-        .forEach((mesh) => preparePointLevelMesh(mesh));
 
     // replace location placeholders with their intended box mesh
     const placeholders = locationsMesh
@@ -395,21 +375,8 @@ const setup = async () => {
 
         switch (name) {
             case BOX_NAMES.BUTTON:
-            case BOX_NAMES.PLANET:
-            case BOX_NAMES.SKULL:
             case BOX_NAMES.EYE:
-            case BOX_NAMES.POINT_LEVEL: {
-                targetMesh.position = new Vector3(
-                    placeholder.position.x,
-                    placeholder.position.y,
-                    placeholder.position.z
-                );
-                targetMesh.setEnabled(true); // reveal the mesh
-                ret = targetMesh;
-                break;
-            }
             case BOX_NAMES.TV: {
-                const screenMaterial = scene.getMaterialByName("tv_screen");
                 targetMesh.position = new Vector3(
                     placeholder.position.x,
                     placeholder.position.y,
