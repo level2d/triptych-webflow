@@ -33,3 +33,21 @@ export const BOX_MESHES = [
     BOX_NAMES.BOX,
     BOX_NAMES.BOX,
 ];
+
+export const ANIMATION_NAMES = {
+    ["button_01"]: "button_01",
+    ["socket"]: "socket",
+    ["eye"]: "eye",
+    ["upper_lid"]: "upper_lid",
+    ["lower_lid"]: "lower_lid",
+    ["click_eye_01"]: "click_eye_01",
+    ["click_eye_02"]: "click_eye_02",
+};
+
+export const AUTOPLAY_ANIMATION_CONFIGS = [
+    { name: ANIMATION_NAMES.button_01, loop: false },
+    { name: ANIMATION_NAMES.socket, loop: true },
+    { name: ANIMATION_NAMES.eye, loop: true },
+    { name: ANIMATION_NAMES.upper_lid, loop: true },
+    { name: ANIMATION_NAMES.lower_lid, loop: true },
+];
