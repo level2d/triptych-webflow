@@ -20,7 +20,13 @@ import { Inspector } from "@babylonjs/inspector";
 import "@babylonjs/loaders/glTF";
 
 import { zeroPad, loadTexturesAsync } from "@/js/util/helpers";
-import { BOX_MESHES, BOX_NAMES, GLB_NAMES } from "@/js/util/constants";
+import {
+    BOX_MESHES,
+    BOX_NAMES,
+    GLB_NAMES,
+    ANIMATION_NAMES,
+    AUTOPLAY_ANIMATION_CONFIGS,
+} from "@/js/util/constants";
 import { debounce } from "lodash";
 
 const debug = false;
@@ -304,26 +310,14 @@ const setup = async () => {
             })
     );
 
-    // animation cache
+    // Create animation cache
     const anim = {};
-    anim.button_01 = scene.getAnimationGroupByName("button_01");
-    anim.socket = scene.getAnimationGroupByName("socket");
-    anim.eye = scene.getAnimationGroupByName("eye");
-    anim.upper_lid = scene.getAnimationGroupByName("upper_lid");
-    anim.lower_lid = scene.getAnimationGroupByName("lower_lid");
-    anim.click_eye_01 = scene.getAnimationGroupByName("click_eye_01");
-    anim.click_eye_02 = scene.getAnimationGroupByName("click_eye_02");
+    Object.keys(ANIMATION_NAMES).forEach((name) => {
+        anim[name] = scene.getAnimationGroupByName(name);
+    });
 
-    const autoplayAnimations = [
-        { name: "button_01", loop: false },
-        { name: "socket", loop: true },
-        { name: "eye", loop: true },
-        { name: "upper_lid", loop: true },
-        { name: "lower_lid", loop: true },
-    ];
-
-    // Play animations
-    autoplayAnimations.forEach(({ name, loop }) => {
+    // Start autoplay animations
+    AUTOPLAY_ANIMATION_CONFIGS.forEach(({ name, loop }) => {
         const targetAnim = anim[name];
         targetAnim.reset();
         targetAnim.play(loop);
