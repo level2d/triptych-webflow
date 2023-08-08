@@ -70,6 +70,7 @@ const handleResize = (entries) => {
     if (engine) {
         engine.resize();
     }
+    updateCameraFovMode();
 };
 
 const handleDeviceOrientation = (e) => {
@@ -102,6 +103,20 @@ const bindOrientationHandler = () => {
         "deviceorientation",
         debouncedHandleDeviceOrientation
     );
+};
+
+const updateCameraFovMode = () => {
+    if (!engine) return;
+    const camera = engine.scenes[0].cameras[0];
+    if (!camera) return;
+    if (
+        engine.getRenderHeight() >
+        engine.getRenderWidth()
+    ) {
+        camera.fovMode = Camera.FOVMODE_HORIZONTAL_FIXED;
+    } else {
+        camera.fovMode = Camera.FOVMODE_VERTICAL_FIXED;
+    }
 };
 
 const handleConfirmClick = (e) => {
@@ -524,19 +539,6 @@ const setup = async () => {
         scene.render();
     });
 
-    const updateCameraFovMode = () => {
-        if (
-            scene.getEngine().getRenderHeight() >
-            scene.getEngine().getRenderWidth()
-        ) {
-            camera.fovMode = Camera.FOVMODE_HORIZONTAL_FIXED;
-        } else {
-            camera.fovMode = Camera.FOVMODE_VERTICAL_FIXED;
-        }
-    };
-
-    // Change fovMode to keep scene scaling within any aspect ratio
-    engine.onResizeObservable.add(() => updateCameraFovMode); // run on resize
     updateCameraFovMode(); // run on initial load
 };
 
