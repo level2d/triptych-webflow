@@ -281,11 +281,21 @@ const setup = async () => {
                 rootMesh.setEnabled(false); // hide the box
                 switch (name) {
                     case BOX_NAMES.TV: {
-                        const screenMesh = rootMesh
-                            .getChildMeshes()
-                            .find((mesh) => mesh.name === "screen");
-                        console.log(screenMesh);
+                        const childMeshes = rootMesh.getChildMeshes();
+                        const screenMesh = childMeshes.find(
+                            (mesh) => mesh.name === "screen"
+                        );
                         screenMesh.material = tvScreenMaterial;
+                        const targets = [
+                            "walls",
+                            "walls_primitive0",
+                            "walls_primitive1",
+                        ];
+                        childMeshes
+                            .filter(({ name }) => !targets.includes(name))
+                            .forEach((mesh) => {
+                                mesh.renderingGroupId = 3;
+                            });
                     }
                     default:
                         break;
