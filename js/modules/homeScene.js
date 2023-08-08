@@ -464,12 +464,13 @@ const setup = async () => {
         }
 
         switch (name) {
-            case BOX_NAMES.SWITCH:
-            case BOX_NAMES.EYE:
-            case BOX_NAMES.TV:
-            case BOX_NAMES.GUMBALL:
             case BOX_NAMES.BOOKS:
-            case BOX_NAMES.MUG: {
+            case BOX_NAMES.EYE:
+            case BOX_NAMES.GOLDFISH:
+            case BOX_NAMES.GUMBALL:
+            case BOX_NAMES.MUG:
+            case BOX_NAMES.SWITCH:
+            case BOX_NAMES.TV: {
                 targetMesh.position = new Vector3(
                     placeholder.position.x,
                     placeholder.position.y,
