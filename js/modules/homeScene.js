@@ -11,6 +11,8 @@ import {
     Vector3,
     ActionManager,
     ExecuteCodeAction,
+    VideoTexture,
+    StandardMaterial,
 } from "@babylonjs/core/";
 import { Inspector } from "@babylonjs/inspector";
 
@@ -215,18 +217,29 @@ const setup = async () => {
 
     // Load matcap shader
     const asyncTexturesResult = await loadTexturesAsync(
-        ["https://d3b25z3tnybfc4.cloudfront.net/assets/3d/cell_matcap_04.png"],
+        ["https://d3b25z3tnybfc4.cloudfront.net/assets/2d/cell_matcap_04.png"],
         scene
     ); // get the texture
     const matCapTexture = asyncTexturesResult[0];
     const matCapMaterial = await NodeMaterial.ParseFromFileAsync(
         "matcap_shader",
-        "https://d3b25z3tnybfc4.cloudfront.net/assets/3d/matcap_02.json",
+        "https://d3b25z3tnybfc4.cloudfront.net/assets/2d/matcap_02.json",
         scene
     ); // get the shader material
     matCapMaterial.build(false);
     const matCapShader = matCapMaterial;
     matCapShader.texture = matCapTexture; // assign the texture to the mat cap shader mesh
+
+    // Load tv material
+    const tvScreenTexture = new VideoTexture(
+        "running_man",
+        "https://d3b25z3tnybfc4.cloudfront.net/assets/2d/running_man_01.mp4",
+        scene,
+        true,
+        true
+    );
+    const tvScreenMaterial = new StandardMaterial("tv_screen");
+    tvScreenMaterial.diffuseTexture = tvScreenTexture;
 
     // Load locations mesh
     const locationsImportResult = await SceneLoader.ImportMeshAsync(
@@ -238,18 +251,12 @@ const setup = async () => {
 
     // setup the locations root mesh
     const locationsMesh = locationsImportResult.meshes[0];
+    locationsMesh.name = "locations";
+    locationsMesh.rotation = new Vector3(0, Math.PI * -0.5, 0);
     // set render order
     locationsMesh.getChildMeshes().forEach((mesh) => {
         mesh.renderingGroupId = 1;
     });
-    // TODO: Remove this fix once scene asset is updated
-    // temp fix for hiding random mesh
-    locationsMesh
-        .getChildMeshes()
-        .find(({ name }) => name === "box_01")
-        .setEnabled(false);
-    locationsMesh.position = Vector3.Zero();
-    locationsMesh.rotation = new Vector3(0, Math.PI * -0.5, 0);
 
     // focus the camera on this mesh
     camera.setTarget(locationsMesh, true);
@@ -263,7 +270,8 @@ const setup = async () => {
                 const filename = GLB_NAMES[name];
                 const importResult = await SceneLoader.ImportMeshAsync(
                     "",
-                    "https://d3b25z3tnybfc4.cloudfront.net/assets/3d/",
+                    // "https://d3b25z3tnybfc4.cloudfront.net/assets/3d/",
+                    "/assets/3d/",
                     `${filename}.glb`,
                     scene
                 );
@@ -271,7 +279,17 @@ const setup = async () => {
                 rootMesh.name = name; // give it a unique name for grabbing it later
                 rootMesh.rotation = new Vector3(0, Math.PI * -0.5, 0); // rotate it correctly
                 rootMesh.setEnabled(false); // hide the box
-
+                switch (name) {
+                    case BOX_NAMES.TV: {
+                        const screenMesh = rootMesh
+                            .getChildMeshes()
+                            .find((mesh) => mesh.name === "screen");
+                        console.log(screenMesh);
+                        screenMesh.material = tvScreenMaterial;
+                    }
+                    default:
+                        break;
+                }
                 return rootMesh;
             })
     );
@@ -390,6 +408,17 @@ const setup = async () => {
                 ret = targetMesh;
                 break;
             }
+            case BOX_NAMES.TV: {
+                const screenMaterial = scene.getMaterialByName("tv_screen");
+                targetMesh.position = new Vector3(
+                    placeholder.position.x,
+                    placeholder.position.y,
+                    placeholder.position.z
+                );
+                targetMesh.setEnabled(true); // reveal the mesh
+                ret = targetMesh;
+                break;
+            }
             case BOX_NAMES.BOX: {
                 const clone = targetMesh.clone(
                     `${targetMeshName}_${zeroPad(i + 1, 2)}`
@@ -413,6 +442,12 @@ const setup = async () => {
 
         return ret;
     });
+
+    // dispose meshes
+    const targetMaterials = ["matcap"];
+    scene.materials
+        .filter((material) => targetMaterials.includes(material.name))
+        .forEach((material) => material.dispose());
 
     // Render every frame
     engine.runRenderLoop(() => {
@@ -469,9 +504,6 @@ const renderCords = () => {
     const element = document.createElement("div");
     element.innerHTML = markup;
     rootEl.appendChild(element);
-    coords = rootEl.querySelector(".js-home-scene__coords");
-    offsetXEl = rootEl.querySelector(".js-offset-x");
-    offsetYEl = rootEl.querySelector(".js-offset-y");
 };
 
 const render = () => {
@@ -498,6 +530,9 @@ const init = () => {
 
     if (debug) {
         renderCords();
+        coords = rootEl.querySelector(".js-home-scene__coords");
+        offsetXEl = rootEl.querySelector(".js-offset-x");
+        offsetYEl = rootEl.querySelector(".js-offset-y");
     }
 
     setup();
