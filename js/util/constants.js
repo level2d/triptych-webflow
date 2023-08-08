@@ -1,14 +1,12 @@
 export const BOX_NAMES = {
-    BOX: "Box",
-    BUTTON: "Button",
+    SWITCH: "Switch",
     EYE: "Eye",
     TV: "TV",
 };
 
 export const GLB_NAMES = {
     ["Locations"]: "box_locations_04",
-    [BOX_NAMES.BOX]: "box_01",
-    [BOX_NAMES.BUTTON]: "button_03",
+    [BOX_NAMES.SWITCH]: "switch_01",
     [BOX_NAMES.EYE]: "eye_02",
     [BOX_NAMES.TV]: "tv_01",
 };
@@ -16,26 +14,26 @@ export const GLB_NAMES = {
 // The length of this array should match how many placeholders there are.
 // Currently there are only 16
 export const BOX_MESHES = [
-    BOX_NAMES.BOX,
+    null,
     BOX_NAMES.TV,
     BOX_NAMES.EYE,
-    BOX_NAMES.BOX,
-    BOX_NAMES.BOX,
-    BOX_NAMES.BUTTON,
-    BOX_NAMES.BOX,
-    BOX_NAMES.BOX,
-    BOX_NAMES.BOX,
-    BOX_NAMES.BOX,
-    BOX_NAMES.BOX,
-    BOX_NAMES.BOX,
-    BOX_NAMES.BOX,
-    BOX_NAMES.BOX,
-    BOX_NAMES.BOX,
-    BOX_NAMES.BOX,
+    null,
+    null,
+    BOX_NAMES.SWITCH,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
 ];
 
 export const ANIMATION_NAMES = {
-    ["button_01"]: "button_01",
+    ["switch_01"]: "switch_01",
     ["socket"]: "socket",
     ["eye"]: "eye",
     ["upper_lid"]: "upper_lid",
@@ -45,7 +43,6 @@ export const ANIMATION_NAMES = {
 };
 
 export const AUTOPLAY_ANIMATION_CONFIGS = [
-    { name: ANIMATION_NAMES.button_01, loop: false },
     { name: ANIMATION_NAMES.socket, loop: true },
     { name: ANIMATION_NAMES.eye, loop: true },
     { name: ANIMATION_NAMES.upper_lid, loop: true },
