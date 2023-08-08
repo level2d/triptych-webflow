@@ -507,6 +507,19 @@ const setup = async () => {
             );
         }
 
+        const mugMesh = boxMeshes.find((mesh) => mesh.name === BOX_NAMES.MUG);
+        if (mugMesh) {
+            const mugMeshChildren = mugMesh.getChildMeshes();
+            const containerMesh = mugMeshChildren.find(
+                ({ name }) => name === "container"
+            );
+            containerMesh.position = new Vector3(
+                panY,
+                containerMesh.position.y,
+                panX
+            );
+        }
+
         // Rotation effect
         locationBoxes.forEach((mesh) => {
             if (mesh === null) return;
