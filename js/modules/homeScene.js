@@ -285,20 +285,53 @@ const setup = async () => {
                 rootMesh.name = name; // give it a unique name for grabbing it later
                 rootMesh.rotation = new Vector3(0, Math.PI * -0.5, 0); // rotate it correctly
                 rootMesh.setEnabled(false); // hide the box
-                switch (name) {
-                    case BOX_NAMES.TV: {
-                        const childMeshes = rootMesh.getChildMeshes();
-                        const screenMesh = childMeshes.find(
-                            (mesh) => mesh.name === "screen"
-                        );
-                        screenMesh.material = tvScreenMaterial;
-                    }
-                    default:
-                        break;
-                }
                 return rootMesh;
             })
     );
+
+    // configure box meshes
+    boxMeshes.forEach((mesh) => {
+        const { name } = mesh;
+        const childMeshes = mesh.getChildMeshes();
+        switch (name) {
+            case BOX_NAMES.TV: {
+                const screenMesh = childMeshes.find(
+                    (mesh) => mesh.name === "screen"
+                );
+                screenMesh.material = tvScreenMaterial;
+                break;
+            }
+            case BOX_NAMES.GUMBALL: {
+                const targetMesh = childMeshes.find(
+                    (mesh) => mesh.name === "Sphere"
+                );
+                targetMesh.renderingGroupId = 2;
+            }
+            case BOX_NAMES.MUG: {
+                const targets = ["hand", "coffee", "mug"];
+                const targetMeshes = childMeshes.filter((mesh) =>
+                    targets.includes(mesh.name)
+                );
+                console.log(childMeshes);
+                console.log(targetMeshes);
+                targetMeshes.forEach((mesh) => {
+                    let groupId = 0;
+                    switch (mesh.name) {
+                        case "hand":
+                            groupId = 1;
+                            break;
+                        default:
+                            groupId = 2;
+                            break;
+                    }
+                    mesh.renderingGroupId = groupId;
+                });
+                break;
+            }
+            default:
+                break;
+        }
+    });
 
     // Create animation cache
     const anim = {};
