@@ -93,13 +93,6 @@ const handleDeviceOrientation = (e) => {
         yPanDir === "UP"
             ? Math.max(yFactor, minPan)
             : Math.min(yFactor, maxPan);
-
-    console.log({
-        // xFactor,
-        // panX,
-        yFactor,
-        panY,
-    });
 };
 
 const debouncedHandleDeviceOrientation = debounce(handleDeviceOrientation, 3);
@@ -312,8 +305,6 @@ const setup = async () => {
                 const targetMeshes = childMeshes.filter((mesh) =>
                     targets.includes(mesh.name)
                 );
-                console.log(childMeshes);
-                console.log(targetMeshes);
                 targetMeshes.forEach((mesh) => {
                     let groupId = 0;
                     switch (mesh.name) {
