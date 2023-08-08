@@ -420,6 +420,21 @@ const setup = async () => {
     const eyeMesh = boxMeshes.find((mesh) => mesh.name === BOX_NAMES.EYE);
     eyeMesh.getChildMeshes().forEach((mesh) => prepareEyeMesh(mesh));
 
+    // gumball mesh
+    const prepareGumballMesh = function (mesh) {
+        mesh.actionManager = new ActionManager(scene);
+        mesh.actionManager.registerAction(
+            new ExecuteCodeAction(ActionManager.OnPickUpTrigger, function () {
+                anim.knob_01.play();
+                anim.gum_01.play();
+            })
+        );
+    };
+    const gumballMesh = boxMeshes.find(
+        (mesh) => mesh.name === BOX_NAMES.GUMBALL
+    );
+    gumballMesh.getChildMeshes().forEach((mesh) => prepareGumballMesh(mesh));
+
     // replace location placeholders with their intended box mesh
     const placeholders = locationsMesh
         .getChildMeshes()
