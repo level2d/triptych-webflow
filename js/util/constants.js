@@ -41,14 +41,20 @@ export const BOX_MESHES = [
 ];
 
 export const ANIMATION_NAMES = {
+    // switch model
     ["switch_01"]: "switch_01",
+    // eye model
     ["socket"]: "socket",
     ["eye"]: "eye",
     ["upper_lid"]: "upper_lid",
     ["lower_lid"]: "lower_lid",
     ["click_eye_01"]: "click_eye_01",
     ["click_eye_02"]: "click_eye_02",
+    // books model
     ["book_01"]: "book_01",
+    // gumball model
+    ["knob_01"]: "knob_01",
+    ["gum_01"]: "gum_01",
 };
 
 export const AUTOPLAY_ANIMATION_CONFIGS = [
