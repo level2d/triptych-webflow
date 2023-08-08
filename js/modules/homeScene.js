@@ -11,6 +11,8 @@ import {
     Vector3,
     ActionManager,
     ExecuteCodeAction,
+    VideoTexture,
+    StandardMaterial,
 } from "@babylonjs/core/";
 import { Inspector } from "@babylonjs/inspector";
 
@@ -18,7 +20,13 @@ import { Inspector } from "@babylonjs/inspector";
 import "@babylonjs/loaders/glTF";
 
 import { zeroPad, loadTexturesAsync } from "@/js/util/helpers";
-import { BOX_MESHES, BOX_NAMES, GLB_NAMES } from "@/js/util/constants";
+import {
+    BOX_MESHES,
+    BOX_NAMES,
+    GLB_NAMES,
+    ANIMATION_NAMES,
+    AUTOPLAY_ANIMATION_CONFIGS,
+} from "@/js/util/constants";
 import { debounce } from "lodash";
 
 const debug = false;
@@ -62,6 +70,7 @@ const handleResize = (entries) => {
     if (engine) {
         engine.resize();
     }
+    updateCameraFovMode();
 };
 
 const handleDeviceOrientation = (e) => {
@@ -85,13 +94,6 @@ const handleDeviceOrientation = (e) => {
         yPanDir === "UP"
             ? Math.max(yFactor, minPan)
             : Math.min(yFactor, maxPan);
-
-    console.log({
-        // xFactor,
-        // panX,
-        yFactor,
-        panY,
-    });
 };
 
 const debouncedHandleDeviceOrientation = debounce(handleDeviceOrientation, 3);
@@ -101,6 +103,20 @@ const bindOrientationHandler = () => {
         "deviceorientation",
         debouncedHandleDeviceOrientation
     );
+};
+
+const updateCameraFovMode = () => {
+    if (!engine) return;
+    const camera = engine.scenes[0].cameras[0];
+    if (!camera) return;
+    if (
+        engine.getRenderHeight() >
+        engine.getRenderWidth()
+    ) {
+        camera.fovMode = Camera.FOVMODE_HORIZONTAL_FIXED;
+    } else {
+        camera.fovMode = Camera.FOVMODE_VERTICAL_FIXED;
+    }
 };
 
 const handleConfirmClick = (e) => {
@@ -215,18 +231,29 @@ const setup = async () => {
 
     // Load matcap shader
     const asyncTexturesResult = await loadTexturesAsync(
-        ["https://d3b25z3tnybfc4.cloudfront.net/assets/3d/cell_matcap_04.png"],
+        ["https://d3b25z3tnybfc4.cloudfront.net/assets/2d/cell_matcap_04.png"],
         scene
     ); // get the texture
     const matCapTexture = asyncTexturesResult[0];
     const matCapMaterial = await NodeMaterial.ParseFromFileAsync(
         "matcap_shader",
-        "https://d3b25z3tnybfc4.cloudfront.net/assets/3d/matcap_02.json",
+        "https://d3b25z3tnybfc4.cloudfront.net/assets/2d/matcap_02.json",
         scene
     ); // get the shader material
     matCapMaterial.build(false);
     const matCapShader = matCapMaterial;
     matCapShader.texture = matCapTexture; // assign the texture to the mat cap shader mesh
+
+    // Load tv material
+    const tvScreenTexture = new VideoTexture(
+        "running_man",
+        "https://d3b25z3tnybfc4.cloudfront.net/assets/2d/running_man_01.mp4",
+        scene,
+        true,
+        true
+    );
+    const tvScreenMaterial = new StandardMaterial("tv_screen");
+    tvScreenMaterial.diffuseTexture = tvScreenTexture;
 
     // Load locations mesh
     const locationsImportResult = await SceneLoader.ImportMeshAsync(
@@ -238,18 +265,12 @@ const setup = async () => {
 
     // setup the locations root mesh
     const locationsMesh = locationsImportResult.meshes[0];
+    locationsMesh.name = "locations";
+    locationsMesh.rotation = new Vector3(0, Math.PI * -0.5, 0);
     // set render order
     locationsMesh.getChildMeshes().forEach((mesh) => {
         mesh.renderingGroupId = 1;
     });
-    // TODO: Remove this fix once scene asset is updated
-    // temp fix for hiding random mesh
-    locationsMesh
-        .getChildMeshes()
-        .find(({ name }) => name === "box_01")
-        .setEnabled(false);
-    locationsMesh.position = Vector3.Zero();
-    locationsMesh.rotation = new Vector3(0, Math.PI * -0.5, 0);
 
     // focus the camera on this mesh
     camera.setTarget(locationsMesh, true);
@@ -263,7 +284,8 @@ const setup = async () => {
                 const filename = GLB_NAMES[name];
                 const importResult = await SceneLoader.ImportMeshAsync(
                     "",
-                    "https://d3b25z3tnybfc4.cloudfront.net/assets/3d/",
+                    // "https://d3b25z3tnybfc4.cloudfront.net/assets/3d/",
+                    "/assets/3d/",
                     `${filename}.glb`,
                     scene
                 );
@@ -271,53 +293,125 @@ const setup = async () => {
                 rootMesh.name = name; // give it a unique name for grabbing it later
                 rootMesh.rotation = new Vector3(0, Math.PI * -0.5, 0); // rotate it correctly
                 rootMesh.setEnabled(false); // hide the box
-
                 return rootMesh;
             })
     );
 
-    // animation cache
+    // configure box meshes
+    boxMeshes.forEach((mesh) => {
+        const { name } = mesh;
+        const childMeshes = mesh.getChildMeshes();
+        switch (name) {
+            case BOX_NAMES.TV: {
+                const screenMesh = childMeshes.find(
+                    (mesh) => mesh.name === "screen"
+                );
+                screenMesh.material = tvScreenMaterial;
+                break;
+            }
+            case BOX_NAMES.GUMBALL: {
+                const targetMesh = childMeshes.find(
+                    (mesh) => mesh.name === "Sphere"
+                );
+                targetMesh.renderingGroupId = 2;
+            }
+            case BOX_NAMES.MUG: {
+                const targets = ["hand", "coffee", "mug"];
+                const targetMeshes = childMeshes.filter((mesh) =>
+                    targets.includes(mesh.name)
+                );
+                targetMeshes.forEach((mesh) => {
+                    let groupId = 0;
+                    switch (mesh.name) {
+                        case "hand":
+                            groupId = 1;
+                            break;
+                        default:
+                            groupId = 2;
+                            break;
+                    }
+                    mesh.renderingGroupId = groupId;
+                });
+                break;
+            }
+            default:
+                break;
+        }
+    });
+
+    // Create animation cache
     const anim = {};
-    anim.orbit_01 = scene.getAnimationGroupByName("orbit_01");
-    anim.button_01 = scene.getAnimationGroupByName("button_01");
-    anim.socket = scene.getAnimationGroupByName("socket");
-    anim.eye = scene.getAnimationGroupByName("eye");
-    anim.upper_lid = scene.getAnimationGroupByName("upper_lid");
-    anim.lower_lid = scene.getAnimationGroupByName("lower_lid");
-    anim.click_eye_01 = scene.getAnimationGroupByName("click_eye_01");
-    anim.click_eye_02 = scene.getAnimationGroupByName("click_eye_02");
-    anim.point_deform = scene.getAnimationGroupByName("point_deform");
+    Object.keys(ANIMATION_NAMES).forEach((name) => {
+        const animation = scene.getAnimationGroupByName(name);
 
-    const autoplayAnimations = [
-        { name: "orbit_01", loop: true },
-        { name: "button_01", loop: false },
-        { name: "socket", loop: true },
-        { name: "eye", loop: true },
-        { name: "upper_lid", loop: true },
-        { name: "lower_lid", loop: true },
-    ];
+        switch (name) {
+            case ANIMATION_NAMES.switch_01:
+            case ANIMATION_NAMES.book_01:
+                animation.metadata = {};
+                animation.metadata["isPlayed"] = false;
+                break;
+            default:
+                break;
+        }
 
-    // Play animations
-    autoplayAnimations.forEach(({ name, loop }) => {
+        anim[name] = animation;
+    });
+
+    // Start autoplay animations
+    AUTOPLAY_ANIMATION_CONFIGS.forEach(({ name, loop }) => {
         const targetAnim = anim[name];
         targetAnim.reset();
         targetAnim.play(loop);
     });
 
     // setup mesh specific actions
-
-    // button mesh
-    const prepareButtonMesh = function (mesh) {
+    // switch mesh
+    const prepareSwitchMesh = function (mesh) {
         mesh.actionManager = new ActionManager(scene);
         mesh.actionManager.registerAction(
             new ExecuteCodeAction(ActionManager.OnPickUpTrigger, function () {
-                anim.button_01.play();
+                const animation = anim.switch_01;
+                if (animation.metadata.isPlayed) {
+                    animation.start(
+                        false,
+                        animation.speedRatio,
+                        animation.to,
+                        0
+                    );
+                } else {
+                    animation.play();
+                }
+                animation.metadata.isPlayed = !animation.metadata.isPlayed;
             })
         );
     };
 
-    const buttonMesh = boxMeshes.find((mesh) => mesh.name === BOX_NAMES.BUTTON);
-    buttonMesh.getChildMeshes().forEach((mesh) => prepareButtonMesh(mesh));
+    const switchMesh = boxMeshes.find((mesh) => mesh.name === BOX_NAMES.SWITCH);
+    switchMesh.getChildMeshes().forEach((mesh) => prepareSwitchMesh(mesh));
+
+    // books mesh
+    const prepareBooksMesh = function (mesh) {
+        mesh.actionManager = new ActionManager(scene);
+        mesh.actionManager.registerAction(
+            new ExecuteCodeAction(ActionManager.OnPickUpTrigger, function () {
+                const animation = anim.book_01;
+                if (animation.metadata.isPlayed) {
+                    animation.start(
+                        false,
+                        animation.speedRatio,
+                        animation.to,
+                        0
+                    );
+                } else {
+                    animation.play();
+                }
+                animation.metadata.isPlayed = !animation.metadata.isPlayed;
+            })
+        );
+    };
+
+    const booksMesh = boxMeshes.find((mesh) => mesh.name === BOX_NAMES.BOOKS);
+    booksMesh.getChildMeshes().forEach((mesh) => prepareBooksMesh(mesh));
 
     // eye mesh
     const prepareEyeMesh = function (mesh) {
@@ -332,21 +426,20 @@ const setup = async () => {
     const eyeMesh = boxMeshes.find((mesh) => mesh.name === BOX_NAMES.EYE);
     eyeMesh.getChildMeshes().forEach((mesh) => prepareEyeMesh(mesh));
 
-    // point level mesh
-    const preparePointLevelMesh = function (mesh) {
+    // gumball mesh
+    const prepareGumballMesh = function (mesh) {
         mesh.actionManager = new ActionManager(scene);
         mesh.actionManager.registerAction(
             new ExecuteCodeAction(ActionManager.OnPickUpTrigger, function () {
-                anim.point_deform.play();
+                anim.knob_01.play();
+                anim.gum_01.play();
             })
         );
     };
-    const pointLevelMesh = boxMeshes.find(
-        (mesh) => mesh.name === BOX_NAMES.POINT_LEVEL
+    const gumballMesh = boxMeshes.find(
+        (mesh) => mesh.name === BOX_NAMES.GUMBALL
     );
-    pointLevelMesh
-        .getChildMeshes()
-        .forEach((mesh) => preparePointLevelMesh(mesh));
+    gumballMesh.getChildMeshes().forEach((mesh) => prepareGumballMesh(mesh));
 
     // replace location placeholders with their intended box mesh
     const placeholders = locationsMesh
@@ -358,29 +451,32 @@ const setup = async () => {
             (mesh) => mesh.name === `location_${zeroPad(i + 1, 2)}`
         );
         let ret = null;
-        const targetMeshName = BOX_MESHES[i];
         const targetMesh = boxMeshes.find((mesh) => mesh.name === name);
 
-        // Replace placeholder materials with custom materials
-        targetMesh.getChildMeshes().forEach((mesh) => {
-            const { material } = mesh;
-            const materialName = material.name;
-            switch (materialName) {
-                case "matcap":
-                    mesh.material = matCapShader;
-                    break;
-                default:
-                    // do nothing
-                    break;
-            }
-        });
+        if (targetMesh) {
+            // Replace placeholder materials with custom materials
+            targetMesh.getChildMeshes().forEach((mesh) => {
+                const { material } = mesh;
+                const materialName = material.name;
+                switch (materialName) {
+                    case "matcap":
+                        mesh.material = matCapShader;
+                        break;
+                    default:
+                        // do nothing
+                        break;
+                }
+            });
+        }
 
         switch (name) {
-            case BOX_NAMES.BUTTON:
-            case BOX_NAMES.PLANET:
-            case BOX_NAMES.SKULL:
+            case BOX_NAMES.BOOKS:
             case BOX_NAMES.EYE:
-            case BOX_NAMES.POINT_LEVEL: {
+            case BOX_NAMES.GOLDFISH:
+            case BOX_NAMES.GUMBALL:
+            case BOX_NAMES.MUG:
+            case BOX_NAMES.SWITCH:
+            case BOX_NAMES.TV: {
                 targetMesh.position = new Vector3(
                     placeholder.position.x,
                     placeholder.position.y,
@@ -390,21 +486,8 @@ const setup = async () => {
                 ret = targetMesh;
                 break;
             }
-            case BOX_NAMES.BOX: {
-                const clone = targetMesh.clone(
-                    `${targetMeshName}_${zeroPad(i + 1, 2)}`
-                );
-                clone.position = new Vector3(
-                    placeholder.position.x,
-                    placeholder.position.y,
-                    placeholder.position.z
-                );
-                clone.setEnabled(true); // reveal the clone
-                ret = clone;
-                break;
-            }
             default: {
-                console.error(`Mesh ${name} has not been configured!`);
+                console.error(`Box ${i} has not been configured!`);
                 break;
             }
         }
@@ -413,6 +496,12 @@ const setup = async () => {
 
         return ret;
     });
+
+    // dispose meshes
+    const targetMaterials = ["matcap"];
+    scene.materials
+        .filter((material) => targetMaterials.includes(material.name))
+        .forEach((material) => material.dispose());
 
     // Render every frame
     engine.runRenderLoop(() => {
@@ -425,8 +514,22 @@ const setup = async () => {
             );
         }
 
+        const mugMesh = boxMeshes.find((mesh) => mesh.name === BOX_NAMES.MUG);
+        if (mugMesh) {
+            const mugMeshChildren = mugMesh.getChildMeshes();
+            const containerMesh = mugMeshChildren.find(
+                ({ name }) => name === "container"
+            );
+            containerMesh.position = new Vector3(
+                panY,
+                containerMesh.position.y,
+                panX
+            );
+        }
+
         // Rotation effect
         locationBoxes.forEach((mesh) => {
+            if (mesh === null) return;
             mesh.rotation = new Vector3(
                 panY * 0.25,
                 mesh.rotation.y,
@@ -436,19 +539,6 @@ const setup = async () => {
         scene.render();
     });
 
-    const updateCameraFovMode = () => {
-        if (
-            scene.getEngine().getRenderHeight() >
-            scene.getEngine().getRenderWidth()
-        ) {
-            camera.fovMode = Camera.FOVMODE_HORIZONTAL_FIXED;
-        } else {
-            camera.fovMode = Camera.FOVMODE_VERTICAL_FIXED;
-        }
-    };
-
-    // Change fovMode to keep scene scaling within any aspect ratio
-    engine.onResizeObservable.add(() => updateCameraFovMode); // run on resize
     updateCameraFovMode(); // run on initial load
 };
 
@@ -469,17 +559,15 @@ const renderCords = () => {
     const element = document.createElement("div");
     element.innerHTML = markup;
     rootEl.appendChild(element);
-    coords = rootEl.querySelector(".js-home-scene__coords");
-    offsetXEl = rootEl.querySelector(".js-offset-x");
-    offsetYEl = rootEl.querySelector(".js-offset-y");
 };
 
 const render = () => {
     rootEl.innerHTML = `
         <div class="home-scene">
-            <div className="home-scene__inner">
-                <canvas class="js-home-scene__canvas home-scene__canvas" />
-                <button class="js-home-scene__confirm-button home-scene__confirm-button">
+            <div class="home-scene__inner">
+                <canvas class="js-home-scene__canvas home-scene__canvas"></canvas>
+                <button class="js-home-scene__confirm-button home-scene__confirm-button"></button>
+                <div class="home-scene__bg"></div>
             </div>
         </div>
     `;
@@ -498,6 +586,9 @@ const init = () => {
 
     if (debug) {
         renderCords();
+        coords = rootEl.querySelector(".js-home-scene__coords");
+        offsetXEl = rootEl.querySelector(".js-offset-x");
+        offsetYEl = rootEl.querySelector(".js-offset-y");
     }
 
     setup();
