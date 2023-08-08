@@ -284,8 +284,8 @@ const setup = async () => {
                 const filename = GLB_NAMES[name];
                 const importResult = await SceneLoader.ImportMeshAsync(
                     "",
-                    // "https://d3b25z3tnybfc4.cloudfront.net/assets/3d/",
-                    "/assets/3d/",
+                    "https://d3b25z3tnybfc4.cloudfront.net/assets/3d/",
+                    // "/assets/3d/",
                     `${filename}.glb`,
                     scene
                 );
