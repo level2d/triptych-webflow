@@ -307,6 +307,7 @@ const setup = async () => {
 
         switch (name) {
             case ANIMATION_NAMES.switch_01:
+            case ANIMATION_NAMES.book_01:
                 animation.metadata = {};
                 animation.metadata["isPlayed"] = false;
                 break;
@@ -325,7 +326,7 @@ const setup = async () => {
     });
 
     // setup mesh specific actions
-    // button mesh
+    // switch mesh
     const prepareSwitchMesh = function (mesh) {
         mesh.actionManager = new ActionManager(scene);
         mesh.actionManager.registerAction(
@@ -348,6 +349,30 @@ const setup = async () => {
 
     const switchMesh = boxMeshes.find((mesh) => mesh.name === BOX_NAMES.SWITCH);
     switchMesh.getChildMeshes().forEach((mesh) => prepareSwitchMesh(mesh));
+
+    // books mesh
+    const prepareBooksMesh = function (mesh) {
+        mesh.actionManager = new ActionManager(scene);
+        mesh.actionManager.registerAction(
+            new ExecuteCodeAction(ActionManager.OnPickUpTrigger, function () {
+                const animation = anim.book_01;
+                if (animation.metadata.isPlayed) {
+                    animation.start(
+                        false,
+                        animation.speedRatio,
+                        animation.to,
+                        0
+                    );
+                } else {
+                    animation.play();
+                }
+                animation.metadata.isPlayed = !animation.metadata.isPlayed;
+            })
+        );
+    };
+
+    const booksMesh = boxMeshes.find((mesh) => mesh.name === BOX_NAMES.BOOKS);
+    booksMesh.getChildMeshes().forEach((mesh) => prepareBooksMesh(mesh));
 
     // eye mesh
     const prepareEyeMesh = function (mesh) {
@@ -393,7 +418,10 @@ const setup = async () => {
         switch (name) {
             case BOX_NAMES.SWITCH:
             case BOX_NAMES.EYE:
-            case BOX_NAMES.TV: {
+            case BOX_NAMES.TV:
+            case BOX_NAMES.GUMBALL:
+            case BOX_NAMES.BOOKS:
+            case BOX_NAMES.MUG: {
                 targetMesh.position = new Vector3(
                     placeholder.position.x,
                     placeholder.position.y,
