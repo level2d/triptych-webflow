@@ -562,9 +562,10 @@ const renderCords = () => {
 const render = () => {
     rootEl.innerHTML = `
         <div class="home-scene">
-            <div className="home-scene__inner">
-                <canvas class="js-home-scene__canvas home-scene__canvas" />
-                <button class="js-home-scene__confirm-button home-scene__confirm-button">
+            <div class="home-scene__inner">
+                <canvas class="js-home-scene__canvas home-scene__canvas"></canvas>
+                <button class="js-home-scene__confirm-button home-scene__confirm-button"></button>
+                <div class="home-scene__bg"></div>
             </div>
         </div>
     `;
