@@ -292,16 +292,6 @@ const setup = async () => {
                             (mesh) => mesh.name === "screen"
                         );
                         screenMesh.material = tvScreenMaterial;
-                        const targets = [
-                            "walls",
-                            "walls_primitive0",
-                            "walls_primitive1",
-                        ];
-                        childMeshes
-                            .filter(({ name }) => !targets.includes(name))
-                            .forEach((mesh) => {
-                                mesh.renderingGroupId = 3;
-                            });
                     }
                     default:
                         break;
