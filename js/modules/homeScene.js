@@ -303,7 +303,18 @@ const setup = async () => {
     // Create animation cache
     const anim = {};
     Object.keys(ANIMATION_NAMES).forEach((name) => {
-        anim[name] = scene.getAnimationGroupByName(name);
+        const animation = scene.getAnimationGroupByName(name);
+
+        switch (name) {
+            case ANIMATION_NAMES.switch_01:
+                animation.metadata = {};
+                animation.metadata["isPlayed"] = false;
+                break;
+            default:
+                break;
+        }
+
+        anim[name] = animation;
     });
 
     // Start autoplay animations
@@ -315,17 +326,28 @@ const setup = async () => {
 
     // setup mesh specific actions
     // button mesh
-    const prepareButtonMesh = function (mesh) {
+    const prepareSwitchMesh = function (mesh) {
         mesh.actionManager = new ActionManager(scene);
         mesh.actionManager.registerAction(
             new ExecuteCodeAction(ActionManager.OnPickUpTrigger, function () {
-                anim.button_01.play();
+                const animation = anim.switch_01;
+                if (animation.metadata.isPlayed) {
+                    animation.start(
+                        false,
+                        animation.speedRatio,
+                        animation.to,
+                        0
+                    );
+                } else {
+                    animation.play();
+                }
+                animation.metadata.isPlayed = !animation.metadata.isPlayed;
             })
         );
     };
 
-    const buttonMesh = boxMeshes.find((mesh) => mesh.name === BOX_NAMES.BUTTON);
-    buttonMesh.getChildMeshes().forEach((mesh) => prepareButtonMesh(mesh));
+    const switchMesh = boxMeshes.find((mesh) => mesh.name === BOX_NAMES.SWITCH);
+    switchMesh.getChildMeshes().forEach((mesh) => prepareSwitchMesh(mesh));
 
     // eye mesh
     const prepareEyeMesh = function (mesh) {
@@ -350,25 +372,26 @@ const setup = async () => {
             (mesh) => mesh.name === `location_${zeroPad(i + 1, 2)}`
         );
         let ret = null;
-        const targetMeshName = BOX_MESHES[i];
         const targetMesh = boxMeshes.find((mesh) => mesh.name === name);
 
-        // Replace placeholder materials with custom materials
-        targetMesh.getChildMeshes().forEach((mesh) => {
-            const { material } = mesh;
-            const materialName = material.name;
-            switch (materialName) {
-                case "matcap":
-                    mesh.material = matCapShader;
-                    break;
-                default:
-                    // do nothing
-                    break;
-            }
-        });
+        if (targetMesh) {
+            // Replace placeholder materials with custom materials
+            targetMesh.getChildMeshes().forEach((mesh) => {
+                const { material } = mesh;
+                const materialName = material.name;
+                switch (materialName) {
+                    case "matcap":
+                        mesh.material = matCapShader;
+                        break;
+                    default:
+                        // do nothing
+                        break;
+                }
+            });
+        }
 
         switch (name) {
-            case BOX_NAMES.BUTTON:
+            case BOX_NAMES.SWITCH:
             case BOX_NAMES.EYE:
             case BOX_NAMES.TV: {
                 targetMesh.position = new Vector3(
@@ -380,21 +403,8 @@ const setup = async () => {
                 ret = targetMesh;
                 break;
             }
-            case BOX_NAMES.BOX: {
-                const clone = targetMesh.clone(
-                    `${targetMeshName}_${zeroPad(i + 1, 2)}`
-                );
-                clone.position = new Vector3(
-                    placeholder.position.x,
-                    placeholder.position.y,
-                    placeholder.position.z
-                );
-                clone.setEnabled(true); // reveal the clone
-                ret = clone;
-                break;
-            }
             default: {
-                console.error(`Mesh ${name} has not been configured!`);
+                console.error(`Box ${i} has not been configured!`);
                 break;
             }
         }
@@ -423,6 +433,7 @@ const setup = async () => {
 
         // Rotation effect
         locationBoxes.forEach((mesh) => {
+            if (mesh === null) return;
             mesh.rotation = new Vector3(
                 panY * 0.25,
                 mesh.rotation.y,
