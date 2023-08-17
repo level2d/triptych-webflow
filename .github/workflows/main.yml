@@ -1,29 +1,40 @@
 name: Deploy `/dist` to Github pages
 on:
-  push:
-    branches:
-      - main
+    push:
+        branches:
+            - main
 jobs:
-  deploy:
-    name: Deploy `/dist` to Github pages
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@master
-    # Run build
-    - name: Use Node.js
-      uses: actions/setup-node@main
-      with:
-        node-version: 20.x
-    - name: yarn install and build
-      run: |
-        yarn install
-        yarn build
-    # Deploy to local repo
-    - name: Deploy
-      uses: s0/git-publish-subdir-action@develop
-      env:
-        REPO: self
-        BRANCH: gh-pages
-        FOLDER: dist
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        
+    deploy:
+        name: Deploy
+        runs-on: ubuntu-latest
+        env:
+            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        steps:
+            - uses: actions/checkout@master
+            # Setup env
+            - name: "Create env file"
+              run: |
+                  echo "${{ secrets.ENV_FILE }}" > .env
+            # Run build
+            - name: Use Node.js
+              uses: actions/setup-node@main
+              with:
+                  node-version: 20.x
+            - name: yarn install and build
+              run: |
+                  yarn install
+                  yarn build
+            # Deploy to S3
+            - name: Deploy to S3
+              uses: reggionick/s3-deploy@v3
+              with:
+                  folder: dist
+                  bucket: ${{ secrets.S3_BUCKET }}
+                  bucket-region: ${{ secrets.S3_BUCKET_REGION }}
+                  dist-id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
+                  invalidation: /
+                  delete-removed: true
+                  no-cache: true
+                  private: true
+                  files-to-include: ".*/*,*/*,**"
