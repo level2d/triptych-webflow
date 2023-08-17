@@ -23,7 +23,7 @@ import { zeroPad, loadTexturesAsync } from "@/js/util/helpers";
 import {
     BOX_MESHES,
     BOX_NAMES,
-    GLB_NAMES,
+    GLB_ASSET_URLS,
     ANIMATION_NAMES,
     AUTOPLAY_ANIMATION_CONFIGS,
 } from "@/js/util/constants";
@@ -109,10 +109,7 @@ const updateCameraFovMode = () => {
     if (!engine) return;
     const camera = engine.scenes[0].cameras[0];
     if (!camera) return;
-    if (
-        engine.getRenderHeight() >
-        engine.getRenderWidth()
-    ) {
+    if (engine.getRenderHeight() > engine.getRenderWidth()) {
         camera.fovMode = Camera.FOVMODE_HORIZONTAL_FIXED;
     } else {
         camera.fovMode = Camera.FOVMODE_VERTICAL_FIXED;
@@ -258,8 +255,8 @@ const setup = async () => {
     // Load locations mesh
     const locationsImportResult = await SceneLoader.ImportMeshAsync(
         "",
-        "https://d3b25z3tnybfc4.cloudfront.net/assets/3d/",
-        `${GLB_NAMES.Locations}.glb`,
+        GLB_ASSET_URLS.Locations,
+        "",
         scene
     );
 
@@ -281,12 +278,11 @@ const setup = async () => {
         Object.keys(BOX_NAMES)
             .map((key) => BOX_NAMES[key])
             .map(async (name) => {
-                const filename = GLB_NAMES[name];
+                const url = GLB_ASSET_URLS[name];
                 const importResult = await SceneLoader.ImportMeshAsync(
                     "",
-                    "https://d3b25z3tnybfc4.cloudfront.net/assets/3d/",
-                    // "/assets/3d/",
-                    `${filename}.glb`,
+                    url,
+                    "",
                     scene
                 );
                 const rootMesh = importResult.meshes[0];
