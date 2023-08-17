@@ -3,20 +3,19 @@ import "@/styles/main.scss";
 import { homeScene } from "./modules";
 class App {
     constructor() {
-        this.init();
         this.homeScene = homeScene;
+        this.init();
     }
 
     initModules() {
         this.homeScene.init();
+        console.log("Modules: init");
     }
 
     init() {
         const _this = this;
-        document.addEventListener("DOMContentLoaded", () => {
-            _this.initModules();
-            console.log("App: init");
-        });
+        _this.initModules();
+        console.log("App: init");
     }
 }
 
