@@ -25,15 +25,16 @@ jobs:
               run: yarn install
             - name: Build
               run: yarn build
-            # Deploy to S3
-            - name: Deploy to S3
-              uses: reggionick/s3-deploy@v3
+            # Configure S3
+            - name: Configure AWS Credentials
+              uses: aws-actions/configure-aws-credentials@v1
               with:
-                  folder: dist
-                  bucket: ${{ secrets.S3_BUCKET }}
-                  bucket-region: ${{ secrets.S3_BUCKET_REGION }}
-                  dist-id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
-                  invalidation: /
-                  delete-removed: true
-                  no-cache: true
-                  private: true
+                  aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+                  aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+                  aws-region: ${{ secrets.S3_BUCKET_REGION }}
+            # Deploy to S3
+            - name: Deploy dashboard to bucket
+              run: aws s3 sync ./dist s3://${{ secrets.S3_BUCKET }}/dist/
+            # Invalidate cloudront cache
+            - name: Invalidate dashboard cloudfront
+              run: aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"
