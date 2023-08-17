@@ -24,6 +24,8 @@ import {
     BOX_MESHES,
     BOX_NAMES,
     GLB_ASSET_URLS,
+    TEXTURE_ASSET_URLS,
+    SHADER_ASSET_URLS,
     ANIMATION_NAMES,
     AUTOPLAY_ANIMATION_CONFIGS,
 } from "@/js/util/constants";
@@ -228,13 +230,13 @@ const setup = async () => {
 
     // Load matcap shader
     const asyncTexturesResult = await loadTexturesAsync(
-        ["https://d3b25z3tnybfc4.cloudfront.net/assets/2d/cell_matcap_04.png"],
+        [TEXTURE_ASSET_URLS.matcap],
         scene
     ); // get the texture
     const matCapTexture = asyncTexturesResult[0];
     const matCapMaterial = await NodeMaterial.ParseFromFileAsync(
         "matcap_shader",
-        "https://d3b25z3tnybfc4.cloudfront.net/assets/2d/matcap_02.json",
+        SHADER_ASSET_URLS.matcap,
         scene
     ); // get the shader material
     matCapMaterial.build(false);
@@ -244,7 +246,7 @@ const setup = async () => {
     // Load tv material
     const tvScreenTexture = new VideoTexture(
         "running_man",
-        "https://d3b25z3tnybfc4.cloudfront.net/assets/2d/running_man_01.mp4",
+        TEXTURE_ASSET_URLS.running_man,
         scene,
         true,
         true

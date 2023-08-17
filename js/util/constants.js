@@ -1,12 +1,20 @@
+// glbs
 import books_url from "@/assets/3d/books_01.glb";
 import box_locations_url from "@/assets/3d/box_locations_04.glb";
 import eye_url from "@/assets/3d/eye_02.glb";
 import goldfish_url from "@/assets/3d/goldfish_01.glb";
 import gumball_url from "@/assets/3d/gumball_01.glb";
-import mobile_box_locationsGlbUrl from "@/assets/3d/mobile_box_locations_01.glb";
+import mobile_box_locations_url from "@/assets/3d/mobile_box_locations_01.glb";
 import mug_url from "@/assets/3d/mug_01.glb";
 import switch_url from "@/assets/3d/switch_01.glb";
 import tv_url from "@/assets/3d/tv_01.glb";
+
+// textures
+import cell_matcap_url from "@/assets/2d/cell_matcap_04.png";
+import running_man_url from "@/assets/2d/running_man_01.mp4?url";
+
+// shaders
+import matcap_shader_url from "@/assets/2d/matcap_02.json?url";
 
 export const BOX_NAMES = {
     SWITCH: "Switch",
@@ -18,19 +26,11 @@ export const BOX_NAMES = {
     MUG: "Mug",
 };
 
-export const GLB_NAMES = {
-    ["Locations"]: "box_locations_04",
-    [BOX_NAMES.SWITCH]: "switch_01",
-    [BOX_NAMES.EYE]: "eye_02",
-    [BOX_NAMES.TV]: "tv_01",
-    [BOX_NAMES.GUMBALL]: "gumball_01",
-    [BOX_NAMES.GOLDFISH]: "goldfish_01",
-    [BOX_NAMES.BOOKS]: "books_01",
-    [BOX_NAMES.MUG]: "mug_01",
-};
-
 export const GLB_ASSET_URLS = {
+    // location meshes
     Locations: box_locations_url,
+    Locations_Mobile: mobile_box_locations_url,
+    // box models
     [BOX_NAMES.SWITCH]: switch_url,
     [BOX_NAMES.EYE]: eye_url,
     [BOX_NAMES.TV]: tv_url,
@@ -38,6 +38,15 @@ export const GLB_ASSET_URLS = {
     [BOX_NAMES.GOLDFISH]: goldfish_url,
     [BOX_NAMES.BOOKS]: books_url,
     [BOX_NAMES.MUG]: mug_url,
+};
+
+export const TEXTURE_ASSET_URLS = {
+    matcap: cell_matcap_url,
+    running_man: running_man_url,
+};
+
+export const SHADER_ASSET_URLS = {
+    matcap: matcap_shader_url,
 };
 
 // The length of this array should match how many placeholders there are.
