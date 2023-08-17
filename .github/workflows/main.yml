@@ -21,10 +21,10 @@ jobs:
               uses: actions/setup-node@main
               with:
                   node-version: 20.x
-            - name: yarn install and build
-              run: |
-                  yarn install
-                  yarn build
+            - name: Install dependencies
+              run: yarn install
+            - name: Build
+              run: yarn build
             # Deploy to S3
             - name: Deploy to S3
               uses: reggionick/s3-deploy@v3
