@@ -1,14 +1,16 @@
 import "@/styles/main.scss";
 
-import { homeScene } from "./modules";
+import { homeScene, homeScene2 } from "./modules";
 class App {
     constructor() {
         this.homeScene = homeScene;
+        this.homeScene2 = homeScene2;
         this.init();
     }
 
     initModules() {
         this.homeScene.init();
+        this.homeScene2.init();
         console.log("Modules: init");
     }
 
