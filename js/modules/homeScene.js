@@ -4,7 +4,7 @@ import {
     AxesViewer,
     ArcRotateCamera,
     Camera,
-    Color3,
+    Color4,
     HemisphericLight,
     SceneLoader,
     NodeMaterial,
@@ -13,6 +13,7 @@ import {
     ExecuteCodeAction,
     VideoTexture,
     StandardMaterial,
+    Texture,
 } from "@babylonjs/core/";
 import { Inspector } from "@babylonjs/inspector";
 
@@ -207,7 +208,7 @@ const setup = async () => {
     // Create our first scene.
     scene = new Scene(engine);
 
-    scene.clearColor = new Color3(255, 255, 255);
+    scene.clearColor = new Color4(255, 255, 255, 0);
 
     // Debuggers
     if (debug) {
@@ -228,22 +229,25 @@ const setup = async () => {
     // Default intensity is 1. Let's dim the light a small amount
     light.intensity = 0.7;
 
-    // Load matcap shader
-    const asyncTexturesResult = await loadTexturesAsync(
-        [TEXTURE_ASSET_URLS.matcap],
-        scene
-    ); // get the texture
-    const matCapTexture = asyncTexturesResult[0];
-    const matCapMaterial = await NodeMaterial.ParseFromFileAsync(
+    /**
+     * Textures
+     */
+    // get the texture
+    const matCapTexture = new Texture(TEXTURE_ASSET_URLS.matcap, scene);
+
+    /**
+     * Materials
+     */
+    // matcap shader
+    const matCapShader = await NodeMaterial.ParseFromFileAsync(
         "matcap_shader",
         SHADER_ASSET_URLS.matcap,
         scene
-    ); // get the shader material
-    matCapMaterial.build(false);
-    const matCapShader = matCapMaterial;
-    matCapShader.texture = matCapTexture; // assign the texture to the mat cap shader mesh
+    );
+    matCapShader.build(false);
+    matCapShader.texture = matCapTexture; // assign matcap texture to matcap shader material
 
-    // Load tv material
+    // Tv material
     const tvScreenTexture = new VideoTexture(
         "running_man",
         TEXTURE_ASSET_URLS.running_man,
@@ -254,6 +258,9 @@ const setup = async () => {
     const tvScreenMaterial = new StandardMaterial("tv_screen");
     tvScreenMaterial.diffuseTexture = tvScreenTexture;
 
+    /**
+     * Models
+     */
     // Load locations mesh
     const locationsImportResult = await SceneLoader.ImportMeshAsync(
         "",
