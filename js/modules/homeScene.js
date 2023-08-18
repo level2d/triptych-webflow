@@ -31,14 +31,14 @@ import {
 } from "@/js/util/constants";
 import { debounce } from "lodash";
 
-const debug = false;
+let debug = false;
 let rootEl = null;
-let confirmButton = null;
+let confirmButtonEl = null;
 let resizeObserver = null;
 let engine = null;
 let scene = null;
 let canvas = null;
-let coords = null;
+let fpsEl = null;
 let offsetXEl = null;
 let offsetYEl = null;
 let panX = 0;
@@ -176,21 +176,22 @@ const bindEventListeners = () => {
     canvas.addEventListener("mousemove", handleMousemove);
 
     // hide/show the Inspector
-    window.addEventListener("keydown", (ev) => {
-        if (debug) return;
-
-        // Shift+Ctrl+I
-        if (ev.shiftKey && ev.ctrlKey && ev.key === "I") {
-            if (scene.debugLayer.isVisible()) {
-                Inspector.Hide();
-            } else {
-                Inspector.Show(scene, { embedMode: true });
+    if (import.meta.env.MODE === "development") {
+        console.log("bound");
+        window.addEventListener("keydown", (ev) => {
+            // Shift+Ctrl+I
+            if (ev.shiftKey && ev.ctrlKey && ev.key === "I") {
+                if (scene.debugLayer.isVisible()) {
+                    Inspector.Hide();
+                } else {
+                    Inspector.Show(scene, { embedMode: true });
+                }
             }
-        }
-    });
+        });
+    }
 
-    if (confirmButton) {
-        confirmButton.addEventListener("click", handleConfirmClick);
+    if (confirmButtonEl) {
+        confirmButtonEl.addEventListener("click", handleConfirmClick);
     }
 };
 
@@ -211,7 +212,6 @@ const setup = async () => {
     // Debuggers
     if (debug) {
         const axes = new AxesViewer(scene, 5);
-        Inspector.Show(scene, { embedMode: true });
     }
 
     // Create a fixed orthographic camera
@@ -534,22 +534,26 @@ const setup = async () => {
                 panX * 0.25
             );
         });
+
+        // Debug UI
+        fpsEl.innerHTML = engine.getFps().toFixed();
+
         scene.render();
     });
 
     updateCameraFovMode(); // run on initial load
 };
 
-const renderCords = () => {
+const renderDebugUi = () => {
     const markup = `
-    <div class="js-home-scene__coords home-scene__coords">
-      <div class="home-scene__coords__inner">
+    <div class="home-scene__debug-ui">
+      <div class="home-scene__debug-ui__inner">
         <div>
-          <p><strong>Mouse Coordinates:</strong></p>
-          <p>
-            <span>X:<span class="js-offset-x">0</span></span>
-            <span>Y:<span class="js-offset-y">0</span></span>
-          </p>
+            <p><span class="js-fps"></span>fps</p>
+            <hr />
+            <p><strong>mouse coordinates:</strong></p>
+            <p><span>x: <span class="js-mouse-offset-x">0</span>px</span></p>
+            <p><span>y: <span class="js-mouse-offset-y">0</span>px</span></p>
         </div>
       </div>
     </div>
@@ -557,6 +561,11 @@ const renderCords = () => {
     const element = document.createElement("div");
     element.innerHTML = markup;
     rootEl.appendChild(element);
+
+    // Setup element cache
+    fpsEl = rootEl.querySelector(".js-fps");
+    offsetXEl = rootEl.querySelector(".js-mouse-offset-x");
+    offsetYEl = rootEl.querySelector(".js-mouse-offset-y");
 };
 
 const render = () => {
@@ -565,10 +574,17 @@ const render = () => {
             <div class="home-scene__inner">
                 <canvas class="js-home-scene__canvas home-scene__canvas"></canvas>
                 <button class="js-home-scene__confirm-button home-scene__confirm-button"></button>
-                <div class="home-scene__bg"></div>
             </div>
         </div>
     `;
+
+    // Setup element cache
+    canvas = rootEl.querySelector(".js-home-scene__canvas");
+    confirmButtonEl = rootEl.querySelector(".js-home-scene__confirm-button");
+
+    if (debug) {
+        renderDebugUi();
+    }
 };
 
 const init = () => {
@@ -577,18 +593,9 @@ const init = () => {
         return;
     }
 
+    debug = new URLSearchParams(window.location.search).get("debug");
+
     render();
-
-    canvas = rootEl.querySelector(".js-home-scene__canvas");
-    confirmButton = rootEl.querySelector(".js-home-scene__confirm-button");
-
-    if (debug) {
-        renderCords();
-        coords = rootEl.querySelector(".js-home-scene__coords");
-        offsetXEl = rootEl.querySelector(".js-offset-x");
-        offsetYEl = rootEl.querySelector(".js-offset-y");
-    }
-
     setup();
     bindEventListeners();
     bindObservables();
