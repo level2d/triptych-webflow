@@ -550,7 +550,9 @@ const setup = async () => {
         }
 
         // Debug UI
-        fpsEl.innerHTML = engine.getFps().toFixed();
+        if (fpsEl) {
+            fpsEl.innerHTML = engine.getFps().toFixed();
+        }
 
         scene.render();
     });
