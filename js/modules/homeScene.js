@@ -31,6 +31,7 @@ import {
     AUTOPLAY_ANIMATION_CONFIGS,
 } from "@/js/util/constants";
 import { debounce } from "lodash";
+import gsap from "gsap";
 
 let debug = false;
 let rootEl = null;
@@ -41,6 +42,7 @@ let scene = null;
 let canvas = null;
 let camera = null;
 let fpsEl = null;
+let isPanEnabled = false;
 let offsetXEl = null;
 let offsetYEl = null;
 let panX = 0;
@@ -256,7 +258,7 @@ const setup = async () => {
     );
     const locationsMesh = locationsImportResult.meshes[0];
     locationsMesh.name = "locations";
-    locationsMesh.rotation = new Vector3(0, Math.PI * -0.5, 0);
+
     // set render order
     locationsMesh.getChildMeshes().forEach((mesh) => {
         mesh.renderingGroupId = 1;
@@ -276,7 +278,7 @@ const setup = async () => {
                 );
                 const rootMesh = importResult.meshes[0];
                 rootMesh.name = name; // give it a unique name for grabbing it later
-                rootMesh.rotation = new Vector3(0, Math.PI * -0.5, 0); // rotate it correctly
+                // rootMesh.rotation = new Vector3(0, Math.PI * -0.5, 0); // rotate it correctly
                 rootMesh.setEnabled(false); // hide the box
                 return rootMesh;
             })
@@ -467,7 +469,10 @@ const setup = async () => {
                     placeholder.position.y,
                     placeholder.position.z
                 );
+                targetMesh.parent = locationsMesh;
+                targetMesh.rotation.y += Math.PI; // orient the box correctly
                 targetMesh.setEnabled(true); // reveal the mesh
+                placeholder.setEnabled(false); // hide the placeholder
                 ret = targetMesh;
                 break;
             }
@@ -476,9 +481,6 @@ const setup = async () => {
                 break;
             }
         }
-
-        placeholder.setEnabled(false); // hide the placeholder
-
         return ret;
     });
 
@@ -514,13 +516,13 @@ const setup = async () => {
     // Render every frame
     engine.runRenderLoop(() => {
         // Panning effect
-        if (locationsMesh) {
-            locationsMesh.position = new Vector3(
-                panY,
-                locationsMesh.position.y,
-                panX
-            );
-        }
+        // if (locationsMesh) {
+        //     locationsMesh.position = new Vector3(
+        //         panY,
+        //         locationsMesh.position.y,
+        //         panX
+        //     );
+        // }
 
         const mugMesh = boxMeshes.find((mesh) => mesh.name === BOX_NAMES.MUG);
         if (mugMesh) {
@@ -536,14 +538,16 @@ const setup = async () => {
         }
 
         // Rotation effect
-        locationBoxes.forEach((mesh) => {
-            if (mesh === null) return;
-            mesh.rotation = new Vector3(
-                panY * 0.25,
-                mesh.rotation.y,
-                panX * 0.25
-            );
-        });
+        if (isPanEnabled) {
+            locationBoxes.forEach((mesh) => {
+                if (mesh === null) return;
+                mesh.rotation = new Vector3(
+                    panY * 0.25,
+                    mesh.rotation.y,
+                    panX * 0.25
+                );
+            });
+        }
 
         // Debug UI
         fpsEl.innerHTML = engine.getFps().toFixed();
@@ -552,6 +556,19 @@ const setup = async () => {
     });
 
     updateCameraFovMode(); // run on initial load
+
+    // Setup animation
+    locationsMesh.rotation = new Vector3(0, 0, Math.PI * 0.5);
+    gsap.to(locationsMesh.rotation, {
+        x: 0,
+        y: -Math.PI * 0.5,
+        z: 0,
+        duration: 2,
+        ease: "power2.inOut",
+        onComplete: () => {
+            isPanEnabled = true;
+        },
+    });
 };
 
 const renderDebugUi = () => {
