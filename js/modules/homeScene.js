@@ -469,6 +469,11 @@ const setup = async () => {
                     placeholder.position.y,
                     placeholder.position.z
                 );
+                targetMesh.rotation = new Vector3(
+                    placeholder.rotation.x,
+                    placeholder.rotation.y,
+                    placeholder.rotation.z
+                );
                 targetMesh.parent = locationsMesh;
                 targetMesh.rotation.y += Math.PI; // orient the box correctly
                 targetMesh.setEnabled(true); // reveal the mesh
@@ -541,11 +546,11 @@ const setup = async () => {
         if (isPanEnabled) {
             locationBoxes.forEach((mesh) => {
                 if (mesh === null) return;
-                mesh.rotation = new Vector3(
-                    panY * 0.25,
-                    mesh.rotation.y,
-                    panX * 0.25
-                );
+                gsap.to(mesh.rotation, {
+                    x: panY * 0.25,
+                    y: mesh.rotation.y,
+                    z: panX * 0.25,
+                });
             });
         }
 
