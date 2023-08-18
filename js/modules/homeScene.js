@@ -38,6 +38,7 @@ let resizeObserver = null;
 let engine = null;
 let scene = null;
 let canvas = null;
+let camera = null;
 let fpsEl = null;
 let offsetXEl = null;
 let offsetYEl = null;
@@ -109,7 +110,6 @@ const bindOrientationHandler = () => {
 
 const updateCameraFovMode = () => {
     if (!engine) return;
-    const camera = engine.scenes[0].cameras[0];
     if (!camera) return;
     if (engine.getRenderHeight() > engine.getRenderWidth()) {
         camera.fovMode = Camera.FOVMODE_HORIZONTAL_FIXED;
@@ -215,7 +215,7 @@ const setup = async () => {
     }
 
     // Create a fixed orthographic camera
-    const camera = new ArcRotateCamera("camera1", 0, 0, 80, null, scene);
+    camera = new ArcRotateCamera("camera1", 0, 0, 80, null, scene);
 
     // This attaches the camera to the canvas
     if (debug) {
