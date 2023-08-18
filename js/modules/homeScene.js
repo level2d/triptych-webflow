@@ -215,20 +215,6 @@ const setup = async () => {
         const axes = new AxesViewer(scene, 5);
     }
 
-    // Create a fixed orthographic camera
-    camera = new ArcRotateCamera("camera1", 0, 0, 80, null, scene);
-
-    // This attaches the camera to the canvas
-    if (debug) {
-        camera.attachControl(canvas, true);
-    }
-
-    // This creates a light, aiming 0,1,0 - to the sky (non-mesh)
-    const light = new HemisphericLight("light1", new Vector3(0, 1, 0), scene);
-
-    // Default intensity is 1. Let's dim the light a small amount
-    light.intensity = 0.7;
-
     /**
      * Textures
      */
@@ -261,15 +247,13 @@ const setup = async () => {
     /**
      * Models
      */
-    // Load locations mesh
+    // Locations mesh
     const locationsImportResult = await SceneLoader.ImportMeshAsync(
         "",
         GLB_ASSET_URLS.Locations,
         "",
         scene
     );
-
-    // setup the locations root mesh
     const locationsMesh = locationsImportResult.meshes[0];
     locationsMesh.name = "locations";
     locationsMesh.rotation = new Vector3(0, Math.PI * -0.5, 0);
@@ -277,10 +261,6 @@ const setup = async () => {
     locationsMesh.getChildMeshes().forEach((mesh) => {
         mesh.renderingGroupId = 1;
     });
-
-    // focus the camera on this mesh
-    camera.setTarget(locationsMesh, true);
-    camera.fov = 0.5;
 
     // load box meshes
     const boxMeshes = await Promise.all(
@@ -507,6 +487,29 @@ const setup = async () => {
     scene.materials
         .filter((material) => targetMaterials.includes(material.name))
         .forEach((material) => material.dispose());
+
+    /**
+     * Camera
+     */
+    // Create a fixed orthographic camera
+    camera = new ArcRotateCamera("camera1", 0, 0, 80, null, scene);
+    // focus the camera on locationsMesh
+    camera.setTarget(locationsMesh, true);
+    camera.fov = 0.5;
+
+    if (debug) {
+        // This attaches the camera to the canvas
+        camera.attachControl(canvas, true);
+    }
+
+    /**
+     * Lights
+     */
+    // This creates a light, aiming 0,1,0 - to the sky (non-mesh)
+    const light = new HemisphericLight("light1", new Vector3(0, 1, 0), scene);
+
+    // Default intensity is 1. Let's dim the light a small amount
+    light.intensity = 0.7;
 
     // Render every frame
     engine.runRenderLoop(() => {
