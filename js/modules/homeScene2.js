@@ -1,117 +1,125 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
-import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
-import Stats from "three/addons/libs/stats.module.js";
-import * as dat from "lil-gui";
-import { debounce } from "lodash";
-import { GLB_ASSET_URLS } from "../util/constants";
+import GUI from "lil-gui";
 
-// Debug
-const gui = new dat.GUI();
-let debug = true;
-let stats = null;
+THREE.ColorManagement.enabled = false;
+
+/**
+ * Globals
+ */
+const gui = new GUI();
+let debug = false;
 let rootEl = null;
-let confirmButtonEl = null;
 let frameEl = null;
-let scene = null;
-let canvas = null;
-let textureLoader = null;
-let glTFLoader = null;
-let controls = null;
-let camera = null;
 let renderer = null;
-let clock = null;
-let resizeObserver = null;
-const cameraValues = {
-    frustumSize: 50,
-    near: 0.1,
-    far: 200,
-};
-const sizes = {
+let canvas = null;
+let scene = null;
+let camera = null;
+let controls = null;
+let previousTime = 0;
+let sizes = {
     width: 0,
     height: 0,
 };
+let resizeObserver = null;
 
 /**
- * 3D Setup
+ * Updaters
+ */
+const updateControls = () => {
+    if (controls) {
+        controls.update();
+    }
+};
+const updateSizes = () => {
+    if (frameEl) {
+        const rect = frameEl.getBoundingClientRect();
+
+        sizes.width = rect.width;
+        sizes.height = rect.height;
+
+        console.log(sizes);
+    }
+};
+
+const updateRenderer = () => {
+    if (renderer) {
+        renderer.setSize(sizes.width, sizes.height);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    }
+};
+
+/**
+ * Event/Observer Handlers
+ */
+const handleResize = () => {
+    // Update sizes
+    updateSizes();
+
+    // Update camera
+    if (camera) {
+        camera.aspect = sizes.width / sizes.height;
+        camera.updateProjectionMatrix();
+    }
+
+    // Update renderer
+    updateRenderer();
+};
+
+const bindObservers = () => {
+    resizeObserver = new ResizeObserver(handleResize);
+    resizeObserver.observe(frameEl);
+};
+
+/**
+ * Setup
  */
 const setup = () => {
     // Scene
     scene = new THREE.Scene();
 
     /**
-     * Textures
+     * Floor
      */
-    textureLoader = new THREE.TextureLoader();
+    const floor = new THREE.Mesh(
+        new THREE.PlaneGeometry(10, 10),
+        new THREE.MeshStandardMaterial()
+    );
+    floor.rotation.x = -Math.PI * 0.5;
+    scene.add(floor);
 
     /**
-     * Gltfs
+     * Lights
      */
-    glTFLoader = new GLTFLoader();
-    const locationsModel = glTFLoader.load(GLB_ASSET_URLS.Locations, (gltf) => {
-        scene.add(gltf.scene);
-        const sceneGroup = scene.getObjectByName("Scene");
-        sceneGroup.rotation.x = Math.PI * 0.5;
-        // setTimeout(() => {
-        //     gsap.to(sceneGroup.rotation, {
-        //         x: Math.PI * 0.5,
-        //         z: -Math.PI * 0.5,
-        //         duration: 1,
-        //     });
-        // }, 500);
-    });
+    const ambientLight = new THREE.AmbientLight("#ffffff", 0.3);
+
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.6);
+    directionalLight.position.set(5, 5, 5);
+    scene.add(directionalLight);
 
     /**
      * Camera
      */
-    const box = new THREE.Mesh(
-        new THREE.BoxGeometry(1, 1, 1),
-        new THREE.MeshStandardMaterial({ color: 0xffffff })
-    );
-    scene.add(box);
-    // Base camera
-    camera = new THREE.OrthographicCamera(
-        (cameraValues.frustumSize * (sizes.width / sizes.height)) / -2,
-        (cameraValues.frustumSize * (sizes.width / sizes.height)) / 2,
-        cameraValues.frustumSize / 2,
-        cameraValues.frustumSize / -2,
+    // base camera
+    camera = new THREE.PerspectiveCamera(
+        75,
+        sizes.width / sizes.height,
         0.1,
-        200
+        100
     );
-    camera.position.set(0, 0, 80);
-    const cameraGui = gui.addFolder("Camera");
-    cameraGui
-        .add(cameraValues, "frustumSize")
-        .min(0)
-        .max(100)
-        .step(1)
-        .onChange((frustumSize) => {
-            cameraValues.frustumSize = frustumSize;
-            updateCamera();
-        });
-    cameraGui
-        .add(cameraValues, "near")
-        .min(0)
-        .max(10)
-        .step(0.1)
-        .onChange((near) => {
-            cameraValues.near = near;
-            updateCamera();
-        });
-    cameraGui
-        .add(cameraValues, "far")
-        .min(100)
-        .max(300)
-        .step(1)
-        .onChange((far) => {
-            cameraValues.far = far;
-            updateCamera();
-        });
+    camera.position.x = 1;
+    camera.position.y = 1;
+    camera.position.z = 2;
     scene.add(camera);
 
-    // Controls
-    controls = new OrbitControls(camera, canvas);
-    controls.enableDamping = true;
+    /**
+     * Controls
+     */
+    if (debug) {
+        controls = new OrbitControls(camera, canvas);
+        controls.target.set(0, 0.75, 0);
+        controls.enableDamping = true;
+    }
 
     /**
      * Renderer
@@ -119,24 +127,21 @@ const setup = () => {
     renderer = new THREE.WebGLRenderer({
         canvas: canvas,
     });
-    renderer.setSize(sizes.width, sizes.height);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.outputColorSpace = THREE.LinearSRGBColorSpace;
+    updateRenderer();
 
     /**
      * Animate
      */
-    clock = new THREE.Clock();
+    const clock = new THREE.Clock();
 
     const tick = () => {
         const elapsedTime = clock.getElapsedTime();
-
-        // update stats
-        if (stats) {
-            stats.update();
-        }
+        const deltaTime = elapsedTime - previousTime;
+        previousTime = elapsedTime;
 
         // Update controls
-        controls.update();
+        updateControls();
 
         // Render
         renderer.render(scene, camera);
@@ -148,84 +153,6 @@ const setup = () => {
     tick();
 };
 
-// Sizes updater
-const updateSizes = () => {
-    const rect = frameEl.getBoundingClientRect();
-    sizes.width = rect.width;
-    sizes.height = rect.height;
-};
-
-// Camera updater
-const updateCamera = () => {
-    const aspect = sizes.width / sizes.height;
-
-    camera.left = (-cameraValues.frustumSize * aspect) / 2;
-    camera.right = (cameraValues.frustumSize * aspect) / 2;
-    camera.top = cameraValues.frustumSize / 2;
-    camera.bottom = -cameraValues.frustumSize / 2;
-
-    camera.updateProjectionMatrix();
-};
-
-/**
- * Events and Observables
- */
-const handleDeviceOrientation = () => {};
-const debouncedHandleDeviceOrientation = debounce(handleDeviceOrientation, 3);
-const bindOrientationHandler = () => {
-    window.addEventListener(
-        "deviceorientation",
-        debouncedHandleDeviceOrientation
-    );
-};
-const handleConfirmClick = (e) => {
-    const { target } = e;
-    if (typeof DeviceMotionEvent.requestPermission === "function") {
-        // Handle iOS 13+ devices.
-        DeviceMotionEvent.requestPermission()
-            .then((state) => {
-                if (state === "granted") {
-                    bindOrientationHandler();
-                    target.remove();
-                } else {
-                    console.error(
-                        "Request to access the orientation was rejected"
-                    );
-                }
-            })
-            .catch(console.error);
-    } else {
-        // Handle regular non iOS 13+ devices.
-        bindOrientationHandler();
-        target.remove();
-    }
-};
-
-const handleResize = () => {
-    const rect = canvas.getBoundingClientRect();
-
-    // Update sizes
-    updateSizes();
-
-    // Update camera
-    updateCamera();
-
-    // Update renderer
-    renderer.setSize(sizes.width, sizes.height);
-    renderer.setPixelRatio(Math.min(rect.devicePixelRatio, 2));
-};
-
-const bindEventListeners = () => {
-    if (confirmButtonEl) {
-        confirmButtonEl.addEventListener("click", handleConfirmClick);
-    }
-};
-
-const bindObservables = () => {
-    resizeObserver = new ResizeObserver(handleResize);
-    resizeObserver.observe(frameEl);
-};
-
 /**
  * Render
  */
@@ -235,37 +162,37 @@ const render = () => {
             <div class="home-scene__inner">
                 <canvas class="js-home-scene__canvas home-scene__canvas"></canvas>
                 <button class="js-home-scene__confirm-button home-scene__confirm-button"></button>
-                <div class="home-scene__bg"></div>
             </div>
         </div>
     `;
+
+    // update DOM cache
+    canvas = rootEl.querySelector("canvas.js-home-scene__canvas");
+    frameEl = rootEl.querySelector(".js-home-scene");
+
+    // run relevant updaters
+    updateSizes();
 };
 
+/**
+ * Init
+ */
 const init = () => {
+    console.log("Module: Home Scene: init");
     rootEl = document.querySelector(".js-home-scene-target-2");
     if (!rootEl) {
         return;
     }
 
-    render();
     debug = new URLSearchParams(window.location.search).get("debug");
-    frameEl = rootEl.querySelector(".js-home-scene");
-    canvas = rootEl.querySelector(".js-home-scene__canvas");
-    confirmButtonEl = rootEl.querySelector(".js-home-scene__confirm-button");
 
-    bindEventListeners();
-    bindObservables();
-    updateSizes();
+    render();
     setup();
-    handleResize();
+    bindObservers();
 
-    if (debug) {
-        stats = new Stats();
-        rootEl.appendChild(stats.dom);
-    } else {
+    if (!debug) {
         gui.destroy();
     }
-    console.log("module: homeScene: init");
 };
 
 export default {
