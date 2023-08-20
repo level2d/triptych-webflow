@@ -3,6 +3,7 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import GUI from "lil-gui";
 import { GLB_ASSET_URLS } from "../util/constants";
+import { gsap } from "gsap";
 
 THREE.ColorManagement.enabled = false;
 
@@ -11,43 +12,76 @@ THREE.ColorManagement.enabled = false;
  */
 const gui = new GUI();
 let debug = false;
+// DOM cache
 let rootEl = null;
 let confirmButtonEl = null;
 let frameEl = null;
+// THREE Cache
 let renderer = null;
 let canvas = null;
 let scene = null;
 let camera = null;
 let controls = null;
 let previousTime = 0;
-let sizes = {
+let rootMeshGroup = null;
+let rootMeshGroupBox = null;
+let rootMeshGroupSize = null;
+const sceneMargin = 0.2;
+const sizes = {
     width: 0,
     height: 0,
+    aspectRatio: 0,
 };
+// Observers
 let resizeObserver = null;
 
 /**
  * Updaters
  */
-const updateCamera = () => {
-    if (camera) {
-        camera.aspect = sizes.width / sizes.height;
-        camera.updateProjectionMatrix();
+const updateRootGroupScale = () => {
+    // This func scales the root group to fit the camera bounds
+    // regardless of screen size
+    if (camera && rootMeshGroup && rootMeshGroupSize) {
+        const cameraWidth = camera.right - camera.left - sceneMargin;
+        const cameraHeight = camera.top - camera.bottom - sceneMargin;
+        let scale = null;
+
+        if (
+            cameraWidth < rootMeshGroupSize.x ||
+            cameraHeight < rootMeshGroupSize.z
+        ) {
+            // scale down
+            scale = Math.min(
+                cameraWidth / rootMeshGroupSize.x,
+                cameraHeight / rootMeshGroupSize.z
+            );
+        } else {
+            // scale up
+            scale = Math.min(
+                rootMeshGroupSize.x / cameraWidth,
+                rootMeshGroupSize.z / cameraHeight
+            );
+        }
+        rootMeshGroup.scale.set(scale, scale, scale);
     }
 };
 
-const updateControls = () => {
-    if (controls) {
-        controls.update();
+const updateCamera = () => {
+    if (camera) {
+        camera.left = -sizes.aspectRatio;
+        camera.right = sizes.aspectRatio;
+
+        camera.updateProjectionMatrix();
     }
 };
 
 const updateSizes = () => {
     if (frameEl) {
         const rect = frameEl.getBoundingClientRect();
-
-        sizes.width = rect.width;
-        sizes.height = rect.height;
+        const { width, height } = rect;
+        sizes.width = width;
+        sizes.height = height;
+        sizes.aspectRatio = width / height;
     }
 };
 
@@ -68,6 +102,14 @@ const handleResize = () => {
     // Update camera
     updateCamera();
 
+    // Update rootMeshGroup scale
+    updateRootGroupScale();
+
+    // make camera look at rootMeshGroup
+    if (rootMeshGroup) {
+        camera.lookAt(rootMeshGroup.position);
+    }
+
     // Update renderer
     updateRenderer();
 };
@@ -80,7 +122,7 @@ const bindObservers = () => {
 /**
  * Setup
  */
-const setup = () => {
+const setup = async () => {
     // Scene
     scene = new THREE.Scene();
 
@@ -90,49 +132,48 @@ const setup = () => {
     }
 
     /**
+     * Camera
+     */
+    // base camera
+    // camera = new THREE.PerspectiveCamera(75, sizes.aspectRatio, 0.1, 100);
+    camera = new THREE.OrthographicCamera(
+        -sizes.aspectRatio,
+        sizes.aspectRatio,
+        1,
+        -1,
+        0.1,
+        10
+    );
+    camera.position.set(1, 0, 1);
+    window.camera = camera;
+    updateCamera();
+    scene.add(camera);
+
+    /**
      * Models
      */
     const gltfLoader = new GLTFLoader();
 
-    let rootMesh = null;
-    gltfLoader.load(GLB_ASSET_URLS.Locations, (gltf) => {
-        rootMesh = gltf.scene;
-        rootMesh.scale.set(0.045, 0.045, 0.045);
-        rootMesh.renderOrder = 2;
-        scene.add(rootMesh);
-    });
-
-    /**
-     * Lights
-     */
-    const ambientLight = new THREE.AmbientLight("#ffffff", 0.3);
-
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.6);
-    directionalLight.position.set(5, 5, 5);
-    scene.add(directionalLight);
-
-    /**
-     * Camera
-     */
-    // base camera
-    camera = new THREE.PerspectiveCamera(
-        75,
-        sizes.width / sizes.height,
-        0.1,
-        100
-    );
-    camera.position.x = 1;
-    camera.position.y = 0;
-    camera.position.z = 1;
-    camera.lookAt(new THREE.Vector3(0, 0, 0));
-    scene.add(camera);
+    const rootGltf = await gltfLoader.loadAsync(GLB_ASSET_URLS.Locations);
+    rootMeshGroup = rootGltf.scene;
+    rootMeshGroupBox = new THREE.Box3().setFromObject(rootMeshGroup);
+    rootMeshGroupSize = rootMeshGroupBox.getSize(new THREE.Vector3());
+    rootMeshGroup.name = "rootMeshGroup";
+    rootMeshGroup.position.set(0, 0, 0);
+    rootMeshGroup.renderOrder = 2;
+    updateRootGroupScale();
+    scene.add(rootMeshGroup);
 
     /**
      * Controls
      */
     if (debug) {
         controls = new OrbitControls(camera, canvas);
-        controls.target.set(0, 0, 0);
+        controls.target.set(
+            rootMeshGroup.position.x,
+            rootMeshGroup.position.y,
+            rootMeshGroup.position.z
+        );
         controls.enableDamping = true;
     }
 
@@ -140,7 +181,7 @@ const setup = () => {
      * Renderer
      */
     renderer = new THREE.WebGLRenderer({
-        canvas: canvas,
+        canvas,
     });
     renderer.outputColorSpace = THREE.LinearSRGBColorSpace;
     updateRenderer();
@@ -156,7 +197,9 @@ const setup = () => {
         previousTime = elapsedTime;
 
         // Update controls
-        updateControls();
+        if (controls) {
+            controls.update();
+        }
 
         // Render
         renderer.render(scene, camera);
@@ -183,11 +226,11 @@ const render = () => {
     `;
 
     // update DOM cache
+    frameEl = rootEl.querySelector(".js-home-scene");
+    canvas = rootEl.querySelector("canvas.js-home-scene__canvas");
     confirmButtonEl = rootEl.querySelector(
         "button.js-home-scene__confirm-button"
     );
-    canvas = rootEl.querySelector("canvas.js-home-scene__canvas");
-    frameEl = rootEl.querySelector(".js-home-scene");
 
     // run relevant updaters
     updateSizes();
