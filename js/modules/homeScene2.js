@@ -1,6 +1,8 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import GUI from "lil-gui";
+import { GLB_ASSET_URLS } from "../util/constants";
 
 THREE.ColorManagement.enabled = false;
 
@@ -46,8 +48,6 @@ const updateSizes = () => {
 
         sizes.width = rect.width;
         sizes.height = rect.height;
-
-        console.log(sizes);
     }
 };
 
@@ -84,15 +84,23 @@ const setup = () => {
     // Scene
     scene = new THREE.Scene();
 
+    if (debug) {
+        const axesHelper = new THREE.AxesHelper(5);
+        scene.add(axesHelper);
+    }
+
     /**
-     * Floor
+     * Models
      */
-    const floor = new THREE.Mesh(
-        new THREE.PlaneGeometry(10, 10),
-        new THREE.MeshStandardMaterial()
-    );
-    floor.rotation.x = -Math.PI * 0.5;
-    scene.add(floor);
+    const gltfLoader = new GLTFLoader();
+
+    let rootMesh = null;
+    gltfLoader.load(GLB_ASSET_URLS.Locations, (gltf) => {
+        rootMesh = gltf.scene;
+        rootMesh.scale.set(0.045, 0.045, 0.045);
+        rootMesh.renderOrder = 2;
+        scene.add(rootMesh);
+    });
 
     /**
      * Lights
@@ -114,8 +122,8 @@ const setup = () => {
         100
     );
     camera.position.x = 1;
-    camera.position.y = 1;
-    camera.position.z = 2;
+    camera.position.y = 0;
+    camera.position.z = 1;
     camera.lookAt(new THREE.Vector3(0, 0, 0));
     scene.add(camera);
 
