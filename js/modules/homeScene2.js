@@ -183,6 +183,7 @@ const setup = async () => {
     renderer = new THREE.WebGLRenderer({
         canvas,
     });
+    renderer.antialias = true;
     renderer.outputColorSpace = THREE.LinearSRGBColorSpace;
     updateRenderer();
 
