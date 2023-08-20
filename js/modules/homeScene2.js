@@ -178,7 +178,6 @@ const render = () => {
  * Init
  */
 const init = () => {
-    console.log("Module: Home Scene: init");
     rootEl = document.querySelector(".js-home-scene-target-2");
     if (!rootEl) {
         return;
@@ -193,6 +192,8 @@ const init = () => {
     if (!debug) {
         gui.destroy();
     }
+
+    console.log("module: homeScene: init");
 };
 
 export default {
