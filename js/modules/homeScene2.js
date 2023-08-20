@@ -10,6 +10,7 @@ THREE.ColorManagement.enabled = false;
 const gui = new GUI();
 let debug = false;
 let rootEl = null;
+let confirmButtonEl = null;
 let frameEl = null;
 let renderer = null;
 let canvas = null;
@@ -26,11 +27,19 @@ let resizeObserver = null;
 /**
  * Updaters
  */
+const updateCamera = () => {
+    if (camera) {
+        camera.aspect = sizes.width / sizes.height;
+        camera.updateProjectionMatrix();
+    }
+};
+
 const updateControls = () => {
     if (controls) {
         controls.update();
     }
 };
+
 const updateSizes = () => {
     if (frameEl) {
         const rect = frameEl.getBoundingClientRect();
@@ -57,10 +66,7 @@ const handleResize = () => {
     updateSizes();
 
     // Update camera
-    if (camera) {
-        camera.aspect = sizes.width / sizes.height;
-        camera.updateProjectionMatrix();
-    }
+    updateCamera();
 
     // Update renderer
     updateRenderer();
@@ -110,6 +116,7 @@ const setup = () => {
     camera.position.x = 1;
     camera.position.y = 1;
     camera.position.z = 2;
+    camera.lookAt(new THREE.Vector3(0, 0, 0));
     scene.add(camera);
 
     /**
@@ -117,7 +124,7 @@ const setup = () => {
      */
     if (debug) {
         controls = new OrbitControls(camera, canvas);
-        controls.target.set(0, 0.75, 0);
+        controls.target.set(0, 0, 0);
         controls.enableDamping = true;
     }
 
@@ -150,6 +157,7 @@ const setup = () => {
         window.requestAnimationFrame(tick);
     };
 
+    // Start tick loop
     tick();
 };
 
@@ -167,6 +175,9 @@ const render = () => {
     `;
 
     // update DOM cache
+    confirmButtonEl = rootEl.querySelector(
+        "button.js-home-scene__confirm-button"
+    );
     canvas = rootEl.querySelector("canvas.js-home-scene__canvas");
     frameEl = rootEl.querySelector(".js-home-scene");
 
