@@ -12,6 +12,11 @@ THREE.ColorManagement.enabled = false;
  * Globals
  */
 let debug = false;
+const sizes = {
+    width: 0,
+    height: 0,
+    aspectRatio: 0,
+};
 // DOM cache
 let rootEl = null;
 let confirmButtonEl = null;
@@ -29,11 +34,6 @@ let rootMeshGroup = null;
 let rootMeshGroupBox = null;
 let rootMeshGroupSize = null;
 const sceneMargin = 2;
-const sizes = {
-    width: 0,
-    height: 0,
-    aspectRatio: 0,
-};
 // Observers
 let resizeObserver = null;
 
