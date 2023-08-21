@@ -213,11 +213,13 @@ const setup = async () => {
     // Start tick loop
     tick();
 
+    // Intro animation
     const tl = gsap.timeline({ paused: true });
     tl.to(
         rootMeshGroup.rotation,
         {
-            duration: 1,
+            duration: 2,
+            ease: "power2.inOut",
             x: Math.PI * 0.5,
             y: 0,
             z: 0,
@@ -227,7 +229,8 @@ const setup = async () => {
     tl.to(
         camera.position,
         {
-            duration: 1,
+            duration: 2,
+            ease: "power2.inOut",
             x: 0,
             y: 0,
             z: 1,
