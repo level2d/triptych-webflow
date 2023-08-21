@@ -1,6 +1,7 @@
 import * as THREE from "three";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import Stats from "three/examples/jsm/libs/stats.module";
 import GUI from "lil-gui";
 import { GLB_ASSET_URLS } from "../util/constants";
 import { gsap } from "gsap";
@@ -10,18 +11,19 @@ THREE.ColorManagement.enabled = false;
 /**
  * Globals
  */
-const gui = new GUI();
 let debug = false;
 // DOM cache
 let rootEl = null;
 let confirmButtonEl = null;
 let frameEl = null;
 // THREE Cache
+const gui = new GUI();
 let renderer = null;
 let canvas = null;
 let scene = null;
 let camera = null;
 let controls = null;
+let stats = null;
 let previousTime = 0;
 let rootMeshGroup = null;
 let rootMeshGroupBox = null;
@@ -127,6 +129,9 @@ const setup = async () => {
     if (debug) {
         const axesHelper = new THREE.AxesHelper(5);
         scene.add(axesHelper);
+
+        stats = new Stats();
+        rootEl.appendChild(stats.dom);
     }
 
     /**
@@ -159,6 +164,7 @@ const setup = async () => {
     rootMeshGroup.renderOrder = 2;
     scene.add(rootMeshGroup);
     updateRootGroupScale();
+    console.log(rootMeshGroup);
 
     /**
      * Controls
@@ -198,13 +204,20 @@ const setup = async () => {
 
         // Update controls
         if (controls) {
+            // Update controls for rotating around root mesh
             controls.update();
         } else {
+            // Force camera to look at root mesh
             camera.lookAt(rootMeshGroup.position);
         }
 
         // Render
         renderer.render(scene, camera);
+
+        // Update stats
+        if (stats) {
+            stats.update();
+        }
 
         // Call tick again on the next frame
         window.requestAnimationFrame(tick);
@@ -214,30 +227,47 @@ const setup = async () => {
     tick();
 
     // Intro animation
-    const tl = gsap.timeline({ paused: true });
-    tl.to(
-        rootMeshGroup.rotation,
-        {
-            duration: 2,
-            ease: "power2.inOut",
-            x: Math.PI * 0.5,
-            y: 0,
-            z: 0,
-        },
-        0
-    );
-    tl.to(
-        camera.position,
-        {
-            duration: 2,
-            ease: "power2.inOut",
-            x: 0,
-            y: 0,
-            z: 1,
-        },
-        0
-    );
-    tl.play();
+    const intro = () => {
+        const tl = gsap.timeline({
+            paused: true,
+        });
+        tl.fromTo(
+            rootMeshGroup.rotation,
+            {
+                x: 0,
+                y: 0,
+                z: 0,
+            },
+            {
+                duration: 2,
+                ease: "power2.inOut",
+                x: Math.PI * 0.5,
+                y: 0,
+                z: 0,
+            },
+            0
+        );
+        tl.fromTo(
+            camera.position,
+            {
+                x: 1,
+                y: 0,
+                z: 1,
+            },
+            {
+                duration: 2,
+                ease: "power2.inOut",
+                x: 0,
+                y: 0,
+                z: 1,
+            },
+            0
+        );
+
+        tl.play();
+    };
+    gui.add({ intro }, "intro").name("Play Intro");
+    intro();
 };
 
 /**
