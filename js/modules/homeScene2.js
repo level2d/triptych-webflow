@@ -108,12 +108,6 @@ const handleResize = () => {
     // Update rootMeshGroup scale
     updateRootGroupScale();
 
-    // make camera look at rootMeshGroup
-    if (rootMeshGroup) {
-        console.log("looked at");
-        camera.lookAt(rootMeshGroup.position);
-    }
-
     // Update renderer
     updateRenderer();
 };
@@ -271,7 +265,7 @@ const render = () => {
  * Init
  */
 const init = () => {
-    rootEl = document.querySelector(".js-home-scene-target-2");
+    rootEl = document.querySelector(".js-home-scene-target");
     if (!rootEl) {
         return;
     }
