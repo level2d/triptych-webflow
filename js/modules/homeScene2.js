@@ -26,7 +26,7 @@ let previousTime = 0;
 let rootMeshGroup = null;
 let rootMeshGroupBox = null;
 let rootMeshGroupSize = null;
-const sceneMargin = 0.2;
+const sceneMargin = 2;
 const sizes = {
     width: 0,
     height: 0,
@@ -38,12 +38,13 @@ let resizeObserver = null;
 /**
  * Updaters
  */
+/**
+ * @description scales the root group to fit the camera bounds
+ */
 const updateRootGroupScale = () => {
-    // This func scales the root group to fit the camera bounds
-    // regardless of screen size
     if (camera && rootMeshGroup && rootMeshGroupSize) {
-        const cameraWidth = camera.right - camera.left - sceneMargin;
-        const cameraHeight = camera.top - camera.bottom - sceneMargin;
+        const cameraWidth = camera.right - camera.left;
+        const cameraHeight = camera.top - camera.bottom;
         let scale = null;
 
         if (
@@ -52,14 +53,14 @@ const updateRootGroupScale = () => {
         ) {
             // scale down
             scale = Math.min(
-                cameraWidth / rootMeshGroupSize.x,
-                cameraHeight / rootMeshGroupSize.z
+                cameraWidth / (rootMeshGroupSize.x + sceneMargin),
+                cameraHeight / (rootMeshGroupSize.z + sceneMargin)
             );
         } else {
             // scale up
             scale = Math.min(
-                rootMeshGroupSize.x / cameraWidth,
-                rootMeshGroupSize.z / cameraHeight
+                (rootMeshGroupSize.x + sceneMargin) / cameraWidth,
+                (rootMeshGroupSize.z + sceneMargin) / cameraHeight
             );
         }
         rootMeshGroup.scale.set(scale, scale, scale);
@@ -70,6 +71,8 @@ const updateCamera = () => {
     if (camera) {
         camera.left = -sizes.aspectRatio;
         camera.right = sizes.aspectRatio;
+        camera.top = 1;
+        camera.bottom = -1;
 
         camera.updateProjectionMatrix();
     }
@@ -107,6 +110,7 @@ const handleResize = () => {
 
     // make camera look at rootMeshGroup
     if (rootMeshGroup) {
+        console.log("looked at");
         camera.lookAt(rootMeshGroup.position);
     }
 
@@ -145,8 +149,6 @@ const setup = async () => {
         10
     );
     camera.position.set(1, 0, 1);
-    window.camera = camera;
-    updateCamera();
     scene.add(camera);
 
     /**
@@ -161,8 +163,8 @@ const setup = async () => {
     rootMeshGroup.name = "rootMeshGroup";
     rootMeshGroup.position.set(0, 0, 0);
     rootMeshGroup.renderOrder = 2;
-    updateRootGroupScale();
     scene.add(rootMeshGroup);
+    updateRootGroupScale();
 
     /**
      * Controls
@@ -185,6 +187,9 @@ const setup = async () => {
     });
     renderer.antialias = true;
     renderer.outputColorSpace = THREE.LinearSRGBColorSpace;
+    if (!debug) {
+        renderer.setClearAlpha(0);
+    }
     updateRenderer();
 
     /**
@@ -200,6 +205,8 @@ const setup = async () => {
         // Update controls
         if (controls) {
             controls.update();
+        } else {
+            camera.lookAt(rootMeshGroup.position);
         }
 
         // Render
@@ -211,6 +218,29 @@ const setup = async () => {
 
     // Start tick loop
     tick();
+
+    const tl = gsap.timeline({ paused: true });
+    tl.to(
+        rootMeshGroup.rotation,
+        {
+            duration: 1,
+            x: Math.PI * 0.5,
+            y: 0,
+            z: 0,
+        },
+        0
+    );
+    tl.to(
+        camera.position,
+        {
+            duration: 1,
+            x: 0,
+            y: 0,
+            z: 1,
+        },
+        0
+    );
+    tl.play();
 };
 
 /**
