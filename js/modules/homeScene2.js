@@ -150,9 +150,14 @@ const bindEventListeners = () => {
  * Setup
  */
 const setup = async () => {
-    // Scene
+    /**
+     * Scene
+     */
     scene = new THREE.Scene();
 
+    /**
+     * Debuggers
+     */
     if (debug) {
         const axesHelper = new THREE.AxesHelper(5);
         scene.add(axesHelper);
