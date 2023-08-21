@@ -33,7 +33,8 @@ let previousTime = 0;
 let rootMeshGroup = null;
 let rootMeshGroupBox = null;
 let rootMeshGroupSize = null;
-const sceneMargin = 2;
+const sceneMargin = 0;
+
 // Observers
 let resizeObserver = null;
 
