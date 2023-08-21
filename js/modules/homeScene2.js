@@ -6,6 +6,7 @@ import Stats from "three/examples/jsm/libs/stats.module";
 import GUI from "lil-gui";
 import { GLB_ASSET_URLS } from "../util/constants";
 import { gsap } from "gsap";
+import Sizes from "../class/Sizes";
 
 THREE.ColorManagement.enabled = false;
 
@@ -13,11 +14,7 @@ THREE.ColorManagement.enabled = false;
  * Globals
  */
 let debug = false;
-const sizes = {
-    width: 0,
-    height: 0,
-    aspectRatio: 0,
-};
+let sizes = null;
 const cursor = {
     x: 0,
     y: 0,
@@ -87,16 +84,6 @@ const updateCamera = () => {
     }
 };
 
-const updateSizes = () => {
-    if (frameEl) {
-        const rect = frameEl.getBoundingClientRect();
-        const { width, height } = rect;
-        sizes.width = width;
-        sizes.height = height;
-        sizes.aspectRatio = width / height;
-    }
-};
-
 const updateRenderer = () => {
     if (renderer) {
         renderer.setSize(sizes.width, sizes.height);
@@ -108,9 +95,6 @@ const updateRenderer = () => {
  * Event/Observer Handlers
  */
 const handleResize = () => {
-    // Update sizes
-    updateSizes();
-
     // Update camera
     updateCamera();
 
@@ -134,12 +118,8 @@ const handleMouseleave = () => {
     cursor.y = 0;
 };
 
-const bindObservers = () => {
-    resizeObserver = new ResizeObserver(handleResize);
-    resizeObserver.observe(frameEl);
-};
-
 const bindEventListeners = () => {
+    sizes.on("resize", handleResize);
     frameEl.addEventListener("mousemove", handleMousemove);
     frameEl.addEventListener("mouseleave", handleMouseleave);
 };
@@ -341,8 +321,8 @@ const render = () => {
         "button.js-home-scene__confirm-button"
     );
 
-    // run relevant updaters
-    updateSizes();
+    // start external libs
+    sizes = new Sizes(frameEl);
 };
 
 /**
@@ -358,7 +338,6 @@ const init = () => {
 
     render();
     setup();
-    bindObservers();
     bindEventListeners();
 
     if (!debug) {
