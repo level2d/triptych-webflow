@@ -1,12 +1,12 @@
 import * as THREE from "three";
-import { damp3 } from "maath/easing";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import Stats from "three/examples/jsm/libs/stats.module";
+import { damp3 } from "maath/easing";
 import GUI from "lil-gui";
-import { GLB_ASSET_URLS } from "../util/constants";
 import { gsap } from "gsap";
 import Sizes from "../class/Sizes";
+import { GLB_ASSET_URLS } from "../util/constants";
 
 THREE.ColorManagement.enabled = false;
 
@@ -228,17 +228,15 @@ const setup = async () => {
         }
 
         // Animate parallaxGroup
-        const parallaxFactor = 0.8;
-        const parallaxX = cursor.x * parallaxFactor;
-        const parallaxY = cursor.y * parallaxFactor;
-        const parallaxPositionX =
-            -(parallaxX - parallaxGroup.position.x) * 5 * deltaTime;
-        const parallaxPositionY =
-            -(parallaxY - parallaxGroup.position.y) * 5 * deltaTime;
+        const parallaxFactor = 0.1;
+        const parallaxX = -(cursor.x * parallaxFactor);
+        const parallaxY = -(cursor.y * parallaxFactor);
+        const parallaxPositionX = parallaxX - parallaxGroup.position.x;
+        const parallaxPositionY = parallaxY - parallaxGroup.position.y;
         damp3(
             parallaxGroup.position,
             [parallaxPositionX, parallaxPositionY, 0],
-            0.1,
+            0.25,
             deltaTime
         );
 
