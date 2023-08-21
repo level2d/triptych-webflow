@@ -30,6 +30,7 @@ const gui = new GUI();
 let renderer = null;
 let canvas = null;
 let scene = null;
+let parallaxGroup = null;
 let camera = null;
 let controls = null;
 let stats = null;
@@ -177,6 +178,13 @@ const setup = async () => {
     scene.add(camera);
 
     /**
+     * Parallax
+     */
+    parallaxGroup = new THREE.Group();
+    parallaxGroup.name = "parallaxGroup";
+    scene.add(parallaxGroup);
+
+    /**
      * Models
      */
     const gltfLoader = new GLTFLoader();
@@ -188,9 +196,8 @@ const setup = async () => {
     rootMeshGroup.name = "rootMeshGroup";
     rootMeshGroup.position.set(0, 0, 0);
     rootMeshGroup.renderOrder = 2;
-    scene.add(rootMeshGroup);
+    parallaxGroup.add(rootMeshGroup);
     updateRootGroupScale();
-    console.log(rootMeshGroup);
 
     /**
      * Controls
@@ -234,8 +241,21 @@ const setup = async () => {
             controls.update();
         } else {
             // Force camera to look at root mesh
-            camera.lookAt(rootMeshGroup.position);
+            camera.lookAt(new THREE.Vector3());
         }
+
+        // Animate parallaxGroup
+        const parallaxFactor = 0.5;
+        const parallaxX = cursor.x * parallaxFactor;
+        const parallaxY = cursor.y * parallaxFactor;
+        let parallaxPositionX =
+            (parallaxX - parallaxGroup.position.x) * 5 * deltaTime;
+        let parallaxPositionY =
+            (parallaxY - parallaxGroup.position.y) * 5 * deltaTime;
+        parallaxPositionX = Math.round(parallaxPositionX * 10000) / 10000;
+        parallaxPositionY = Math.round(parallaxPositionY * 10000) / 10000;
+        parallaxGroup.position.x = parallaxPositionX;
+        parallaxGroup.position.y = parallaxPositionY;
 
         // Render
         renderer.render(scene, camera);
