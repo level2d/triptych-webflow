@@ -17,6 +17,10 @@ const sizes = {
     height: 0,
     aspectRatio: 0,
 };
+const cursor = {
+    x: 0,
+    y: 0,
+};
 // DOM cache
 let rootEl = null;
 let confirmButtonEl = null;
@@ -115,9 +119,30 @@ const handleResize = () => {
     updateRenderer();
 };
 
+const handleMousemove = (e) => {
+    const { clientX, clientY } = e;
+    let x = (clientX / sizes.width - 0.5) * 2;
+    let y = (clientY / sizes.height - 0.5) * 2;
+    // round values to 1 decimal places
+    x = Math.round(x * 10) / 10;
+    y = Math.round(y * 10) / 10;
+    cursor.x = x;
+    cursor.y = -y;
+};
+
+const handleMouseleave = () => {
+    cursor.x = 0;
+    cursor.y = 0;
+};
+
 const bindObservers = () => {
     resizeObserver = new ResizeObserver(handleResize);
     resizeObserver.observe(frameEl);
+};
+
+const bindEventListeners = () => {
+    frameEl.addEventListener("mousemove", handleMousemove);
+    frameEl.addEventListener("mouseleave", handleMouseleave);
 };
 
 /**
@@ -309,6 +334,7 @@ const init = () => {
     render();
     setup();
     bindObservers();
+    bindEventListeners();
 
     if (!debug) {
         gui.destroy();
