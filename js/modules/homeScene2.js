@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { damp3 } from "maath/easing";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import Stats from "three/examples/jsm/libs/stats.module";
@@ -122,11 +123,8 @@ const handleResize = () => {
 
 const handleMousemove = (e) => {
     const { clientX, clientY } = e;
-    let x = (clientX / sizes.width - 0.5) * 2;
-    let y = (clientY / sizes.height - 0.5) * 2;
-    // round values to 1 decimal places
-    x = Math.round(x * 10) / 10;
-    y = Math.round(y * 10) / 10;
+    const x = (clientX / sizes.width - 0.5) * 2;
+    const y = (clientY / sizes.height - 0.5) * 2;
     cursor.x = x;
     cursor.y = -y;
 };
@@ -250,17 +248,19 @@ const setup = async () => {
         }
 
         // Animate parallaxGroup
-        const parallaxFactor = 0.5;
+        const parallaxFactor = 0.8;
         const parallaxX = cursor.x * parallaxFactor;
         const parallaxY = cursor.y * parallaxFactor;
-        let parallaxPositionX =
-            (parallaxX - parallaxGroup.position.x) * 5 * deltaTime;
-        let parallaxPositionY =
-            (parallaxY - parallaxGroup.position.y) * 5 * deltaTime;
-        parallaxPositionX = Math.round(parallaxPositionX * 10000) / 10000;
-        parallaxPositionY = Math.round(parallaxPositionY * 10000) / 10000;
-        parallaxGroup.position.x = parallaxPositionX;
-        parallaxGroup.position.y = parallaxPositionY;
+        const parallaxPositionX =
+            -(parallaxX - parallaxGroup.position.x) * 5 * deltaTime;
+        const parallaxPositionY =
+            -(parallaxY - parallaxGroup.position.y) * 5 * deltaTime;
+        damp3(
+            parallaxGroup.position,
+            [parallaxPositionX, parallaxPositionY, 0],
+            0.1,
+            deltaTime
+        );
 
         // Render
         renderer.render(scene, camera);
