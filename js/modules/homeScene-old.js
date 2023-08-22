@@ -28,7 +28,7 @@ import {
     SHADER_ASSET_URLS,
     ANIMATION_NAMES,
     AUTOPLAY_ANIMATION_CONFIGS,
-} from "@/js/util/constants";
+} from "@/js/core/constants";
 import { debounce } from "lodash";
 
 const debug = false;

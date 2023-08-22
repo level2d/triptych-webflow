@@ -6,7 +6,7 @@ import { damp3 } from "maath/easing";
 import GUI from "lil-gui";
 import { gsap } from "gsap";
 import Sizes from "@/js/util/Sizes";
-import { GLB_ASSET_URLS } from "@/js/util/constants";
+import { GLB_ASSET_URLS } from "@/js/core/constants";
 
 THREE.ColorManagement.enabled = false;
 
