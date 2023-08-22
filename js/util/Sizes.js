@@ -3,16 +3,16 @@ import EventEmitter from "events";
 export default class Sizes extends EventEmitter {
     // cache
     resizeObserver = null;
-    observableNode = null;
+    targetNode = null;
     width = 0;
     height = 0;
     aspectRatio = 0;
     pixelRatio = 2;
 
-    constructor(observableNode) {
+    constructor(targetNode) {
         super();
 
-        this.observableNode = observableNode ?? document.body;
+        this.targetNode = targetNode ?? document.body;
 
         // set initial values
         this.updateSizes();
@@ -23,7 +23,7 @@ export default class Sizes extends EventEmitter {
     }
 
     updateSizes() {
-        const rect = this.observableNode.getBoundingClientRect();
+        const rect = this.targetNode.getBoundingClientRect();
         const { width, height } = rect;
         this.width = width;
         this.height = height;
@@ -38,7 +38,7 @@ export default class Sizes extends EventEmitter {
 
     bindEvents() {
         this.resizeObserver = new ResizeObserver(this.handleResize);
-        this.resizeObserver.observe(this.observableNode);
+        this.resizeObserver.observe(this.targetNode);
     }
 
     unbindEvents() {
