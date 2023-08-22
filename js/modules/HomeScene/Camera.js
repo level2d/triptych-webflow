@@ -37,12 +37,8 @@ export default class Camera {
     setControls() {
         if (!this.debug.active) return;
         const controls = new OrbitControls(this.instance, this.canvas);
-        // controls.target.set(
-        //     rootMeshGroup.position.x,
-        //     rootMeshGroup.position.y,
-        //     rootMeshGroup.position.z
-        // );
-        controls.target.set(0, 0, 0);
+        // controls.target.set(0, 0, 0);
+        // target is now set in the Locations class.
         controls.enableDamping = true;
         this.controls = controls;
     }

@@ -42,6 +42,15 @@ export default class Locations {
         this.modelSize = modelSize;
         this.resize();
 
+        if (camera.controls) {
+            // set camera orbit to this mesh if controls exist
+            camera.controls.setTarget(
+                model.position.x,
+                model.position.y,
+                model.position.z
+            );
+        }
+
         // Intro animation
         const intro = () => {
             const tl = gsap.timeline({
