@@ -5,8 +5,8 @@ import Stats from "three/examples/jsm/libs/stats.module";
 import { damp3 } from "maath/easing";
 import GUI from "lil-gui";
 import { gsap } from "gsap";
-import Sizes from "../class/Sizes";
-import { GLB_ASSET_URLS } from "../util/constants";
+import Sizes from "@/js/util/Sizes";
+import { GLB_ASSET_URLS } from "@/js/util/constants";
 
 THREE.ColorManagement.enabled = false;
 
@@ -24,7 +24,7 @@ let rootEl = null;
 let confirmButtonEl = null;
 let frameEl = null;
 // THREE Cache
-const gui = new GUI();
+// const gui = new GUI();
 let renderer = null;
 let canvas = null;
 let scene = null;
