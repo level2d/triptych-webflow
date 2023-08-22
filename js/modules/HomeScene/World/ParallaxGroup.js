@@ -31,12 +31,12 @@ export default class ParallaxGroup {
         // Animate parallaxGroup
         const parallaxFactor = 0.1;
         const parallaxX = -(cursor.x * parallaxFactor);
-        const parallaxY = cursor.y * parallaxFactor;
+        const parallaxY = -(cursor.y * parallaxFactor);
         const parallaxPositionX = parallaxX - group.position.x;
         const parallaxPositionY = parallaxY - group.position.y;
         damp3(
             group.position,
-            [parallaxPositionX, 0, parallaxPositionY],
+            [parallaxPositionX, parallaxPositionY, 0],
             0.25,
             delta
         );
