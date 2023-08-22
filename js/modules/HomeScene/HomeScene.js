@@ -68,6 +68,7 @@ export default class HomeScene {
 
     resize() {
         this.camera.resize();
+        this.world.resize();
         this.renderer.resize();
     }
 
@@ -75,6 +76,10 @@ export default class HomeScene {
         this.camera.update();
         this.world.update();
         this.renderer.update();
+        // Update stats
+        if (this.stats) {
+            this.stats.update();
+        }
     }
 
     bindListeners() {
