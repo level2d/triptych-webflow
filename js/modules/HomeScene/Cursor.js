@@ -36,11 +36,13 @@ export default class Cursor extends EventEmitter {
     }
 
     handleMouseleave() {
-        // reset cursor position when mouse leaves targetNode
-        this.x = 0;
-        this.y = 0;
+        window.requestAnimationFrame(() => {
+            // reset cursor position when mouse leaves targetNode
+            this.x = 0;
+            this.y = 0;
 
-        this.emit("mouseleave");
+            this.emit("mouseleave");
+        });
     }
 
     init() {
