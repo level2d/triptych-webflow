@@ -1,16 +1,14 @@
 import "@/styles/main.scss";
 
-import { homeScene, homeScene2 } from "./modules";
+import { HomeScene } from "./modules";
 class App {
     constructor() {
-        // this.homeScene = homeScene;
-        this.homeScene2 = homeScene2;
+        this.homeScene = new HomeScene();
         this.init();
     }
 
     initModules() {
-        // this.homeScene.init();
-        this.homeScene2.init();
+        this.homeScene.init();
         console.log("Modules: init");
     }
 
@@ -21,5 +19,5 @@ class App {
     }
 }
 
-const triptychApp = new App();
-window.triptychApp = triptychApp;
+const app = new App();
+window.app = app;
