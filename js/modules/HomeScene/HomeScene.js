@@ -6,10 +6,11 @@ import Time from "@/js/util/Time";
 import Sizes from "@/js/util/Sizes";
 import Resources from "@/js/util/Resources";
 
-import sources from "./sources";
+import Cursor from "./Cursor";
 import Camera from "./Camera";
 import Renderer from "./Renderer";
 import World from "./World";
+import sources from "./sources";
 
 THREE.ColorManagement.enabled = false;
 
@@ -21,6 +22,7 @@ export default class HomeScene {
     // Global
     debug = null;
     sizes = null;
+    cursor = null;
     resources = null;
 
     // DOM cache
@@ -84,6 +86,7 @@ export default class HomeScene {
         this.time = new Time();
         this.sizes = new Sizes(this.frameEl);
         this.resources = new Resources(sources);
+        this.cursor = new Cursor(this.frameEl);
         this.scene = new THREE.Scene();
         this.camera = new Camera();
         this.renderer = new Renderer();
