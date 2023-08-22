@@ -75,16 +75,16 @@ export default class Locations {
             tl.fromTo(
                 camera.position,
                 {
-                    x: 1,
+                    x: 2,
                     y: 0,
-                    z: 1,
+                    z: 2,
                 },
                 {
                     duration: 2,
                     ease: "power2.inOut",
                     x: 0,
                     y: 0,
-                    z: 1,
+                    z: 2,
                 },
                 0
             );
