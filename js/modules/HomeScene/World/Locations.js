@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import gsap from "gsap";
 import HomeScene from "../HomeScene";
 
 const sceneMargin = 0;
@@ -9,6 +10,7 @@ export default class Locations {
 
     constructor() {
         this.homeScene = new HomeScene();
+        this.debug = this.homeScene.debug;
         this.resources = this.homeScene.resources;
         this.camera = this.homeScene.camera;
         this.parallaxGroup = this.homeScene.world.parallaxGroup;
@@ -19,16 +21,71 @@ export default class Locations {
     }
 
     setModel() {
-        this.model = this.resource.scene;
-        this.modelBox = new THREE.Box3().setFromObject(this.model);
-        this.modelSize = this.modelBox.getSize(new THREE.Vector3());
+        const {
+            parallaxGroup: { group },
+            camera: { instance: camera },
+            debug,
+        } = this;
 
-        this.model.name = "Locations";
-        this.model.position.set(0, 0, 0);
-        this.model.renderOrder = 2;
+        const model = this.resource.scene;
+        const modelBox = new THREE.Box3().setFromObject(model);
+        const modelSize = modelBox.getSize(new THREE.Vector3());
+
+        model.name = "Locations";
+        model.position.set(0, 0, 0);
+        model.renderOrder = 2;
+
+        group.add(model);
+
+        this.model = model;
+        this.modelBox = modelBox;
+        this.modelSize = modelSize;
         this.resize();
 
-        this.parallaxGroup.group.add(this.model);
+        // Intro animation
+        const intro = () => {
+            const tl = gsap.timeline({
+                paused: true,
+            });
+            tl.fromTo(
+                model.rotation,
+                {
+                    x: 0,
+                    y: 0,
+                    z: 0,
+                },
+                {
+                    duration: 2,
+                    ease: "power2.inOut",
+                    x: Math.PI * 0.5,
+                    y: 0,
+                    z: 0,
+                },
+                0
+            );
+            tl.fromTo(
+                camera.position,
+                {
+                    x: 1,
+                    y: 0,
+                    z: 1,
+                },
+                {
+                    duration: 2,
+                    ease: "power2.inOut",
+                    x: 0,
+                    y: 0,
+                    z: 1,
+                },
+                0
+            );
+
+            tl.play();
+        };
+        if (debug.active) {
+            debug.ui.add({ intro }, "intro").name("Play Intro");
+        }
+        intro();
     }
 
     /**
