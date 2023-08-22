@@ -19,7 +19,7 @@ import { Inspector } from "@babylonjs/inspector";
 // Enable GLTF/GLB loader (side-effects)
 import "@babylonjs/loaders/glTF";
 
-import { zeroPad, loadTexturesAsync } from "@/js/util/helpers";
+import { zeroPad, loadTexturesAsync } from "@/js/core/helpers";
 import {
     BOX_MESHES,
     BOX_NAMES,
