@@ -1,9 +1,12 @@
 import * as THREE from "three";
+
 import HomeScene from "../HomeScene";
 import ParallaxGroup from "./ParallaxGroup";
+import Locations from "./Locations";
 
 export default class World {
     parallaxGroup = null;
+    locations = null;
 
     constructor() {
         this.homeScene = new HomeScene();
@@ -12,15 +15,22 @@ export default class World {
 
         this.parallaxGroup = new ParallaxGroup();
 
-        // Test mesh
-        const testMesh = new THREE.Mesh(
-            new THREE.BoxGeometry(1, 1, 1),
-            new THREE.MeshBasicMaterial({ wireframe: true })
-        );
-        this.parallaxGroup.group.add(testMesh);
+        this.handleResourcesReady = this.handleResourcesReady.bind(this);
+
+        this.resources.on("ready", this.handleResourcesReady);
+    }
+
+    handleResourcesReady() {
+        this.locations = new Locations();
     }
 
     update() {
         this.parallaxGroup.update();
+    }
+
+    resize() {
+        if (this.locations?.model) {
+            this.locations.resize();
+        }
     }
 }
