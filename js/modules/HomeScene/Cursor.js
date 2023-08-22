@@ -30,7 +30,6 @@ export default class Cursor extends EventEmitter {
             this.x = x;
             this.y = -y;
 
-            console.log(this.x, this.y);
             this.emit("mousemove");
         });
     }
