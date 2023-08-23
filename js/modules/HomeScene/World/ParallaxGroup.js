@@ -29,14 +29,14 @@ export default class ParallaxGroup {
         const { delta } = time;
 
         // Animate parallaxGroup
-        const parallaxFactor = 0.1;
+        const parallaxFactor = 0.05;
         const parallaxX = -(cursor.x * parallaxFactor);
         const parallaxY = -(cursor.y * parallaxFactor);
         const parallaxPositionX = parallaxX - group.position.x;
         const parallaxPositionY = parallaxY - group.position.y;
         damp3(
             group.position,
-            [parallaxPositionX, parallaxPositionY, 0],
+            [parallaxPositionX, 0, -parallaxPositionY],
             0.25,
             delta
         );
