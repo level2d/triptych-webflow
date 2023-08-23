@@ -5,13 +5,13 @@ export default class Debug {
     ui = null;
 
     constructor() {
+        this.active =
+            new URLSearchParams(window.location.search).get("debug") === "true";
+
         this.init();
     }
 
     init() {
-        this.active =
-            new URLSearchParams(window.location.search).get("debug") === "true";
-
         if (this.active) {
             this.ui = new dat.GUI();
         }

@@ -21,7 +21,7 @@ export default class Cursor extends EventEmitter {
     }
 
     handleMousemove(e) {
-        window.requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
             const { sizes } = this;
             const { clientX, clientY } = e;
             // normalize x/y values to a range of -1 to 1.
@@ -35,7 +35,7 @@ export default class Cursor extends EventEmitter {
     }
 
     handleMouseleave() {
-        window.requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
             // reset cursor position when mouse leaves targetNode
             this.x = 0;
             this.y = 0;

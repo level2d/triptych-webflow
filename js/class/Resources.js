@@ -58,13 +58,13 @@ export default class Resources extends EventEmitter {
         }
     }
 
-    initLoaders() {
+    setLoaders() {
         this.loaders.gltfLoader = new GLTFLoader();
         this.loaders.textureLoader = new THREE.TextureLoader();
     }
 
     init() {
-        this.initLoaders();
+        this.setLoaders();
         this.startLoading();
     }
 }

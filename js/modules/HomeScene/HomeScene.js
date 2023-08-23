@@ -14,7 +14,7 @@ import sources from "./sources";
 
 THREE.ColorManagement.enabled = false;
 
-let instance = null;
+let _instance = null;
 export default class HomeScene {
     /**
      * Props
@@ -40,10 +40,10 @@ export default class HomeScene {
 
     constructor() {
         // Singleton
-        if (instance) {
-            return instance;
+        if (_instance) {
+            return _instance;
         }
-        instance = this;
+        _instance = this;
 
         this.resize = this.resize.bind(this);
         this.update = this.update.bind(this);
