@@ -1,14 +1,15 @@
-import * as THREE from "three";
+import EventEmitter from "events";
 
 import HomeScene from "../HomeScene";
 import ParallaxGroup from "./ParallaxGroup";
 import Locations from "./Locations";
 
-export default class World {
+export default class World extends EventEmitter {
     parallaxGroup = null;
     locations = null;
 
     constructor() {
+        super();
         this.homeScene = new HomeScene();
         this.scene = this.homeScene.scene;
         this.resources = this.homeScene.resources;
@@ -22,6 +23,8 @@ export default class World {
 
     handleResourcesReady() {
         this.locations = new Locations();
+
+        this.emit("ready");
     }
 
     update() {
