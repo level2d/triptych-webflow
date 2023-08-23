@@ -35,6 +35,7 @@ export default class HomeScene {
     scene = null;
     camera = null;
     renderer = null;
+    raycaster = null;
     world = null;
 
     constructor() {
@@ -96,6 +97,7 @@ export default class HomeScene {
         this.scene = new THREE.Scene();
         this.camera = new Camera();
         this.renderer = new Renderer();
+        this.raycaster = new THREE.Raycaster();
         this.world = new World();
 
         /**
