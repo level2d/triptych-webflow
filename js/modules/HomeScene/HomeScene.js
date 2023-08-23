@@ -1,10 +1,10 @@
 import * as THREE from "three";
 import Stats from "three/examples/jsm/libs/stats.module";
 
-import Debug from "@/js/util/Debug";
-import Time from "@/js/util/Time";
-import Sizes from "@/js/util/Sizes";
-import Resources from "@/js/util/Resources";
+import Debug from "@/js/class/Debug";
+import Time from "@/js/class/Time";
+import Sizes from "@/js/class/Sizes";
+import Resources from "@/js/class/Resources";
 
 import Cursor from "./Cursor";
 import Camera from "./Camera";

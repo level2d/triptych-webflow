@@ -5,8 +5,8 @@ import Stats from "three/examples/jsm/libs/stats.module";
 import { damp3 } from "maath/easing";
 import GUI from "lil-gui";
 import { gsap } from "gsap";
-import Sizes from "@/js/util/Sizes";
-import { GLB_ASSET_URLS } from "@/js/core/constants";
+import Sizes from "@/js/class/Sizes";
+import { GLB_ASSET_URLS } from "@/js/util/constants";
 
 THREE.ColorManagement.enabled = false;
 

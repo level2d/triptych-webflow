@@ -1,4 +1,4 @@
-import { GLB_ASSET_URLS } from "@/js/core/constants";
+import { GLB_ASSET_URLS } from "@/js/util/constants";
 
 export default [
     {
