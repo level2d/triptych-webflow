@@ -1,5 +1,4 @@
 import * as THREE from "three";
-import gsap from "gsap";
 import HomeScene from "../HomeScene";
 
 const sceneMargin = 0;
@@ -10,7 +9,6 @@ export default class Locations {
 
     constructor() {
         this.homeScene = new HomeScene();
-        this.debug = this.homeScene.debug;
         this.resources = this.homeScene.resources;
         this.camera = this.homeScene.camera;
         this.parallaxGroup = this.homeScene.world.parallaxGroup;
@@ -23,8 +21,6 @@ export default class Locations {
     setModel() {
         const {
             parallaxGroup: { group },
-            camera: { instance: camera },
-            debug,
         } = this;
 
         const model = this.resource.scene;
@@ -41,60 +37,6 @@ export default class Locations {
         this.modelBox = modelBox;
         this.modelSize = modelSize;
         this.resize();
-
-        if (camera.controls) {
-            // set camera orbit to this mesh if controls exist
-            camera.controls.setTarget(
-                model.position.x,
-                model.position.y,
-                model.position.z
-            );
-        }
-
-        // Intro animation
-        const intro = () => {
-            const tl = gsap.timeline({
-                paused: true,
-            });
-            tl.fromTo(
-                model.rotation,
-                {
-                    x: 0,
-                    y: 0,
-                    z: 0,
-                },
-                {
-                    duration: 2,
-                    ease: "power2.inOut",
-                    x: Math.PI * 0.5,
-                    y: 0,
-                    z: 0,
-                },
-                0
-            );
-            tl.fromTo(
-                camera.position,
-                {
-                    x: 2,
-                    y: 0,
-                    z: 2,
-                },
-                {
-                    duration: 2,
-                    ease: "power2.inOut",
-                    x: 0,
-                    y: 0,
-                    z: 2,
-                },
-                0
-            );
-
-            tl.play();
-        };
-        if (debug.active) {
-            debug.ui.add({ intro }, "intro").name("Play Intro");
-        }
-        intro();
     }
 
     /**
