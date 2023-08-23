@@ -2,10 +2,12 @@ import EventEmitter from "events";
 import gsap from "gsap";
 
 import HomeScene from "../HomeScene";
+import Environment from "./Environment";
 import ParallaxGroup from "./ParallaxGroup";
 import Locations from "./Locations";
 
 export default class World extends EventEmitter {
+    environment = null;
     parallaxGroup = null;
     locations = null;
 
@@ -17,28 +19,20 @@ export default class World extends EventEmitter {
         this.camera = this.homeScene.camera;
         this.resources = this.homeScene.resources;
 
-        this.parallaxGroup = new ParallaxGroup();
-
-        this.handleResourcesReady = this.handleResourcesReady.bind(this);
         this.intro = this.intro.bind(this);
+        this.setup = this.setup.bind(this);
 
-        this.bindListeners();
-
-        if (this.debug.active) {
-            this.debug.ui
-                .add({ intro: this.intro }, "intro")
-                .name("Play Intro");
-        }
-    }
-
-    handleResourcesReady() {
-        this.locations = new Locations();
-
-        this.emit("intro");
+        this.resources.on("ready", this.setup);
     }
 
     update() {
-        this.parallaxGroup.update();
+        if (this.parallaxGroup) {
+            this.parallaxGroup.update();
+        }
+
+        if (this.locations) {
+            this.locations.update();
+        }
     }
 
     resize() {
@@ -47,10 +41,17 @@ export default class World extends EventEmitter {
         }
     }
 
-    bindListeners() {
-        this.resources.on("ready", this.handleResourcesReady);
-        if (!this.debug?.active) {
-            this.on("intro", this.intro);
+    setup() {
+        this.parallaxGroup = new ParallaxGroup();
+        this.locations = new Locations();
+        this.environment = new Environment();
+
+        if (this.debug.active) {
+            this.debug.ui
+                .add({ intro: this.intro }, "intro")
+                .name("Play Intro");
+        } else {
+            this.intro();
         }
     }
 
