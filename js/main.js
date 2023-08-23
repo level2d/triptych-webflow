@@ -13,8 +13,7 @@ class App {
     }
 
     init() {
-        const _this = this;
-        _this.initModules();
+        this.initModules();
         console.log("App: init");
     }
 }
