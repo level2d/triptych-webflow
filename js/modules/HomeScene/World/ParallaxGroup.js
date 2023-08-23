@@ -36,7 +36,7 @@ export default class ParallaxGroup {
         const parallaxPositionY = parallaxY - group.position.y;
         damp3(
             group.position,
-            [parallaxPositionX, parallaxPositionY, 0],
+            [parallaxPositionX, parallaxPositionY, -parallaxPositionX],
             0.25,
             delta
         );
