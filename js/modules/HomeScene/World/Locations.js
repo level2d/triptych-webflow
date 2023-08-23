@@ -109,9 +109,9 @@ export default class Locations {
             cursor,
             time: { delta },
         } = this;
-        const mouse = new THREE.Vector2(cursor.x, cursor.y);
+        const coords = new THREE.Vector2(cursor.x, cursor.y);
 
-        raycaster.setFromCamera(mouse, camera);
+        raycaster.setFromCamera(coords, camera);
 
         const intersects = raycaster.intersectObjects(boxes);
         const intersectsNames = intersects.map(({ object: { name } }) => name);
