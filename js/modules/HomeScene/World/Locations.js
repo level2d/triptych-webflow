@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { dampE } from "maath/easing";
+import { dampE, dampC } from "maath/easing";
 
 import HomeScene from "../HomeScene";
 
@@ -37,7 +37,7 @@ export default class Locations {
         model.position.set(0, 0, 0);
         model.renderOrder = 2;
 
-        const boxGeometry = new THREE.BoxGeometry(1, 1, 1);
+        const boxGeometry = new THREE.BoxGeometry(2, 2, 2);
         const boxMaterial = new THREE.MeshLambertMaterial({ color: 0xffff00 });
         const boxes = model.children
             .filter(({ name }) => name.includes("location"))
@@ -54,6 +54,7 @@ export default class Locations {
                 model.remove(item);
                 return box;
             });
+        boxMaterial.dispose();
         boxes.forEach((box) => {
             model.add(box);
         });
@@ -116,14 +117,16 @@ export default class Locations {
         const intersectsNames = intersects.map(({ object: { name } }) => name);
         boxes.forEach((box) => {
             if (intersectsNames.includes(box.name)) {
-                box.material.color.set("#0000ff");
+                // box.material.color.set("#0000ff");
+                dampC(box.material.color, "#0000ff", 0.1, delta);
             } else {
-                box.material.color.set("#ff0000");
+                // box.material.color.set("#ff0000");
+                dampC(box.material.color, "#ff0000", 0.1, delta);
             }
             const x = -cursor.y * 0.5;
             const y = box.rotation.y;
             const z = -cursor.x * 0.5;
-            dampE(box.rotation, [x, y, z], 0.25, delta);
+            dampE(box.rotation, [x, y, z], 0.15, delta);
         });
     }
 }
