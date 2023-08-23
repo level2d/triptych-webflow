@@ -60,10 +60,31 @@ export default class World extends EventEmitter {
             camera: { instance: camera },
             locations: { model },
         } = this;
-        // Intro animation
+
+        const toScale = model.scale.clone();
+
         const tl = gsap.timeline({
             paused: true,
+            onComplete: () => {
+                toScale.dispose();
+            },
         });
+        tl.fromTo(
+            model.scale,
+            {
+                x: 0,
+                y: 0,
+                z: 0,
+            },
+            {
+                x: toScale.x,
+                y: toScale.y,
+                z: toScale.z,
+                duration: 1,
+                ease: "power2.inOut",
+            },
+            0
+        );
         tl.fromTo(
             camera.position,
             {
