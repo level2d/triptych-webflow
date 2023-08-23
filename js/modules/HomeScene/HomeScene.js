@@ -46,7 +46,6 @@ export default class HomeScene {
 
         this.resize = this.resize.bind(this);
         this.update = this.update.bind(this);
-        this.intro = this.intro.bind(this);
     }
 
     render() {
@@ -83,16 +82,9 @@ export default class HomeScene {
         }
     }
 
-    intro() {
-        this.camera.intro();
-    }
-
     bindListeners() {
         this.sizes.on("resize", this.resize);
         this.time.on("tick", this.update);
-        if (!this.debug.active) {
-            this.world.on("ready", this.intro);
-        }
     }
 
     setup() {
@@ -117,10 +109,6 @@ export default class HomeScene {
             const stats = new Stats();
             this.rootEl.appendChild(stats.dom);
             this.stats = stats;
-
-            this.debug.ui
-                .add({ intro: this.intro }, "intro")
-                .name("Play Intro");
         }
     }
 

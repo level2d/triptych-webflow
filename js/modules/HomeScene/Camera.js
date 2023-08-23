@@ -17,8 +17,6 @@ export default class Camera {
 
         this.setInstance();
         this.setControls();
-
-        this.intro = this.intro.bind(this);
     }
 
     setInstance() {
@@ -65,30 +63,5 @@ export default class Camera {
             // Force camera to look at center
             camera.lookAt(new THREE.Vector3());
         }
-    }
-
-    intro() {
-        const { instance: camera } = this;
-        // Intro animation
-        const tl = gsap.timeline({
-            paused: true,
-        });
-        tl.fromTo(
-            camera.position,
-            {
-                x: 2,
-                y: 0,
-                z: 2,
-            },
-            {
-                duration: 2,
-                ease: "power2.inOut",
-                x: 0,
-                y: 4,
-                z: 2,
-            },
-            0
-        );
-        tl.play();
     }
 }
