@@ -20,10 +20,11 @@ export default class Renderer {
             canvas: this.canvas,
             antialias: true,
         });
+        renderer.outputColorSpace = THREE.LinearSRGBColorSpace;
+        renderer.antialias = true;
+        renderer.shadowMap.enabled = true;
         renderer.setSize(this.sizes.width, this.sizes.height);
         renderer.setPixelRatio(this.sizes.pixelRatio);
-        renderer.antialias = true;
-        renderer.outputColorSpace = THREE.LinearSRGBColorSpace;
         renderer.setClearColor(0x000000);
 
         if (!this.debug.active) {
