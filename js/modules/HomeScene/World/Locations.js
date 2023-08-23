@@ -123,7 +123,7 @@ export default class Locations {
             const x = -cursor.y * 0.5;
             const y = box.rotation.y;
             const z = -cursor.x * 0.5;
-            dampE(box.rotation, [x, y, z], 0.1, delta);
+            dampE(box.rotation, [x, y, z], 0.25, delta);
         });
     }
 }
