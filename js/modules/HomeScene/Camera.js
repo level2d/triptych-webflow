@@ -1,11 +1,15 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+import CameraControls from "camera-controls";
+
+CameraControls.install({ THREE: THREE });
 
 import HomeScene from "./HomeScene";
 
 export default class Camera {
     instance = null;
     controls = null;
+    hasControlsUpdated = false;
 
     constructor() {
         this.homeScene = new HomeScene();
@@ -13,6 +17,7 @@ export default class Camera {
         this.sizes = this.homeScene.sizes;
         this.scene = this.homeScene.scene;
         this.canvas = this.homeScene.canvas;
+        this.time = this.homeScene.time;
 
         this.setInstance();
         this.setControls();
@@ -28,18 +33,30 @@ export default class Camera {
             0.1,
             10
         );
-        camera.position.set(2, 0, 2);
+        camera.position.set(0, 0, 2);
         scene.add(camera);
 
         this.instance = camera;
     }
 
     setControls() {
-        if (!this.debug.active) return;
-        const controls = new OrbitControls(this.instance, this.canvas);
+        const controls = new CameraControls(this.instance, this.canvas);
         controls.enableDamping = true;
 
         this.controls = controls;
+        if (!this.debug.active) {
+            this.controls.disconnect();
+        } else {
+            const cameraFolder = this.debug.ui.addFolder("Camera");
+            cameraFolder.add(
+                {
+                    reset: () => {
+                        controls.reset(true);
+                    },
+                },
+                "reset"
+            );
+        }
     }
 
     resize() {
@@ -53,13 +70,9 @@ export default class Camera {
     }
 
     update() {
-        const { controls, instance: camera } = this;
-        if (controls) {
-            // Update controls for rotating around root mesh
-            controls.update();
-        } else {
-            // Force camera to look at center
-            camera.lookAt(new THREE.Vector3());
-        }
+        const { controls, time } = this;
+        const { delta } = time;
+
+        controls.update(delta);
     }
 }
