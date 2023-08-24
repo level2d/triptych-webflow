@@ -7,7 +7,7 @@ const padding = 0.2;
 
 export default class RootGroup {
     group = null;
-    boundingBox = null;
+    box = null;
     folder = null;
 
     constructor() {
@@ -20,7 +20,7 @@ export default class RootGroup {
         this.rotate = this.rotate.bind(this);
 
         this.setGroup();
-        this.setBoundingBox();
+        this.setBox();
     }
 
     setGroup() {
@@ -29,8 +29,8 @@ export default class RootGroup {
         this.parallaxGroup.group.add(this.group);
     }
 
-    setBoundingBox() {
-        this.boundingBox = new THREE.Mesh(
+    setBox() {
+        this.box = new THREE.Mesh(
             new THREE.BoxGeometry(1, 1, 1),
             new THREE.MeshStandardMaterial({
                 color: "red",
@@ -38,7 +38,7 @@ export default class RootGroup {
             })
         );
 
-        this.group.add(this.boundingBox);
+        this.group.add(this.box);
         this.resize();
 
         if (this.debug.active) {
@@ -90,7 +90,7 @@ export default class RootGroup {
      * @description update camera to fit RootGroup boundingBox bounds
      */
     resize() {
-        this.camera.controls.fitToBox(this.boundingBox, true, {
+        this.camera.controls.fitToBox(this.box, true, {
             paddingTop: padding,
             paddingRight: padding,
             paddingBottom: padding,
@@ -101,51 +101,52 @@ export default class RootGroup {
     async rotate(direction = "right") {
         const {
             camera: { instance: camera, controls },
-            boundingBox,
+            group,
+            box,
         } = this;
 
         const rotation = new THREE.Euler();
-        rotation.copy(boundingBox.rotation);
+        rotation.copy(group.rotation);
 
         const tl = gsap.timeline({
             pause: true,
             onComplete: () => {
-                camera.lookAt(boundingBox.position);
+                camera.lookAt(group.position);
                 controls.update();
             },
         });
 
         switch (direction) {
             case "left": {
-                tl.to(boundingBox.rotation, {
+                tl.to(group.rotation, {
                     x: (rotation.x += Math.PI * 0.25),
                     y: (rotation.y += Math.PI * 0.25),
                 });
-                tl.to(boundingBox.rotation, {
+                tl.to(group.rotation, {
                     x: (rotation.x -= Math.PI * 0.25),
                     y: (rotation.y += Math.PI * 0.25),
                 });
                 break;
             }
             case "up": {
-                tl.to(boundingBox.rotation, {
+                tl.to(group.rotation, {
                     x: (rotation.x += Math.PI * 0.5),
                 });
                 break;
             }
             case "down": {
-                tl.to(boundingBox.rotation, {
+                tl.to(group.rotation, {
                     x: (rotation.x -= Math.PI * 0.5),
                 });
                 break;
             }
             case "right":
             default: {
-                tl.to(boundingBox.rotation, {
+                tl.to(group.rotation, {
                     x: (rotation.x += Math.PI * 0.25),
                     y: (rotation.y -= Math.PI * 0.25),
                 });
-                tl.to(boundingBox.rotation, {
+                tl.to(group.rotation, {
                     x: (rotation.x -= Math.PI * 0.25),
                     y: (rotation.y -= Math.PI * 0.25),
                 });
