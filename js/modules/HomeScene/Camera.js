@@ -9,7 +9,7 @@ import HomeScene from "./HomeScene";
 export default class Camera {
     instance = null;
     controls = null;
-    hasControlsUpdated = false;
+    folder = null;
 
     constructor() {
         this.homeScene = new HomeScene();
@@ -42,12 +42,13 @@ export default class Camera {
     setControls() {
         const controls = new CameraControls(this.instance, this.canvas);
         controls.enableDamping = true;
+        controls.setOrbitPoint(0, 0, 0);
 
         if (!this.debug.active) {
             controls.disconnect();
         } else {
-            const cameraFolder = this.debug.ui.addFolder("Camera");
-            cameraFolder.add(
+            this.folder = this.debug.ui.addFolder("Camera");
+            this.folder.add(
                 {
                     reset: () => {
                         controls.reset(true);
