@@ -34,6 +34,9 @@ export default class World extends EventEmitter {
         if (this.locations) {
             this.locations.update();
         }
+        if (this.testCube) {
+            this.testCube.update();
+        }
     }
 
     resize() {
