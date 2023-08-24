@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import gsap from "gsap";
 import { dampE, dampC } from "maath/easing";
 
 import HomeScene from "../HomeScene";
@@ -11,6 +12,7 @@ export default class Locations {
 
     constructor() {
         this.homeScene = new HomeScene();
+        this.debug = this.homeScene.debug;
         this.scene = this.homeScene.scene;
         this.resources = this.homeScene.resources;
         this.camera = this.homeScene.camera;
@@ -20,6 +22,7 @@ export default class Locations {
         this.parallaxGroup = this.homeScene.world.parallaxGroup;
 
         // setup
+        this.intro = this.intro.bind(this);
         this.resource = this.resources.items.locationsModel;
         this.setModel();
     }
@@ -66,12 +69,21 @@ export default class Locations {
         this.modelBox = modelBox;
         this.modelSize = modelSize;
         this.resize();
+
+        if (this.debug.active) {
+            this.debug.ui
+                .add({ intro: this.intro }, "intro")
+                .name("Play Intro");
+        } else {
+            this.intro();
+        }
     }
 
     /**
      * @description scales the root group to fit the camera bounds
      */
     resize() {
+        if (!this.model) return;
         const {
             camera: { instance: camera },
             model,
@@ -128,5 +140,63 @@ export default class Locations {
             const z = -cursor.x * 0.5;
             dampE(box.rotation, [x, y, z], 0.15, delta);
         });
+    }
+
+    intro() {
+        const {
+            camera: { instance: camera },
+            model,
+        } = this;
+
+        const toScale = model.scale.clone();
+
+        const tl = gsap.timeline({
+            paused: true,
+        });
+        tl.fromTo(
+            model.scale,
+            {
+                x: 0,
+                y: 0,
+                z: 0,
+            },
+            {
+                x: toScale.x,
+                y: toScale.y,
+                z: toScale.z,
+                duration: 1,
+                ease: "power2.inOut",
+            },
+            0
+        );
+        tl.fromTo(
+            camera.position,
+            {
+                x: 2,
+                y: 0,
+                z: 2,
+            },
+            {
+                x: 0,
+                y: 0,
+                z: 2,
+                duration: 2,
+                ease: "power2.inOut",
+            },
+            0
+        );
+        tl.fromTo(
+            model.rotation,
+            { x: 0, y: 0, z: 0 },
+            {
+                x: Math.PI * 0.5,
+                y: 0,
+                z: 0,
+                duration: 2,
+                ease: "power2.inOut",
+            },
+            0
+        );
+        tl.play();
     }
 }
