@@ -43,9 +43,8 @@ export default class Camera {
         const controls = new CameraControls(this.instance, this.canvas);
         controls.enableDamping = true;
 
-        this.controls = controls;
         if (!this.debug.active) {
-            this.controls.disconnect();
+            controls.disconnect();
         } else {
             const cameraFolder = this.debug.ui.addFolder("Camera");
             cameraFolder.add(
@@ -57,6 +56,8 @@ export default class Camera {
                 "reset"
             );
         }
+
+        this.controls = controls;
     }
 
     resize() {
