@@ -6,4 +6,9 @@ export default [
         type: "gltfModel",
         path: GLB_ASSET_URLS.Locations,
     },
+    {
+        name: "testCubeModel",
+        type: "gltfModel",
+        path: GLB_ASSET_URLS.Test_Cube,
+    },
 ];
