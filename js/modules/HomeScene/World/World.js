@@ -5,12 +5,14 @@ import Environment from "./Environment";
 import ParallaxGroup from "./ParallaxGroup";
 import Locations from "./Locations";
 import RootGroup from "./RootGroup";
+import TestCube from "./TestCube";
 
 export default class World extends EventEmitter {
     environment = null;
     parallaxGroup = null;
     locations = null;
     rootGroup = null;
+    testCube = null;
 
     constructor() {
         super();
@@ -47,6 +49,7 @@ export default class World extends EventEmitter {
         this.parallaxGroup = new ParallaxGroup();
         // this.locations = new Locations();
         this.rootGroup = new RootGroup();
+        this.testCube = new TestCube();
         this.environment = new Environment();
     }
 }
