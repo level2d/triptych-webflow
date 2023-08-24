@@ -37,7 +37,7 @@ export default class ParallaxGroup {
         damp3(
             group.position,
             [parallaxPositionX, parallaxPositionY, -parallaxPositionX],
-            0.25,
+            0.2,
             delta
         );
     }
