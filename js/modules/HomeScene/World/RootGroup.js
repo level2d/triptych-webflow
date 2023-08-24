@@ -2,13 +2,11 @@ import * as THREE from "three";
 import gsap from "gsap";
 
 import HomeScene from "../HomeScene";
-
-const padding = 0.2;
-
 export default class RootGroup {
     group = null;
     box = null;
     folder = null;
+    padding = 0.2; // padding to use for controls.fitToBox()
 
     constructor() {
         this.homeScene = new HomeScene();
@@ -91,10 +89,10 @@ export default class RootGroup {
      */
     resize() {
         this.camera.controls.fitToBox(this.box, true, {
-            paddingTop: padding,
-            paddingRight: padding,
-            paddingBottom: padding,
-            paddingLeft: padding,
+            paddingTop: this.padding,
+            paddingRight: this.padding,
+            paddingBottom: this.padding,
+            paddingLeft: this.padding,
         });
     }
 
