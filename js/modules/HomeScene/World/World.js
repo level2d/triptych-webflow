@@ -1,15 +1,16 @@
 import EventEmitter from "events";
-import gsap from "gsap";
 
 import HomeScene from "../HomeScene";
 import Environment from "./Environment";
 import ParallaxGroup from "./ParallaxGroup";
 import Locations from "./Locations";
+import RootGroup from "./RootGroup";
 
 export default class World extends EventEmitter {
     environment = null;
     parallaxGroup = null;
     locations = null;
+    rootGroup = null;
 
     constructor() {
         super();
@@ -34,6 +35,9 @@ export default class World extends EventEmitter {
     }
 
     resize() {
+        if (this.rootGroup) {
+            this.rootGroup.resize();
+        }
         if (this.locations) {
             this.locations.resize();
         }
@@ -41,7 +45,8 @@ export default class World extends EventEmitter {
 
     setup() {
         this.parallaxGroup = new ParallaxGroup();
-        this.locations = new Locations();
+        // this.locations = new Locations();
+        this.rootGroup = new RootGroup();
         this.environment = new Environment();
     }
 }
