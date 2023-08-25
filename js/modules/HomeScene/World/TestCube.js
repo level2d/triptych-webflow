@@ -87,9 +87,8 @@ export default class TestCube {
             cursor,
             time: { delta },
         } = this;
-        const coords = new THREE.Vector2(cursor.x, cursor.y);
 
-        raycaster.setFromCamera(coords, camera);
+        raycaster.setFromCamera({ x: cursor.x, y: cursor.y }, camera);
         this.currentIntersects = raycaster.intersectObjects(items);
 
         items.forEach((item) => {
