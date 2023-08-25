@@ -9,6 +9,7 @@ export default class Camera {
     instance = null;
     controls = null;
     folder = null;
+    savedState = null;
 
     constructor() {
         this.homeScene = new HomeScene();
@@ -18,6 +19,8 @@ export default class Camera {
         this.canvas = this.homeScene.canvas;
         this.time = this.homeScene.time;
 
+        this.saveState = this.saveState.bind(this);
+        this.loadSavedState = this.loadSavedState.bind(this);
         this.setInstance();
         this.setControls();
     }
@@ -55,6 +58,14 @@ export default class Camera {
                 },
                 "reset"
             );
+            this.folder.add(
+                {
+                    loadSavedState: () => {
+                        this.loadSavedState();
+                    },
+                },
+                "loadSavedState"
+            );
         }
 
         this.controls = controls;
@@ -75,5 +86,30 @@ export default class Camera {
         const { delta } = time;
 
         controls.update(delta);
+    }
+
+    saveState() {
+        this.savedState = this.controls.toJSON();
+    }
+
+    loadSavedState(ease = true) {
+        if (this.savedState) {
+            this.controls.fromJSON(this.savedState, true);
+        }
+    }
+
+    async zoomToBox(box3d) {
+        const targetPosition = box3d.getWorldPosition(new THREE.Vector3());
+        const currentPosition = new THREE.Vector3();
+        this.controls.getPosition(currentPosition);
+
+        // Pan camera to
+        await this.controls.truck(targetPosition.x, -targetPosition.y, true);
+        await this.controls.fitToSphere(box3d, true, {
+            paddingTop: this.padding,
+            paddingRight: this.padding,
+            paddingBottom: this.padding,
+            paddingLeft: this.padding,
+        });
     }
 }

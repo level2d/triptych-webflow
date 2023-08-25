@@ -17,7 +17,6 @@ export default class RootGroup {
 
         // setup
         this.rotate = this.rotate.bind(this);
-        this.zoomGroup = this.zoomGroup.bind(this);
 
         this.setGroup();
         this.setBox();
@@ -45,16 +44,6 @@ export default class RootGroup {
 
         if (this.debug.active) {
             this.folder = this.debug.ui.addFolder("Root Group");
-            this.folder
-                .add(
-                    {
-                        zoomGroup: () => {
-                            this.zoomGroup();
-                        },
-                    },
-                    "zoomGroup"
-                )
-                .name("Zoom Group");
             this.folder
                 .add(
                     {
@@ -108,14 +97,13 @@ export default class RootGroup {
             paddingBottom: this.padding,
             paddingLeft: this.padding,
         });
-        this.saveState = await this.camera.controls.toJSON();
+        this.camera.saveState();
     }
 
     async rotate(direction = "right") {
         const {
             camera: { instance: camera, controls },
             group,
-            box,
         } = this;
 
         const rotation = new THREE.Euler();
@@ -167,9 +155,5 @@ export default class RootGroup {
             }
         }
         return tl;
-    }
-
-    async zoomGroup(ease = true) {
-        await this.camera.controls.fromJSON(this.saveState, ease);
     }
 }
