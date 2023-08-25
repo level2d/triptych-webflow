@@ -1,7 +1,11 @@
 import * as THREE from "three";
-import { dampC, dampE } from "maath/easing";
+import { dampQ } from "maath/easing";
 
 import HomeScene from "../HomeScene";
+
+const easeInOutSine = (t) => {
+    return (1 + Math.sin(Math.PI * t - Math.PI / 2)) / 2;
+};
 
 export default class TestCube {
     model = null;
@@ -91,11 +95,18 @@ export default class TestCube {
         raycaster.setFromCamera({ x: cursor.x, y: cursor.y }, camera);
         this.currentIntersects = raycaster.intersectObjects(items);
 
-        items.forEach((item) => {
-            const x = -cursor.y * 0.5;
-            const y = item.rotation.y;
-            const z = -cursor.x * 0.5;
-            dampE(item.rotation, [x, y, z], 0.15, delta);
+        const lookAtTarget = new THREE.Vector3();
+        items.forEach((item, i) => {
+            const clone = item.clone();
+
+            // Mouse vector on same z axis as camera
+            lookAtTarget.x = cursor.x;
+            lookAtTarget.y = cursor.y;
+            lookAtTarget.z = camera.position.z; // assuming the camera is located at ( 0, 0, z );
+
+            clone.lookAt(lookAtTarget);
+            const toQuaternion = clone.quaternion; // quaternion to lerp to
+            dampQ(item.quaternion, toQuaternion, 0.3, delta);
         });
 
         if (this.rotatableItem) {
