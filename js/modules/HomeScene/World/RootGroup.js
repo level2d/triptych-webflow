@@ -12,10 +12,11 @@ export default class RootGroup {
         this.homeScene = new HomeScene();
         this.debug = this.homeScene.debug;
         this.camera = this.homeScene.camera;
-        this.parallaxGroup = this.homeScene.world.parallaxGroup;
+        this.scene = this.homeScene.scene;
 
         // setup
         this.rotate = this.rotate.bind(this);
+        this.zoomGroup = this.zoomGroup.bind(this);
 
         this.setGroup();
         this.setBox();
@@ -24,7 +25,7 @@ export default class RootGroup {
     setGroup() {
         this.group = new THREE.Group();
         this.group.name = "rootGroup";
-        this.parallaxGroup.group.add(this.group);
+        this.scene.add(this.group);
     }
 
     setBox() {
@@ -41,6 +42,16 @@ export default class RootGroup {
 
         if (this.debug.active) {
             this.folder = this.debug.ui.addFolder("Root Group");
+            this.folder
+                .add(
+                    {
+                        zoomGroup: () => {
+                            this.zoomGroup();
+                        },
+                    },
+                    "zoomGroup"
+                )
+                .name("Zoom Group");
             this.folder
                 .add(
                     {
@@ -88,12 +99,7 @@ export default class RootGroup {
      * @description update camera to fit RootGroup boundingBox bounds
      */
     resize() {
-        this.camera.controls.fitToBox(this.box, true, {
-            paddingTop: this.padding,
-            paddingRight: this.padding,
-            paddingBottom: this.padding,
-            paddingLeft: this.padding,
-        });
+        this.zoomGroup();
     }
 
     async rotate(direction = "right") {
@@ -152,5 +158,14 @@ export default class RootGroup {
             }
         }
         return tl;
+    }
+
+    async zoomGroup() {
+        this.camera.controls.fitToBox(this.box, true, {
+            paddingTop: this.padding,
+            paddingRight: this.padding,
+            paddingBottom: this.padding,
+            paddingLeft: this.padding,
+        });
     }
 }
