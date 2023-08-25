@@ -37,6 +37,8 @@ export default class RootGroup {
             })
         );
 
+        this.box.visible = this.debug.active;
+
         this.group.add(this.box);
         this.resize();
 
