@@ -5,7 +5,6 @@ import CameraControls from "camera-controls";
 CameraControls.install({ THREE: THREE });
 
 import HomeScene from "./HomeScene";
-
 export default class Camera {
     instance = null;
     controls = null;
