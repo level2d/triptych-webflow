@@ -7,6 +7,7 @@ export default class RootGroup {
     box = null;
     folder = null;
     padding = 0.2; // padding to use for controls.fitToBox()
+    saveState = null;
 
     constructor() {
         this.homeScene = new HomeScene();
@@ -40,7 +41,7 @@ export default class RootGroup {
         this.box.visible = this.debug.active;
 
         this.group.add(this.box);
-        this.resize();
+        this.resize(false);
 
         if (this.debug.active) {
             this.folder = this.debug.ui.addFolder("Root Group");
@@ -100,8 +101,14 @@ export default class RootGroup {
     /**
      * @description update camera to fit RootGroup boundingBox bounds
      */
-    resize() {
-        this.zoomGroup();
+    async resize(ease = true) {
+        await this.camera.controls.fitToBox(this.box, ease, {
+            paddingTop: this.padding,
+            paddingRight: this.padding,
+            paddingBottom: this.padding,
+            paddingLeft: this.padding,
+        });
+        this.saveState = await this.camera.controls.toJSON();
     }
 
     async rotate(direction = "right") {
@@ -162,12 +169,7 @@ export default class RootGroup {
         return tl;
     }
 
-    async zoomGroup() {
-        this.camera.controls.fitToBox(this.box, true, {
-            paddingTop: this.padding,
-            paddingRight: this.padding,
-            paddingBottom: this.padding,
-            paddingLeft: this.padding,
-        });
+    async zoomGroup(ease = true) {
+        await this.camera.controls.fromJSON(this.saveState, ease);
     }
 }
