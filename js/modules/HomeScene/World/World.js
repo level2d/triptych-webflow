@@ -2,8 +2,6 @@ import EventEmitter from "events";
 
 import HomeScene from "../HomeScene";
 import Environment from "./Environment";
-import ParallaxGroup from "./ParallaxGroup";
-import Locations from "./Locations";
 import RootGroup from "./RootGroup";
 import TestCube from "./TestCube";
 
@@ -28,12 +26,6 @@ export default class World extends EventEmitter {
     }
 
     update() {
-        if (this.parallaxGroup) {
-            this.parallaxGroup.update();
-        }
-        if (this.locations) {
-            this.locations.update();
-        }
         if (this.testCube) {
             this.testCube.update();
         }
@@ -49,8 +41,6 @@ export default class World extends EventEmitter {
     }
 
     setup() {
-        this.parallaxGroup = new ParallaxGroup();
-        // this.locations = new Locations();
         this.rootGroup = new RootGroup();
         this.testCube = new TestCube();
         this.environment = new Environment();
