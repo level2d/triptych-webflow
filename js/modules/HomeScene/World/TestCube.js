@@ -12,6 +12,7 @@ export default class TestCube {
     items = [];
     currentIntersects = [];
     padding = 0.02; // padding to use for controls.fitToBox()
+    lookAtVector = new THREE.Vector3(); // vector that items will look at
 
     constructor() {
         this.homeScene = new HomeScene();
@@ -85,33 +86,27 @@ export default class TestCube {
         if (this.items.length <= 0) return;
 
         const {
-            items,
             raycaster,
             camera: { instance: camera },
             cursor,
             time: { delta },
+            lookAtVector,
+            items,
         } = this;
 
         raycaster.setFromCamera({ x: cursor.x, y: cursor.y }, camera);
         this.currentIntersects = raycaster.intersectObjects(items);
 
-        const lookAtTarget = new THREE.Vector3();
+        // Mouse vector on same z axis as camera
+        lookAtVector.z = camera.position.z; // assuming the camera is located at ( 0, 0, z );
+        lookAtVector.x = cursor.x;
+        lookAtVector.y = cursor.y;
         items.forEach((item, i) => {
             const clone = item.clone();
-
-            // Mouse vector on same z axis as camera
-            lookAtTarget.x = cursor.x;
-            lookAtTarget.y = cursor.y;
-            lookAtTarget.z = camera.position.z; // assuming the camera is located at ( 0, 0, z );
-
-            clone.lookAt(lookAtTarget);
+            clone.lookAt(lookAtVector);
             const toQuaternion = clone.quaternion; // quaternion to lerp to
             dampQ(item.quaternion, toQuaternion, 0.3, delta);
         });
-
-        if (this.rotatableItem) {
-            this.rotatableItem.y += Math.PI * 0.01;
-        }
     }
 
     async handleClick() {
