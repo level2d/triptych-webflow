@@ -17,6 +17,7 @@ export default class TestCube {
         this.cursor = this.homeScene.cursor;
         this.time = this.homeScene.time;
         this.rootGroup = this.homeScene.world.rootGroup;
+        this.parallaxGroup = this.homeScene.world.parallaxGroup;
         this.resources = this.homeScene.resources;
 
         this.resource = this.resources.items.testCubeModel;
@@ -106,32 +107,31 @@ export default class TestCube {
 
     async handleClick() {
         if (this.currentIntersects.length > 0) {
-            this.camera.controls.saveState(); // save camera position for zooming back out
-
-            const clickedObject = this.currentIntersects[0].object;
-            const targetPosition = clickedObject.getWorldPosition(
-                new THREE.Vector3()
-            );
-            const currentPosition = new THREE.Vector3();
-            this.camera.controls.getPosition(currentPosition);
-
-            await this.camera.controls.setLookAt(
-                targetPosition.x,
-                targetPosition.y,
-                currentPosition.z,
-                targetPosition.x,
-                targetPosition.y,
-                targetPosition.z,
-                true
-            );
-
-            await this.camera.controls.fitToBox(clickedObject, true, {
-                paddingTop: this.padding,
-                paddingRight: this.padding,
-                paddingBottom: this.padding,
-                paddingLeft: this.padding,
-            });
+            const clickedItem = this.currentIntersects[0].object;
+            return this.zoomItem(clickedItem);
         }
+    }
+
+    async zoomItem(item) {
+        const targetPosition = item.getWorldPosition(new THREE.Vector3());
+        const currentPosition = new THREE.Vector3();
+        this.camera.controls.getPosition(currentPosition);
+
+        await this.camera.controls.setLookAt(
+            targetPosition.x,
+            targetPosition.y,
+            currentPosition.z,
+            targetPosition.x,
+            targetPosition.y,
+            targetPosition.z,
+            true
+        );
+        await this.camera.controls.fitToBox(item, true, {
+            paddingTop: this.padding,
+            paddingRight: this.padding,
+            paddingBottom: this.padding,
+            paddingLeft: this.padding,
+        });
     }
 
     bindListeners() {
