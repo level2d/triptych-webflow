@@ -3,10 +3,6 @@ import { dampQ } from "maath/easing";
 
 import HomeScene from "../HomeScene";
 
-const easeInOutSine = (t) => {
-    return (1 + Math.sin(Math.PI * t - Math.PI / 2)) / 2;
-};
-
 export default class TestCube {
     model = null;
     items = [];
@@ -112,30 +108,8 @@ export default class TestCube {
     async handleClick() {
         if (this.currentIntersects.length > 0) {
             const clickedItem = this.currentIntersects[0].object;
-            return this.zoomItem(clickedItem);
+            return this.camera.zoomToBox(clickedItem);
         }
-    }
-
-    async zoomItem(item) {
-        const targetPosition = item.getWorldPosition(new THREE.Vector3());
-        const currentPosition = new THREE.Vector3();
-        this.camera.controls.getPosition(currentPosition);
-
-        await this.camera.controls.setLookAt(
-            targetPosition.x,
-            targetPosition.y,
-            currentPosition.z,
-            targetPosition.x,
-            targetPosition.y,
-            targetPosition.z,
-            true
-        );
-        await this.camera.controls.fitToBox(item, true, {
-            paddingTop: this.padding,
-            paddingRight: this.padding,
-            paddingBottom: this.padding,
-            paddingLeft: this.padding,
-        });
     }
 
     bindListeners() {
