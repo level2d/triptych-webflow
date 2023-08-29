@@ -4,7 +4,7 @@ import {
     AxesViewer,
     ArcRotateCamera,
     Camera,
-    Color3,
+    Color4,
     HemisphericLight,
     SceneLoader,
     NodeMaterial,
@@ -13,6 +13,7 @@ import {
     ExecuteCodeAction,
     VideoTexture,
     StandardMaterial,
+    Texture,
 } from "@babylonjs/core/";
 import { Inspector } from "@babylonjs/inspector";
 
@@ -30,15 +31,18 @@ import {
     AUTOPLAY_ANIMATION_CONFIGS,
 } from "@/js/util/constants";
 import { debounce } from "lodash";
+import gsap from "gsap";
 
-const debug = false;
+let debug = false;
 let rootEl = null;
-let confirmButton = null;
+let confirmButtonEl = null;
 let resizeObserver = null;
 let engine = null;
 let scene = null;
 let canvas = null;
-let coords = null;
+let camera = null;
+let fpsEl = null;
+let isPanEnabled = false;
 let offsetXEl = null;
 let offsetYEl = null;
 let panX = 0;
@@ -109,7 +113,6 @@ const bindOrientationHandler = () => {
 
 const updateCameraFovMode = () => {
     if (!engine) return;
-    const camera = engine.scenes[0].cameras[0];
     if (!camera) return;
     if (engine.getRenderHeight() > engine.getRenderWidth()) {
         camera.fovMode = Camera.FOVMODE_HORIZONTAL_FIXED;
@@ -176,21 +179,22 @@ const bindEventListeners = () => {
     canvas.addEventListener("mousemove", handleMousemove);
 
     // hide/show the Inspector
-    window.addEventListener("keydown", (ev) => {
-        if (debug) return;
-
-        // Shift+Ctrl+I
-        if (ev.shiftKey && ev.ctrlKey && ev.key === "I") {
-            if (scene.debugLayer.isVisible()) {
-                Inspector.Hide();
-            } else {
-                Inspector.Show(scene, { embedMode: true });
+    if (import.meta.env.MODE === "development") {
+        console.log("bound");
+        window.addEventListener("keydown", (ev) => {
+            // Shift+Ctrl+I
+            if (ev.shiftKey && ev.ctrlKey && ev.key === "I") {
+                if (scene.debugLayer.isVisible()) {
+                    Inspector.Hide();
+                } else {
+                    Inspector.Show(scene, { embedMode: true });
+                }
             }
-        }
-    });
+        });
+    }
 
-    if (confirmButton) {
-        confirmButton.addEventListener("click", handleConfirmClick);
+    if (confirmButtonEl) {
+        confirmButtonEl.addEventListener("click", handleConfirmClick);
     }
 };
 
@@ -206,44 +210,32 @@ const setup = async () => {
     // Create our first scene.
     scene = new Scene(engine);
 
-    scene.clearColor = new Color3(255, 255, 255);
+    scene.clearColor = new Color4(255, 255, 255, 0);
 
     // Debuggers
     if (debug) {
         const axes = new AxesViewer(scene, 5);
-        Inspector.Show(scene, { embedMode: true });
     }
 
-    // Create a fixed orthographic camera
-    const camera = new ArcRotateCamera("camera1", 0, 0, 80, null, scene);
+    /**
+     * Textures
+     */
+    // get the texture
+    const matCapTexture = new Texture(TEXTURE_ASSET_URLS.matcap, scene);
 
-    // This attaches the camera to the canvas
-    if (debug) {
-        camera.attachControl(canvas, true);
-    }
-
-    // This creates a light, aiming 0,1,0 - to the sky (non-mesh)
-    const light = new HemisphericLight("light1", new Vector3(0, 1, 0), scene);
-
-    // Default intensity is 1. Let's dim the light a small amount
-    light.intensity = 0.7;
-
-    // Load matcap shader
-    const asyncTexturesResult = await loadTexturesAsync(
-        [TEXTURE_ASSET_URLS.matcap],
-        scene
-    ); // get the texture
-    const matCapTexture = asyncTexturesResult[0];
-    const matCapMaterial = await NodeMaterial.ParseFromFileAsync(
+    /**
+     * Materials
+     */
+    // matcap shader
+    const matCapShader = await NodeMaterial.ParseFromFileAsync(
         "matcap_shader",
         SHADER_ASSET_URLS.matcap,
         scene
-    ); // get the shader material
-    matCapMaterial.build(false);
-    const matCapShader = matCapMaterial;
-    matCapShader.texture = matCapTexture; // assign the texture to the mat cap shader mesh
+    );
+    matCapShader.build(false);
+    matCapShader.texture = matCapTexture; // assign matcap texture to matcap shader material
 
-    // Load tv material
+    // Tv material
     const tvScreenTexture = new VideoTexture(
         "running_man",
         TEXTURE_ASSET_URLS.running_man,
@@ -254,26 +246,23 @@ const setup = async () => {
     const tvScreenMaterial = new StandardMaterial("tv_screen");
     tvScreenMaterial.diffuseTexture = tvScreenTexture;
 
-    // Load locations mesh
+    /**
+     * Models
+     */
+    // Locations mesh
     const locationsImportResult = await SceneLoader.ImportMeshAsync(
         "",
         GLB_ASSET_URLS.Locations,
         "",
         scene
     );
-
-    // setup the locations root mesh
     const locationsMesh = locationsImportResult.meshes[0];
     locationsMesh.name = "locations";
-    locationsMesh.rotation = new Vector3(0, Math.PI * -0.5, 0);
+
     // set render order
     locationsMesh.getChildMeshes().forEach((mesh) => {
         mesh.renderingGroupId = 1;
     });
-
-    // focus the camera on this mesh
-    camera.setTarget(locationsMesh, true);
-    camera.fov = 0.5;
 
     // load box meshes
     const boxMeshes = await Promise.all(
@@ -289,7 +278,7 @@ const setup = async () => {
                 );
                 const rootMesh = importResult.meshes[0];
                 rootMesh.name = name; // give it a unique name for grabbing it later
-                rootMesh.rotation = new Vector3(0, Math.PI * -0.5, 0); // rotate it correctly
+                // rootMesh.rotation = new Vector3(0, Math.PI * -0.5, 0); // rotate it correctly
                 rootMesh.setEnabled(false); // hide the box
                 return rootMesh;
             })
@@ -480,7 +469,15 @@ const setup = async () => {
                     placeholder.position.y,
                     placeholder.position.z
                 );
+                targetMesh.rotation = new Vector3(
+                    placeholder.rotation.x,
+                    placeholder.rotation.y,
+                    placeholder.rotation.z
+                );
+                targetMesh.parent = locationsMesh;
+                targetMesh.rotation.y += Math.PI; // orient the box correctly
                 targetMesh.setEnabled(true); // reveal the mesh
+                placeholder.setEnabled(false); // hide the placeholder
                 ret = targetMesh;
                 break;
             }
@@ -489,9 +486,6 @@ const setup = async () => {
                 break;
             }
         }
-
-        placeholder.setEnabled(false); // hide the placeholder
-
         return ret;
     });
 
@@ -501,16 +495,39 @@ const setup = async () => {
         .filter((material) => targetMaterials.includes(material.name))
         .forEach((material) => material.dispose());
 
+    /**
+     * Camera
+     */
+    // Create a fixed orthographic camera
+    camera = new ArcRotateCamera("camera1", 0, 0, 80, null, scene);
+    // focus the camera on locationsMesh
+    camera.setTarget(locationsMesh, true);
+    camera.fov = 0.5;
+
+    if (debug) {
+        // This attaches the camera to the canvas
+        camera.attachControl(canvas, true);
+    }
+
+    /**
+     * Lights
+     */
+    // This creates a light, aiming 0,1,0 - to the sky (non-mesh)
+    const light = new HemisphericLight("light1", new Vector3(0, 1, 0), scene);
+
+    // Default intensity is 1. Let's dim the light a small amount
+    light.intensity = 0.7;
+
     // Render every frame
     engine.runRenderLoop(() => {
         // Panning effect
-        if (locationsMesh) {
-            locationsMesh.position = new Vector3(
-                panY,
-                locationsMesh.position.y,
-                panX
-            );
-        }
+        // if (locationsMesh) {
+        //     locationsMesh.position = new Vector3(
+        //         panY,
+        //         locationsMesh.position.y,
+        //         panX
+        //     );
+        // }
 
         const mugMesh = boxMeshes.find((mesh) => mesh.name === BOX_NAMES.MUG);
         if (mugMesh) {
@@ -526,30 +543,51 @@ const setup = async () => {
         }
 
         // Rotation effect
-        locationBoxes.forEach((mesh) => {
-            if (mesh === null) return;
-            mesh.rotation = new Vector3(
-                panY * 0.25,
-                mesh.rotation.y,
-                panX * 0.25
-            );
-        });
+        if (isPanEnabled) {
+            locationBoxes.forEach((mesh) => {
+                if (mesh === null) return;
+                gsap.to(mesh.rotation, {
+                    x: panY * 0.25,
+                    y: mesh.rotation.y,
+                    z: panX * 0.25,
+                });
+            });
+        }
+
+        // Debug UI
+        if (fpsEl) {
+            fpsEl.innerHTML = engine.getFps().toFixed();
+        }
+
         scene.render();
     });
 
     updateCameraFovMode(); // run on initial load
+
+    // Setup animation
+    locationsMesh.rotation = new Vector3(0, 0, Math.PI * 0.5);
+    gsap.to(locationsMesh.rotation, {
+        x: 0,
+        y: -Math.PI * 0.5,
+        z: 0,
+        duration: 2,
+        ease: "power2.inOut",
+        onComplete: () => {
+            isPanEnabled = true;
+        },
+    });
 };
 
-const renderCords = () => {
+const renderDebugUi = () => {
     const markup = `
-    <div class="js-home-scene__coords home-scene__coords">
-      <div class="home-scene__coords__inner">
+    <div class="home-scene__debug-ui">
+      <div class="home-scene__debug-ui__inner">
         <div>
-          <p><strong>Mouse Coordinates:</strong></p>
-          <p>
-            <span>X:<span class="js-offset-x">0</span></span>
-            <span>Y:<span class="js-offset-y">0</span></span>
-          </p>
+            <p><span class="js-fps"></span>fps</p>
+            <hr />
+            <p><strong>mouse coordinates:</strong></p>
+            <p><span>x: <span class="js-mouse-offset-x">0</span>px</span></p>
+            <p><span>y: <span class="js-mouse-offset-y">0</span>px</span></p>
         </div>
       </div>
     </div>
@@ -557,6 +595,11 @@ const renderCords = () => {
     const element = document.createElement("div");
     element.innerHTML = markup;
     rootEl.appendChild(element);
+
+    // Setup element cache
+    fpsEl = rootEl.querySelector(".js-fps");
+    offsetXEl = rootEl.querySelector(".js-mouse-offset-x");
+    offsetYEl = rootEl.querySelector(".js-mouse-offset-y");
 };
 
 const render = () => {
@@ -565,10 +608,17 @@ const render = () => {
             <div class="home-scene__inner">
                 <canvas class="js-home-scene__canvas home-scene__canvas"></canvas>
                 <button class="js-home-scene__confirm-button home-scene__confirm-button"></button>
-                <div class="home-scene__bg"></div>
             </div>
         </div>
     `;
+
+    // Setup element cache
+    canvas = rootEl.querySelector(".js-home-scene__canvas");
+    confirmButtonEl = rootEl.querySelector(".js-home-scene__confirm-button");
+
+    if (debug) {
+        renderDebugUi();
+    }
 };
 
 const init = () => {
@@ -577,18 +627,9 @@ const init = () => {
         return;
     }
 
+    debug = new URLSearchParams(window.location.search).get("debug");
+
     render();
-
-    canvas = rootEl.querySelector(".js-home-scene__canvas");
-    confirmButton = rootEl.querySelector(".js-home-scene__confirm-button");
-
-    if (debug) {
-        renderCords();
-        coords = rootEl.querySelector(".js-home-scene__coords");
-        offsetXEl = rootEl.querySelector(".js-offset-x");
-        offsetYEl = rootEl.querySelector(".js-offset-y");
-    }
-
     setup();
     bindEventListeners();
     bindObservables();

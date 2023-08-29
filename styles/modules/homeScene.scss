@@ -34,13 +34,17 @@
         position: absolute;
         top: 0;
         left: 0;
+        z-index: 999;
     }
 
-    &__coords__inner {
+    &__debug-ui__inner {
         padding: 8px 16px;
         display: flex;
         flex-flow: row nowrap;
         gap: 16px;
+
+        font-family: monospace;
+        font-size: 0.75rem;
     }
 
     #embed-host {
