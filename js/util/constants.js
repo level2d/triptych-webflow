@@ -1,4 +1,5 @@
 // glbs
+import test_cube_url from "@/assets/3d/test_cube_01.glb";
 import books_url from "@/assets/3d/books_01.glb";
 import box_locations_url from "@/assets/3d/box_locations_04.glb";
 import eye_url from "@/assets/3d/eye_02.glb";
@@ -27,6 +28,8 @@ export const BOX_NAMES = {
 };
 
 export const GLB_ASSET_URLS = {
+    // Test Cube
+    Test_Cube: test_cube_url,
     // location meshes
     Locations: box_locations_url,
     Locations_Mobile: mobile_box_locations_url,

@@ -1,9 +1,9 @@
 import "@/styles/main.scss";
 
-import { homeScene } from "./modules";
+import { HomeScene } from "./modules";
 class App {
     constructor() {
-        this.homeScene = homeScene;
+        this.homeScene = new HomeScene();
         this.init();
     }
 
@@ -13,11 +13,10 @@ class App {
     }
 
     init() {
-        const _this = this;
-        _this.initModules();
+        this.initModules();
         console.log("App: init");
     }
 }
 
-const triptychApp = new App();
-window.triptychApp = triptychApp;
+const app = new App();
+window.app = app;
