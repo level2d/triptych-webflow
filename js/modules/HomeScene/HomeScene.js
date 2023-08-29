@@ -88,6 +88,7 @@ export default class HomeScene {
 
     bindListeners() {
         this.sizes.on("resize", this.resize);
+        this.time.on("tick", this.update);
     }
 
     setup() {
@@ -120,11 +121,9 @@ export default class HomeScene {
         if (!this.rootEl) {
             return;
         }
-
         this.render();
         this.setup();
         this.bindListeners();
-
         console.log("module: HomeScene: init");
     }
 
