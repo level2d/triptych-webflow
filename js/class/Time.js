@@ -1,31 +1,24 @@
 import EventEmitter from "events";
 
 export default class Time extends EventEmitter {
-    start = Date.now() * 0.001; // Store value in seconds
-    current = Date.now() * 0.001; // Store value in seconds
     elapsed = 0;
-    previous = 0;
     delta = 0;
     constructor() {
         super();
 
+        this.tick = this.tick.bind(this);
         // Start loop in request animation to get positive value for delta
-        window.requestAnimationFrame(() => {
-            this.tick();
-        });
+        requestAnimationFrame(this.tick);
     }
 
-    tick() {
-        const currentTime = Date.now() * 0.001; // Store value in seconds
-        this.delta = currentTime - this.current;
-        this.current = currentTime;
-        this.elapsed = this.current - this.start;
+    tick(timestamp) {
+        const elapsed = timestamp * 0.001; // Store value in seconds
+        this.delta = elapsed - this.elapsed;
+        this.elapsed = elapsed;
 
         // emit
         this.emit("tick");
 
-        window.requestAnimationFrame(() => {
-            this.tick();
-        });
+        window.requestAnimationFrame(this.tick);
     }
 }

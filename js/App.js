@@ -1,5 +1,6 @@
 //lib
 import gsap from "./lib/gsap";
+import lenis from "./lib/lenis";
 
 // class
 import Bus from "./class/Bus";
@@ -28,6 +29,7 @@ export default class App {
     update() {
         // unify external lib rafs
         gsap.updateRoot(this.time.elapsed);
+        lenis.raf(this.time.elapsed * 1000); // lenis requires time in milliseconds
 
         // update modules
         if (this.homeScene) {
