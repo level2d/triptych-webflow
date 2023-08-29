@@ -116,7 +116,7 @@ export default class HomeScene {
     }
 
     init() {
-        this.rootEl = document.querySelector(".js-home-scene-target");
+        this.rootEl = document.querySelector("[data-module='home-scene']");
         if (!this.rootEl) {
             return;
         }
