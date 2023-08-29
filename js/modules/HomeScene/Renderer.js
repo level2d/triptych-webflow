@@ -39,9 +39,4 @@ export default class Renderer {
         renderer.setSize(sizes.width, sizes.height);
         renderer.setPixelRatio(sizes.pixelRatio);
     }
-
-    update() {
-        const { instance: renderer, scene, camera } = this;
-        renderer.render(scene, camera.instance);
-    }
 }

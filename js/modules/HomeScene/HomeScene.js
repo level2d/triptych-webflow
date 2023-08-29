@@ -11,6 +11,7 @@ import Camera from "./Camera";
 import Renderer from "./Renderer";
 import World from "./World";
 import sources from "./sources";
+import FxComposer from "./FxComposer";
 
 THREE.ColorManagement.enabled = false;
 
@@ -37,6 +38,7 @@ export default class HomeScene {
     camera = null;
     renderer = null;
     raycaster = null;
+    fxComposer = null;
     world = null;
 
     constructor() {
@@ -79,7 +81,8 @@ export default class HomeScene {
     update() {
         this.camera.update();
         this.world.update();
-        this.renderer.update();
+        this.fxComposer.update();
+
         // Update stats
         if (this.stats) {
             this.stats.update();
@@ -99,6 +102,7 @@ export default class HomeScene {
         this.scene = new THREE.Scene();
         this.camera = new Camera();
         this.renderer = new Renderer();
+        this.fxComposer = new FxComposer();
         this.raycaster = new THREE.Raycaster();
         this.world = new World();
 
