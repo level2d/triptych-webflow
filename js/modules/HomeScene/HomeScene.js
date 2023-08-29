@@ -20,7 +20,6 @@ export default class HomeScene {
      * Props
      */
     // Global
-    active = false;
     debug = null;
     sizes = null;
     time = null;
@@ -89,6 +88,7 @@ export default class HomeScene {
 
     bindListeners() {
         this.sizes.on("resize", this.resize);
+        this.time.on("tick", this.update);
     }
 
     setup() {
@@ -124,7 +124,6 @@ export default class HomeScene {
         this.render();
         this.setup();
         this.bindListeners();
-        this.active = true;
         console.log("module: HomeScene: init");
     }
 
