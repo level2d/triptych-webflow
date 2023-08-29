@@ -20,6 +20,7 @@ export default class HomeScene {
      * Props
      */
     // Global
+    active = false;
     debug = null;
     sizes = null;
     time = null;
@@ -120,11 +121,10 @@ export default class HomeScene {
         if (!this.rootEl) {
             return;
         }
-
         this.render();
         this.setup();
         this.bindListeners();
-
+        this.active = true;
         console.log("module: HomeScene: init");
     }
 

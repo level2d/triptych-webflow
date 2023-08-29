@@ -32,7 +32,7 @@ export default class App {
         lenis.raf(this.time.elapsed * 1000); // lenis requires time in milliseconds
 
         // update modules
-        if (this.homeScene) {
+        if (this.homeScene.active) {
             this.homeScene.update();
         }
     }
