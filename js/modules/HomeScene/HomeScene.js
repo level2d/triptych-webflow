@@ -1,8 +1,8 @@
 import * as THREE from "three";
 import Stats from "three/examples/jsm/libs/stats.module";
 
+import App from "@/js/App";
 import Debug from "@/js/class/Debug";
-import Time from "@/js/class/Time";
 import Sizes from "@/js/class/Sizes";
 import Resources from "@/js/class/Resources";
 
@@ -22,6 +22,7 @@ export default class HomeScene {
     // Global
     debug = null;
     sizes = null;
+    time = null;
     cursor = null;
     resources = null;
 
@@ -45,6 +46,8 @@ export default class HomeScene {
         }
         _instance = this;
 
+        this.app = new App();
+        this.time = this.app.time;
         this.resize = this.resize.bind(this);
         this.update = this.update.bind(this);
     }
@@ -85,12 +88,10 @@ export default class HomeScene {
 
     bindListeners() {
         this.sizes.on("resize", this.resize);
-        this.time.on("tick", this.update);
     }
 
     setup() {
         this.debug = new Debug();
-        this.time = new Time();
         this.sizes = new Sizes(this.frameEl);
         this.resources = new Resources(sources);
         this.cursor = new Cursor(this.frameEl);
