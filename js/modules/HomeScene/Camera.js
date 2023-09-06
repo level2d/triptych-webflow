@@ -1,5 +1,4 @@
 import * as THREE from "three";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import CameraControls from "camera-controls";
 
 CameraControls.install({ THREE: THREE });
@@ -92,7 +91,7 @@ export default class Camera {
         this.savedState = this.controls.toJSON();
     }
 
-    loadSavedState(ease = true) {
+    loadSavedState() {
         if (this.savedState) {
             this.controls.fromJSON(this.savedState, true);
         }
