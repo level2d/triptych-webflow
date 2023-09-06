@@ -7,6 +7,7 @@ import Bus from "./class/Bus";
 import Time from "./class/Time";
 
 // modules
+import * as core from "./core";
 import { HomeScene, PopQuote, test } from "./modules";
 
 let _instance = null;
@@ -17,6 +18,7 @@ export default class App {
             return _instance;
         }
         _instance = this;
+        this.core = core;
         this.bus = new Bus();
         this.time = new Time();
         this.homeScene = new HomeScene();
