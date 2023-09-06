@@ -7,7 +7,7 @@ import Bus from "./class/Bus";
 import Time from "./class/Time";
 
 // modules
-import { HomeScene } from "./modules";
+import { HomeScene, PopQuote, test } from "./modules";
 
 let _instance = null;
 export default class App {
@@ -20,6 +20,8 @@ export default class App {
         this.bus = new Bus();
         this.time = new Time();
         this.homeScene = new HomeScene();
+        this.popQuote = new PopQuote();
+        this.test = test;
 
         this.update = this.update.bind(this);
 
@@ -38,6 +40,8 @@ export default class App {
 
     initModules() {
         this.homeScene.init();
+        this.popQuote.init();
+        this.test.init();
         console.log("Modules: init");
     }
 

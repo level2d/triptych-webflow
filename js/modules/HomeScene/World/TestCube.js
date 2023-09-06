@@ -97,7 +97,7 @@ export default class TestCube {
         lookAtVector.z = camera.position.z; // assuming the camera is located at ( 0, 0, z );
         lookAtVector.x = cursor.x;
         lookAtVector.y = cursor.y;
-        items.forEach((item, i) => {
+        items.forEach((item) => {
             const clone = item.clone();
             clone.lookAt(lookAtVector);
             const toQuaternion = clone.quaternion; // quaternion to lerp to
