@@ -1,6 +1,10 @@
 import path from "path";
 import { defineConfig, loadEnv } from "vite";
+
+// plugins
+import eslint from "vite-plugin-eslint";
 import mkcert from "vite-plugin-mkcert";
+import react from "@vitejs/plugin-react";
 
 // vite.config.js
 export default defineConfig((command, mode) => {
@@ -28,7 +32,7 @@ export default defineConfig((command, mode) => {
                 protocol: "wss",
             },
         },
-        plugins: [mkcert()],
+        plugins: [mkcert(), eslint(), react()],
         build: {
             minify: true,
             manifest: true,
