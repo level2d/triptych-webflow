@@ -1,3 +1,4 @@
+import * as THREE from "three";
 import { useEffect, useRef, useState } from "react";
 import { useThree } from "@react-three/fiber";
 import {
@@ -48,7 +49,7 @@ export default function Scene() {
             <CameraControls ref={cameraControls} />
 
             {/* environment */}
-            <Environment preset="city" background blur={1} />
+            <Environment preset="sunset" background blur={1} />
             <directionalLight
                 castShadow
                 position={[-1.5, 2.5, 1.8]}
@@ -63,13 +64,13 @@ export default function Scene() {
 
             {/* Plane */}
             <mesh
-                position-y={-1}
+                position-y={-1.1}
                 scale={10}
                 rotation={[-Math.PI * 0.5, 0, 0]}
                 receiveShadow
             >
                 <planeGeometry />
-                <meshStandardMaterial color="greenyellow" />
+                <meshStandardMaterial color="aqua" side={THREE.DoubleSide} />
             </mesh>
         </SceneContext.Provider>
     );
