@@ -5,7 +5,7 @@ import { GLB_ASSET_URLS } from "@/js/core/constants";
 export default forwardRef(function Model(props, ref) {
     const { nodes, materials } = useGLTF(GLB_ASSET_URLS.Locations);
     return (
-        <group {...props} dispose={null} scale={0.5}>
+        <group {...props} dispose={null} scale={0.1}>
             <mesh
                 castShadow
                 receiveShadow
