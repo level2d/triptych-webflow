@@ -6,6 +6,7 @@ module.exports = {
         "plugin:react/recommended",
         "plugin:react/jsx-runtime",
         "plugin:react-hooks/recommended",
+        "plugin:@react-three/recommended",
     ],
     ignorePatterns: ["dist", ".eslintrc.cjs", "vit.config.js"],
     parserOptions: { ecmaVersion: "latest", sourceType: "module" },
