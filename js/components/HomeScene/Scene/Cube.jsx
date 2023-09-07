@@ -5,7 +5,6 @@ import { constants } from "@/js/core";
 export default function Cube() {
     const cubeRef = useRef(null);
     const model = useGLTF(constants.GLB_ASSET_URLS.Test_Cube);
-    console.log(model);
     return (
         <>
             <group>
