@@ -99,3 +99,7 @@ export const AUTOPLAY_ANIMATION_CONFIGS = [
     { name: ANIMATION_NAMES.lower_lid, loop: true },
     { name: ANIMATION_NAMES.fish_01, loop: true },
 ];
+
+export const debug = Boolean(
+    new URLSearchParams(window.location.search).get("debug") === "true",
+);
