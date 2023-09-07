@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import * as THREE from "three";
 import { useThree } from "@react-three/fiber";
 import {
     CameraControls,
@@ -18,33 +19,121 @@ export default function Scene() {
     const [mounted, setMounted] = useState(false);
     const { size } = useThree();
     const { width, height } = size;
+    const camera = useRef(null);
     const cameraControls = useRef(null);
     const triptychRef = useRef(null);
+    const currentSubjectRef = useRef(null);
+
+    /**
+     *
+     * @param {'right'|'up'|'down'|'left'} direction
+     */
+    async function orbit(direction = "right") {
+        const cameraPosition = new THREE.Vector3();
+        cameraPosition.copy(camera.current.position);
+        console.log(cameraPosition);
+
+        currentSubjectRef.current.geometry.computeBoundingSphere();
+        const boundingSphere =
+            currentSubjectRef.current.geometry.boundingSphere.clone();
+
+        const boundingBox = new THREE.Box3();
+        boundingSphere.getBoundingBox(boundingBox);
+
+        const currentSubjectPosition = new THREE.Vector3();
+        currentSubjectPosition.copy(currentSubjectRef.current.position);
+
+        switch (direction) {
+            case "up": {
+                await cameraControls.current.rotate(
+                    0,
+                    THREE.MathUtils.degToRad(-90),
+                    true,
+                );
+                await cameraControls.current.fitToBox(
+                    currentSubjectRef.current,
+                    true,
+                    {
+                        paddingTop: padding,
+                        paddingRight: padding,
+                        paddingBottom: padding,
+                        paddingLeft: padding,
+                    },
+                );
+                break;
+            }
+            case "down": {
+                await cameraControls.current.rotate(
+                    0,
+                    THREE.MathUtils.degToRad(90),
+                    true,
+                );
+                await cameraControls.current.fitToBox(
+                    currentSubjectRef.current,
+                    true,
+                    {
+                        paddingTop: padding,
+                        paddingRight: padding,
+                        paddingBottom: padding,
+                        paddingLeft: padding,
+                    },
+                );
+                break;
+            }
+            case "left": {
+                await cameraControls.current.rotate(
+                    THREE.MathUtils.degToRad(-45),
+                    THREE.MathUtils.degToRad(cameraPosition.y > 0 ? 45 : -45),
+                    true,
+                );
+                break;
+            }
+            case "right":
+            default: {
+                await cameraControls.current.rotate(
+                    THREE.MathUtils.degToRad(45),
+                    THREE.MathUtils.degToRad(cameraPosition.y > 0 ? 45 : -45),
+                    true,
+                );
+                break;
+            }
+        }
+    }
+
 
     useEffect(() => {
         setMounted(true);
+        currentSubjectRef.current = triptychRef.current;
+        cameraControls.current.setOrbitPoint(
+            currentSubjectRef.current.x,
+            currentSubjectRef.current.y,
+            currentSubjectRef.current.z,
+        );
     }, []);
 
     useEffect(() => {
-        if (!cameraControls.current) return;
-        if (mounted) {
-            cameraControls.current.fitToBox(triptychRef.current, true, {
-                paddingTop: padding,
-                paddingRight: padding,
-                paddingBottom: padding,
-                paddingLeft: padding,
-            });
-        }
+        if (!mounted) return;
+        cameraControls.current.fitToBox(currentSubjectRef.current, true, {
+            paddingTop: padding,
+            paddingRight: padding,
+            paddingBottom: padding,
+            paddingLeft: padding,
+        });
     }, [mounted, width, height, cameraControls]);
 
     return (
-        <SceneContext.Provider value={{ cameraControls }}>
+        <SceneContext.Provider value={{ cameraControls, camera }}>
             {/* debug */}
             {debug && <Perf position="top-left" />}
+            {debug && <axesHelper args={[5]} />}
             {debug && <OrbitControls />}
 
             {/* camera */}
-            <OrthographicCamera makeDefault zoom={200} position={[0, 0, 10]} />
+            <OrthographicCamera
+                makeDefault
+                position={[0, 0, 10]}
+                ref={camera}
+            />
             <CameraControls ref={cameraControls} />
 
             {/* environment */}
@@ -58,17 +147,6 @@ export default function Scene() {
 
             {/* models */}
             <Model ref={triptychRef} />
-
-            {/* Plane */}
-            {/* <mesh
-                position-y={-1.1}
-                scale={10}
-                rotation={[-Math.PI * 0.5, 0, 0]}
-                receiveShadow
-            >
-                <planeGeometry />
-                <meshStandardMaterial color="aqua" side={THREE.DoubleSide} />
-            </mesh> */}
         </SceneContext.Provider>
     );
 }
