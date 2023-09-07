@@ -1,4 +1,3 @@
-import * as THREE from "three";
 import { useEffect, useRef, useState } from "react";
 import { useThree } from "@react-three/fiber";
 import {
@@ -11,7 +10,7 @@ import { Perf } from "r3f-perf";
 
 import { debug } from "@/js/core/constants";
 import { SceneContext } from "./SceneContext";
-import Cube from "./Cube";
+import Model from "./Model";
 
 const padding = 0.5;
 
@@ -20,7 +19,7 @@ export default function Scene() {
     const { size } = useThree();
     const { width, height } = size;
     const cameraControls = useRef(null);
-    const groupRef = useRef(null);
+    const triptychRef = useRef(null);
 
     useEffect(() => {
         setMounted(true);
@@ -29,7 +28,7 @@ export default function Scene() {
     useEffect(() => {
         if (!cameraControls.current) return;
         if (mounted) {
-            cameraControls.current.fitToBox(groupRef.current, true, {
+            cameraControls.current.fitToBox(triptychRef.current, true, {
                 paddingTop: padding,
                 paddingRight: padding,
                 paddingBottom: padding,
@@ -58,12 +57,10 @@ export default function Scene() {
             <ambientLight intensity={0.5} />
 
             {/* models */}
-            <group ref={groupRef}>
-                <Cube />
-            </group>
+            <Model ref={triptychRef} />
 
             {/* Plane */}
-            <mesh
+            {/* <mesh
                 position-y={-1.1}
                 scale={10}
                 rotation={[-Math.PI * 0.5, 0, 0]}
@@ -71,7 +68,7 @@ export default function Scene() {
             >
                 <planeGeometry />
                 <meshStandardMaterial color="aqua" side={THREE.DoubleSide} />
-            </mesh>
+            </mesh> */}
         </SceneContext.Provider>
     );
 }
