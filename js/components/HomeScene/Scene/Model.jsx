@@ -5,7 +5,7 @@ import { useControls } from "leva";
 
 function _Model(props, ref) {
     const { nodes, materials } = useGLTF(GLB_ASSET_URLS.Locations);
-    const { uHeight, uPatternScale } = useControls({
+    const { uHeight, uPatternScale } = useControls("Triptych Grain Shader", {
         uHeight: {
             value: 10,
             min: 1,
@@ -14,8 +14,8 @@ function _Model(props, ref) {
         },
         uPatternScale: {
             value: 0.001,
-            min: 0.0001,
-            max: 0.01,
+            min: 0,
+            max: 0.5,
             step: 0.0001,
         },
     });

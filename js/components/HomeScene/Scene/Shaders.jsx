@@ -138,6 +138,8 @@ export const GrainShaderMaterial = shaderMaterial(
             vec3 noiseColor = noise();
 
             gl_FragColor = vec4( gradientColor + noiseColor , 1.0 );
+            // gl_FragColor = vec4( gradientColor, 1.0 ); // gradient only
+            // gl_FragColor = vec4( noiseColor, 1.0 ); // grain only
         }
     `,
 );
