@@ -1,17 +1,17 @@
-import { forwardRef } from "react";
+import * as THREE from "three";
+import { forwardRef, useEffect, useState } from "react";
 import { useGLTF, Outlines } from "@react-three/drei";
 import { GLB_ASSET_URLS } from "@/js/core/constants";
 import { useControls } from "leva";
+import { constants } from "@/js/core";
 
 function _Model(props, ref) {
+    const [boundingBox, setBoundingBox] = useState({
+        min: new THREE.Vector3(0, 0, 0),
+        max: new THREE.Vector3(1, 1, 1),
+    });
     const { nodes, materials } = useGLTF(GLB_ASSET_URLS.Locations);
-    const { uHeight, uPatternScale } = useControls("Triptych Grain Shader", {
-        uHeight: {
-            value: 10,
-            min: 1,
-            max: 20,
-            step: 1,
-        },
+    const { uPatternScale } = useControls("Triptych Grain Shader", {
         uPatternScale: {
             value: 0.001,
             min: 0,
@@ -19,6 +19,10 @@ function _Model(props, ref) {
             step: 0.0001,
         },
     });
+    useEffect(() => {
+        nodes.triptych.geometry.computeBoundingBox();
+        setBoundingBox(nodes.triptych.geometry.boundingBox);
+    }, [setBoundingBox, nodes.triptych.geometry]);
     return (
         <group {...props} dispose={null} scale={0.1}>
             <mesh
@@ -29,8 +33,9 @@ function _Model(props, ref) {
                 ref={ref}
             >
                 <grainShaderMaterial
-                    uHeight={uHeight}
                     uPatternScale={{ x: uPatternScale, y: uPatternScale }}
+                    uBoundingBoxMin={boundingBox.min}
+                    uBoundingBoxMax={boundingBox.max}
                 />
                 <Outlines thickness={0.05} color={"black"} />
             </mesh>
