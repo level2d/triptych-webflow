@@ -1,18 +1,37 @@
+// Matcap shader
+// @see: https://www.clicktorelease.com/blog/creating-spherical-environment-mapping-shader/
+
+// Gradient shader
+// @see: https://stackoverflow.com/questions/52614371/apply-color-gradient-to-material-on-mesh-three-js
+
+// Noise shader
+// @see: https://shaderfrog.com/app/view/4865
+
 precision highp float;
 precision highp int;
 
-uniform float uHeight;
+uniform sampler2D uMatcapTexture;
 uniform vec2 uPatternScale;
-// #define SHOW_DOTS
-// #define SHOW_GRID
-// #define SHOW_ISOLINES
-// #define PATTERN_CIRCLE
-// #define PATTERN_RAMP
-#define PATTERN_VORONOI
 
-varying vec3 vPosition;
-varying vec3 vNormal;
 varying vec2 vUv;
+varying vec3 vEye;
+varying vec3 vN;
+
+vec3 matcap() {
+    vec3 r = reflect(vEye, vN);
+    float m = 2. * sqrt(pow(r.x, 2.) + pow(r.y, 2.) + pow(r.z + 1., 2.));
+    vec2 vN = r.xy / m + .5;
+
+    vec3 color = texture2D(uMatcapTexture, vN).rgb;
+
+    return color;
+}
+
+vec3 gradient() {
+    vec3 color = mix(vec3(1.0, 1.0, 1.0), vec3(0.0, 0.0, 0.0), vUv.y);
+
+    return color;
+}
 
 vec2 random2(vec2 p) {
     return fract(sin(vec2(dot(p, vec2(127.1, 311.7)), dot(p, vec2(269.5, 183.3)))) * 43758.5453);
@@ -51,26 +70,7 @@ vec3 voronoi(vec2 st) {
     vec3 color = vec3(0.0);
     color += m_dist;
 
-    #ifdef SHOW_DOTS
-    // Draw cell center
-    color += 1. - step(.02, m_dist);
-    #endif
-
-    #ifdef SHOW_GRID
-    // Draw grid
-    color.r += step(.98, f_st.x) + step(.98, f_st.y);
-    #endif
-
-    #ifdef SHOW_ISOLINES
-    // Show isolines
-    color -= step(.7, abs(sin(27.0 * m_dist))) * .5;
-    #endif
     return color;
-}
-
-float circle(in vec2 _st, in float _radius) {
-    vec2 l = _st - vec2(0.5);
-    return 1. - smoothstep(_radius - (_radius * 0.01), _radius + (_radius * 0.01), dot(l, l) * 4.0);
 }
 
 vec3 noise() {
@@ -82,33 +82,22 @@ vec3 noise() {
     st = fract(st); // Wrap around 1.0
 
     // Now we have 9 spaces that go from 0-1
-    #ifdef PATTERN_RAMP
-    color = vec3(st, 0.0);
-    #endif
-    #ifdef PATTERN_CIRCLE
-    color = vec3(circle(st, 0.8));
-    #endif
-    #ifdef PATTERN_VORONOI
     color = voronoi(vUv.xy / uPatternScale * 3.0);
-    #endif
-
-    return color;
-}
-
-vec3 gradient() {
-    float howFarUp = clamp(1.0 - (vPosition.y + (uHeight / 2.0)) / uHeight, 0.0, 1.0);
-
-    vec3 color = vec3(howFarUp);
 
     return color;
 }
 
 void main() {
 
+    vec3 matcapColor = matcap();
     vec3 gradientColor = gradient();
     vec3 noiseColor = noise();
 
-    gl_FragColor = vec4(gradientColor + noiseColor, 1.0);
-    // gl_FragColor = vec4( gradientColor, 1.0 ); // gradient only
-    // gl_FragColor = vec4( noiseColor, 1.0 ); // grain only
+    gl_FragColor = vec4(matcapColor + gradientColor + noiseColor, 1.0);
+    // gl_FragColor = vec4(matcapColor + gradientColor, 1.0); // matcap and gradient
+    // gl_FragColor = vec4(gradientColor + noiseColor, 1.0); // gradient and grain
+    // gl_FragColor = vec4(matcapColor + noiseColor, 1.0); // matcap and grain
+    // gl_FragColor = vec4(matcapColor, 1.0); // matcap only
+    // gl_FragColor = vec4(gradientColor, 1.0); // gradient only
+    // gl_FragColor = vec4(noiseColor, 1.0); // grain only
 }
