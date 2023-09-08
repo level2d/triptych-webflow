@@ -2,14 +2,16 @@ import styles from "./HomeScene.module.scss";
 
 import { Suspense, lazy } from "react";
 import { Canvas } from "@react-three/fiber";
-import { Text } from "@react-three/drei";
+import { Text, Html } from "@react-three/drei";
 import { Leva } from "leva";
 import { debug } from "@/js/core/constants";
+
+import loadingLogoUrl from "@/assets/img/loading-logo.gif";
 
 const Scene = lazy(() => {
     return Promise.all([
         import("./Scene"),
-        new Promise((resolve) => setTimeout(resolve, 1000)),
+        new Promise((resolve) => setTimeout(resolve, 2000)),
     ]).then(([moduleExports]) => moduleExports);
 });
 
@@ -20,10 +22,18 @@ export default function HomeScene() {
             <Canvas shadows camera={{ position: [-4, -1.25, 4], fov: 55 }}>
                 <Suspense
                     fallback={
-                        <Text
+                        <Html
                             position={[0, 0, 0]}
-                            rotation-y={-Math.PI * 0.25}
-                        >{`Loading...`}</Text>
+                            style={{
+                                height: "100%",
+                                width: "100%",
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                            }}
+                        >
+                            <img src={loadingLogoUrl} />
+                        </Html>
                     }
                 >
                     <Scene />
