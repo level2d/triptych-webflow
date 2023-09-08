@@ -3,6 +3,8 @@ import styles from "./HomeScene.module.scss";
 import { Suspense, lazy } from "react";
 import { Canvas } from "@react-three/fiber";
 import { Text } from "@react-three/drei";
+import { Leva } from "leva";
+import { debug } from "@/js/core/constants";
 
 const Scene = lazy(() => {
     return Promise.all([
@@ -14,6 +16,7 @@ const Scene = lazy(() => {
 export default function HomeScene() {
     return (
         <div className={styles.wrapper}>
+            <Leva hidden={!debug} />
             <Canvas shadows camera={{ position: [-4, -1.25, 4], fov: 55 }}>
                 <Suspense
                     fallback={
