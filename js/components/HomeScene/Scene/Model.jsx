@@ -2,7 +2,7 @@ import { forwardRef } from "react";
 import { useGLTF, Outlines } from "@react-three/drei";
 import { GLB_ASSET_URLS } from "@/js/core/constants";
 
-export default forwardRef(function Model(props, ref) {
+function _Model(props, ref) {
     const { nodes, materials } = useGLTF(GLB_ASSET_URLS.Locations);
     return (
         <group {...props} dispose={null} scale={0.1}>
@@ -128,6 +128,9 @@ export default forwardRef(function Model(props, ref) {
             />
         </group>
     );
-});
+}
+
+const Model = forwardRef(_Model);
+export default Model;
 
 useGLTF.preload(GLB_ASSET_URLS.Locations);
