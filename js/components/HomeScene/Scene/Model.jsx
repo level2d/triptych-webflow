@@ -1,18 +1,37 @@
 import { forwardRef } from "react";
 import { useGLTF, Outlines } from "@react-three/drei";
 import { GLB_ASSET_URLS } from "@/js/core/constants";
+import { useControls } from "leva";
 
 function _Model(props, ref) {
     const { nodes, materials } = useGLTF(GLB_ASSET_URLS.Locations);
+    const { uHeight, uPatternScale } = useControls({
+        uHeight: {
+            value: 10,
+            min: 1,
+            max: 20,
+            step: 1,
+        },
+        uPatternScale: {
+            value: 0.001,
+            min: 0.0001,
+            max: 0.01,
+            step: 0.0001,
+        },
+    });
     return (
         <group {...props} dispose={null} scale={0.1}>
             <mesh
                 castShadow
                 receiveShadow
                 geometry={nodes.triptych.geometry}
-                material={nodes.triptych.material}
+                // material={nodes.triptych.material}
                 ref={ref}
             >
+                <grainShaderMaterial
+                    uHeight={uHeight}
+                    uPatternScale={{ x: uPatternScale, y: uPatternScale }}
+                />
                 <Outlines thickness={0.05} color={"black"} />
             </mesh>
             <mesh
