@@ -4,7 +4,6 @@ import {
     CameraControls,
     Environment,
     OrthographicCamera,
-    OrbitControls,
 } from "@react-three/drei";
 import { Perf } from "r3f-perf";
 
