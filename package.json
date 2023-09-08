@@ -24,6 +24,7 @@
         "sass": "^1.64.2",
         "vite": "^4.3.9",
         "vite-plugin-eslint": "^1.8.1",
+        "vite-plugin-glsl": "^1.1.2",
         "vite-plugin-mkcert": "^1.16.0"
     },
     "dependencies": {
