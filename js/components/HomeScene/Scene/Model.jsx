@@ -12,10 +12,10 @@ function _Model(props, ref) {
     const { nodes, materials } = useGLTF(GLB_ASSET_URLS.Locations);
     const { uPatternScale } = useControls("Triptych Grain Shader", {
         uPatternScale: {
-            value: 0.001,
-            min: 0,
-            max: 0.5,
-            step: 0.0001,
+            value: 0.01,
+            min: 0.01,
+            max: 2,
+            step: 0.01,
         },
     });
     useEffect(() => {
