@@ -14,7 +14,6 @@ export default function Actions() {
     async function orbit(direction = "right") {
         const cameraPosition = new THREE.Vector3();
         cameraPosition.copy(camera.current.position);
-        console.log(cameraPosition);
 
         currentSubject.current.geometry.computeBoundingSphere();
         const boundingSphere =
