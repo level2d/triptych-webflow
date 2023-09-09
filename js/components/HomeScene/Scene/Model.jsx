@@ -3,7 +3,6 @@ import { forwardRef, useEffect, useState } from "react";
 import { useGLTF, Outlines } from "@react-three/drei";
 import { GLB_ASSET_URLS } from "@/js/core/constants";
 import { useControls } from "leva";
-import { constants } from "@/js/core";
 
 function _Model(props, ref) {
     const [boundingBox, setBoundingBox] = useState({

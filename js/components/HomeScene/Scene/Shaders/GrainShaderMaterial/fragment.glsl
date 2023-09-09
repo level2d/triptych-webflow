@@ -93,11 +93,13 @@ void main() {
     vec3 gradientColor = gradient();
     vec3 noiseColor = noise();
 
-    gl_FragColor = vec4(matcapColor + gradientColor + noiseColor, 1.0);
-    // gl_FragColor = vec4(matcapColor + gradientColor, 1.0); // matcap and gradient
-    // gl_FragColor = vec4(gradientColor + noiseColor, 1.0); // gradient and grain
-    // gl_FragColor = vec4(matcapColor + noiseColor, 1.0); // matcap and grain
-    // gl_FragColor = vec4(matcapColor, 1.0); // matcap only
-    // gl_FragColor = vec4(gradientColor, 1.0); // gradient only
-    // gl_FragColor = vec4(noiseColor, 1.0); // grain only
+    vec3 color = matcapColor + gradientColor + noiseColor;
+    // vec3 color = matcapColor + gradientColor; // matcap and gradient
+    // vec3 color = gradientColor + noiseColor; // gradient and grain
+    // vec3 color = matcapColor + noiseColor; // matcap and grain
+    // vec3 color = matcapColor; // matcap only
+    // vec3 color = gradientColor; // gradient only
+    // vec3 color = noiseColor; // grain only
+
+    gl_FragColor = vec4(color, 1.0);
 }

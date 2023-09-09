@@ -8,7 +8,7 @@ import { constants } from "@/js/core";
 
 const textureLoader = new THREE.TextureLoader();
 const matcapTexture = await textureLoader.loadAsync(
-    constants.TEXTURE_ASSET_URLS.rim_lit_matcap,
+    constants.TEXTURE_ASSET_URLS.hatching_matcap,
 );
 
 export const GrainShaderMaterial = shaderMaterial(
