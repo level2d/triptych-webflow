@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { useControls, button } from "leva";
 
-import { useSceneContext } from "./SceneContext";
+import { useSceneContext } from "./useSceneContext";
 
 export default function Actions() {
     const { camera, cameraControls, currentSubject, padding } =

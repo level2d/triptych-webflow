@@ -8,7 +8,7 @@ import Time from "./class/Time";
 
 // modules
 import * as core from "./core";
-import { HomeExperience, PopQuote, test } from "./modules";
+import { DitheredImage, HomeExperience, PopQuote, test } from "./modules";
 
 let _instance = null;
 export default class App {
@@ -21,6 +21,7 @@ export default class App {
         this.core = core;
         this.bus = new Bus();
         this.time = new Time();
+        this.ditheredImage = new DitheredImage();
         this.homeExperience = new HomeExperience();
         this.popQuote = new PopQuote();
         this.test = test;
@@ -41,6 +42,7 @@ export default class App {
     }
 
     initModules() {
+        this.ditheredImage.init();
         this.homeExperience.init();
         this.popQuote.init();
         this.test.init();

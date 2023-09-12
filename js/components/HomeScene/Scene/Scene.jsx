@@ -8,7 +8,7 @@ import {
 import { Perf } from "r3f-perf";
 
 import { debug } from "@/js/core/constants";
-import { SceneContext } from "./SceneContext";
+import SceneContext from "./SceneContext";
 import Actions from "./Actions";
 import Model from "./Model";
 import "./Shaders";
