@@ -19,6 +19,8 @@ uniform float uGradientStop;
 uniform bool uMatcapEnabled;
 uniform bool uGradientEnabled;
 uniform bool uNoiseEnabled;
+uniform float uNoiseContrast;
+uniform float uNoiseScalarDistanceFactor;
 
 varying vec2 vScreenSpace;
 varying vec2 vUv;
@@ -72,7 +74,7 @@ vec2 voronoi(in vec3 x, in float time) {
                 // calculate the distance vector between the current pixel and the moving random point 'o'
                 vec3 r = g + (0.5 + 0.5 * sin(vec3(time) + 6.2831 * o)) - f;
                 // calculate the scalar distance of r
-                float d = dot(r, r);
+                float d = dot(r, r) * uNoiseScalarDistanceFactor;
 
                 // find the minimum distance
                 // it is most important to save the minimum distance into the result 'm'
@@ -93,7 +95,7 @@ vec3 noise() {
     vec2 st = vScreenSpace * vec2(uNoiseScale);
     vec2 res = voronoi(vec3(st * 3.0, 0.0), 0.0);
     // darken by pow
-    vec3 color = vec3(pow(res.x, 1.5));
+    vec3 color = vec3(pow(res.x, uNoiseContrast));
 
     return color;
 }
