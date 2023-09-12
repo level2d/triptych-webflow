@@ -15,6 +15,7 @@ uniform sampler2D uMatcapTexture;
 uniform vec2 uPatternScale;
 
 varying vec3 vPosition;
+varying vec2 vScreenSpace;
 varying vec2 vUv;
 varying vec3 vEye;
 varying vec3 vN;
@@ -82,7 +83,7 @@ vec2 voronoi(in vec3 x, in float time) {
 
 vec3 noise() {
 
-    vec2 st = vPosition.xy / uPatternScale;
+    vec2 st = vScreenSpace * vec2(500);
     vec2 res = voronoi(vec3(st * 3.0, 0.0), 0.0);
     // darken by pow
     vec3 color = vec3(pow(res.x, 1.5));

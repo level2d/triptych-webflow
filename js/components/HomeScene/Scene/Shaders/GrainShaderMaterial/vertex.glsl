@@ -4,7 +4,7 @@ precision highp int;
 uniform vec3 uBoundingBoxMin;
 uniform vec3 uBoundingBoxMax;
 
-varying vec3 vPosition;
+varying vec2 vScreenSpace;
 varying vec2 vUv;
 
 varying vec3 vEye;
@@ -12,7 +12,6 @@ varying vec3 vN;
 
 void main() {
     vUv = uv;
-    vPosition = position;
 
     // tweaks for gradient. Clamp vUv to bounding box
     vUv.y = (position.y - uBoundingBoxMin.y) / (uBoundingBoxMax.y - uBoundingBoxMin.y);
@@ -23,4 +22,6 @@ void main() {
     vN = normalize(normalMatrix * normal);
 
     gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+
+    vScreenSpace = gl_Position.xy / gl_Position.w;
 }
