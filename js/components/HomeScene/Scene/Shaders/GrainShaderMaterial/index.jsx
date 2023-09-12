@@ -16,7 +16,7 @@ export const GrainShaderMaterial = shaderMaterial(
     {
         uBoundingBoxMin: new THREE.Vector3(0, 0, 0),
         uBoundingBoxMax: new THREE.Vector3(1, 1, 1),
-        uPatternScale: { x: 0.1, y: 0.1 },
+        uNoiseScale: 1000.0,
         uMatcapTexture: matcapTexture,
     },
     // Vertex Shader
