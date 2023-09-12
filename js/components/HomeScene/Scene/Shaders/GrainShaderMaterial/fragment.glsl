@@ -13,8 +13,10 @@ precision highp int;
 
 uniform sampler2D uMatcapTexture;
 uniform float uNoiseScale;
+uniform vec3 uGradientColorA;
+uniform vec3 uGradientColorB;
+uniform float uGradientStop;
 
-varying vec3 vPosition;
 varying vec2 vScreenSpace;
 varying vec2 vUv;
 varying vec3 vEye;
@@ -31,7 +33,9 @@ vec3 matcap() {
 }
 
 vec3 gradient() {
-    vec3 color = mix(vec3(1.0, 1.0, 1.0), vec3(0.0, 0.0, 0.0), vUv.y);
+    float stop0 = smoothstep(vUv.y, 0.0, uGradientStop);
+
+    vec3 color = mix(uGradientColorA, uGradientColorB, stop0);
 
     return color;
 }

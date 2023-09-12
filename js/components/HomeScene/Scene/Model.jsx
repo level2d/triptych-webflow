@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { forwardRef, useEffect, useState } from "react";
+import { forwardRef, useEffect, useRef, useState } from "react";
 import { useGLTF, Outlines } from "@react-three/drei";
 import { GLB_ASSET_URLS } from "@/js/core/constants";
 import { useControls, folder } from "leva";
@@ -9,44 +9,70 @@ function _Model(props, ref) {
         min: new THREE.Vector3(0, 0, 0),
         max: new THREE.Vector3(1, 1, 1),
     });
+    const grainShaderMaterialRef = useRef();
     const { nodes, materials } = useGLTF(GLB_ASSET_URLS.Locations);
-    const { uNoiseScale, outlineColor, outlineThickness } = useControls({
-        Outlines: folder({
-            outlineColor: "black",
-            outlineThickness: {
-                value: 0.03,
-                step: 0.01,
-                min: 0.01,
-                max: 0.1,
-            },
-        }),
-        "Triptych Shader": folder({
-            Noise: folder({
-                uNoiseScale: {
-                    value: 1000.0,
-                    min: 10,
-                    max: 2000,
-                    step: 10,
+    const { uNoiseScale, uGradientStop, outlineColor, outlineThickness } =
+        useControls({
+            Outlines: folder({
+                outlineColor: "black",
+                outlineThickness: {
+                    value: 0.03,
+                    step: 0.01,
+                    min: 0.01,
+                    max: 0.1,
                 },
             }),
-            Gradient: folder({
-                uGradientColorA: {
-                    r: 255,
-                    g: 255,
-                    b: 255,
-                },
-                uGradientColorB: {
-                    r: 52,
-                    g: 52,
-                    b: 52,
-                },
+            "Triptych Shader": folder({
+                Noise: folder({
+                    uNoiseScale: {
+                        value: 1000.0,
+                        min: 10,
+                        max: 2000,
+                        step: 10,
+                    },
+                }),
+                Gradient: folder({
+                    uGradientStop: {
+                        value: 0.25,
+                        min: 0.0,
+                        max: 0.5,
+                        step: 0.01,
+                    },
+                    uGradientColorA: {
+                        value: {
+                            r: 255,
+                            g: 255,
+                            b: 255,
+                        },
+                        onChange: (v) => {
+                            console.log("uGradientColorA:", v);
+                            const color = new THREE.Vector3(v.r, v.g, v.b);
+                            color.divide(new THREE.Vector3(255, 255, 255));
+                            grainShaderMaterialRef.current.uniforms.uGradientColorA.value =
+                                color;
+                        },
+                    },
+                    uGradientColorB: {
+                        value: {
+                            r: 0,
+                            g: 0,
+                            b: 0,
+                        },
+                        onChange: (v) => {
+                            const color = new THREE.Vector3(v.r, v.g, v.b);
+                            color.divide(new THREE.Vector3(255, 255, 255));
+                            grainShaderMaterialRef.current.uniforms.uGradientColorB.value =
+                                color;
+                        },
+                    },
+                }),
             }),
-        }),
-    });
+        });
     useEffect(() => {
         nodes.triptych.geometry.computeBoundingBox();
         setBoundingBox(nodes.triptych.geometry.boundingBox);
     }, [setBoundingBox, nodes.triptych.geometry]);
+
     return (
         <group {...props} dispose={null} scale={0.1}>
             <mesh
@@ -60,6 +86,8 @@ function _Model(props, ref) {
                     uNoiseScale={uNoiseScale}
                     uBoundingBoxMin={boundingBox.min}
                     uBoundingBoxMax={boundingBox.max}
+                    uGradientStop={uGradientStop}
+                    ref={grainShaderMaterialRef}
                 />
                 <Outlines thickness={outlineThickness} color={outlineColor} />
             </mesh>

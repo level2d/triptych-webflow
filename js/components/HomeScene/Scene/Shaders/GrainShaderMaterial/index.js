@@ -14,10 +14,16 @@ const matcapTexture = await textureLoader.loadAsync(
 export const GrainShaderMaterial = shaderMaterial(
     // Uniform
     {
+        // matcap pass
+        uMatcapTexture: matcapTexture,
+        // color pass
         uBoundingBoxMin: new THREE.Vector3(0, 0, 0),
         uBoundingBoxMax: new THREE.Vector3(1, 1, 1),
+        uGradientColorA: new THREE.Vector3(1, 1, 1),
+        uGradientColorB: new THREE.Vector3(0, 0, 0),
+        uGradientStop: 0.5,
+        // noise pass
         uNoiseScale: 1000.0,
-        uMatcapTexture: matcapTexture,
     },
     // Vertex Shader
     `${vertexShaderCode}`,
