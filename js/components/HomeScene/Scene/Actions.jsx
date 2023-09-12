@@ -82,7 +82,7 @@ export default function Actions() {
         }
     }
 
-    useControls({
+    useControls("Camera Actions", {
         orbitRight: button(() => orbit("right")),
         orbitLeft: button(() => orbit("left")),
         orbitUp: button(() => orbit("up")),

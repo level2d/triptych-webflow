@@ -2,7 +2,7 @@ import * as THREE from "three";
 import { forwardRef, useEffect, useState } from "react";
 import { useGLTF, Outlines } from "@react-three/drei";
 import { GLB_ASSET_URLS } from "@/js/core/constants";
-import { useControls } from "leva";
+import { useControls, folder } from "leva";
 
 function _Model(props, ref) {
     const [boundingBox, setBoundingBox] = useState({
@@ -10,13 +10,38 @@ function _Model(props, ref) {
         max: new THREE.Vector3(1, 1, 1),
     });
     const { nodes, materials } = useGLTF(GLB_ASSET_URLS.Locations);
-    const { uPatternScale } = useControls("Triptych Grain Shader", {
-        uPatternScale: {
-            value: 0.01,
-            min: 0.01,
-            max: 2,
-            step: 0.01,
-        },
+    const { uNoiseScale, outlineColor, outlineThickness } = useControls({
+        Outlines: folder({
+            outlineColor: "black",
+            outlineThickness: {
+                value: 0.03,
+                step: 0.01,
+                min: 0.01,
+                max: 0.1,
+            },
+        }),
+        "Triptych Shader": folder({
+            Noise: folder({
+                uNoiseScale: {
+                    value: 1000.0,
+                    min: 10,
+                    max: 2000,
+                    step: 10,
+                },
+            }),
+            Gradient: folder({
+                uGradientColorA: {
+                    r: 255,
+                    g: 255,
+                    b: 255,
+                },
+                uGradientColorB: {
+                    r: 52,
+                    g: 52,
+                    b: 52,
+                },
+            }),
+        }),
     });
     useEffect(() => {
         nodes.triptych.geometry.computeBoundingBox();
@@ -32,18 +57,18 @@ function _Model(props, ref) {
                 ref={ref}
             >
                 <grainShaderMaterial
-                    uPatternScale={{ x: uPatternScale, y: uPatternScale }}
+                    uNoiseScale={uNoiseScale}
                     uBoundingBoxMin={boundingBox.min}
                     uBoundingBoxMax={boundingBox.max}
                 />
-                <Outlines thickness={0.05} color={"black"} />
+                <Outlines thickness={outlineThickness} color={outlineColor} />
             </mesh>
-            <mesh
+            {/* <mesh
                 castShadow
                 receiveShadow
                 geometry={nodes.water.geometry}
                 material={nodes.water.material}
-            />
+            /> */}
             <mesh
                 castShadow
                 receiveShadow
