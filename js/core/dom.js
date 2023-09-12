@@ -25,6 +25,16 @@ const dom = {
      *
      */
     popQuote: $("[data-module='pop-quote']"),
+
+    /**
+     *
+     * @public
+     * @member ditheredImage
+     * @memberof core.dom
+     * @description cached nodes for DitheredImage module
+     *
+     */
+    ditheredImage: $("[data-module='dithered-image']"),
 };
 
 export default dom;
