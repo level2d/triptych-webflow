@@ -39,12 +39,14 @@ const Loading = () => {
 export default function HomeScene() {
     return (
         <div className={styles.wrapper} data-lenis-prevent>
-            <Leva hidden={!debug} />
             <Canvas shadows camera={{ position: [-4, -1.25, 4], fov: 55 }}>
                 <Suspense fallback={<Loading />}>
                     <Scene />
                 </Suspense>
             </Canvas>
+            <div className={styles.levaWrapper}>
+                <Leva hidden={!debug} fill />
+            </div>
         </div>
     );
 }
