@@ -16,6 +16,9 @@ uniform float uNoiseScale;
 uniform vec3 uGradientColorA;
 uniform vec3 uGradientColorB;
 uniform float uGradientStop;
+uniform bool uMatcapEnabled;
+uniform bool uGradientEnabled;
+uniform bool uNoiseEnabled;
 
 varying vec2 vScreenSpace;
 varying vec2 vUv;
@@ -101,13 +104,20 @@ void main() {
     vec3 gradientColor = gradient();
     vec3 noiseColor = noise();
 
-    vec3 color = matcapColor + gradientColor + noiseColor;
-    // vec3 color = matcapColor + gradientColor; // matcap and gradient
-    // vec3 color = gradientColor + noiseColor; // gradient and grain
-    // vec3 color = matcapColor + noiseColor; // matcap and grain
-    // vec3 color = matcapColor; // matcap only
-    // vec3 color = gradientColor; // gradient only
-    // vec3 color = noiseColor; // grain only
+    // set a default color in case everything is turned off
+    vec3 color = vec3(0, 0, 0);
+
+    if(uMatcapEnabled) {
+        color += matcapColor;
+    }
+
+    if(uGradientEnabled) {
+        color += gradientColor;
+    }
+
+    if(uNoiseEnabled) {
+        color += noiseColor;
+    }
 
     gl_FragColor = vec4(color, 1.0);
 }

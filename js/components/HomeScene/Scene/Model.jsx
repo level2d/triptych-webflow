@@ -11,63 +11,75 @@ function _Model(props, ref) {
     });
     const grainShaderMaterialRef = useRef();
     const { nodes, materials } = useGLTF(GLB_ASSET_URLS.Locations);
-    const { uNoiseScale, uGradientStop, outlineColor, outlineThickness } =
-        useControls({
-            Outlines: folder({
-                outlineColor: "black",
-                outlineThickness: {
-                    value: 0.03,
-                    step: 0.01,
-                    min: 0.01,
-                    max: 0.1,
+    const {
+        uNoiseScale,
+        uGradientStop,
+        outlineColor,
+        outlineThickness,
+        uMatcapEnabled,
+        uNoiseEnabled,
+        uGradientEnabled,
+    } = useControls({
+        Outlines: folder({
+            outlineColor: "black",
+            outlineThickness: {
+                value: 0.03,
+                step: 0.01,
+                min: 0.01,
+                max: 0.1,
+            },
+        }),
+        "Triptych Shader": folder({
+            Matcap: folder({
+                uMatcapEnabled: true,
+            }),
+            Noise: folder({
+                uNoiseEnabled: true,
+                uNoiseScale: {
+                    value: 1000.0,
+                    min: 10,
+                    max: 2000,
+                    step: 10,
                 },
             }),
-            "Triptych Shader": folder({
-                Noise: folder({
-                    uNoiseScale: {
-                        value: 1000.0,
-                        min: 10,
-                        max: 2000,
-                        step: 10,
+            Gradient: folder({
+                uGradientEnabled: true,
+                uGradientStop: {
+                    value: 0.25,
+                    min: 0.0,
+                    max: 0.5,
+                    step: 0.01,
+                },
+                uGradientColorA: {
+                    value: {
+                        r: 255,
+                        g: 255,
+                        b: 255,
                     },
-                }),
-                Gradient: folder({
-                    uGradientStop: {
-                        value: 0.25,
-                        min: 0.0,
-                        max: 0.5,
-                        step: 0.01,
+                    onChange: (v) => {
+                        console.log("uGradientColorA:", v);
+                        const color = new THREE.Vector3(v.r, v.g, v.b);
+                        color.divide(new THREE.Vector3(255, 255, 255));
+                        grainShaderMaterialRef.current.uniforms.uGradientColorA.value =
+                            color;
                     },
-                    uGradientColorA: {
-                        value: {
-                            r: 255,
-                            g: 255,
-                            b: 255,
-                        },
-                        onChange: (v) => {
-                            console.log("uGradientColorA:", v);
-                            const color = new THREE.Vector3(v.r, v.g, v.b);
-                            color.divide(new THREE.Vector3(255, 255, 255));
-                            grainShaderMaterialRef.current.uniforms.uGradientColorA.value =
-                                color;
-                        },
+                },
+                uGradientColorB: {
+                    value: {
+                        r: 0,
+                        g: 0,
+                        b: 0,
                     },
-                    uGradientColorB: {
-                        value: {
-                            r: 0,
-                            g: 0,
-                            b: 0,
-                        },
-                        onChange: (v) => {
-                            const color = new THREE.Vector3(v.r, v.g, v.b);
-                            color.divide(new THREE.Vector3(255, 255, 255));
-                            grainShaderMaterialRef.current.uniforms.uGradientColorB.value =
-                                color;
-                        },
+                    onChange: (v) => {
+                        const color = new THREE.Vector3(v.r, v.g, v.b);
+                        color.divide(new THREE.Vector3(255, 255, 255));
+                        grainShaderMaterialRef.current.uniforms.uGradientColorB.value =
+                            color;
                     },
-                }),
+                },
             }),
-        });
+        }),
+    });
     useEffect(() => {
         nodes.triptych.geometry.computeBoundingBox();
         setBoundingBox(nodes.triptych.geometry.boundingBox);
@@ -87,6 +99,9 @@ function _Model(props, ref) {
                     uBoundingBoxMin={boundingBox.min}
                     uBoundingBoxMax={boundingBox.max}
                     uGradientStop={uGradientStop}
+                    uMatcapEnabled={uMatcapEnabled}
+                    uNoiseEnabled={uNoiseEnabled}
+                    uGradientEnabled={uGradientEnabled}
                     ref={grainShaderMaterialRef}
                 />
                 <Outlines thickness={outlineThickness} color={outlineColor} />

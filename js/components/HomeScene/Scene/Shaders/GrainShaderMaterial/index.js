@@ -15,14 +15,17 @@ export const GrainShaderMaterial = shaderMaterial(
     // Uniform
     {
         // matcap pass
+        uMatcapEnabled: true,
         uMatcapTexture: matcapTexture,
         // color pass
+        uGradientEnabled: true,
         uBoundingBoxMin: new THREE.Vector3(0, 0, 0),
         uBoundingBoxMax: new THREE.Vector3(1, 1, 1),
         uGradientColorA: new THREE.Vector3(1, 1, 1),
         uGradientColorB: new THREE.Vector3(0, 0, 0),
         uGradientStop: 0.5,
         // noise pass
+        uNoiseEnabled: true,
         uNoiseScale: 1000.0,
     },
     // Vertex Shader
