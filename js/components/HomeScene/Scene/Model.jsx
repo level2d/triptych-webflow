@@ -13,6 +13,8 @@ function _Model(props, ref) {
     const { nodes, materials } = useGLTF(GLB_ASSET_URLS.Locations);
     const {
         uNoiseScale,
+        uNoiseContrast,
+        uNoiseScalarDistanceFactor,
         uGradientStop,
         outlineColor,
         outlineThickness,
@@ -40,6 +42,18 @@ function _Model(props, ref) {
                     min: 10,
                     max: 2000,
                     step: 10,
+                },
+                uNoiseScalarDistanceFactor: {
+                    value: 1.25,
+                    min: 0,
+                    max: 10,
+                    step: 0.1,
+                },
+                uNoiseContrast: {
+                    value: 1.25,
+                    min: 0,
+                    max: 10,
+                    step: 0.1,
                 },
             }),
             Gradient: folder({
@@ -95,12 +109,14 @@ function _Model(props, ref) {
                 ref={ref}
             >
                 <grainShaderMaterial
+                    uNoiseEnabled={uNoiseEnabled}
                     uNoiseScale={uNoiseScale}
+                    uNoiseScalarDistanceFactor={uNoiseScalarDistanceFactor}
+                    uNoiseContrast={uNoiseContrast}
                     uBoundingBoxMin={boundingBox.min}
                     uBoundingBoxMax={boundingBox.max}
                     uGradientStop={uGradientStop}
                     uMatcapEnabled={uMatcapEnabled}
-                    uNoiseEnabled={uNoiseEnabled}
                     uGradientEnabled={uGradientEnabled}
                     ref={grainShaderMaterialRef}
                 />
