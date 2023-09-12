@@ -6,8 +6,7 @@ import vertexShaderCode from "./vertex.glsl";
 import fragmentShaderCode from "./fragment.glsl";
 import { constants } from "@/js/core";
 
-const textureLoader = new THREE.TextureLoader();
-const matcapTexture = await textureLoader.loadAsync(
+const matcapTexture = new THREE.TextureLoader().load(
     constants.TEXTURE_ASSET_URLS.hatching_matcap,
 );
 
