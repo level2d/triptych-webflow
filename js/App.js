@@ -8,7 +8,7 @@ import Time from "./class/Time";
 
 // modules
 import * as core from "./core";
-import { HomeScene, PopQuote, test } from "./modules";
+import { HomeExperience, PopQuote, test } from "./modules";
 
 let _instance = null;
 export default class App {
@@ -21,7 +21,7 @@ export default class App {
         this.core = core;
         this.bus = new Bus();
         this.time = new Time();
-        this.homeScene = new HomeScene();
+        this.homeExperience = new HomeExperience();
         this.popQuote = new PopQuote();
         this.test = test;
 
@@ -41,7 +41,7 @@ export default class App {
     }
 
     initModules() {
-        this.homeScene.init();
+        this.homeExperience.init();
         this.popQuote.init();
         this.test.init();
         console.log("Modules: init");

@@ -3,6 +3,7 @@ import { defineConfig, loadEnv } from "vite";
 
 // plugins
 import eslint from "vite-plugin-eslint";
+import glsl from "vite-plugin-glsl";
 import mkcert from "vite-plugin-mkcert";
 import react from "@vitejs/plugin-react";
 
@@ -32,7 +33,7 @@ export default defineConfig((command, mode) => {
                 protocol: "wss",
             },
         },
-        plugins: [mkcert(), eslint(), react()],
+        plugins: [mkcert(), eslint(), react(), glsl()],
         build: {
             minify: true,
             manifest: true,

@@ -9,12 +9,12 @@ const dom = {
     /**
      *
      * @public
-     * @member homeScene
+     * @member homeExperience
      * @memberof core.dom
-     * @description cached nodes for HomeScene module
+     * @description cached nodes for homeExperience module
      *
      */
-    homeScene: $("[data-home-scene]"),
+    homeExperience: $("[data-module='home-experience']"),
 
     /**
      *
@@ -24,7 +24,7 @@ const dom = {
      * @description cached nodes for PopQuote module
      *
      */
-    popQuote: $("[data-pop-quote]"),
+    popQuote: $("[data-module='pop-quote']"),
 };
 
 export default dom;
