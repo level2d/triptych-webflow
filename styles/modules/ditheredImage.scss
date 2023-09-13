@@ -1,17 +1,33 @@
 [data-module="dithered-image"] {
-    position: relative;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
 
-    > img {
+    .inner {
+        position: relative;
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+    }
+
+    img,
+    canvas {
+        height: 100%;
+        width: 100%;
+    }
+
+    img {
         position: relative;
     }
 
-    > canvas {
-        transition: all 200ms ease-in-out;
-        opacity: 1;
+    canvas {
+        position: absolute;
         top: 0;
         left: 0;
-        position: absolute;
-        object-fit: cover;
+        transition: all 200ms ease-in-out;
+        opacity: 1;
     }
 
     &[data-hover]:hover {
