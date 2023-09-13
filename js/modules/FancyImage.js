@@ -34,7 +34,7 @@ class _FancyImage {
 
     resize = () => {
         this.setScaled();
-        this.render();
+        this.setMediaSizes();
         this.drawImage();
     };
 
@@ -62,7 +62,7 @@ class _FancyImage {
         this.ctx = ctx;
     };
 
-    render = async () => {
+    setMediaSizes = async () => {
         // Apply object fit styles
         this.DOM.img.style.width = `${this.scaled.width}px`;
         this.DOM.img.style.height = `${this.scaled.height}px`;
@@ -122,7 +122,7 @@ class _FancyImage {
         this.setScaled();
         this.setCanvas();
 
-        this.render();
+        this.setMediaSizes();
         this.drawImage();
     };
 }
