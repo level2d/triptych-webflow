@@ -10,32 +10,29 @@ import * as intrinsicScale from "intrinsic-scale";
 import App from "@/js/App";
 
 export default class FancyImage {
-    $target = null;
-    targets = [];
-    renderedContainers = [];
+    $targets = null;
 
     constructor() {
         this.app = new App();
-        this.$target = this.app.core.dom.ditheredImage;
-        this.targets = Array.from(this.$target);
+        this.$targets = this.app.core.dom.fancyImage;
     }
 
     resizeEnd = () => {
-        if (this.renderedContainers.length <= 0) return;
-        this.$target.next(".dithered-image").remove();
-        this.targets.forEach((node) => this.renderImage(node));
+        if (this.$targets.next(".fancy-image").length <= 0) return;
+        this.$targets.next(".fancy-image").remove();
+        this.$targets.each((i) => this.renderImage(this.$targets[i]));
     };
 
     renderImage = async (node) => {
         const parentNode = node.parentNode;
-        parentNode.dataset.moduleDitheredImageParent = ""; // add parent positioning
+        parentNode.dataset.moduleFancyImageParent = ""; // add parent positioning
 
         // Detect object fit mode
         const objectFit = node.dataset.objectFit ?? "contain";
 
         // Create container that everything lives inside
         const container = document.createElement("div");
-        container.classList.add("dithered-image");
+        container.classList.add("fancy-image");
 
         // Append as next sibling of source node
         if (node.nextSibling) {
@@ -46,7 +43,7 @@ export default class FancyImage {
 
         // Create inner
         const inner = document.createElement("div");
-        inner.classList.add("dithered-image__inner");
+        inner.classList.add("fancy-image__inner");
         container.appendChild(inner);
 
         // Detect image window size
@@ -54,7 +51,7 @@ export default class FancyImage {
 
         // Load new image
         const img = await imagePromise(node.src);
-        img.classList.add("dithered-image__img");
+        img.classList.add("fancy-image__img");
 
         // Calculate img and canvas sizing based on object fit mode
         const scaled = intrinsicScale[objectFit](
@@ -69,7 +66,7 @@ export default class FancyImage {
 
         // Create canvas
         const { canvas, ctx } = canvas2d(buf.width, buf.height);
-        canvas.classList.add("dithered-image__canvas");
+        canvas.classList.add("fancy-image__canvas");
         ctx.fillStyle = "white";
 
         // Dither the image
@@ -88,14 +85,14 @@ export default class FancyImage {
         // Append everything to DOM
         inner.appendChild(img);
         inner.appendChild(canvas);
-        container.classList.add("dithered-image--ready");
-
-        this.renderedContainers.push(container);
+        container.classList.add("fancy-image--ready");
     };
 
     init = () => {
-        if (this.targets.length) {
-            this.targets.forEach(this.renderImage);
+        if (this.$targets.length > 0) {
+            this.$targets.each((i) => {
+                this.renderImage(this.$targets[i]);
+            });
         }
     };
 }

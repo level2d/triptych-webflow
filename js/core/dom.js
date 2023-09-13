@@ -29,12 +29,12 @@ const dom = {
     /**
      *
      * @public
-     * @member ditheredImage
+     * @member fancyImage
      * @memberof core.dom
-     * @description cached nodes for DitheredImage module
+     * @description cached nodes for fancyImage module
      *
      */
-    ditheredImage: $("[data-module='dithered-image']"),
+    fancyImage: $("[data-module='fancy-image']"),
 };
 
 export default dom;

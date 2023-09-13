@@ -1,8 +1,8 @@
-[data-module-dithered-image-parent] {
+[data-module-fancy-image-parent] {
     position: relative;
 }
 
-[data-module="dithered-image"] + .dithered-image {
+[data-module="fancy-image"] + .fancy-image {
     position: absolute;
     top: 0;
     left: 0;
@@ -14,15 +14,15 @@
         visibility 200ms ease-in-out,
         opacity 200ms ease-in-out;
 
-    .dithered-image__inner {
+    .fancy-image__inner {
         position: relative;
         height: 100%;
         width: 100%;
         overflow: hidden;
     }
 
-    img.dithered-image__img,
-    canvas.dithered-image__canvas {
+    img.fancy-image__img,
+    canvas.fancy-image__canvas {
         // reset styles
         object-fit: unset;
         max-width: unset;
@@ -38,7 +38,7 @@
         opacity: 1;
     }
 
-    &.dithered-image--ready {
+    &.fancy-image--ready {
         visibility: visible;
         opacity: 1;
 
@@ -52,7 +52,7 @@
     }
 }
 
-[data-hover] + .dithered-image:hover {
+[data-hover] + .fancy-image:hover {
     canvas {
         opacity: 0;
         filter: blur(2px);
