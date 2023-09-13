@@ -24,9 +24,11 @@ export default class DitheredImage {
         if (this.renderedTargets.length <= 0) return;
         this.renderedTargets.forEach((node) => {
             const inner = node.querySelector(".inner");
-            node.removeChild(inner);
-
-            this.renderImage(node);
+            node.classList.remove("ready");
+            setTimeout(() => {
+                node.removeChild(inner);
+                this.renderImage(node);
+            }, 200);
         });
     };
 
@@ -64,6 +66,7 @@ export default class DitheredImage {
         canvas.style.left = `${scaled.x}px`;
         inner.appendChild(img);
         inner.appendChild(canvas);
+        node.classList.add("ready");
 
         this.renderedTargets.push(node);
     };
