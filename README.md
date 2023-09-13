@@ -83,6 +83,7 @@ See [here](https://github.com/vitejs/vite/issues/1984#issuecomment-778403608) fo
 Requirements:
 
 -   This module's attributes must exist on a Webflow image element.
+-   The Webflow image element must have it's `load` setting set to `Eager:lLoads with page`.
 -   This module only supports object-fit styles of "contain" or "cover". Make sure your root Webflow image element has the same `object-fit` style value as the `data-object-fit` attribute.
 -   The Webflow image element must be inside a containing div. The containing div doesn't need to have any styling. It just needs to exist.
 
