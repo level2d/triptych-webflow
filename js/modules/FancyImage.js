@@ -48,7 +48,7 @@ class _FancyImage {
     resize = () => {
         this.setScaled();
         this.setMediaSizes();
-        this.drawImage();
+        this.drawFinalFrame();
     };
 
     setScaled = () => {
