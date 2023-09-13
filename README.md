@@ -76,9 +76,9 @@ See [here](https://github.com/vitejs/vite/issues/1984#issuecomment-778403608) fo
 </script>
 ```
 
-## Module Usage
+# Modules
 
-### Fancy Image
+## Fancy Image
 
 Requirements:
 
