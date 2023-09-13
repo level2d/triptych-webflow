@@ -5,6 +5,7 @@ import lenis from "./lib/lenis";
 // class
 import Bus from "./class/Bus";
 import Time from "./class/Time";
+import Sizes from "./class/Sizes";
 
 // modules
 import * as core from "./core";
@@ -21,12 +22,15 @@ export default class App {
         this.core = core;
         this.bus = new Bus();
         this.time = new Time();
+        this.sizes = new Sizes();
         this.ditheredImage = new DitheredImage();
         this.homeExperience = new HomeExperience();
         this.popQuote = new PopQuote();
         this.test = test;
 
         this.update = this.update.bind(this);
+        this.resize = this.resize.bind(this);
+        this.resizeEnd = this.resizeEnd.bind(this);
 
         this.init();
     }
@@ -37,8 +41,15 @@ export default class App {
         lenis.raf(this.time.elapsed * 1000); // lenis requires time in milliseconds
     }
 
+    resize() {}
+
+    resizeEnd() {
+        this.ditheredImage.resizeEnd();
+    }
+
     bindListeners() {
         this.time.on("tick", this.update);
+        this.sizes.on("window resize end", this.resizeEnd);
     }
 
     initModules() {
