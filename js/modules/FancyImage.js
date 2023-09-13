@@ -21,6 +21,7 @@ class _FancyImage {
     // settings
     src = null;
     ditherEnabled = false;
+    pixelAnimationEnabled = false;
     objectFit = "contain";
     // inferred from settings
     scaleFunc = null;
@@ -86,8 +87,6 @@ class _FancyImage {
         this.DOM.canvas.style.height = `${this.scaled.height}px`;
         this.DOM.canvas.style.top = `${this.scaled.y}px`;
         this.DOM.canvas.style.left = `${this.scaled.x}px`;
-
-        this.DOM.container.classList.add("fancy-image--ready");
     };
 
     drawFinalFrame = () => {
@@ -154,7 +153,7 @@ class _FancyImage {
         // Clear the canvas
         this.ctx.clearRect(0, 0, this.scaled.width, this.scaled.height);
 
-        // Draw the first frame
+        // Draw the final frame
         this.drawFinalFrame();
 
         // Draw the original image at a fraction of the final size
@@ -179,19 +178,20 @@ class _FancyImage {
      * Renders the image with increasing pixelation factor at each step.
      */
     animatePixels = () => {
-        console.log("here");
         if (this.pxIndex < this.pxFactorValues.length) {
             // Increase the pixelation factor and continue animating
             setTimeout(
                 () => {
                     // Render the image with the current pixelation factor
                     this.renderPixelFrame();
+                    this.DOM.container.classList.add("fancy-image--ready");
                     this.pxIndex++;
                     this.animatePixels();
                 },
                 this.pxIndex === 0 ? 300 : 80,
             ); // The first time should be the longest.
         } else {
+            this.DOM.container.classList.add("fancy-image--animate-end");
             this.pxIndex = this.pxFactorValues.length - 1;
         }
     };
@@ -205,6 +205,9 @@ class _FancyImage {
         this.objectFit = this.DOM.el.dataset.objectFit ?? "contain"; // object fit mode
         this.ditherEnabled =
             typeof this.DOM.el.dataset.ditherEnabled !== "undefined" ?? false;
+        this.pixelAnimationEnabled =
+            typeof this.DOM.el.dataset.pixelAnimationEnabled !== "undefined" ??
+            false;
         this.scaleFunc = intrinsicScale[this.objectFit];
 
         // DOM
@@ -230,7 +233,11 @@ class _FancyImage {
         this.setMediaSizes();
         this.drawFinalFrame();
 
-        this.animatePixels();
+        if (this.pixelAnimationEnabled) {
+            this.animatePixels();
+        } else {
+            this.DOM.container.classList.add("fancy-image--ready");
+        }
     };
 }
 
