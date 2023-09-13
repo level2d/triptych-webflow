@@ -9,54 +9,54 @@ import * as intrinsicScale from "intrinsic-scale";
 
 import App from "@/js/App";
 
-export default class FancyImage {
-    $targets = null;
+class _FancyImage {
+    DOM = {
+        el: null,
+        parentEl: null,
+        container: null,
+    };
+    src = null;
+    ditherEnabled = false;
+    objectFit = "contain";
 
-    constructor() {
-        this.app = new App();
-        this.$targets = this.app.core.dom.fancyImage;
+    constructor(node) {
+        // setup
+        this.DOM.el = node;
+        this.DOM.parentEl = this.DOM.el.parentElement;
+        this.DOM.parentEl.dataset.fancyImageParent = ""; // add parent positioning attribute
+        this.DOM.container = document.createElement("div");
+        this.DOM.container.classList.add("fancy-image");
+        this.DOM.parentEl.appendChild(this.DOM.container); // app as next sibling of source node
+
+        // settings from node
+        this.src = this.DOM.el.src;
+        this.objectFit = this.DOM.el.dataset.objectFit ?? "contain"; // object fit mode
+        this.ditherEnabled =
+            typeof this.DOM.el.dataset.ditherEnabled !== "undefined" ?? false;
+
+        this.render();
     }
 
     resizeEnd = () => {
-        if (this.$targets.next(".fancy-image").length <= 0) return;
-        this.$targets.next(".fancy-image").remove();
-        this.$targets.each((i) => this.renderImage(this.$targets[i]));
+        this.DOM.container.classList.remove("fancy-image--ready");
+        this.DOM.container.innerHTML = "";
+        this.render();
     };
 
-    renderImage = async (node) => {
-        const parentNode = node.parentNode;
-        parentNode.dataset.fancyImageParent = ""; // add parent positioning
-
-        // Settings from node
-        const objectFit = node.dataset.objectFit ?? "contain"; // object fit mode
-        const ditherEnabled =
-            typeof node.dataset.ditherEnabled !== "undefined" ?? false;
-
-        // Create container that everything lives inside
-        const container = document.createElement("div");
-        container.classList.add("fancy-image");
-
-        // Append as next sibling of source node
-        if (node.nextSibling) {
-            parentNode.insertBefore(container, node.nextSibling);
-        } else {
-            parentNode.appendChild(container);
-        }
-
+    render = async () => {
         // Create inner
         const inner = document.createElement("div");
         inner.classList.add("fancy-image__inner");
-        container.appendChild(inner);
 
         // Detect image window size
-        const { width, height } = node.getBoundingClientRect();
+        const { width, height } = this.DOM.el.getBoundingClientRect();
 
         // Load new image
-        const img = await imagePromise(node.src);
+        const img = await imagePromise(this.src);
         img.classList.add("fancy-image__img");
 
         // Calculate img and canvas sizing based on object fit mode
-        const scaled = intrinsicScale[objectFit](
+        const scaled = intrinsicScale[this.objectFit](
             width,
             height,
             img.naturalWidth,
@@ -72,7 +72,7 @@ export default class FancyImage {
         ctx.fillStyle = "white";
 
         // Dither the image
-        if (ditherEnabled) {
+        if (this.ditherEnabled) {
             ditherWith(ATKINSON, buf).blitCanvas(canvas);
         }
 
@@ -89,14 +89,32 @@ export default class FancyImage {
         // Append everything to DOM
         inner.appendChild(img);
         inner.appendChild(canvas);
-        container.classList.add("fancy-image--ready");
+        this.DOM.container.appendChild(inner);
+        this.DOM.container.classList.add("fancy-image--ready");
+    };
+}
+
+export default class FancyImage {
+    $targets = null;
+    instances = [];
+
+    constructor() {
+        this.app = new App();
+        this.$targets = this.app.core.dom.fancyImage;
+    }
+
+    resizeEnd = () => {
+        if (this.instances.length <= 0) return;
+        this.instances.forEach((instance) => {
+            instance.resizeEnd();
+        });
     };
 
     init = () => {
         if (this.$targets.length > 0) {
-            this.$targets.each((i) => {
-                this.renderImage(this.$targets[i]);
-            });
+            this.instances = Array.from(this.$targets).map(
+                (target) => new _FancyImage(target),
+            );
         }
     };
 }
