@@ -7,27 +7,47 @@
         <title>Vite App</title>
         <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
     </head>
-    <body>
-        <div style="width: 100vw; height: 500px; position: relative">
-            <div
-                data-module="dithered-image"
-                data-image-src="/assets/img/Chris.png"
-                data-object-fit="contain"
-                data-hover
-            ></div>
-        </div>
-        <div style="width: 100vw; height: 500px; position: relative">
-            <div
-                data-module="dithered-image"
-                data-image-src="/assets/img/Dustin.png"
-                data-object-fit="contain"
-                data-hover
-            ></div>
-        </div>
+    <body style="width: 100%; height: 100%">
         <div
+            style="
+                grid-column-gap: 16px;
+                grid-row-gap: 16px;
+                grid-template-rows: auto auto;
+                grid-template-columns: 1fr 1fr;
+                grid-auto-columns: 1fr;
+                display: grid;
+            "
+        >
+            <div></div>
+            <div>
+                <img
+                    style="max-width: 100%"
+                    class="image"
+                    src="/assets/img/Chris.png"
+                    data-object-fit="contain"
+                    data-module="fancy-image"
+                    data-dither-enabled
+                    data-hover
+                    alt=""
+                />
+            </div>
+            <div>
+                <img
+                    style="max-width: 100%"
+                    class="image"
+                    src="/assets/img/Dustin.png"
+                    data-object-fit="contain"
+                    data-module="fancy-image"
+                    data-dither-enabled
+                    data-hover
+                    alt=""
+                />
+            </div>
+        </div>
+        <!-- <div
             style="height: 75vh; position: relative"
             data-module="home-experience"
-        ></div>
+        ></div> -->
         <!-- <div style="height: 100vh; background-color: teal"></div> -->
         <!-- <div style="height: 100vh; background-color: red"></div> -->
         <!-- <div

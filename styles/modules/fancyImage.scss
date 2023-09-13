@@ -1,0 +1,65 @@
+[data-fancy-image-parent] {
+    position: relative;
+}
+
+[data-module="fancy-image"] + .fancy-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    visibility: hidden;
+    opacity: 0;
+    transition:
+        visibility 200ms ease-in-out,
+        opacity 200ms ease-in-out;
+
+    .fancy-image__inner {
+        position: relative;
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+    }
+
+    img.fancy-image__img,
+    canvas.fancy-image__canvas {
+        // reset styles
+        object-fit: unset;
+        max-width: unset;
+        max-height: unset;
+        right: unset;
+        bottom: unset;
+
+        // module styles
+        display: block;
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        left: 0;
+        opacity: 1;
+    }
+
+    &.fancy-image--ready {
+        visibility: visible;
+        opacity: 1;
+
+        canvas.fancy-image__canvas {
+            opacity: 1;
+            filter: blur(0px);
+            transition:
+                opacity 200ms linear,
+                filter 300ms linear;
+        }
+    }
+}
+
+[data-module="fancy-image"][data-hover] + .fancy-image:hover {
+    canvas.fancy-image__canvas {
+        opacity: 0;
+        filter: blur(2px);
+        transition:
+            filter 200ms linear,
+            opacity 300ms linear;
+    }
+}
