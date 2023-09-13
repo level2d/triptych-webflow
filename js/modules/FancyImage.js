@@ -26,6 +26,7 @@ class _FancyImage {
     scaleFunc = null;
     // props
     scaled = {}; // holds scaled positioning values
+    imgRatio = null; // the image's aspect ratio
     ctx = null; // canvas context
 
     constructor(node) {
@@ -89,6 +90,15 @@ class _FancyImage {
                 this.scaled.height,
             );
             ditherWith(ATKINSON, buf).blitCanvas(this.DOM.canvas);
+        } else {
+            // Draw the initial image
+            this.ctx.drawImage(
+                this.DOM.img,
+                0,
+                0,
+                this.scaled.width,
+                this.scaled.height,
+            );
         }
     };
 
@@ -118,6 +128,7 @@ class _FancyImage {
         this.DOM.img = await imagePromise(this.src);
         this.DOM.img.classList.add("fancy-image__img");
         this.DOM.inner.appendChild(this.DOM.img);
+        this.imgRatio = this.DOM.img.naturalWidth / this.DOM.img.naturalHeight;
 
         this.setScaled();
         this.setCanvas();
