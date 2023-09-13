@@ -15,9 +15,12 @@ class _FancyImage {
         parentEl: null,
         container: null,
     };
+    // settings
     src = null;
     ditherEnabled = false;
     objectFit = "contain";
+    // inferred from settings
+    scaleFunc = null;
 
     constructor(node) {
         this.init(node);
@@ -42,7 +45,7 @@ class _FancyImage {
         img.classList.add("fancy-image__img");
 
         // Calculate img and canvas sizing based on object fit mode
-        const scaled = intrinsicScale[this.objectFit](
+        const scaled = this.scaleFunc(
             width,
             height,
             img.naturalWidth,
@@ -93,6 +96,9 @@ class _FancyImage {
         this.objectFit = this.DOM.el.dataset.objectFit ?? "contain"; // object fit mode
         this.ditherEnabled =
             typeof this.DOM.el.dataset.ditherEnabled !== "undefined" ?? false;
+
+        // inferred from settings
+        this.scaleFunc = intrinsicScale[this.objectFit];
 
         this.render();
     };
