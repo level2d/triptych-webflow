@@ -36,7 +36,7 @@ class _FancyImage {
     // visible for a longer time.
     // Towards the end we don't add many values as
     // we want the sharpening up to happen quickly here.
-    pxFactorValues = [2, 4, 9, 50, 100];
+    pxFactorValues = [1, 2, 4, 9, 18, 32, 64, 100];
     pxIndex = 0;
     // the dithered image IntBuffer for rendering to canvas
     ditheredBuf = null;
@@ -188,7 +188,7 @@ class _FancyImage {
                     this.pxIndex++;
                     this.animatePixels();
                 },
-                this.pxIndex === 0 ? 300 : 80,
+                this.pxIndex === 0 ? 500 : 100,
             ); // The first time should be the longest.
         } else {
             this.DOM.container.classList.add("fancy-image--animate-end");
