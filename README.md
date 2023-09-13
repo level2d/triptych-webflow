@@ -105,6 +105,16 @@ E.g. this is correct:
 </div>
 ```
 
+-   You must add the following code block to the site head code to prevent a FOUT on page load
+
+```
+<style>
+img[data-module="fancy-image"]{
+    visibility: hidden;
+}
+</style>
+```
+
 **Attributes**
 | name | required? | value | default | description |
 |----------------------- |----------- |-------------------- |----------- |------------------------------------------------------------------------------------- |
