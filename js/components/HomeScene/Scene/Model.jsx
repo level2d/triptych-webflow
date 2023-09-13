@@ -10,7 +10,7 @@ function _Model(props, ref) {
         max: new THREE.Vector3(1, 1, 1),
     });
     const grainShaderMaterialRef = useRef();
-    const { nodes, materials } = useGLTF(GLB_ASSET_URLS.Locations);
+    const { nodes /*, materials */ } = useGLTF(GLB_ASSET_URLS.Locations);
     const {
         uNoiseScale,
         uNoiseContrast,
@@ -23,9 +23,9 @@ function _Model(props, ref) {
         uGradientEnabled,
     } = useControls({
         Outlines: folder({
-            outlineColor: "black",
+            outlineColor: "#343434",
             outlineThickness: {
-                value: 0.03,
+                value: 0.02,
                 step: 0.01,
                 min: 0.01,
                 max: 0.1,
@@ -38,19 +38,19 @@ function _Model(props, ref) {
             Noise: folder({
                 uNoiseEnabled: true,
                 uNoiseScale: {
-                    value: 1000.0,
+                    value: 850,
                     min: 10,
                     max: 2000,
                     step: 10,
                 },
                 uNoiseScalarDistanceFactor: {
-                    value: 1.25,
+                    value: 0.3,
                     min: 0,
                     max: 10,
                     step: 0.1,
                 },
                 uNoiseContrast: {
-                    value: 1.25,
+                    value: 1.1,
                     min: 0,
                     max: 10,
                     step: 0.1,
@@ -59,7 +59,7 @@ function _Model(props, ref) {
             Gradient: folder({
                 uGradientEnabled: true,
                 uGradientStop: {
-                    value: 0.25,
+                    value: 0.02,
                     min: 0.0,
                     max: 0.5,
                     step: 0.01,
@@ -80,9 +80,9 @@ function _Model(props, ref) {
                 },
                 uGradientColorB: {
                     value: {
-                        r: 0,
-                        g: 0,
-                        b: 0,
+                        r: 119,
+                        g: 119,
+                        b: 119,
                     },
                     onChange: (v) => {
                         const color = new THREE.Vector3(v.r, v.g, v.b);
