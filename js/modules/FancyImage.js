@@ -28,6 +28,17 @@ class _FancyImage {
     scaled = {}; // holds scaled positioning values
     imgRatio = null; // the image's aspect ratio
     ctx = null; // canvas context
+    // The pixelation factor values determine the level of
+    // pixelation at each step of the effect.
+    // To make the effect more prominent, we start with
+    // smaller values initially to keep the big blocks
+    // visible for a longer time.
+    // Towards the end we don't add many values as
+    // we want the sharpening up to happen quickly here.
+    pxFactorValues = [1, 2, 4, 9, 100];
+    pxIndex = 0;
+    // the dithered image IntBuffer for rendering to canvas
+    ditheredBuf = null;
 
     constructor(node) {
         this.init(node);
@@ -89,7 +100,8 @@ class _FancyImage {
                 this.scaled.width,
                 this.scaled.height,
             );
-            ditherWith(ATKINSON, buf).blitCanvas(this.DOM.canvas);
+            this.ditheredBuf = ditherWith(ATKINSON, buf);
+            this.ditheredBuf.blitCanvas(this.DOM.canvas); // draw to canvas
         } else {
             // Draw the initial image
             this.ctx.drawImage(
@@ -99,6 +111,88 @@ class _FancyImage {
                 this.scaled.width,
                 this.scaled.height,
             );
+        }
+    };
+
+    renderPixelFrame = () => {
+        const offsetWidth = this.scaled.width;
+        const offsetHeight = this.scaled.height;
+        // increase a bit to not have a gap in the end of the image
+        // when we have big pizel sizes
+        const w = offsetWidth;
+        const h = offsetHeight;
+
+        // Calculate the dimensions and position for rendering the image
+        // within the canvas based on the image aspect ratio.
+        let newWidth = w;
+        let newHeight = h;
+        let newX = 0;
+        let newY = 0;
+
+        // Adjust the dimensions and position if the image
+        // aspect ratio is different from the canvas aspect ratio
+        if (newWidth / newHeight > this.imgRatio) {
+            newHeight = Math.round(w / this.imgRatio);
+            // let's keep Y at 0 because we want the pixels to not
+            // be cut off at the top. Uncomment if you want the
+            // image to be centered.
+            // newY = (h - newHeight) / 2;
+        } else {
+            newWidth = Math.round(h * this.imgRatio);
+            newX = (w - newWidth) / 2;
+        }
+
+        // Get the pixel factor based on the current index
+        let pxFactor = this.pxFactorValues[this.pxIndex];
+        const size = pxFactor * 0.01;
+
+        // Turn off image smoothing to achieve the pixelated effect
+        this.ctx.mozImageSmoothingEnabled = size === 1 ? true : false;
+        this.ctx.webkitImageSmoothingEnabled = size === 1 ? true : false;
+        this.ctx.imageSmoothingEnabled = size === 1 ? true : false;
+
+        // Clear the canvas
+        this.ctx.clearRect(0, 0, this.scaled.width, this.scaled.height);
+
+        // Draw the first frame
+        this.drawImage();
+
+        // Draw the original image at a fraction of the final size
+        this.ctx.drawImage(this.DOM.canvas, 0, 0, w * size, h * size);
+
+        // Enlarge the minimized image to full size
+        this.ctx.drawImage(
+            this.DOM.canvas,
+            0,
+            0,
+            w * size,
+            h * size,
+            newX,
+            newY,
+            newWidth,
+            newHeight,
+        );
+    };
+
+    /**
+     * Animates the pixelation effect.
+     * Renders the image with increasing pixelation factor at each step.
+     */
+    animatePixels = () => {
+        console.log("here");
+        if (this.pxIndex < this.pxFactorValues.length) {
+            // Increase the pixelation factor and continue animating
+            setTimeout(
+                () => {
+                    // Render the image with the current pixelation factor
+                    this.renderPixelFrame();
+                    this.pxIndex++;
+                    this.animatePixels();
+                },
+                this.pxIndex === 0 ? 300 : 80,
+            ); // The first time should be the longest.
+        } else {
+            this.pxIndex = this.pxFactorValues.length - 1;
         }
     };
 
@@ -135,6 +229,8 @@ class _FancyImage {
 
         this.setMediaSizes();
         this.drawImage();
+
+        this.animatePixels();
     };
 }
 
