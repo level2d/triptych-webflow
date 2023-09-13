@@ -49,6 +49,7 @@ export default class App {
 
     bindListeners() {
         this.time.on("tick", this.update);
+        this.sizes.on("resize", this.resize);
         this.sizes.on("window resize end", this.resizeEnd);
     }
 
