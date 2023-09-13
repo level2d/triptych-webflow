@@ -12,7 +12,7 @@ import App from "@/js/App";
 export default class DitheredImage {
     $target = null;
     targets = [];
-    renderedTargets = [];
+    renderedContainers = [];
 
     constructor() {
         this.app = new App();
@@ -21,25 +21,42 @@ export default class DitheredImage {
     }
 
     resizeEnd = () => {
-        if (this.renderedTargets.length <= 0) return;
-        this.renderedTargets.forEach((node) => {
-            const inner = node.querySelector(".inner");
-            node.classList.remove("ready");
-            node.removeChild(inner);
-            this.renderImage(node);
-        });
+        if (this.renderedContainers.length <= 0) return;
+        this.$target.next(".dithered-image").remove();
+        this.targets.forEach((node) => this.renderImage(node));
     };
 
     renderImage = async (node) => {
-        const objectFit = node.dataset.objectFit ?? "cover";
+        const parentNode = node.parentNode;
+        parentNode.dataset.moduleDitheredImageParent = ""; // add parent positioning
 
+        // Detect object fit mode
+        const objectFit = node.dataset.objectFit ?? "contain";
+
+        // Create container that everything lives inside
+        const container = document.createElement("div");
+        container.classList.add("dithered-image");
+
+        // Append as next sibling of source node
+        if (node.nextSibling) {
+            parentNode.insertBefore(container, node.nextSibling);
+        } else {
+            parentNode.appendChild(container);
+        }
+
+        // Create inner
         const inner = document.createElement("div");
-        inner.classList.add("inner");
-        node.appendChild(inner);
-        const { width, height } = inner.getBoundingClientRect();
+        inner.classList.add("dithered-image__inner");
+        container.appendChild(inner);
 
-        const img = await imagePromise(node.dataset.imageSrc);
+        // Detect image window size
+        const { width, height } = node.getBoundingClientRect();
 
+        // Load new image
+        const img = await imagePromise(node.src);
+        img.classList.add("dithered-image__img");
+
+        // Calculate img and canvas sizing based on object fit mode
         const scaled = intrinsicScale[objectFit](
             width,
             height,
@@ -47,13 +64,18 @@ export default class DitheredImage {
             img.naturalHeight,
         );
 
+        // Create image buf to render into canvas
         const buf = intBufferFromImage(img, GRAY8, scaled.width, scaled.height);
 
+        // Create canvas
         const { canvas, ctx } = canvas2d(buf.width, buf.height);
+        canvas.classList.add("dithered-image__canvas");
         ctx.fillStyle = "white";
 
+        // Dither the image
         ditherWith(ATKINSON, buf).blitCanvas(canvas);
 
+        // Apply object fit styles
         img.style.width = `${scaled.width}px`;
         img.style.height = `${scaled.height}px`;
         img.style.top = `${scaled.y}px`;
@@ -62,11 +84,13 @@ export default class DitheredImage {
         canvas.style.height = `${scaled.height}px`;
         canvas.style.top = `${scaled.y}px`;
         canvas.style.left = `${scaled.x}px`;
+
+        // Append everything to DOM
         inner.appendChild(img);
         inner.appendChild(canvas);
-        node.classList.add("ready");
+        container.classList.add("dithered-image--ready");
 
-        this.renderedTargets.push(node);
+        this.renderedContainers.push(container);
     };
 
     init = () => {
