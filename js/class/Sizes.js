@@ -1,5 +1,12 @@
 import EventEmitter from "events";
 
+const debounce = (func) => {
+    var timer;
+    return function (event) {
+        if (timer) clearTimeout(timer);
+        timer = setTimeout(func, 100, event);
+    };
+};
 export default class Sizes extends EventEmitter {
     // cache
     resizeObserver = null;
@@ -19,6 +26,9 @@ export default class Sizes extends EventEmitter {
 
         // bind
         this.handleResize = this.handleResize.bind(this);
+        this.handleWindowResizeEnd = debounce(
+            this.handleWindowResizeEnd.bind(this),
+        );
         this.init();
     }
 
@@ -36,9 +46,15 @@ export default class Sizes extends EventEmitter {
         this.emit("resize");
     }
 
+    handleWindowResizeEnd() {
+        console.log("resize end");
+        this.emit("window resize end");
+    }
+
     bindEvents() {
         this.resizeObserver = new ResizeObserver(this.handleResize);
         this.resizeObserver.observe(this.targetNode);
+        window.addEventListener("resize", this.handleWindowResizeEnd);
     }
 
     unbindEvents() {
