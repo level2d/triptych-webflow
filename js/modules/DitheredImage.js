@@ -25,10 +25,8 @@ export default class DitheredImage {
         this.renderedTargets.forEach((node) => {
             const inner = node.querySelector(".inner");
             node.classList.remove("ready");
-            setTimeout(() => {
-                node.removeChild(inner);
-                this.renderImage(node);
-            }, 200);
+            node.removeChild(inner);
+            this.renderImage(node);
         });
     };
 
