@@ -104,7 +104,7 @@ E.g. this is correct:
 </div>
 ```
 
-_Attributes_
+**Attributes**
 | name | required? | value | default | description |
 |----------------------- |----------- |-------------------- |----------- |------------------------------------------------------------------------------------- |
 | data-module | yes | "fancy-image" | n/a | Tells our custom code that you want to create a fancy image. |
