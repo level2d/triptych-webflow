@@ -20,21 +20,7 @@ class _FancyImage {
     objectFit = "contain";
 
     constructor(node) {
-        // setup
-        this.DOM.el = node;
-        this.DOM.parentEl = this.DOM.el.parentElement;
-        this.DOM.parentEl.dataset.fancyImageParent = ""; // add parent positioning attribute
-        this.DOM.container = document.createElement("div");
-        this.DOM.container.classList.add("fancy-image");
-        this.DOM.parentEl.appendChild(this.DOM.container); // app as next sibling of source node
-
-        // settings from node
-        this.src = this.DOM.el.src;
-        this.objectFit = this.DOM.el.dataset.objectFit ?? "contain"; // object fit mode
-        this.ditherEnabled =
-            typeof this.DOM.el.dataset.ditherEnabled !== "undefined" ?? false;
-
-        this.render();
+        this.init(node);
     }
 
     resize = () => {
@@ -91,6 +77,24 @@ class _FancyImage {
         inner.appendChild(canvas);
         this.DOM.container.appendChild(inner);
         this.DOM.container.classList.add("fancy-image--ready");
+    };
+
+    init = async (node) => {
+        // setup
+        this.DOM.el = node;
+        this.DOM.parentEl = this.DOM.el.parentElement;
+        this.DOM.parentEl.dataset.fancyImageParent = ""; // add parent positioning attribute
+        this.DOM.container = document.createElement("div");
+        this.DOM.container.classList.add("fancy-image");
+        this.DOM.parentEl.appendChild(this.DOM.container); // app as next sibling of source node
+
+        // settings from node
+        this.src = this.DOM.el.src;
+        this.objectFit = this.DOM.el.dataset.objectFit ?? "contain"; // object fit mode
+        this.ditherEnabled =
+            typeof this.DOM.el.dataset.ditherEnabled !== "undefined" ?? false;
+
+        this.render();
     };
 }
 
