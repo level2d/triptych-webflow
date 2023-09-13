@@ -9,7 +9,7 @@ import * as intrinsicScale from "intrinsic-scale";
 
 import App from "@/js/App";
 
-export default class DitheredImage {
+export default class FancyImage {
     $target = null;
     targets = [];
     renderedContainers = [];
