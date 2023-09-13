@@ -111,3 +111,24 @@ E.g. this is correct:
 | data-object-fit | no | "contain"\|"cover" | "contain" | Tells our custom code what object-fit scaling behavior the fancy image should have. |
 | data-dithered-enabled | no | n/a | n/a | Tells our custom code that you want your fancy image to be dithered. |
 | data-hover | no | n/a | n/a | Enables a hover effect |
+
+## Pop Quote
+
+**Attributes**
+| name | required? | value | description |
+|------------- |----------- |------------- |------------------------------------------------------------------ |
+| data-module | yes | "pop-quote" | Tells our custom code that you want to inject a pop-quote module |
+
+## Lenis
+
+**Attributes**
+| name | required | value | description |
+|-------------------- |---------- |------- |-------------------------------------------------------------------------------------------------------- |
+| data-lenis-prevent | no | n/a | Add this to any element where lenis smooth scroll should be disabled. E.g. `<iframe>`, `<canvas>`,etc. |
+
+## Home Experience
+
+**Attributes**
+| name | required | value | description |
+|------------- |---------- |------------------- |------------------------------------------------------------------ |
+| data-module | yes | "home-experience" | Tells our custom code where to render the Home Experience module |
