@@ -25,10 +25,12 @@ export default class FancyImage {
 
     renderImage = async (node) => {
         const parentNode = node.parentNode;
-        parentNode.dataset.moduleFancyImageParent = ""; // add parent positioning
+        parentNode.dataset.fancyImageParent = ""; // add parent positioning
 
-        // Detect object fit mode
-        const objectFit = node.dataset.objectFit ?? "contain";
+        // Settings from node
+        const objectFit = node.dataset.objectFit ?? "contain"; // object fit mode
+        const ditherEnabled =
+            typeof node.dataset.ditherEnabled !== "undefined" ?? false;
 
         // Create container that everything lives inside
         const container = document.createElement("div");
@@ -70,7 +72,9 @@ export default class FancyImage {
         ctx.fillStyle = "white";
 
         // Dither the image
-        ditherWith(ATKINSON, buf).blitCanvas(canvas);
+        if (ditherEnabled) {
+            ditherWith(ATKINSON, buf).blitCanvas(canvas);
+        }
 
         // Apply object fit styles
         img.style.width = `${scaled.width}px`;

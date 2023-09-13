@@ -1,4 +1,4 @@
-[data-module-fancy-image-parent] {
+[data-fancy-image-parent] {
     position: relative;
 }
 
@@ -27,6 +27,8 @@
         object-fit: unset;
         max-width: unset;
         max-height: unset;
+        right: unset;
+        bottom: unset;
 
         // module styles
         display: block;
@@ -42,22 +44,22 @@
         visibility: visible;
         opacity: 1;
 
-        canvas {
+        canvas.fancy-image__canvas {
             opacity: 1;
             filter: blur(0px);
             transition:
-                opacity 200ms 0ms ease-in-out,
-                filter 100ms 200ms ease-in-out;
+                opacity 200ms linear,
+                filter 300ms linear;
         }
     }
 }
 
-[data-hover] + .fancy-image:hover {
-    canvas {
+[data-module="fancy-image"][data-hover] + .fancy-image:hover {
+    canvas.fancy-image__canvas {
         opacity: 0;
         filter: blur(2px);
         transition:
-            filter 100ms 0ms ease-in-out,
-            opacity 200ms 100ms ease-in-out;
+            filter 200ms linear,
+            opacity 300ms linear;
     }
 }
