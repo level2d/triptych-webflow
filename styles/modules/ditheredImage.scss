@@ -14,20 +14,27 @@
 
     img,
     canvas {
+        // reset styles
+        object-fit: unset;
+        max-width: unset;
+        max-height: unset;
+
+        // module styles
+        display: block;
+        position: absolute;
         height: 100%;
         width: 100%;
-    }
-
-    img {
-        position: relative;
-    }
-
-    canvas {
-        position: absolute;
         top: 0;
         left: 0;
-        transition: all 200ms ease-in-out;
-        opacity: 1;
+        transition: opacity 200ms ease-in-out;
+        visibility: hidden;
+    }
+
+    &.ready {
+        canvas,
+        img {
+            visibility: visible;
+        }
     }
 
     &[data-hover]:hover {
