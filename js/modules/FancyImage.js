@@ -35,7 +35,7 @@ class _FancyImage {
     // visible for a longer time.
     // Towards the end we don't add many values as
     // we want the sharpening up to happen quickly here.
-    pxFactorValues = [1, 2, 4, 9, 100];
+    pxFactorValues = [2, 4, 9, 50, 100];
     pxIndex = 0;
     // the dithered image IntBuffer for rendering to canvas
     ditheredBuf = null;
@@ -90,7 +90,7 @@ class _FancyImage {
         this.DOM.container.classList.add("fancy-image--ready");
     };
 
-    drawFirstFrame = () => {
+    drawFinalFrame = () => {
         // Dither the image
         if (this.ditherEnabled) {
             // Create image buf to render into canvas
@@ -155,7 +155,7 @@ class _FancyImage {
         this.ctx.clearRect(0, 0, this.scaled.width, this.scaled.height);
 
         // Draw the first frame
-        this.drawFirstFrame();
+        this.drawFinalFrame();
 
         // Draw the original image at a fraction of the final size
         this.ctx.drawImage(this.DOM.canvas, 0, 0, w * size, h * size);
@@ -228,7 +228,7 @@ class _FancyImage {
         this.setCanvas();
 
         this.setMediaSizes();
-        this.drawFirstFrame();
+        this.drawFinalFrame();
 
         this.animatePixels();
     };
