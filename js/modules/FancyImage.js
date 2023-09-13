@@ -14,6 +14,9 @@ class _FancyImage {
         el: null,
         parentEl: null,
         container: null,
+        inner: null,
+        img: null, // canvas image
+        canvas: null,
     };
     // settings
     src = null;
@@ -22,88 +25,105 @@ class _FancyImage {
     // inferred from settings
     scaleFunc = null;
     // props
-    img = null; // canvas image
+    scaled = {}; // holds scaled positioning values
+    ctx = null; // canvas context
 
     constructor(node) {
         this.init(node);
     }
 
     resize = () => {
-        this.DOM.container.classList.remove("fancy-image--ready");
-        this.DOM.container.innerHTML = "";
+        this.setScaled();
         this.render();
+        this.drawImage();
     };
 
-    render = async () => {
-        // Create inner
-        const inner = document.createElement("div");
-        inner.classList.add("fancy-image__inner");
-
+    setScaled = () => {
         // Detect image window size
         const { width, height } = this.DOM.el.getBoundingClientRect();
 
-        // Clone image to append to DOM
-        const img = this.img.cloneNode(true);
-        img.classList.add("fancy-image__img");
-
         // Calculate img and canvas sizing based on object fit mode
-        const scaled = this.scaleFunc(
+        this.scaled = this.scaleFunc(
             width,
             height,
-            img.naturalWidth,
-            img.naturalHeight,
+            this.DOM.img.naturalWidth,
+            this.DOM.img.naturalHeight,
         );
+    };
 
-        // Create image buf to render into canvas
-        const buf = intBufferFromImage(img, GRAY8, scaled.width, scaled.height);
-
+    setCanvas = () => {
         // Create canvas
-        const { canvas, ctx } = canvas2d(buf.width, buf.height);
+        const { canvas, ctx } = canvas2d(this.scaled.width, this.scaled.height);
         canvas.classList.add("fancy-image__canvas");
         ctx.fillStyle = "white";
 
-        // Dither the image
-        if (this.ditherEnabled) {
-            ditherWith(ATKINSON, buf).blitCanvas(canvas);
-        }
+        this.DOM.canvas = canvas;
+        this.DOM.inner.appendChild(this.DOM.canvas);
+        this.ctx = ctx;
+    };
 
+    render = async () => {
         // Apply object fit styles
-        img.style.width = `${scaled.width}px`;
-        img.style.height = `${scaled.height}px`;
-        img.style.top = `${scaled.y}px`;
-        img.style.left = `${scaled.x}px`;
-        canvas.style.width = `${scaled.width}px`;
-        canvas.style.height = `${scaled.height}px`;
-        canvas.style.top = `${scaled.y}px`;
-        canvas.style.left = `${scaled.x}px`;
+        this.DOM.img.style.width = `${this.scaled.width}px`;
+        this.DOM.img.style.height = `${this.scaled.height}px`;
+        this.DOM.img.style.top = `${this.scaled.y}px`;
+        this.DOM.img.style.left = `${this.scaled.x}px`;
+        this.DOM.canvas.width = this.scaled.width;
+        this.DOM.canvas.height = this.scaled.height;
+        this.DOM.canvas.style.width = `${this.scaled.width}px`;
+        this.DOM.canvas.style.height = `${this.scaled.height}px`;
+        this.DOM.canvas.style.top = `${this.scaled.y}px`;
+        this.DOM.canvas.style.left = `${this.scaled.x}px`;
 
-        // Append everything to DOM
-        inner.appendChild(img);
-        inner.appendChild(canvas);
-        this.DOM.container.appendChild(inner);
         this.DOM.container.classList.add("fancy-image--ready");
     };
 
-    init = async (node) => {
-        // setup
-        this.DOM.el = node;
-        this.DOM.parentEl = this.DOM.el.parentElement;
-        this.DOM.parentEl.dataset.fancyImageParent = ""; // add parent positioning attribute
-        this.DOM.container = document.createElement("div");
-        this.DOM.container.classList.add("fancy-image");
-        this.DOM.parentEl.appendChild(this.DOM.container); // app as next sibling of source node
+    drawImage = () => {
+        // Dither the image
+        if (this.ditherEnabled) {
+            // Create image buf to render into canvas
+            const buf = intBufferFromImage(
+                this.DOM.img,
+                GRAY8,
+                this.scaled.width,
+                this.scaled.height,
+            );
+            ditherWith(ATKINSON, buf).blitCanvas(this.DOM.canvas);
+        }
+    };
 
-        // settings from node
+    init = async (node) => {
+        // root el
+        this.DOM.el = node;
+
+        // settings from root el
         this.src = this.DOM.el.src;
         this.objectFit = this.DOM.el.dataset.objectFit ?? "contain"; // object fit mode
         this.ditherEnabled =
             typeof this.DOM.el.dataset.ditherEnabled !== "undefined" ?? false;
-
-        // inferred from settings
         this.scaleFunc = intrinsicScale[this.objectFit];
-        this.img = await imagePromise(this.src);
+
+        // DOM
+        this.DOM.parentEl = this.DOM.el.parentElement;
+        this.DOM.parentEl.dataset.fancyImageParent = ""; // add parent positioning attribute
+
+        this.DOM.container = document.createElement("div");
+        this.DOM.container.classList.add("fancy-image");
+        this.DOM.parentEl.appendChild(this.DOM.container); // app as next sibling of source node
+
+        this.DOM.inner = document.createElement("div");
+        this.DOM.inner.classList.add("fancy-image__inner");
+        this.DOM.container.appendChild(this.DOM.inner);
+
+        this.DOM.img = await imagePromise(this.src);
+        this.DOM.img.classList.add("fancy-image__img");
+        this.DOM.inner.appendChild(this.DOM.img);
+
+        this.setScaled();
+        this.setCanvas();
 
         this.render();
+        this.drawImage();
     };
 }
 
