@@ -109,7 +109,7 @@ E.g. this is correct:
 |----------------------- |----------- |-------------------- |----------- |------------------------------------------------------------------------------------- |
 | data-module | yes | "fancy-image" | n/a | Tells our custom code that you want to create a fancy image. |
 | data-object-fit | no | "contain"\|"cover" | "contain" | Tells our custom code what object-fit scaling behavior the fancy image should have. |
-| data-dithered-enabled | no | n/a | n/a | Tells our custom code that you want your fancy image to be dithered. |
+| data-dither-enabled | no | n/a | n/a | Tells our custom code that you want your fancy image to be dithered. |
 | data-hover | no | n/a | n/a | Enables a hover effect |
 
 ## Pop Quote
