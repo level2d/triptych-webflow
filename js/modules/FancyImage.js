@@ -37,7 +37,7 @@ class _FancyImage {
         this.render();
     }
 
-    resizeEnd = () => {
+    resize = () => {
         this.DOM.container.classList.remove("fancy-image--ready");
         this.DOM.container.innerHTML = "";
         this.render();
@@ -103,10 +103,10 @@ export default class FancyImage {
         this.$targets = this.app.core.dom.fancyImage;
     }
 
-    resizeEnd = () => {
+    resize = () => {
         if (this.instances.length <= 0) return;
         this.instances.forEach((instance) => {
-            instance.resizeEnd();
+            instance.resize();
         });
     };
 

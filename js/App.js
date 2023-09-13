@@ -44,7 +44,7 @@ export default class App {
     resize() {}
 
     resizeEnd() {
-        this.fancyImage.resizeEnd();
+        this.fancyImage.resize();
     }
 
     bindListeners() {
