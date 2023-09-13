@@ -2,6 +2,11 @@
     position: relative;
 }
 
+[data-module="fancy-image"] {
+    // hide source image
+    visibility: hidden;
+}
+
 [data-module="fancy-image"] + .fancy-image {
     position: absolute;
     top: 0;
@@ -11,8 +16,8 @@
     visibility: hidden;
     opacity: 0;
     transition:
-        visibility 200ms ease-in-out,
-        opacity 200ms ease-in-out;
+        visibility 100ms ease-in-out,
+        opacity 200ms 100ms ease-in-out;
 
     .fancy-image__inner {
         position: relative;
@@ -43,14 +48,27 @@
     &.fancy-image--ready {
         visibility: visible;
         opacity: 1;
+    }
+}
 
-        canvas.fancy-image__canvas {
-            opacity: 1;
-            filter: blur(0px);
-            transition:
-                opacity 200ms linear,
-                filter 300ms linear;
-        }
+[data-module="fancy-image"][data-pixel-animation-enabled]:not(
+        [data-dither-enabled]
+    )
+    + .fancy-image.fancy-image--animate-end {
+    canvas.fancy-image__canvas {
+        transition: opacity 100ms linear;
+        opacity: 0;
+    }
+}
+
+// Hover styles
+[data-module="fancy-image"][data-hover] + .fancy-image {
+    canvas.fancy-image__canvas {
+        opacity: 1;
+        filter: blur(0px);
+        transition:
+            opacity 200ms linear,
+            filter 300ms linear;
     }
 }
 
@@ -61,5 +79,16 @@
         transition:
             filter 200ms linear,
             opacity 300ms linear;
+    }
+}
+
+// overrides
+// fallback to original image if no effects are enabled
+[data-module="fancy-image"]:not([data-dither-enabled]):not(
+        [data-pixel-animation-enabled]
+    ) {
+    visibility: visible;
+    + .fancy-image {
+        visibility: hidden;
     }
 }

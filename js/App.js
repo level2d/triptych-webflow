@@ -44,11 +44,12 @@ export default class App {
     resize() {}
 
     resizeEnd() {
-        this.fancyImage.resizeEnd();
+        this.fancyImage.resize();
     }
 
     bindListeners() {
         this.time.on("tick", this.update);
+        this.sizes.on("resize", this.resize);
         this.sizes.on("window resize end", this.resizeEnd);
     }
 
