@@ -105,12 +105,23 @@ E.g. this is correct:
 </div>
 ```
 
+-   You must add the following code block to the site head code to prevent a FOUT on page load
+
+```
+<style>
+img[data-module="fancy-image"]{
+    visibility: hidden;
+}
+</style>
+```
+
 **Attributes**
 | name | required? | value | default | description |
-|----------------------- |----------- |-------------------- |----------- |------------------------------------------------------------------------------------- |
+| ---------------------------- | --------- | ------------------ | --------- | ----------------------------------------------------------------------------------- |
 | data-module | yes | "fancy-image" | n/a | Tells our custom code that you want to create a fancy image. |
 | data-object-fit | no | "contain"\|"cover" | "contain" | Tells our custom code what object-fit scaling behavior the fancy image should have. |
 | data-dither-enabled | no | n/a | n/a | Tells our custom code that you want your fancy image to be dithered. |
+| data-pixel-animation-enabled | no | n/a | n/a | Tells our custom code that you want this image to pixel animate in |
 | data-hover | no | n/a | n/a | Enables a hover effect |
 
 ## Pop Quote
