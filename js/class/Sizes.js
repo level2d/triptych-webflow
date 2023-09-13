@@ -1,12 +1,5 @@
 import EventEmitter from "events";
-
-const debounce = (func) => {
-    var timer;
-    return function (event) {
-        if (timer) clearTimeout(timer);
-        timer = setTimeout(func, 100, event);
-    };
-};
+import { debounce } from "lodash";
 export default class Sizes extends EventEmitter {
     // cache
     resizeObserver = null;
@@ -28,6 +21,7 @@ export default class Sizes extends EventEmitter {
         this.handleResize = this.handleResize.bind(this);
         this.handleWindowResizeEnd = debounce(
             this.handleWindowResizeEnd.bind(this),
+            100,
         );
         this.init();
     }

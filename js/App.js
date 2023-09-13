@@ -9,7 +9,7 @@ import Sizes from "./class/Sizes";
 
 // modules
 import * as core from "./core";
-import { DitheredImage, HomeExperience, PopQuote, test } from "./modules";
+import { FancyImage, HomeExperience, PopQuote, test } from "./modules";
 
 let _instance = null;
 export default class App {
@@ -23,7 +23,7 @@ export default class App {
         this.bus = new Bus();
         this.time = new Time();
         this.sizes = new Sizes();
-        this.ditheredImage = new DitheredImage();
+        this.fancyImage = new FancyImage();
         this.homeExperience = new HomeExperience();
         this.popQuote = new PopQuote();
         this.test = test;
@@ -44,7 +44,7 @@ export default class App {
     resize() {}
 
     resizeEnd() {
-        this.ditheredImage.resizeEnd();
+        this.fancyImage.resizeEnd();
     }
 
     bindListeners() {
@@ -53,7 +53,7 @@ export default class App {
     }
 
     initModules() {
-        this.ditheredImage.init();
+        this.fancyImage.init();
         this.homeExperience.init();
         this.popQuote.init();
         this.test.init();

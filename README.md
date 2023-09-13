@@ -75,3 +75,39 @@ See [here](https://github.com/vitejs/vite/issues/1984#issuecomment-778403608) fo
 })();
 </script>
 ```
+
+# Modules
+
+## Fancy Image
+
+Requirements:
+
+-   This module's attributes must exist on a Webflow image element.
+-   This module only supports object-fit styles of "contain" or "cover". Make sure your root Webflow image element has the same `object-fit` style value as the `data-object-fit` attribute.
+-   The Webflow image element must be inside a containing div. The containing div doesn't need to have any styling. It just needs to exist.
+
+E.g. this is wrong:
+
+```
+<img src="/image1-url.jpg" data-module="fancy-image">
+<img src="/image2-url.jpg" data-module="fancy-image">
+```
+
+E.g. this is correct:
+
+```
+<div>
+    <img src="/image1-url.jpg" data-module="fancy-image">
+</div>
+<div>
+    <img src="/image2-url.jpg" data-module="fancy-image">
+</div>
+```
+
+**Attributes**
+| name | required? | value | default | description |
+|----------------------- |----------- |-------------------- |----------- |------------------------------------------------------------------------------------- |
+| data-module | yes | "fancy-image" | n/a | Tells our custom code that you want to create a fancy image. |
+| data-object-fit | no | "contain"\|"cover" | "contain" | Tells our custom code what object-fit scaling behavior the fancy image should have. |
+| data-dithered-enabled | no | n/a | n/a | Tells our custom code that you want your fancy image to be dithered. |
+| data-hover | no | n/a | n/a | Enables a hover effect |
