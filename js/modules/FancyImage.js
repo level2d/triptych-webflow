@@ -21,6 +21,8 @@ class _FancyImage {
     objectFit = "contain";
     // inferred from settings
     scaleFunc = null;
+    // props
+    img = null; // canvas image
 
     constructor(node) {
         this.init(node);
@@ -40,8 +42,8 @@ class _FancyImage {
         // Detect image window size
         const { width, height } = this.DOM.el.getBoundingClientRect();
 
-        // Load new image
-        const img = await imagePromise(this.src);
+        // Clone image to append to DOM
+        const img = this.img.cloneNode(true);
         img.classList.add("fancy-image__img");
 
         // Calculate img and canvas sizing based on object fit mode
@@ -99,6 +101,7 @@ class _FancyImage {
 
         // inferred from settings
         this.scaleFunc = intrinsicScale[this.objectFit];
+        this.img = await imagePromise(this.src);
 
         this.render();
     };
