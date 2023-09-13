@@ -2,7 +2,11 @@
     position: relative;
 }
 
-[data-module="fancy-image"] + .fancy-image {
+img[data-module="fancy-image"] {
+    visibility: hidden;
+}
+
+img[data-module="fancy-image"] + .fancy-image {
     position: absolute;
     top: 0;
     left: 0;
