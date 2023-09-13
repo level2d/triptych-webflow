@@ -90,7 +90,7 @@ class _FancyImage {
         this.DOM.container.classList.add("fancy-image--ready");
     };
 
-    drawImage = () => {
+    drawFirstFrame = () => {
         // Dither the image
         if (this.ditherEnabled) {
             // Create image buf to render into canvas
@@ -155,7 +155,7 @@ class _FancyImage {
         this.ctx.clearRect(0, 0, this.scaled.width, this.scaled.height);
 
         // Draw the first frame
-        this.drawImage();
+        this.drawFirstFrame();
 
         // Draw the original image at a fraction of the final size
         this.ctx.drawImage(this.DOM.canvas, 0, 0, w * size, h * size);
@@ -228,7 +228,7 @@ class _FancyImage {
         this.setCanvas();
 
         this.setMediaSizes();
-        this.drawImage();
+        this.drawFirstFrame();
 
         this.animatePixels();
     };
