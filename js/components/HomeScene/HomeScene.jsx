@@ -37,8 +37,12 @@ const Loading = () => {
 };
 
 export default function HomeScene() {
+    const wrapperProps = {};
+    if (debug) {
+        wrapperProps["data-lenis-prevent"] = true;
+    }
     return (
-        <div className={styles.wrapper} data-lenis-prevent>
+        <div className={styles.wrapper} {...wrapperProps}>
             <Canvas shadows camera={{ position: [-4, -1.25, 4], fov: 55 }}>
                 <Suspense fallback={<Loading />}>
                     <Scene />
