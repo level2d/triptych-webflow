@@ -234,10 +234,13 @@ class _FancyImage {
         this.renderImg();
 
         if (this.pixelAnimationEnabled) {
-            this.animatePixels();
-        } else {
-            this.DOM.container.classList.add("fancy-image--ready");
+            this.renderPixelFrame();
+            setTimeout(() => {
+                this.animatePixels();
+            }, 100);
         }
+
+        this.DOM.container.classList.add("fancy-image--ready");
     };
 }
 
