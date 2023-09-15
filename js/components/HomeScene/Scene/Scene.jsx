@@ -1,16 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import { useThree } from "@react-three/fiber";
-import {
-    CameraControls,
-    Environment,
-    OrthographicCamera,
-} from "@react-three/drei";
+import { Environment } from "@react-three/drei";
+import * as THREE from "three";
 import { Perf } from "r3f-perf";
 
 import { debug } from "@/js/core/constants";
 import SceneContext from "./SceneContext";
-import Actions from "./Actions";
+import Rig from "./Rig";
 import Model from "./Model";
+import Actions from "./Actions";
 import "./Shaders";
 
 const padding = 0.5;
@@ -19,10 +17,11 @@ export default function Scene() {
     const [mounted, setMounted] = useState(false);
     const { size } = useThree();
     const { width, height } = size;
-    const camera = useRef(null);
     const cameraControls = useRef(null);
+    const intersectionPlane = useRef(null);
     const triptychRef = useRef(null);
     const currentSubject = useRef(null);
+    const lookAtMesh = useRef(null);
 
     useEffect(() => {
         setMounted(true);
@@ -49,19 +48,19 @@ export default function Scene() {
 
     return (
         <SceneContext.Provider
-            value={{ cameraControls, camera, currentSubject, padding }}
+            value={{
+                cameraControls,
+                currentSubject,
+                padding,
+                intersectionPlane,
+                lookAtMesh,
+            }}
         >
             {/* debug */}
             {debug && <Perf position="top-left" />}
             {debug && <axesHelper args={[5]} />}
 
-            {/* camera */}
-            <OrthographicCamera
-                makeDefault
-                position={[0, 0, 10]}
-                ref={camera}
-            />
-            <CameraControls ref={cameraControls} />
+            <Rig />
 
             {/* environment */}
             <Environment preset="sunset" blur={1} />
