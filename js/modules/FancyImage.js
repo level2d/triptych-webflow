@@ -48,7 +48,7 @@ class _FancyImage {
     resize = () => {
         this.setScaled();
         this.setMediaSizes();
-        this.drawFinalFrame();
+        this.renderImg();
     };
 
     setScaled = () => {
@@ -89,7 +89,7 @@ class _FancyImage {
         this.DOM.canvas.style.left = `${this.scaled.x}px`;
     };
 
-    drawFinalFrame = () => {
+    renderImg = () => {
         // Dither the image
         if (this.ditherEnabled) {
             // Create image buf to render into canvas
@@ -99,10 +99,10 @@ class _FancyImage {
                 this.scaled.width,
                 this.scaled.height,
             );
-            this.ditheredBuf = ditherWith(ATKINSON, buf);
-            this.ditheredBuf.blitCanvas(this.DOM.canvas); // draw to canvas
+            // draw a dithered image to the canvas
+            ditherWith(ATKINSON, buf).blitCanvas(this.DOM.canvas);
         } else {
-            // Draw the initial image
+            // Draw the initial image to the canvas
             this.ctx.drawImage(
                 this.DOM.img,
                 0,
@@ -154,7 +154,7 @@ class _FancyImage {
         this.ctx.clearRect(0, 0, this.scaled.width, this.scaled.height);
 
         // Draw the final frame
-        this.drawFinalFrame();
+        this.renderImg();
 
         // Draw the original image at a fraction of the final size
         this.ctx.drawImage(this.DOM.canvas, 0, 0, w * size, h * size);
@@ -231,7 +231,7 @@ class _FancyImage {
         this.setCanvas();
 
         this.setMediaSizes();
-        this.drawFinalFrame();
+        this.renderImg();
 
         if (this.pixelAnimationEnabled) {
             this.animatePixels();
