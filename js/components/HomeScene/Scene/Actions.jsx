@@ -4,17 +4,14 @@ import { useControls, button } from "leva";
 import { useSceneContext } from "./useSceneContext";
 
 export default function Actions() {
-    const { camera, cameraControls, currentSubject, padding } =
-        useSceneContext();
-
+    const { cameraControls, currentSubject, padding } = useSceneContext();
+    const cameraPosition = new THREE.Vector3();
     /**
      *
      * @param {'right'|'up'|'down'|'left'} direction
      */
     async function orbit(direction = "right") {
-        const cameraPosition = new THREE.Vector3();
-        cameraPosition.copy(camera.current.position);
-
+        cameraControls.current.getPosition(cameraPosition, true);
         currentSubject.current.geometry.computeBoundingSphere();
         const boundingSphere =
             currentSubject.current.geometry.boundingSphere.clone();
