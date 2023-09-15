@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useThree } from "@react-three/fiber";
 import { Environment } from "@react-three/drei";
+import * as THREE from "three";
 import { Perf } from "r3f-perf";
 
 import { debug } from "@/js/core/constants";
@@ -20,6 +21,7 @@ export default function Scene() {
     const intersectionPlane = useRef(null);
     const triptychRef = useRef(null);
     const currentSubject = useRef(null);
+    const lookAtMesh = useRef(null);
 
     useEffect(() => {
         setMounted(true);
@@ -51,6 +53,7 @@ export default function Scene() {
                 currentSubject,
                 padding,
                 intersectionPlane,
+                lookAtMesh,
             }}
         >
             {/* debug */}

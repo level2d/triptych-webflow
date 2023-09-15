@@ -1,23 +1,25 @@
 import { OrthographicCamera, CameraControls } from "@react-three/drei";
 import { useSceneContext } from "./useSceneContext";
-import { useControls, folder } from "leva";
+import { useFrame } from "@react-three/fiber";
 
 export default function Rig() {
-    const { cameraControls, intersectionPlane } = useSceneContext();
-    const { intersectionPlaneVisible } = useControls({
-        Rig: folder({
-            intersectionPlaneVisible: false,
-        }),
+    const { cameraControls, lookAtMesh } = useSceneContext();
+    useFrame(({ pointer, viewport }) => {
+        if (!lookAtMesh.current) return;
+        const x = pointer.x * (viewport.width * 0.5) * 0.025;
+        const y = pointer.y * (viewport.height * 0.5) * 0.025;
+        lookAtMesh.current.position.x = x;
+        lookAtMesh.current.position.y = y;
     });
     return (
         <>
             {/* camera */}
             <OrthographicCamera makeDefault position={[0, 0, 10]}>
-                <mesh position={[0, 0, -5]} ref={intersectionPlane}>
-                    <planeGeometry args={[4, 4]} />
+                <mesh position={[0, 0, -1]} ref={lookAtMesh}>
+                    <planeGeometry />
                     <meshBasicMaterial
                         color={"black"}
-                        opacity={intersectionPlaneVisible ? 0.1 : 0}
+                        opacity={0.2}
                         transparent
                     />
                 </mesh>
