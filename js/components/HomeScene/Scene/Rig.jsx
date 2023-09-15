@@ -1,13 +1,28 @@
 import { OrthographicCamera, CameraControls } from "@react-three/drei";
 import { useSceneContext } from "./useSceneContext";
 import { useFrame } from "@react-three/fiber";
+import { folder, useControls } from "leva";
+import { debug } from "@/js/core/constants";
 
 export default function Rig() {
+    const { lookAtMeshVisible, lookAtFactor } = useControls({
+        Rig: folder({
+            lookAtMeshVisible: debug,
+            lookAtFactor: {
+                value: 1,
+                min: 0.1,
+                max: 2,
+                step: 0.1,
+            },
+        }),
+    });
     const { cameraControls, lookAtMesh } = useSceneContext();
     useFrame(({ pointer, viewport }) => {
         if (!lookAtMesh.current) return;
-        const x = pointer.x * (viewport.width * 0.5) * 0.025;
-        const y = pointer.y * (viewport.height * 0.5) * 0.025;
+        const width = viewport.distance / viewport.aspect;
+        const height = width * viewport.aspect;
+        const x = pointer.x * (width * lookAtFactor);
+        const y = pointer.y * (height * lookAtFactor);
         lookAtMesh.current.position.x = x;
         lookAtMesh.current.position.y = y;
     });
@@ -19,7 +34,7 @@ export default function Rig() {
                     <planeGeometry />
                     <meshBasicMaterial
                         color={"black"}
-                        opacity={0.2}
+                        opacity={lookAtMeshVisible ? 0.5 : 0.0}
                         transparent
                     />
                 </mesh>
