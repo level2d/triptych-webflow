@@ -135,9 +135,9 @@ function _Model(props, ref) {
                     // geometry={nodes.location_015.geometry}
                     // material={nodes.location_015.material}
                     // position={[1, 1, -3]}
-                    scale={0.35}
+                    scale={0.5}
                 >
-                    <torusKnotGeometry />
+                    <boxGeometry />
                     <meshStandardMaterial color={"red"} />
                 </mesh>
             </Box>
@@ -148,9 +148,9 @@ function _Model(props, ref) {
                     // geometry={nodes.location_001.geometry}
                     // material={nodes.location_001.material}
                     // position={[1, 3, -3]}
-                    scale={0.35}
+                    scale={0.5}
                 >
-                    <torusKnotGeometry />
+                    <boxGeometry />
                     <meshStandardMaterial color={"red"} />
                 </mesh>
             </Box>
@@ -161,9 +161,9 @@ function _Model(props, ref) {
                     geometry={nodes.location_002.geometry}
                     material={nodes.location_002.material}
                     // position={[-3, -1, -3]}
-                    scale={0.35}
+                    scale={0.5}
                 >
-                    <torusKnotGeometry />
+                    <boxGeometry />
                     <meshStandardMaterial color={"red"} />
                 </mesh>
             </Box>
@@ -174,9 +174,9 @@ function _Model(props, ref) {
                     // geometry={nodes.location_003.geometry}
                     // material={nodes.location_003.material}
                     // position={[-3, 3, 1]}
-                    scale={0.35}
+                    scale={0.5}
                 >
-                    <torusKnotGeometry />
+                    <boxGeometry />
                     <meshStandardMaterial color={"red"} />
                 </mesh>
             </Box>
@@ -187,9 +187,9 @@ function _Model(props, ref) {
                     // geometry={nodes.location_004.geometry}
                     // material={nodes.location_004.material}
                     // position={[-1, -1, 1]}
-                    scale={0.35}
+                    scale={0.5}
                 >
-                    <torusKnotGeometry />
+                    <boxGeometry />
                     <meshStandardMaterial color={"red"} />
                 </mesh>
             </Box>
@@ -200,9 +200,9 @@ function _Model(props, ref) {
                     // geometry={nodes.location_005.geometry}
                     // material={nodes.location_005.material}
                     // position={[3, -1, 3]}
-                    scale={0.35}
+                    scale={0.5}
                 >
-                    <torusKnotGeometry />
+                    <boxGeometry />
                     <meshStandardMaterial color={"red"} />
                 </mesh>
             </Box>
@@ -213,9 +213,9 @@ function _Model(props, ref) {
                     // geometry={nodes.location_006.geometry}
                     // material={nodes.location_006.material}
                     // position={[-1, -3, 1]}
-                    scale={0.35}
+                    scale={0.5}
                 >
-                    <torusKnotGeometry />
+                    <boxGeometry />
                     <meshStandardMaterial color={"red"} />
                 </mesh>
             </Box>
@@ -226,9 +226,9 @@ function _Model(props, ref) {
                     // geometry={nodes.location_007.geometry}
                     // material={nodes.location_007.material}
                     // position={[1, -1, -1]}
-                    scale={0.35}
+                    scale={0.5}
                 >
-                    <torusKnotGeometry />
+                    <boxGeometry />
                     <meshStandardMaterial color={"red"} />
                 </mesh>
             </Box>
@@ -239,9 +239,9 @@ function _Model(props, ref) {
                     // geometry={nodes.location_008.geometry}
                     // material={nodes.location_008.material}
                     // position={[-1, 3, 3]}
-                    scale={0.35}
+                    scale={0.5}
                 >
-                    <torusKnotGeometry />
+                    <boxGeometry />
                     <meshStandardMaterial color={"red"} />
                 </mesh>
             </Box>
@@ -252,9 +252,9 @@ function _Model(props, ref) {
                     // geometry={nodes.location_009.geometry}
                     // material={nodes.location_009.material}
                     // position={[-3, -3, -3]}
-                    scale={0.35}
+                    scale={0.5}
                 >
-                    <torusKnotGeometry />
+                    <boxGeometry />
                     <meshStandardMaterial color={"red"} />
                 </mesh>
             </Box>
@@ -265,9 +265,9 @@ function _Model(props, ref) {
                     // geometry={nodes.location_010.geometry}
                     // material={nodes.location_010.material}
                     // position={[3, 3, -1]}
-                    scale={0.35}
+                    scale={0.5}
                 >
-                    <torusKnotGeometry />
+                    <boxGeometry />
                     <meshStandardMaterial color={"red"} />
                 </mesh>
             </Box>
@@ -278,9 +278,9 @@ function _Model(props, ref) {
                     // geometry={nodes.location_011.geometry}
                     // material={nodes.location_011.material}
                     // position={[3, -3, -1]}
-                    scale={0.35}
+                    scale={0.5}
                 >
-                    <torusKnotGeometry />
+                    <boxGeometry />
                     <meshStandardMaterial color={"red"} />
                 </mesh>
             </Box>
@@ -291,9 +291,9 @@ function _Model(props, ref) {
                     // geometry={nodes.location_012.geometry}
                     // material={nodes.location_012.material}
                     // position={[1, -3, 1]}
-                    scale={0.35}
+                    scale={0.5}
                 >
-                    <torusKnotGeometry />
+                    <boxGeometry />
                     <meshStandardMaterial color={"red"} />
                 </mesh>
             </Box>
@@ -304,9 +304,9 @@ function _Model(props, ref) {
                     // geometry={nodes.location_013.geometry}
                     // material={nodes.location_013.material}
                     // position={[-1, 1, 1]}
-                    scale={0.35}
+                    scale={0.5}
                 >
-                    <torusKnotGeometry />
+                    <boxGeometry />
                     <meshStandardMaterial color={"red"} />
                 </mesh>
             </Box>
@@ -317,9 +317,9 @@ function _Model(props, ref) {
                     // geometry={nodes.location_014.geometry}
                     // material={nodes.location_014.material}
                     // position={[3, 1, 3]}
-                    scale={0.35}
+                    scale={0.5}
                 >
-                    <torusKnotGeometry />
+                    <boxGeometry />
                     <meshStandardMaterial color={"red"} />
                 </mesh>
             </Box>
