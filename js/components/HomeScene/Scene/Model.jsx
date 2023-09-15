@@ -71,7 +71,6 @@ function _Model(props, ref) {
                         b: 255,
                     },
                     onChange: (v) => {
-                        console.log("uGradientColorA:", v);
                         const color = new THREE.Vector3(v.r, v.g, v.b);
                         color.divide(new THREE.Vector3(255, 255, 255));
                         grainShaderMaterialRef.current.uniforms.uGradientColorA.value =
