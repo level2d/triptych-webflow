@@ -15,6 +15,7 @@ module.exports = {
     plugins: ["react-refresh"],
     rules: {
         "no-unused-vars": ["warn"],
+        "react/prop-types": ["off"],
         "react/no-unknown-property": ["off"], // turn off b/c r3f introduces custom properties
         "react-refresh/only-export-components": [
             "warn",
