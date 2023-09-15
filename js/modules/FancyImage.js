@@ -6,10 +6,17 @@ import {
 } from "@thi.ng/pixel";
 import { ditherWith, ATKINSON } from "@thi.ng/pixel-dither";
 import * as intrinsicScale from "intrinsic-scale";
+import ScrollTrigger from "gsap/ScrollTrigger";
 
 import App from "@/js/App";
 
 class _FancyImage {
+    // settings
+    src = null;
+    ditherEnabled = false;
+    pixelAnimationEnabled = false;
+    objectFit = "contain";
+    // DOM Elements
     DOM = {
         el: null,
         parentEl: null,
@@ -18,17 +25,13 @@ class _FancyImage {
         img: null, // canvas image
         canvas: null,
     };
-    // settings
-    src = null;
-    ditherEnabled = false;
-    pixelAnimationEnabled = false;
-    objectFit = "contain";
-    // inferred from settings
-    scaleFunc = null;
     // props
+    scaleFunc = null;
     scaled = {}; // holds scaled positioning values
     imgRatio = null; // the image's aspect ratio
     ctx = null; // canvas context
+    finalCanvas = null; // backup canvas (not appended to DOM)
+    finalCtx = null; // backup canvas context
     // The pixelation factor values determine the level of
     // pixelation at each step of the effect.
     // To make the effect more prominent, we start with
@@ -36,10 +39,9 @@ class _FancyImage {
     // visible for a longer time.
     // Towards the end we don't add many values as
     // we want the sharpening up to happen quickly here.
-    pxFactorValues = [1, 2, 4, 9, 18, 32, 64, 100];
+    pxFactorValues = [1, 2, 4, 8, 16, 32, 64, 128];
     pxIndex = 0;
-    // the dithered image IntBuffer for rendering to canvas
-    ditheredBuf = null;
+    scrollTrigger = null;
 
     constructor(node) {
         this.init(node);
@@ -48,7 +50,7 @@ class _FancyImage {
     resize = () => {
         this.setScaled();
         this.setMediaSizes();
-        this.drawFinalFrame();
+        this.renderFinalImg();
     };
 
     setScaled = () => {
@@ -75,6 +77,14 @@ class _FancyImage {
         this.ctx = ctx;
     };
 
+    setFinalCanvas = () => {
+        // Create backup canvas
+        const { canvas, ctx } = canvas2d(this.scaled.width, this.scaled.height);
+        ctx.fillStyle = "white";
+        this.finalCanvas = canvas;
+        this.finalCtx = ctx;
+    };
+
     setMediaSizes = async () => {
         // Apply object fit styles
         this.DOM.img.style.width = `${this.scaled.width}px`;
@@ -87,9 +97,15 @@ class _FancyImage {
         this.DOM.canvas.style.height = `${this.scaled.height}px`;
         this.DOM.canvas.style.top = `${this.scaled.y}px`;
         this.DOM.canvas.style.left = `${this.scaled.x}px`;
+        this.finalCanvas.width = this.scaled.width;
+        this.finalCanvas.height = this.scaled.height;
+        this.finalCanvas.style.width = `${this.scaled.width}px`;
+        this.finalCanvas.style.height = `${this.scaled.height}px`;
+        this.finalCanvas.style.top = `${this.scaled.y}px`;
+        this.finalCanvas.style.left = `${this.scaled.x}px`;
     };
 
-    drawFinalFrame = () => {
+    renderFinalImg = () => {
         // Dither the image
         if (this.ditherEnabled) {
             // Create image buf to render into canvas
@@ -99,10 +115,10 @@ class _FancyImage {
                 this.scaled.width,
                 this.scaled.height,
             );
-            this.ditheredBuf = ditherWith(ATKINSON, buf);
-            this.ditheredBuf.blitCanvas(this.DOM.canvas); // draw to canvas
+            // draw a dithered image to the canvas
+            ditherWith(ATKINSON, buf).blitCanvas(this.DOM.canvas);
         } else {
-            // Draw the initial image
+            // Draw the initial image to the canvas
             this.ctx.drawImage(
                 this.DOM.img,
                 0,
@@ -111,6 +127,8 @@ class _FancyImage {
                 this.scaled.height,
             );
         }
+        // Draw final render to a backup canvas
+        this.finalCtx.drawImage(this.DOM.canvas, 0, 0);
     };
 
     renderPixelFrame = () => {
@@ -150,14 +168,13 @@ class _FancyImage {
         this.ctx.webkitImageSmoothingEnabled = size === 1 ? true : false;
         this.ctx.imageSmoothingEnabled = size === 1 ? true : false;
 
-        // Clear the canvas
+        // Clear the canvas and fill with white
         this.ctx.clearRect(0, 0, this.scaled.width, this.scaled.height);
+        this.ctx.fillStyle = "white";
+        this.ctx.fillRect(0, 0, this.scaled.width, this.scaled.height);
 
-        // Draw the final frame
-        this.drawFinalFrame();
-
-        // Draw the original image at a fraction of the final size
-        this.ctx.drawImage(this.DOM.canvas, 0, 0, w * size, h * size);
+        // Draw the final image at a fraction of the final size
+        this.ctx.drawImage(this.finalCanvas, 0, 0, w * size, h * size);
 
         // Enlarge the minimized image to full size
         this.ctx.drawImage(
@@ -184,16 +201,44 @@ class _FancyImage {
                 () => {
                     // Render the image with the current pixelation factor
                     this.renderPixelFrame();
-                    this.DOM.container.classList.add("fancy-image--ready");
                     this.pxIndex++;
                     this.animatePixels();
                 },
                 this.pxIndex === 0 ? 500 : 100,
             ); // The first time should be the longest.
         } else {
+            // Draw that final image
+            this.ctx.drawImage(
+                this.finalCanvas,
+                0,
+                0,
+                this.scaled.width,
+                this.scaled.height,
+            );
             this.DOM.container.classList.add("fancy-image--animate-end");
             this.pxIndex = this.pxFactorValues.length - 1;
         }
+    };
+
+    showImage = () => {
+        // add class to fade in image
+        this.DOM.container.classList.add("fancy-image--ready");
+
+        // Play pixel animation if applicable
+        if (this.pixelAnimationEnabled) {
+            this.animatePixels();
+        }
+    };
+
+    initScrolltrigger = () => {
+        this.scrollTrigger = ScrollTrigger.create({
+            trigger: this.DOM.el,
+            start: "top+=15% bottom-=15%",
+            onEnter: () => {
+                this.showImage();
+            },
+            once: true,
+        });
     };
 
     init = async (node) => {
@@ -229,15 +274,16 @@ class _FancyImage {
 
         this.setScaled();
         this.setCanvas();
-
+        this.setFinalCanvas();
         this.setMediaSizes();
-        this.drawFinalFrame();
+        this.renderFinalImg();
 
         if (this.pixelAnimationEnabled) {
-            this.animatePixels();
-        } else {
-            this.DOM.container.classList.add("fancy-image--ready");
+            // Render first pixelated frame
+            this.renderPixelFrame();
         }
+
+        this.initScrolltrigger();
     };
 }
 
