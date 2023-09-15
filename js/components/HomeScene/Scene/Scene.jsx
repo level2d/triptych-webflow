@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useThree } from "@react-three/fiber";
 import { Environment } from "@react-three/drei";
-import * as THREE from "three";
 import { Perf } from "r3f-perf";
 
 import { debug } from "@/js/core/constants";
