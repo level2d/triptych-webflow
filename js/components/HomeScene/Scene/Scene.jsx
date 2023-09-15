@@ -1,10 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useThree } from "@react-three/fiber";
-import {
-    CameraControls,
-    Environment,
-    OrthographicCamera,
-} from "@react-three/drei";
+import { Environment } from "@react-three/drei";
 import { Perf } from "r3f-perf";
 
 import { debug } from "@/js/core/constants";
