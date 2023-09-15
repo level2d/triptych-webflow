@@ -6,6 +6,7 @@ import {
 } from "@thi.ng/pixel";
 import { ditherWith, ATKINSON } from "@thi.ng/pixel-dither";
 import * as intrinsicScale from "intrinsic-scale";
+import ScrollTrigger from "gsap/ScrollTrigger";
 
 import App from "@/js/App";
 
@@ -40,6 +41,7 @@ class _FancyImage {
     // we want the sharpening up to happen quickly here.
     pxFactorValues = [1, 2, 4, 8, 16, 32, 64, 128];
     pxIndex = 0;
+    scrollTrigger = null;
 
     constructor(node) {
         this.init(node);
@@ -199,7 +201,6 @@ class _FancyImage {
                 () => {
                     // Render the image with the current pixelation factor
                     this.renderPixelFrame();
-                    this.DOM.container.classList.add("fancy-image--ready");
                     this.pxIndex++;
                     this.animatePixels();
                 },
@@ -217,6 +218,27 @@ class _FancyImage {
             this.DOM.container.classList.add("fancy-image--animate-end");
             this.pxIndex = this.pxFactorValues.length - 1;
         }
+    };
+
+    showImage = () => {
+        // add class to fade in image
+        this.DOM.container.classList.add("fancy-image--ready");
+
+        // Play pixel animation if applicable
+        if (this.pixelAnimationEnabled) {
+            this.animatePixels();
+        }
+    };
+
+    initScrolltrigger = () => {
+        this.scrollTrigger = ScrollTrigger.create({
+            trigger: this.DOM.el,
+            start: "top+=15% bottom-=15%",
+            onEnter: () => {
+                this.showImage();
+            },
+            once: true,
+        });
     };
 
     init = async (node) => {
@@ -257,13 +279,11 @@ class _FancyImage {
         this.renderFinalImg();
 
         if (this.pixelAnimationEnabled) {
+            // Render first pixelated frame
             this.renderPixelFrame();
-            setTimeout(() => {
-                this.animatePixels();
-            }, 100);
         }
 
-        this.DOM.container.classList.add("fancy-image--ready");
+        this.initScrolltrigger();
     };
 }
 
