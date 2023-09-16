@@ -6,8 +6,6 @@ import { Html, Text } from "@react-three/drei";
 import { Leva } from "leva";
 import { debug } from "@/js/core/constants";
 
-import loadingLogoUrl from "@/assets/img/loading.svg";
-
 const Scene = lazy(() => {
     return Promise.all([
         import("./Scene"),
