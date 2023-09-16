@@ -39,7 +39,7 @@ export default function Rig() {
                     />
                 </mesh>
             </OrthographicCamera>
-            <CameraControls ref={cameraControls} />
+            <CameraControls ref={cameraControls} makeDefault />
         </>
     );
 }
