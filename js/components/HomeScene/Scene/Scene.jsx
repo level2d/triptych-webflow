@@ -15,22 +15,21 @@ const padding = 0.5;
 export default function Scene() {
     const [mounted, setMounted] = useState(false);
     const cameraTarget = useStore((state) => state.cameraTarget);
-    const { size, get } = useThree();
+    const setCameraTarget = useStore((state) => state.setCameraTarget);
+    const { size, controls: cameraControls } = useThree();
     const { width, height } = size;
-    const intersectionPlane = useRef(null);
     const triptychRef = useRef(null);
-    const currentSubject = useRef(null);
     const lookAtMesh = useRef(null);
 
     useEffect(() => {
         // Immediately focus the triptych model
-        currentSubject.current = triptychRef.current;
+        setCameraTarget(triptychRef.current);
         setMounted(true);
-    }, []);
+    }, [setCameraTarget]);
 
     useEffect(() => {
         if (!mounted) return;
-        const cameraControls = get().controls;
+
         if (!cameraControls) return;
         if (!debug) {
             cameraControls.disconnect();
@@ -49,14 +48,12 @@ export default function Scene() {
             });
         };
         focusCamera();
-    }, [mounted, width, height, get, cameraTarget]);
+    }, [mounted, width, height, cameraTarget, cameraControls]);
 
     return (
         <SceneContext.Provider
             value={{
-                currentSubject,
                 padding,
-                intersectionPlane,
                 lookAtMesh,
             }}
         >
