@@ -1,17 +1,23 @@
 import * as THREE from "three";
+import { useThree } from "@react-three/fiber";
 import { useControls, button } from "leva";
 
 import { useSceneContext } from "./useSceneContext";
 
 export default function Actions() {
-    const { cameraControls, currentSubject, padding } = useSceneContext();
+    const { currentSubject, padding } = useSceneContext();
+    const get = useThree((state) => state.get);
     const cameraPosition = new THREE.Vector3();
+
     /**
      *
      * @param {'right'|'up'|'down'|'left'} direction
      */
-    async function orbit(direction = "right") {
-        cameraControls.current.getPosition(cameraPosition, true);
+    const orbit = async (direction = "right") => {
+        const cameraControls = get().controls;
+        if (!cameraControls) return;
+
+        cameraControls.getPosition(cameraPosition, true);
         currentSubject.current.geometry.computeBoundingSphere();
         const boundingSphere =
             currentSubject.current.geometry.boundingSphere.clone();
@@ -24,43 +30,35 @@ export default function Actions() {
 
         switch (direction) {
             case "up": {
-                await cameraControls.current.rotate(
+                await cameraControls.rotate(
                     0,
                     THREE.MathUtils.degToRad(-90),
                     true,
                 );
-                await cameraControls.current.fitToBox(
-                    currentSubject.current,
-                    true,
-                    {
-                        paddingTop: padding,
-                        paddingRight: padding,
-                        paddingBottom: padding,
-                        paddingLeft: padding,
-                    },
-                );
+                await cameraControls.fitToBox(currentSubject.current, true, {
+                    paddingTop: padding,
+                    paddingRight: padding,
+                    paddingBottom: padding,
+                    paddingLeft: padding,
+                });
                 break;
             }
             case "down": {
-                await cameraControls.current.rotate(
+                await cameraControls.rotate(
                     0,
                     THREE.MathUtils.degToRad(90),
                     true,
                 );
-                await cameraControls.current.fitToBox(
-                    currentSubject.current,
-                    true,
-                    {
-                        paddingTop: padding,
-                        paddingRight: padding,
-                        paddingBottom: padding,
-                        paddingLeft: padding,
-                    },
-                );
+                await cameraControls.fitToBox(currentSubject.current, true, {
+                    paddingTop: padding,
+                    paddingRight: padding,
+                    paddingBottom: padding,
+                    paddingLeft: padding,
+                });
                 break;
             }
             case "left": {
-                await cameraControls.current.rotate(
+                await cameraControls.rotate(
                     THREE.MathUtils.degToRad(-45),
                     THREE.MathUtils.degToRad(cameraPosition.y > 0 ? 45 : -45),
                     true,
@@ -69,7 +67,7 @@ export default function Actions() {
             }
             case "right":
             default: {
-                await cameraControls.current.rotate(
+                await cameraControls.rotate(
                     THREE.MathUtils.degToRad(45),
                     THREE.MathUtils.degToRad(cameraPosition.y > 0 ? 45 : -45),
                     true,
@@ -77,7 +75,7 @@ export default function Actions() {
                 break;
             }
         }
-    }
+    };
 
     useControls("Camera Actions", {
         orbitRight: button(() => orbit("right")),
