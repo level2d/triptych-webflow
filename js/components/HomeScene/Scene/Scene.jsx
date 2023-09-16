@@ -14,41 +14,45 @@ const padding = 0.5;
 
 export default function Scene() {
     const [mounted, setMounted] = useState(false);
-    const { size } = useThree();
+    const { size, get } = useThree();
     const { width, height } = size;
-    const cameraControls = useRef(null);
     const intersectionPlane = useRef(null);
     const triptychRef = useRef(null);
     const currentSubject = useRef(null);
     const lookAtMesh = useRef(null);
 
     useEffect(() => {
-        setMounted(true);
+        // Immediately focus the triptych model
         currentSubject.current = triptychRef.current;
-        cameraControls.current.setOrbitPoint(
-            currentSubject.current.x,
-            currentSubject.current.y,
-            currentSubject.current.z,
-        );
+        setMounted(true);
     }, []);
 
     useEffect(() => {
         if (!mounted) return;
+        const cameraControls = get().controls;
+        if (!cameraControls) return;
         if (!debug) {
-            cameraControls.current.disconnect();
+            cameraControls.disconnect();
         }
-        cameraControls.current.fitToBox(currentSubject.current, true, {
-            paddingTop: padding,
-            paddingRight: padding,
-            paddingBottom: padding,
-            paddingLeft: padding,
-        });
-    }, [mounted, width, height, cameraControls]);
+        const focusCamera = async () => {
+            await cameraControls.setOrbitPoint(
+                currentSubject.current.position.x,
+                currentSubject.current.position.y,
+                currentSubject.current.position.z,
+            );
+            await cameraControls.fitToBox(currentSubject.current, true, {
+                paddingTop: padding,
+                paddingRight: padding,
+                paddingBottom: padding,
+                paddingLeft: padding,
+            });
+        };
+        focusCamera();
+    }, [mounted, width, height, get]);
 
     return (
         <SceneContext.Provider
             value={{
-                cameraControls,
                 currentSubject,
                 padding,
                 intersectionPlane,
