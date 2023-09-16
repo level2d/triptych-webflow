@@ -1,8 +1,10 @@
 import { OrthographicCamera, CameraControls } from "@react-three/drei";
-import { useSceneContext } from "./useSceneContext";
+import { useSceneContext } from "../useSceneContext";
 import { useFrame } from "@react-three/fiber";
 import { folder, useControls } from "leva";
 import { debug } from "@/js/core/constants";
+
+import Actions from "./Actions";
 
 export default function Rig() {
     const { lookAtMeshVisible, lookAtFactor } = useControls({
@@ -40,6 +42,8 @@ export default function Rig() {
                 </mesh>
             </OrthographicCamera>
             <CameraControls ref={cameraControls} makeDefault />
+
+            <Actions />
         </>
     );
 }

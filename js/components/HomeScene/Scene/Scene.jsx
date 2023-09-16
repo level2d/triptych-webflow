@@ -4,16 +4,17 @@ import { Environment } from "@react-three/drei";
 import { Perf } from "r3f-perf";
 
 import { debug } from "@/js/core/constants";
+import { useStore } from "@/js/lib/store";
 import SceneContext from "./SceneContext";
 import Rig from "./Rig";
 import Model from "./Model";
-import Actions from "./Actions";
 import "./Shaders";
 
 const padding = 0.5;
 
 export default function Scene() {
     const [mounted, setMounted] = useState(false);
+    const cameraTarget = useStore((state) => state.cameraTarget);
     const { size, get } = useThree();
     const { width, height } = size;
     const intersectionPlane = useRef(null);
@@ -36,11 +37,11 @@ export default function Scene() {
         }
         const focusCamera = async () => {
             await cameraControls.setOrbitPoint(
-                currentSubject.current.position.x,
-                currentSubject.current.position.y,
-                currentSubject.current.position.z,
+                cameraTarget.position.x,
+                cameraTarget.position.y,
+                cameraTarget.position.z,
             );
-            await cameraControls.fitToBox(currentSubject.current, true, {
+            await cameraControls.fitToBox(cameraTarget, true, {
                 paddingTop: padding,
                 paddingRight: padding,
                 paddingBottom: padding,
@@ -48,7 +49,7 @@ export default function Scene() {
             });
         };
         focusCamera();
-    }, [mounted, width, height, get]);
+    }, [mounted, width, height, get, cameraTarget]);
 
     return (
         <SceneContext.Provider
@@ -70,8 +71,6 @@ export default function Scene() {
 
             {/* models */}
             <Model ref={triptychRef} />
-
-            <Actions />
         </SceneContext.Provider>
     );
 }

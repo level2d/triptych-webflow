@@ -4,8 +4,10 @@ import { useGLTF, Outlines } from "@react-three/drei";
 import { GLB_ASSET_URLS } from "@/js/core/constants";
 import { useControls, folder } from "leva";
 import Box from "./Box";
+import { useStore } from "@/js/lib/store";
 
 function _Model(props, ref) {
+    const setCameraTarget = useStore((state) => state.setCameraTarget);
     const [boundingBox, setBoundingBox] = useState({
         min: new THREE.Vector3(0, 0, 0),
         max: new THREE.Vector3(1, 1, 1),
@@ -99,9 +101,14 @@ function _Model(props, ref) {
         setBoundingBox(nodes.triptych.geometry.boundingBox);
     }, [setBoundingBox, nodes.triptych.geometry]);
 
+    useEffect(() => {
+        setCameraTarget(ref.current);
+    }, []);
+
     return (
         <group {...props} dispose={null} scale={0.1}>
             <mesh
+                name="Triptych"
                 castShadow
                 receiveShadow
                 geometry={nodes.triptych.geometry}

@@ -2,31 +2,34 @@ import * as THREE from "three";
 import { useThree } from "@react-three/fiber";
 import { useControls, button } from "leva";
 
-import { useSceneContext } from "./useSceneContext";
+import { useSceneContext } from "../useSceneContext";
+import { useStore } from "@/js/lib/store";
 
 export default function Actions() {
-    const { currentSubject, padding } = useSceneContext();
-    const get = useThree((state) => state.get);
+    const { padding } = useSceneContext();
+    const getThreeState = useThree((state) => state.get);
     const cameraPosition = new THREE.Vector3();
+    const boundingBox = new THREE.Box3();
 
     /**
      *
      * @param {'right'|'up'|'down'|'left'} direction
      */
     const orbit = async (direction = "right") => {
-        const cameraControls = get().controls;
+        const cameraControls = getThreeState().controls;
         if (!cameraControls) return;
 
+        const cameraTarget = useStore.getState().cameraTarget;
+        if (!cameraTarget.geometry) return;
+
+        // Store camera position to local Vector3
         cameraControls.getPosition(cameraPosition, true);
-        currentSubject.current.geometry.computeBoundingSphere();
-        const boundingSphere =
-            currentSubject.current.geometry.boundingSphere.clone();
+        // Calc bounds of camera target
+        cameraTarget.geometry.computeBoundingSphere();
 
-        const boundingBox = new THREE.Box3();
+        // Store bounding box to local Box3
+        const boundingSphere = cameraTarget.geometry.boundingSphere.clone();
         boundingSphere.getBoundingBox(boundingBox);
-
-        const currentSubjectPosition = new THREE.Vector3();
-        currentSubjectPosition.copy(currentSubject.current.position);
 
         switch (direction) {
             case "up": {
@@ -35,7 +38,7 @@ export default function Actions() {
                     THREE.MathUtils.degToRad(-90),
                     true,
                 );
-                await cameraControls.fitToBox(currentSubject.current, true, {
+                await cameraControls.fitToBox(cameraTarget, true, {
                     paddingTop: padding,
                     paddingRight: padding,
                     paddingBottom: padding,
@@ -49,7 +52,7 @@ export default function Actions() {
                     THREE.MathUtils.degToRad(90),
                     true,
                 );
-                await cameraControls.fitToBox(currentSubject.current, true, {
+                await cameraControls.fitToBox(cameraTarget, true, {
                     paddingTop: padding,
                     paddingRight: padding,
                     paddingBottom: padding,
