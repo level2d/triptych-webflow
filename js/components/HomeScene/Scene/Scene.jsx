@@ -1,26 +1,19 @@
-import { useRef } from "react";
 import { Environment } from "@react-three/drei";
 import { Perf } from "r3f-perf";
 
 import { debug } from "@/js/core/constants";
-import SceneContext from "./SceneContext";
 import Rig from "./Rig";
 import Model from "./Model";
 import "./Shaders";
 
 export default function Scene() {
-    const lookAtMesh = useRef(null);
-
     return (
-        <SceneContext.Provider
-            value={{
-                lookAtMesh,
-            }}
-        >
+        <>
             {/* debug */}
             {debug && <Perf position="top-left" />}
             {debug && <axesHelper args={[5]} />}
 
+            {/* camera, controls, etc... */}
             <Rig />
 
             {/* environment */}
@@ -28,6 +21,6 @@ export default function Scene() {
 
             {/* models */}
             <Model />
-        </SceneContext.Provider>
+        </>
     );
 }
