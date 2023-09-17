@@ -1,7 +1,7 @@
 import styles from "./HomeScene.module.scss";
 
 import { Suspense, lazy } from "react";
-import { Canvas } from "@react-three/fiber";
+import { Canvas, useInstanceHandle } from "@react-three/fiber";
 import { Html } from "@react-three/drei";
 import { Leva } from "leva";
 import { debug } from "@/js/core/constants";
@@ -15,18 +15,7 @@ const Scene = lazy(() => {
 
 const Loading = () => {
     return (
-        <Html
-            // position={[0, 0, 0]}
-            // style={{
-            //     position: "relative",
-            //     height: "100%",
-            //     width: "100%",
-            //     display: "flex",
-            //     justifyContent: "center",
-            //     alignItems: "center",
-            // }}
-            center
-        >
+        <Html center>
             <svg
                 version="1.1"
                 id="L4"
