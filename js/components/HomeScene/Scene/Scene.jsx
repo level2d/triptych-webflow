@@ -8,15 +8,12 @@ import Rig from "./Rig";
 import Model from "./Model";
 import "./Shaders";
 
-const padding = 0.5;
-
 export default function Scene() {
     const lookAtMesh = useRef(null);
 
     return (
         <SceneContext.Provider
             value={{
-                padding,
                 lookAtMesh,
             }}
         >

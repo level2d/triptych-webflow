@@ -7,9 +7,9 @@ import { debug } from "@/js/core/constants";
 import Actions from "./Actions";
 import { useStore } from "@/js/lib/store";
 
-const padding = 0.5;
 export default function Rig() {
     const cameraTargetUuid = useStore((state) => state.cameraTargetUuid);
+    const padding = useStore((state) => state.padding);
     const {
         size: { width, height },
         controls: cameraControls,
@@ -66,7 +66,7 @@ export default function Rig() {
             });
         };
         focusCamera();
-    }, [width, height, cameraTarget, cameraControls]);
+    }, [width, height, cameraTarget, cameraControls, padding]);
 
     useEffect(() => {
         if (!cameraControls) return;

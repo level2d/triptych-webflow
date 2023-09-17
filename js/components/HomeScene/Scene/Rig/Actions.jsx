@@ -2,11 +2,9 @@ import * as THREE from "three";
 import { useThree } from "@react-three/fiber";
 import { useControls, button } from "leva";
 
-import { useSceneContext } from "../useSceneContext";
 import { useStore } from "@/js/lib/store";
 
 export default function Actions() {
-    const { padding } = useSceneContext();
     const getThreeState = useThree((state) => state.get);
     const cameraPosition = new THREE.Vector3();
     const boundingBox = new THREE.Box3();
@@ -24,6 +22,7 @@ export default function Actions() {
         if (!cameraControls) return;
 
         const scene = getThreeState().scene;
+        const padding = useStore.getState().padding;
         const cameraTargetUuid = useStore.getState().cameraTargetUuid;
         const cameraTarget = scene.getObjectByProperty(
             "uuid",

@@ -24,4 +24,6 @@ export const createComputedHomeSceneSlice = (state) => ({
     // Camera will auto focus either a current box, or fallback to the
     // parent triptych model
     cameraTargetUuid: state.currentBoxUuid ?? state.triptychModelUuid,
+    // decrease padding when focussing a box
+    padding: state.currentBoxUuid ? 0.1 : 0.5,
 });
