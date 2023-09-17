@@ -29,7 +29,7 @@ export default function Rig() {
         Rig: folder({
             lookAtMeshVisible: debug,
             lookAtFactor: {
-                value: 1,
+                value: 15,
                 min: 0.1,
                 max: 20,
                 step: 0.1,
