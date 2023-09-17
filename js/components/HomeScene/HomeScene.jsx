@@ -2,33 +2,30 @@ import styles from "./HomeScene.module.scss";
 
 import { Suspense, lazy } from "react";
 import { Canvas } from "@react-three/fiber";
-import { Html, Text } from "@react-three/drei";
+import { Html } from "@react-three/drei";
 import { Leva } from "leva";
 import { debug } from "@/js/core/constants";
 
 const Scene = lazy(() => {
     return Promise.all([
         import("./Scene"),
-        new Promise((resolve) => setTimeout(resolve, debug ? 0 : 2.4 * 1000)),
+        new Promise((resolve) => setTimeout(resolve, debug ? 0 : 1 * 1000)),
     ]).then(([moduleExports]) => moduleExports);
 });
 
 const Loading = () => {
-    return debug ? (
-        <Text position={[0, 0, 0]} rotation={[0, Math.PI * -0.25, 0]}>
-            {"Loading..."}
-        </Text>
-    ) : (
+    return (
         <Html
-            position={[0, 0, 0]}
-            style={{
-                position: "relative",
-                height: "100%",
-                width: "100%",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-            }}
+            // position={[0, 0, 0]}
+            // style={{
+            //     position: "relative",
+            //     height: "100%",
+            //     width: "100%",
+            //     display: "flex",
+            //     justifyContent: "center",
+            //     alignItems: "center",
+            // }}
+            center
         >
             <svg
                 version="1.1"
