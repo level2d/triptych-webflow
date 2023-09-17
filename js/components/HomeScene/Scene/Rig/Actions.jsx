@@ -11,6 +11,10 @@ export default function Actions() {
     const cameraPosition = new THREE.Vector3();
     const boundingBox = new THREE.Box3();
 
+    const resetCameraTarget = () => {
+        useStore.getState().resetCurrentBoxUuid();
+    };
+
     /**
      *
      * @param {'right'|'up'|'down'|'left'} direction
@@ -90,6 +94,7 @@ export default function Actions() {
         orbitLeft: button(() => orbit("left")),
         orbitUp: button(() => orbit("up")),
         orbitDown: button(() => orbit("down")),
+        resetCameraTarget: button(() => resetCameraTarget()),
     });
     return null;
 }
