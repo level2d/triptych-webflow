@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 import { OrthographicCamera, CameraControls } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
@@ -10,6 +10,7 @@ import Actions from "./Actions";
 
 export default function Rig() {
     const lookAtMesh = useRef(null);
+    const cameraOrbitPoint = useRef(new THREE.Vector3());
     const boxSize = useRef(new THREE.Vector2());
     const cameraTargetUuid = useStore((state) => state.cameraTargetUuid);
     const padding = useStore((state) => state.padding);
@@ -57,11 +58,14 @@ export default function Rig() {
     useEffect(() => {
         if (!cameraTarget) return;
         if (!cameraControls) return;
+
+        cameraTarget.getWorldPosition(cameraOrbitPoint.current);
+
         const focusCamera = async () => {
             await cameraControls.setOrbitPoint(
-                cameraTarget.position.x,
-                cameraTarget.position.y,
-                cameraTarget.position.z,
+                cameraOrbitPoint.current.x,
+                cameraOrbitPoint.current.y,
+                cameraOrbitPoint.current.z,
             );
             await cameraControls.fitToBox(cameraTarget, true, {
                 paddingTop: padding,
@@ -71,7 +75,7 @@ export default function Rig() {
             });
         };
         focusCamera();
-    }, [width, height, cameraTarget, cameraControls, padding]);
+    }, [cameraTarget, cameraControls, width, height, padding]);
 
     useEffect(() => {
         if (!cameraControls) return;
