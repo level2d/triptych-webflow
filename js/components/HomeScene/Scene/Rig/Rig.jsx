@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef } from "react";
 import { OrthographicCamera, CameraControls } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
+import * as THREE from "three";
 import { folder, useControls } from "leva";
 
 import { debug } from "@/js/core/constants";
@@ -9,6 +10,7 @@ import Actions from "./Actions";
 
 export default function Rig() {
     const lookAtMesh = useRef(null);
+    const boxSize = useRef(new THREE.Vector2());
     const cameraTargetUuid = useStore((state) => state.cameraTargetUuid);
     const padding = useStore((state) => state.padding);
     const setLookAtMeshUuid = useStore((state) => state.setLookAtMeshUuid);
@@ -28,7 +30,7 @@ export default function Rig() {
             lookAtFactor: {
                 value: 1,
                 min: 0.1,
-                max: 2,
+                max: 20,
                 step: 0.1,
             },
         }),
@@ -36,10 +38,13 @@ export default function Rig() {
 
     useFrame(({ pointer, viewport }) => {
         if (!lookAtMesh.current) return;
-        const width = viewport.distance / viewport.aspect;
-        const height = width * viewport.aspect;
-        const x = pointer.x * (width * lookAtFactor);
-        const y = pointer.y * (height * lookAtFactor);
+        const { aspect } = viewport;
+        const boxWidth = boxSize.current.x;
+        const boxHeight = boxSize.current.y;
+        const translateX = (boxWidth * aspect) / 2;
+        const translateY = boxHeight / aspect / 2;
+        const x = pointer.x * translateX * lookAtFactor;
+        const y = pointer.y * translateY * lookAtFactor;
         lookAtMesh.current.position.x = x;
         lookAtMesh.current.position.y = y;
     });
@@ -76,6 +81,14 @@ export default function Rig() {
     }, [cameraControls]);
 
     useEffect(() => {
+        lookAtMesh.current.geometry.computeBoundingBox();
+        const boxWidth =
+            lookAtMesh.current.geometry.boundingBox.max.x -
+            lookAtMesh.current.geometry.boundingBox.min.x;
+        const boxHeight =
+            lookAtMesh.current.geometry.boundingBox.max.y -
+            lookAtMesh.current.geometry.boundingBox.min.y;
+        boxSize.current.set(boxWidth, boxHeight);
         setLookAtMeshUuid(lookAtMesh.current.uuid);
     }, []);
 
