@@ -1,6 +1,11 @@
-import * as THREE from "three";
-
 export const createHomeSceneSlice = (set) => ({
-    cameraTarget: new THREE.Object3D(),
-    setCameraTarget: (object3D) => set(() => ({ cameraTarget: object3D })),
+    /**
+     * @type {(null | string)}
+     */
+    cameraTargetUuid: null,
+    /**
+     *
+     * @param {string} uuid UUID of object3d or mesh to focus
+     */
+    setCameraTargetUuid: (uuid) => set(() => ({ cameraTargetUuid: uuid })),
 });

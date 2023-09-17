@@ -1,19 +1,20 @@
 import * as THREE from "three";
-import { forwardRef, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useGLTF, Outlines } from "@react-three/drei";
 import { GLB_ASSET_URLS } from "@/js/core/constants";
 import { useControls, folder } from "leva";
 import Box from "./Box";
 import { useStore } from "@/js/lib/store";
 
-function _Model(props, ref) {
-    const setCameraTarget = useStore((state) => state.setCameraTarget);
+function Model(props) {
+    const { nodes /*, materials */ } = useGLTF(GLB_ASSET_URLS.Locations);
+    const setCameraTargetUuid = useStore((state) => state.setCameraTargetUuid);
     const [boundingBox, setBoundingBox] = useState({
         min: new THREE.Vector3(0, 0, 0),
         max: new THREE.Vector3(1, 1, 1),
     });
+    const tripTychRef = useRef(null);
     const grainShaderMaterialRef = useRef();
-    const { nodes /*, materials */ } = useGLTF(GLB_ASSET_URLS.Locations);
     const {
         uNoiseScale,
         uNoiseContrast,
@@ -102,7 +103,8 @@ function _Model(props, ref) {
     }, [setBoundingBox, nodes.triptych.geometry]);
 
     useEffect(() => {
-        setCameraTarget(ref.current);
+        // Immediately focus the camera on the triptych model
+        setCameraTargetUuid(tripTychRef.current.uuid);
     }, []);
 
     return (
@@ -113,7 +115,7 @@ function _Model(props, ref) {
                 receiveShadow
                 geometry={nodes.triptych.geometry}
                 // material={nodes.triptych.material}
-                ref={ref}
+                ref={tripTychRef}
             >
                 <grainShaderMaterial
                     uNoiseEnabled={uNoiseEnabled}
@@ -334,7 +336,6 @@ function _Model(props, ref) {
     );
 }
 
-const Model = forwardRef(_Model);
 export default Model;
 
 useGLTF.preload(GLB_ASSET_URLS.Locations);

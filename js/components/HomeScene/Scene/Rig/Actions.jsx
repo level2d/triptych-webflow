@@ -19,7 +19,12 @@ export default function Actions() {
         const cameraControls = getThreeState().controls;
         if (!cameraControls) return;
 
-        const cameraTarget = useStore.getState().cameraTarget;
+        const scene = getThreeState().scene;
+        const cameraTargetUuid = useStore.getState().cameraTargetUuid;
+        const cameraTarget = scene.getObjectByProperty(
+            "uuid",
+            cameraTargetUuid,
+        );
         if (!cameraTarget.geometry) return;
 
         // Store camera position to local Vector3
