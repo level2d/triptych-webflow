@@ -18,6 +18,15 @@ export const createHomeSceneSlice = (set) => ({
      */
     setCurrentBoxUuid: (uuid) => set(() => ({ currentBoxUuid: uuid })),
     resetCurrentBoxUuid: () => set(() => ({ currentBoxUuid: null })),
+    /**
+     * @type {(null | string)}
+     */
+    lookAtMeshUuid: null,
+    /**
+     *
+     * @param {string} uuid UUID of object3d or mesh to focus
+     */
+    setLookAtMeshUuid: (uuid) => set(() => ({ lookAtMeshUuid: uuid })),
 });
 
 export const createComputedHomeSceneSlice = (state) => ({

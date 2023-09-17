@@ -1,15 +1,17 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { OrthographicCamera, CameraControls } from "@react-three/drei";
-import { useSceneContext } from "../useSceneContext";
 import { useFrame, useThree } from "@react-three/fiber";
 import { folder, useControls } from "leva";
+
 import { debug } from "@/js/core/constants";
-import Actions from "./Actions";
 import { useStore } from "@/js/lib/store";
+import Actions from "./Actions";
 
 export default function Rig() {
+    const lookAtMesh = useRef(null);
     const cameraTargetUuid = useStore((state) => state.cameraTargetUuid);
     const padding = useStore((state) => state.padding);
+    const setLookAtMeshUuid = useStore((state) => state.setLookAtMeshUuid);
     const {
         size: { width, height },
         controls: cameraControls,
@@ -31,8 +33,6 @@ export default function Rig() {
             },
         }),
     });
-
-    const { lookAtMesh } = useSceneContext();
 
     useFrame(({ pointer, viewport }) => {
         if (!lookAtMesh.current) return;
@@ -74,6 +74,10 @@ export default function Rig() {
             cameraControls.disconnect();
         }
     }, [cameraControls]);
+
+    useEffect(() => {
+        setLookAtMeshUuid(lookAtMesh.current.uuid);
+    }, []);
 
     return (
         <>
