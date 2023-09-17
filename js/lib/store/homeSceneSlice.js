@@ -34,5 +34,5 @@ export const createComputedHomeSceneSlice = (state) => ({
     // parent triptych model
     cameraTargetUuid: state.currentBoxUuid ?? state.triptychModelUuid,
     // decrease padding when focussing a box
-    padding: state.currentBoxUuid ? 0.1 : 0.5,
+    padding: state.currentBoxUuid ? 0.01 : 0.5,
 });
