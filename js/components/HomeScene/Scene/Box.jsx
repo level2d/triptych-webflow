@@ -3,8 +3,10 @@ import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { dampQ } from "maath/easing";
 import { useSceneContext } from "./useSceneContext";
+import { useStore } from "@/js/lib/store";
 
 export default function Box({ children, ...rest }) {
+    const setCurrentBoxUuid = useStore((state) => state.setCurrentBoxUuid);
     const [mounted, setMounted] = useState(false);
     const { lookAtMesh } = useSceneContext();
     const lookAtVector = useRef(new THREE.Vector3());
@@ -16,6 +18,13 @@ export default function Box({ children, ...rest }) {
         }
         return null;
     }, [mounted]);
+
+    const handleClick = () => {
+        // Use the first child's uuid as camera targets selector
+        // Need to do this because camera controls can't target a group
+        // only a mesh or object3d.
+        setCurrentBoxUuid(ref.current.children[0].uuid);
+    };
 
     useFrame(({ delta }) => {
         if (!refClone) return;
@@ -31,7 +40,7 @@ export default function Box({ children, ...rest }) {
         setMounted(true);
     }, []);
     return (
-        <group ref={ref} {...rest}>
+        <group ref={ref} {...rest} onClick={handleClick}>
             {children}
         </group>
     );

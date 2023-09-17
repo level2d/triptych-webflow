@@ -8,7 +8,9 @@ import { useStore } from "@/js/lib/store";
 
 function Model(props) {
     const { nodes /*, materials */ } = useGLTF(GLB_ASSET_URLS.Locations);
-    const setCameraTargetUuid = useStore((state) => state.setCameraTargetUuid);
+    const setTriptychModelUuid = useStore(
+        (state) => state.setTriptychModelUuid,
+    );
     const [boundingBox, setBoundingBox] = useState({
         min: new THREE.Vector3(0, 0, 0),
         max: new THREE.Vector3(1, 1, 1),
@@ -103,8 +105,8 @@ function Model(props) {
     }, [setBoundingBox, nodes.triptych.geometry]);
 
     useEffect(() => {
-        // Immediately focus the camera on the triptych model
-        setCameraTargetUuid(tripTychRef.current.uuid);
+        // Sync store
+        setTriptychModelUuid(tripTychRef.current.uuid);
     }, []);
 
     return (

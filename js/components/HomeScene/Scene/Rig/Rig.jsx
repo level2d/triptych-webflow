@@ -1,6 +1,5 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import { OrthographicCamera, CameraControls } from "@react-three/drei";
-import * as THREE from "three";
 import { useSceneContext } from "../useSceneContext";
 import { useFrame, useThree } from "@react-three/fiber";
 import { folder, useControls } from "leva";
@@ -10,7 +9,6 @@ import { useStore } from "@/js/lib/store";
 
 const padding = 0.5;
 export default function Rig() {
-    const [mounted, setMounted] = useState(false);
     const cameraTargetUuid = useStore((state) => state.cameraTargetUuid);
     const {
         size: { width, height },
@@ -47,17 +45,13 @@ export default function Rig() {
     });
 
     const cameraTarget = useMemo(() => {
-        if (!cameraTargetUuid) return new THREE.Object3D();
+        if (!cameraTargetUuid) return null;
         return scene.getObjectByProperty("uuid", cameraTargetUuid);
     }, [cameraTargetUuid, scene]);
 
     useEffect(() => {
-        if (!mounted) return;
-
+        if (!cameraTarget) return;
         if (!cameraControls) return;
-        if (!debug) {
-            cameraControls.disconnect();
-        }
         const focusCamera = async () => {
             await cameraControls.setOrbitPoint(
                 cameraTarget.position.x,
@@ -72,11 +66,14 @@ export default function Rig() {
             });
         };
         focusCamera();
-    }, [mounted, width, height, cameraTarget, cameraControls]);
+    }, [width, height, cameraTarget, cameraControls]);
 
     useEffect(() => {
-        setMounted(true);
-    }, []);
+        if (!cameraControls) return;
+        if (!debug) {
+            cameraControls.disconnect();
+        }
+    }, [cameraControls]);
 
     return (
         <>
