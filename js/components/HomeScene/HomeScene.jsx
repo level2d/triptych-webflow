@@ -26,7 +26,7 @@ const Loading = () => {
                 viewBox="0 0 100 100"
                 enableBackground="new 0 0 0 0"
                 xmlSpace="preserve"
-                preserveAspectRatio="meet"
+                preserveAspectRatio="xMidYMid meet"
                 style={{ width: "5rem", height: "auto" }}
             >
                 <circle fill="#343434" stroke="none" cx="6" cy="50" r="6">
