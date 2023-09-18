@@ -1,7 +1,7 @@
 import styles from "./HomeScene.module.scss";
 
 import { Suspense, lazy } from "react";
-import { Canvas, useInstanceHandle } from "@react-three/fiber";
+import { Canvas } from "@react-three/fiber";
 import { Html } from "@react-three/drei";
 import { Leva } from "leva";
 import { debug } from "@/js/core/constants";
