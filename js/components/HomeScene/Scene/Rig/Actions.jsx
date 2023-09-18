@@ -3,6 +3,10 @@ import { useThree } from "@react-three/fiber";
 import { useControls, button } from "leva";
 
 import { useStore } from "@/js/lib/store";
+import App from "@/js/App";
+import { useEffect } from "react";
+
+const app = new App();
 
 export default function Actions() {
     const getThreeState = useThree((state) => state.get);
@@ -95,5 +99,17 @@ export default function Actions() {
         orbitDown: button(() => orbit("down")),
         resetCameraTarget: button(() => resetCameraTarget()),
     });
+
+    // bind event listeners
+    useEffect(() => {
+        const handleNavClick = (data) => {
+            const { direction } = data;
+            orbit(direction);
+        };
+        app.bus.on("component: HomeScene: nav: click", handleNavClick);
+        return () => {
+            app.bus.off("component: HomeScene: nav: click", handleNavClick);
+        };
+    }, []);
     return null;
 }

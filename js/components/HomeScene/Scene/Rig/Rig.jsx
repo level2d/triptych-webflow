@@ -6,6 +6,7 @@ import { folder, useControls } from "leva";
 
 import { debug } from "@/js/core/constants";
 import { useStore } from "@/js/lib/store";
+import Nav from "./Nav";
 import Actions from "./Actions";
 
 export default function Rig() {
@@ -108,6 +109,7 @@ export default function Rig() {
                         transparent
                     />
                 </mesh>
+                <Nav />
             </OrthographicCamera>
             <CameraControls makeDefault />
             <Actions />
