@@ -1,37 +1,21 @@
 import styles from "./HomeScene.module.scss";
 
 import { Suspense, lazy } from "react";
-import { Canvas } from "@react-three/fiber";
-import { Html, Text } from "@react-three/drei";
+import { Canvas, useInstanceHandle } from "@react-three/fiber";
+import { Html } from "@react-three/drei";
 import { Leva } from "leva";
 import { debug } from "@/js/core/constants";
-
-import loadingLogoUrl from "@/assets/img/loading.svg";
 
 const Scene = lazy(() => {
     return Promise.all([
         import("./Scene"),
-        new Promise((resolve) => setTimeout(resolve, debug ? 0 : 2.4 * 1000)),
+        new Promise((resolve) => setTimeout(resolve, debug ? 0 : 1 * 1000)),
     ]).then(([moduleExports]) => moduleExports);
 });
 
 const Loading = () => {
-    return debug ? (
-        <Text position={[0, 0, 0]} rotation={[0, Math.PI * -0.25, 0]}>
-            {"Loading..."}
-        </Text>
-    ) : (
-        <Html
-            position={[0, 0, 0]}
-            style={{
-                position: "relative",
-                height: "100%",
-                width: "100%",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-            }}
-        >
+    return (
+        <Html center>
             <svg
                 version="1.1"
                 id="L4"
@@ -42,7 +26,7 @@ const Loading = () => {
                 viewBox="0 0 100 100"
                 enableBackground="new 0 0 0 0"
                 xmlSpace="preserve"
-                preserveAspectRatio="meet"
+                preserveAspectRatio="xMidYMid meet"
                 style={{ width: "5rem", height: "auto" }}
             >
                 <circle fill="#343434" stroke="none" cx="6" cy="50" r="6">

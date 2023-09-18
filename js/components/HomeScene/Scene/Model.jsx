@@ -1,17 +1,22 @@
 import * as THREE from "three";
-import { forwardRef, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useGLTF, Outlines } from "@react-three/drei";
 import { GLB_ASSET_URLS } from "@/js/core/constants";
 import { useControls, folder } from "leva";
 import Box from "./Box";
+import { useStore } from "@/js/lib/store";
 
-function _Model(props, ref) {
+function Model(props) {
+    const { nodes /*, materials */ } = useGLTF(GLB_ASSET_URLS.Locations);
+    const setTriptychModelUuid = useStore(
+        (state) => state.setTriptychModelUuid,
+    );
     const [boundingBox, setBoundingBox] = useState({
         min: new THREE.Vector3(0, 0, 0),
         max: new THREE.Vector3(1, 1, 1),
     });
+    const tripTychRef = useRef(null);
     const grainShaderMaterialRef = useRef();
-    const { nodes /*, materials */ } = useGLTF(GLB_ASSET_URLS.Locations);
     const {
         uNoiseScale,
         uNoiseContrast,
@@ -99,14 +104,20 @@ function _Model(props, ref) {
         setBoundingBox(nodes.triptych.geometry.boundingBox);
     }, [setBoundingBox, nodes.triptych.geometry]);
 
+    useEffect(() => {
+        // Sync store
+        setTriptychModelUuid(tripTychRef.current.uuid);
+    }, []);
+
     return (
         <group {...props} dispose={null} scale={0.1}>
             <mesh
+                name="Triptych"
                 castShadow
                 receiveShadow
                 geometry={nodes.triptych.geometry}
                 // material={nodes.triptych.material}
-                ref={ref}
+                ref={tripTychRef}
             >
                 <grainShaderMaterial
                     uNoiseEnabled={uNoiseEnabled}
@@ -327,7 +338,6 @@ function _Model(props, ref) {
     );
 }
 
-const Model = forwardRef(_Model);
 export default Model;
 
 useGLTF.preload(GLB_ASSET_URLS.Locations);
