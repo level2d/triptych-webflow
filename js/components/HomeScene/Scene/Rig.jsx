@@ -6,8 +6,6 @@ import { folder, useControls } from "leva";
 
 import { debug } from "@/js/core/constants";
 import { useStore } from "@/js/lib/store";
-import Nav from "./Nav";
-import Actions from "./Actions";
 
 export default function Rig() {
     const lookAtMesh = useRef(null);
@@ -30,7 +28,7 @@ export default function Rig() {
         Rig: folder({
             lookAtMeshVisible: debug,
             lookAtFactor: {
-                value: 15,
+                value: 8,
                 min: 0.1,
                 max: 20,
                 step: 0.1,
@@ -38,17 +36,16 @@ export default function Rig() {
         }),
     });
 
-    useFrame(({ pointer, viewport }) => {
+    useFrame(({ camera, pointer, viewport }) => {
         if (!lookAtMesh.current) return;
-        const { aspect } = viewport;
-        const boxWidth = boxSize.current.x;
-        const boxHeight = boxSize.current.y;
-        const translateX = (boxWidth * aspect) / 2;
-        const translateY = boxHeight / aspect / 2;
-        const x = pointer.x * translateX * lookAtFactor;
-        const y = pointer.y * translateY * lookAtFactor;
-        lookAtMesh.current.position.x = x;
-        lookAtMesh.current.position.y = y;
+        const { height, width } = viewport.getCurrentViewport(
+            camera,
+            [0, 0, -1], // account for distance of lookAtMesh from camera
+        );
+        const x = (pointer.x * width) / 2;
+        const y = (pointer.y * height) / 2;
+        lookAtMesh.current.position.x = x * lookAtFactor;
+        lookAtMesh.current.position.y = y * lookAtFactor;
     });
 
     const cameraTarget = useMemo(() => {
@@ -109,10 +106,8 @@ export default function Rig() {
                         transparent
                     />
                 </mesh>
-                <Nav />
             </OrthographicCamera>
             <CameraControls makeDefault />
-            <Actions />
         </>
     );
 }

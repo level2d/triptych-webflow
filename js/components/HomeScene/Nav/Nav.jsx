@@ -1,10 +1,7 @@
 import styles from "./Nav.module.scss";
 
-import { Html } from "@react-three/drei";
-
-import App from "@/js/App";
-
-const app = new App();
+import { useStore } from "@/js/lib/store";
+import Actions from "./Actions";
 
 const LeftArrow = () => {
     return (
@@ -97,23 +94,29 @@ const Button = ({ direction = "left", onClick = () => {} }) => {
 };
 
 export default function Nav() {
-    const handleClick = (direction) => {
-        app.bus.emit("component: HomeScene: nav: click", { direction });
-    };
+    const orbit = useStore((state) => state.orbit);
+    const resetCurrentBoxUuid = useStore((state) => state.resetCurrentBoxUuid);
+    const currentBoxUuid = useStore((state) => state.currentBoxUuid);
+
     return (
-        <Html fullscreen>
-            <div className={styles.wrapper}>
-                <div className={styles.inner}>
+        <>
+            {typeof currentBoxUuid === "string" ? (
+                <div className={styles.backWrapper}>
+                    <Button direction="left" onClick={resetCurrentBoxUuid} />
+                </div>
+            ) : (
+                <div className={styles.arrowsWrapper}>
                     <div className={styles.buttonWrapper}>
-                        <Button onClick={handleClick} direction="left" />
+                        <Button direction="left" onClick={orbit} />
                         <div className={styles.middleButtons}>
-                            <Button onClick={handleClick} direction="up" />
-                            <Button onClick={handleClick} direction="down" />
+                            <Button direction="up" onClick={orbit} />
+                            <Button direction="down" onClick={orbit} />
                         </div>
-                        <Button onClick={handleClick} direction="right" />
+                        <Button direction="right" onClick={orbit} />
                     </div>
                 </div>
-            </div>
-        </Html>
+            )}
+            <Actions />
+        </>
     );
 }
