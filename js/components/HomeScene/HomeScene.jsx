@@ -23,26 +23,23 @@ export default function HomeScene() {
         wrapperProps["data-lenis-prevent"] = true;
     }
     return (
-        <div className={styles.wrapper} {...wrapperProps} ref={ref}>
-            <Canvas
-                shadows
-                onCreated={({ get }) => {
-                    // Pass r3f store getter to our local store
-                    setGetR3fStore(get);
-                }}
-                eventSource={ref}
-            >
-                <Suspense fallback={<Loading />}>
-                    <Scene />
-                </Suspense>
-            </Canvas>
-            <div className={styles.overlays}>
-                <div className={styles.overlaysInner}>
-                    <Nav />
-                    <div className={styles.levaWrapper}>
-                        <Leva hidden={!debug} fill />
-                    </div>
-                </div>
+        <div className={styles.wrapper}>
+            <div className={styles.canvasWrapper} {...wrapperProps} ref={ref}>
+                <Canvas
+                    shadows
+                    onCreated={({ get }) => {
+                        // Pass r3f store getter to our local store
+                        setGetR3fStore(get);
+                    }}
+                >
+                    <Suspense fallback={<Loading />}>
+                        <Scene />
+                    </Suspense>
+                </Canvas>
+            </div>
+            <Nav />
+            <div className={styles.levaWrapper}>
+                <Leva hidden={!debug} fill />
             </div>
         </div>
     );
