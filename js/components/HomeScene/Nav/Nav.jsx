@@ -1,6 +1,7 @@
 import styles from "./Nav.module.scss";
 
 import { useStore } from "@/js/lib/store";
+import Actions from "./Actions";
 
 const LeftArrow = () => {
     return (
@@ -115,6 +116,7 @@ export default function Nav() {
                     </div>
                 </div>
             )}
+            <Actions />
         </>
     );
 }

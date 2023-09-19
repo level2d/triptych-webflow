@@ -6,7 +6,7 @@ import { Leva } from "leva";
 import { debug } from "@/js/core/constants";
 import { useStore } from "@/js/lib/store";
 import Loading from "./Loading";
-import Nav from "./Nav";
+import Nav from "./Nav/Nav";
 
 const Scene = lazy(() => {
     return Promise.all([

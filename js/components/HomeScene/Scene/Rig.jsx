@@ -6,7 +6,6 @@ import { folder, useControls } from "leva";
 
 import { debug } from "@/js/core/constants";
 import { useStore } from "@/js/lib/store";
-import Actions from "./Actions";
 
 export default function Rig() {
     const lookAtMesh = useRef(null);
@@ -109,7 +108,6 @@ export default function Rig() {
                 </mesh>
             </OrthographicCamera>
             <CameraControls makeDefault />
-            <Actions />
         </>
     );
 }
