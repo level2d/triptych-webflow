@@ -16,6 +16,7 @@ import {
     GyroModel,
     KeyModel,
     MethodsModel,
+    NorthfaceModel,
 } from "./Models";
 
 function Model(props) {
@@ -262,19 +263,15 @@ function Model(props) {
                     <meshStandardMaterial color={"red"} />
                 </mesh>
             </Box>
-            <Box position={[3, -3, -1]}>
-                <mesh
-                    castShadow
-                    receiveShadow
-                    // geometry={nodes.location_011.geometry}
-                    // material={nodes.location_011.material}
-                    // position={[3, -3, -1]}
-                    scale={0.5}
-                >
-                    <boxGeometry />
-                    <meshStandardMaterial color={"red"} />
-                </mesh>
-            </Box>
+            {/* <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes.location_011.geometry}
+                material={nodes.location_011.material}
+                position={[3, -3, -1]}
+                scale={0.5}
+            /> */}
+            <NorthfaceModel position={[3, -3, -1]} />
             <Box position={[1, -3, 1]}>
                 <mesh
                     castShadow
