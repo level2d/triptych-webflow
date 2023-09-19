@@ -16,11 +16,7 @@ export const createHomeSceneSlice = (set, get) => ({
      * get() the r3f instance's store.
      */
     getR3fStore: () => {},
-    setGetR3fStore: (getR3fStore) =>
-        set(() => {
-            window.getR3fStore = getR3fStore;
-            return { getR3fStore };
-        }),
+    setGetR3fStore: (getR3fStore) => set(() => ({ getR3fStore })),
 
     /**
      * @type {(null | string)}
