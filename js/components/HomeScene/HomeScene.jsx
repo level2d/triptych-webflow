@@ -23,14 +23,7 @@ export default function HomeScene() {
         wrapperProps["data-lenis-prevent"] = true;
     }
     return (
-        <div
-            className={styles.wrapper}
-            {...wrapperProps}
-            ref={ref}
-            onMouseLeave={() => {
-                console.log("mouseleave");
-            }}
-        >
+        <div className={styles.wrapper} {...wrapperProps} ref={ref}>
             <Canvas
                 shadows
                 onCreated={({ get }) => {
