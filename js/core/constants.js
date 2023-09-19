@@ -32,6 +32,7 @@ export const GLB_ASSET_URLS = {
     Contact: contact_url,
     Culture: culture_url,
     EPB: epb_url,
+    Eye: eye_url,
 };
 
 export const TEXTURE_ASSET_URLS = {

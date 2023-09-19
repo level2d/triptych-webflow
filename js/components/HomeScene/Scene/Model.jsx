@@ -12,6 +12,7 @@ import {
     ContactModel,
     CultureModel,
     EpbModel,
+    EyeModel,
 } from "./Models";
 
 function Model(props) {
@@ -293,19 +294,14 @@ function Model(props) {
                     <meshStandardMaterial color={"red"} />
                 </mesh>
             </Box>
-            <Box position={[-1, 1, 1]}>
-                <mesh
-                    castShadow
-                    receiveShadow
-                    // geometry={nodes.location_013.geometry}
-                    // material={nodes.location_013.material}
-                    // position={[-1, 1, 1]}
-                    scale={0.5}
-                >
-                    <boxGeometry />
-                    <meshStandardMaterial color={"red"} />
-                </mesh>
-            </Box>
+            {/* <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes.location_013.geometry}
+                material={nodes.location_013.material}
+                position={[-1, 1, 1]}
+            /> */}
+            <EyeModel position={[-1, 1, 1]} />
             <Box position={[3, 1, 3]}>
                 <mesh
                     castShadow
