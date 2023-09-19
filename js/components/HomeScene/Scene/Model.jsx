@@ -3,8 +3,26 @@ import { useEffect, useRef, useState } from "react";
 import { useGLTF, Outlines } from "@react-three/drei";
 import { GLB_ASSET_URLS } from "@/js/core/constants";
 import { useControls, folder } from "leva";
-import Box from "./Box";
 import { useStore } from "@/js/lib/store";
+
+import { Box } from "./Common";
+import {
+    CareersModel,
+    CdmModel,
+    ContactModel,
+    CultureModel,
+    EpbModel,
+    EyeModel,
+    GyroModel,
+    KeyModel,
+    MethodsModel,
+    NorthfaceModel,
+    ShowreelModel,
+    SkullModel,
+    SosModel,
+    StoriesModel,
+    WorkModel,
+} from "./Models";
 
 function Model(props) {
     const { nodes /*, materials */ } = useGLTF(GLB_ASSET_URLS.Locations);
@@ -139,201 +157,131 @@ function Model(props) {
                 geometry={nodes.water.geometry}
                 material={nodes.water.material}
             /> */}
-            <Box position={[1, 1, -3]}>
-                <mesh
-                    castShadow
-                    receiveShadow
-                    // geometry={nodes.location_015.geometry}
-                    // material={nodes.location_015.material}
-                    // position={[1, 1, -3]}
-                    scale={0.5}
-                >
-                    <boxGeometry />
-                    <meshStandardMaterial color={"red"} />
-                </mesh>
-            </Box>
-            <Box position={[1, 3, -3]}>
-                <mesh
-                    castShadow
-                    receiveShadow
-                    // geometry={nodes.location_001.geometry}
-                    // material={nodes.location_001.material}
-                    // position={[1, 3, -3]}
-                    scale={0.5}
-                >
-                    <boxGeometry />
-                    <meshStandardMaterial color={"red"} />
-                </mesh>
-            </Box>
-            <Box position={[-3, -1, -3]}>
-                <mesh
-                    castShadow
-                    receiveShadow
-                    geometry={nodes.location_002.geometry}
-                    material={nodes.location_002.material}
-                    // position={[-3, -1, -3]}
-                    scale={0.5}
-                >
-                    <boxGeometry />
-                    <meshStandardMaterial color={"red"} />
-                </mesh>
-            </Box>
-            <Box position={[-3, 3, 1]}>
-                <mesh
-                    castShadow
-                    receiveShadow
-                    // geometry={nodes.location_003.geometry}
-                    // material={nodes.location_003.material}
-                    // position={[-3, 3, 1]}
-                    scale={0.5}
-                >
-                    <boxGeometry />
-                    <meshStandardMaterial color={"red"} />
-                </mesh>
-            </Box>
-            <Box position={[-1, -1, 1]}>
-                <mesh
-                    castShadow
-                    receiveShadow
-                    // geometry={nodes.location_004.geometry}
-                    // material={nodes.location_004.material}
-                    // position={[-1, -1, 1]}
-                    scale={0.5}
-                >
-                    <boxGeometry />
-                    <meshStandardMaterial color={"red"} />
-                </mesh>
-            </Box>
-            <Box position={[3, -1, 3]}>
-                <mesh
-                    castShadow
-                    receiveShadow
-                    // geometry={nodes.location_005.geometry}
-                    // material={nodes.location_005.material}
-                    // position={[3, -1, 3]}
-                    scale={0.5}
-                >
-                    <boxGeometry />
-                    <meshStandardMaterial color={"red"} />
-                </mesh>
-            </Box>
-            <Box position={[-1, -3, 1]}>
-                <mesh
-                    castShadow
-                    receiveShadow
-                    // geometry={nodes.location_006.geometry}
-                    // material={nodes.location_006.material}
-                    // position={[-1, -3, 1]}
-                    scale={0.5}
-                >
-                    <boxGeometry />
-                    <meshStandardMaterial color={"red"} />
-                </mesh>
-            </Box>
-            <Box position={[1, -1, -1]}>
-                <mesh
-                    castShadow
-                    receiveShadow
-                    // geometry={nodes.location_007.geometry}
-                    // material={nodes.location_007.material}
-                    // position={[1, -1, -1]}
-                    scale={0.5}
-                >
-                    <boxGeometry />
-                    <meshStandardMaterial color={"red"} />
-                </mesh>
-            </Box>
-            <Box position={[-1, 3, 3]}>
-                <mesh
-                    castShadow
-                    receiveShadow
-                    // geometry={nodes.location_008.geometry}
-                    // material={nodes.location_008.material}
-                    // position={[-1, 3, 3]}
-                    scale={0.5}
-                >
-                    <boxGeometry />
-                    <meshStandardMaterial color={"red"} />
-                </mesh>
-            </Box>
-            <Box position={[-3, -3, -3]}>
-                <mesh
-                    castShadow
-                    receiveShadow
-                    // geometry={nodes.location_009.geometry}
-                    // material={nodes.location_009.material}
-                    // position={[-3, -3, -3]}
-                    scale={0.5}
-                >
-                    <boxGeometry />
-                    <meshStandardMaterial color={"red"} />
-                </mesh>
-            </Box>
-            <Box position={[3, 3, -1]}>
-                <mesh
-                    castShadow
-                    receiveShadow
-                    // geometry={nodes.location_010.geometry}
-                    // material={nodes.location_010.material}
-                    // position={[3, 3, -1]}
-                    scale={0.5}
-                >
-                    <boxGeometry />
-                    <meshStandardMaterial color={"red"} />
-                </mesh>
-            </Box>
-            <Box position={[3, -3, -1]}>
-                <mesh
-                    castShadow
-                    receiveShadow
-                    // geometry={nodes.location_011.geometry}
-                    // material={nodes.location_011.material}
-                    // position={[3, -3, -1]}
-                    scale={0.5}
-                >
-                    <boxGeometry />
-                    <meshStandardMaterial color={"red"} />
-                </mesh>
-            </Box>
-            <Box position={[1, -3, 1]}>
-                <mesh
-                    castShadow
-                    receiveShadow
-                    // geometry={nodes.location_012.geometry}
-                    // material={nodes.location_012.material}
-                    // position={[1, -3, 1]}
-                    scale={0.5}
-                >
-                    <boxGeometry />
-                    <meshStandardMaterial color={"red"} />
-                </mesh>
-            </Box>
-            <Box position={[-1, 1, 1]}>
-                <mesh
-                    castShadow
-                    receiveShadow
-                    // geometry={nodes.location_013.geometry}
-                    // material={nodes.location_013.material}
-                    // position={[-1, 1, 1]}
-                    scale={0.5}
-                >
-                    <boxGeometry />
-                    <meshStandardMaterial color={"red"} />
-                </mesh>
-            </Box>
-            <Box position={[3, 1, 3]}>
-                <mesh
-                    castShadow
-                    receiveShadow
-                    // geometry={nodes.location_014.geometry}
-                    // material={nodes.location_014.material}
-                    // position={[3, 1, 3]}
-                    scale={0.5}
-                >
-                    <boxGeometry />
-                    <meshStandardMaterial color={"red"} />
-                </mesh>
-            </Box>
+            {/* <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes.location_015.geometry}
+                material={nodes.location_015.material}
+                position={[1, 1, -3]}
+            /> */}
+            <CareersModel position={[1, 1, -3]} />
+            {/* <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes.location_001.geometry}
+                material={nodes.location_001.material}
+                position={[1, 3, -3]}
+                scale={0.5}
+            /> */}
+            <EpbModel position={[1, 3, -3]} />
+            {/* <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes.location_002.geometry}
+                material={nodes.location_002.material}
+                position={[-3, -1, -3]}
+            /> */}
+            <GyroModel position={[-3, -1, -3]} />
+            {/* <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes.location_003.geometry}
+                material={nodes.location_003.material}
+                position={[-3, 3, 1]}
+            /> */}
+            <CultureModel position={[-3, 3, 1]} />
+            {/* <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes.location_004.geometry}
+                material={nodes.location_004.material}
+                position={[-1, -1, 1]}
+                scale={0.5}
+            /> */}
+            <ShowreelModel position={[-1, -1, 1]} />
+            {/* <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes.location_005.geometry}
+                material={nodes.location_005.material}
+                position={[3, -1, 3]}
+            /> */}
+            <WorkModel position={[3, -1, 3]} />
+            {/* <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes.location_006.geometry}
+                material={nodes.location_006.material}
+                position={[-1, -3, 1]}
+            /> */}
+            <StoriesModel position={[-1, -3, 1]} />
+            <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes.location_007.geometry}
+                material={nodes.location_007.material}
+                position={[1, -1, -1]}
+                scale={0.5}
+            />
+            <ContactModel position={[1, -1, -1]} />
+            {/* <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes.location_008.geometry}
+                material={nodes.location_008.material}
+                position={[-1, 3, 3]}
+                scale={0.5}
+            /> */}
+            <MethodsModel position={[-1, 3, 3]} />
+            {/* <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes.location_009.geometry}
+                material={nodes.location_009.material}
+                position={[-3, -3, -3]}
+            /> */}
+            <CdmModel position={[-3, -3, -3]} />
+            {/* <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes.location_010.geometry}
+                material={nodes.location_010.material}
+                position={[3, 3, -1]}
+            /> */}
+            <SosModel position={[3, 3, -1]} />
+            {/* <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes.location_011.geometry}
+                material={nodes.location_011.material}
+                position={[3, -3, -1]}
+                scale={0.5}
+            /> */}
+            <NorthfaceModel position={[3, -3, -1]} />
+            {/* <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes.location_012.geometry}
+                material={nodes.location_012.material}
+                position={[1, -3, 1]}
+            /> */}
+            <SkullModel position={[1, -3, 1]} />
+            {/* <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes.location_013.geometry}
+                material={nodes.location_013.material}
+                position={[-1, 1, 1]}
+            /> */}
+            <EyeModel position={[-1, 1, 1]} />
+            {/* <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes.location_014.geometry}
+                material={nodes.location_014.material}
+                position={[3, 1, 3]}
+            /> */}
+            <KeyModel position={[3, 1, 3]} />
         </group>
     );
 }
