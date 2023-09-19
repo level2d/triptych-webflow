@@ -1,10 +1,6 @@
 import styles from "./Nav.module.scss";
 
-import { Html } from "@react-three/drei";
-
-import App from "@/js/App";
-
-const app = new App();
+import { useStore } from "@/js/lib/store";
 
 const LeftArrow = () => {
     return (
@@ -82,13 +78,14 @@ const ARROWS = {
     down: DownArrow,
 };
 
-const Button = ({ direction = "left", onClick = () => {} }) => {
+const Button = ({ direction = "left" }) => {
+    const orbit = useStore((state) => state.orbit);
     const Component = ARROWS[direction];
     return (
         <button
             className={styles.button}
             onClick={() => {
-                onClick(direction);
+                orbit(direction);
             }}
         >
             <Component />
@@ -97,23 +94,16 @@ const Button = ({ direction = "left", onClick = () => {} }) => {
 };
 
 export default function Nav() {
-    const handleClick = (direction) => {
-        app.bus.emit("component: HomeScene: nav: click", { direction });
-    };
     return (
-        <Html fullscreen>
-            <div className={styles.wrapper}>
-                <div className={styles.inner}>
-                    <div className={styles.buttonWrapper}>
-                        <Button onClick={handleClick} direction="left" />
-                        <div className={styles.middleButtons}>
-                            <Button onClick={handleClick} direction="up" />
-                            <Button onClick={handleClick} direction="down" />
-                        </div>
-                        <Button onClick={handleClick} direction="right" />
-                    </div>
+        <div className={styles.wrapper}>
+            <div className={styles.buttonWrapper}>
+                <Button direction="left" />
+                <div className={styles.middleButtons}>
+                    <Button direction="up" />
+                    <Button direction="down" />
                 </div>
+                <Button direction="right" />
             </div>
-        </Html>
+        </div>
     );
 }
