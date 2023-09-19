@@ -40,6 +40,7 @@ export const GLB_ASSET_URLS = {
     Phone: phone_url,
     Showreel: showreel_url,
     Skull: skull_url,
+    SOS: sos_url,
 };
 
 export const TEXTURE_ASSET_URLS = {

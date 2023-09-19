@@ -19,6 +19,7 @@ import {
     NorthfaceModel,
     ShowreelModel,
     SkullModel,
+    SosModel,
 } from "./Models";
 
 function Model(props) {
@@ -248,19 +249,14 @@ function Model(props) {
                 position={[-3, -3, -3]}
             /> */}
             <CdmModel position={[-3, -3, -3]} />
-            <Box position={[3, 3, -1]}>
-                <mesh
-                    castShadow
-                    receiveShadow
-                    // geometry={nodes.location_010.geometry}
-                    // material={nodes.location_010.material}
-                    // position={[3, 3, -1]}
-                    scale={0.5}
-                >
-                    <boxGeometry />
-                    <meshStandardMaterial color={"red"} />
-                </mesh>
-            </Box>
+            {/* <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes.location_010.geometry}
+                material={nodes.location_010.material}
+                position={[3, 3, -1]}
+            /> */}
+            <SosModel position={[3, 3, -1]} />
             {/* <mesh
                 castShadow
                 receiveShadow
