@@ -3,9 +3,9 @@ import { useEffect, useRef, useState } from "react";
 import { useGLTF, Outlines } from "@react-three/drei";
 import { GLB_ASSET_URLS } from "@/js/core/constants";
 import { useControls, folder } from "leva";
-import Box from "./Box";
 import { useStore } from "@/js/lib/store";
 
+import { Box } from "./Common";
 function Model(props) {
     const { nodes /*, materials */ } = useGLTF(GLB_ASSET_URLS.Locations);
     const setTriptychModelUuid = useStore(
