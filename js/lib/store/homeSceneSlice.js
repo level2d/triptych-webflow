@@ -58,7 +58,10 @@ export const createHomeSceneSlice = (set, get) => ({
         if (!cameraControls) return;
 
         const scene = get().getR3fStore().scene;
-        const padding = get().padding;
+        const paddingTop = get().paddingTop;
+        const paddingRight = get().paddingRight;
+        const paddingBottom = get().paddingBottom;
+        const paddingLeft = get().paddingLeft;
         const cameraTargetUuid = get().cameraTargetUuid;
         const cameraTarget = scene.getObjectByProperty(
             "uuid",
@@ -84,10 +87,10 @@ export const createHomeSceneSlice = (set, get) => ({
                     true,
                 );
                 await cameraControls.fitToBox(cameraTarget, true, {
-                    paddingTop: padding,
-                    paddingRight: padding,
-                    paddingBottom: padding,
-                    paddingLeft: padding,
+                    paddingTop: paddingTop,
+                    paddingRight: paddingRight,
+                    paddingBottom: paddingBottom,
+                    paddingLeft: paddingLeft,
                 });
                 break;
             }
@@ -98,10 +101,10 @@ export const createHomeSceneSlice = (set, get) => ({
                     true,
                 );
                 await cameraControls.fitToBox(cameraTarget, true, {
-                    paddingTop: padding,
-                    paddingRight: padding,
-                    paddingBottom: padding,
-                    paddingLeft: padding,
+                    paddingTop: paddingTop,
+                    paddingRight: paddingRight,
+                    paddingBottom: paddingBottom,
+                    paddingLeft: paddingLeft,
                 });
                 break;
             }
@@ -131,5 +134,8 @@ export const createComputedHomeSceneSlice = (state) => ({
     // parent triptych model
     cameraTargetUuid: state.currentBoxUuid ?? state.triptychModelUuid,
     // decrease padding when focussing a box
-    padding: state.currentBoxUuid ? 0.01 : 0.5,
+    paddingTop: state.currentBoxUuid ? 0.01 : 0.5,
+    paddingRight: state.currentBoxUuid ? 0.01 : 0.5,
+    paddingBottom: state.currentBoxUuid ? 0.01 : 0.5,
+    paddingLeft: state.currentBoxUuid ? 0.09 : 0.5,
 });

@@ -12,7 +12,14 @@ export default function Rig() {
     const cameraOrbitPoint = useRef(new THREE.Vector3());
     const boxSize = useRef(new THREE.Vector2());
     const cameraTargetUuid = useStore((state) => state.cameraTargetUuid);
-    const padding = useStore((state) => state.padding);
+    const { paddingTop, paddingRight, paddingBottom, paddingLeft } = useStore(
+        (state) => ({
+            paddingTop: state.paddingTop,
+            paddingRight: state.paddingRight,
+            paddingBottom: state.paddingBottom,
+            paddingLeft: state.paddingLeft,
+        }),
+    );
     const setLookAtMeshUuid = useStore((state) => state.setLookAtMeshUuid);
     const {
         size: { width, height },
@@ -66,14 +73,23 @@ export default function Rig() {
                 cameraOrbitPoint.current.z,
             );
             await cameraControls.fitToBox(cameraTarget, true, {
-                paddingTop: padding,
-                paddingRight: padding,
-                paddingBottom: padding,
-                paddingLeft: padding,
+                paddingTop: paddingTop,
+                paddingRight: paddingRight,
+                paddingBottom: paddingBottom,
+                paddingLeft: paddingLeft,
             });
         };
         focusCamera();
-    }, [cameraTarget, cameraControls, width, height, padding]);
+    }, [
+        cameraTarget,
+        cameraControls,
+        width,
+        height,
+        paddingTop,
+        paddingRight,
+        paddingBottom,
+        paddingLeft,
+    ]);
 
     useEffect(() => {
         if (!cameraControls) return;
