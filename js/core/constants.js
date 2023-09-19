@@ -37,6 +37,7 @@ export const GLB_ASSET_URLS = {
     Key: key_url,
     Methods: methods_url,
     Northface: northface_url,
+    Phone: phone_url,
 };
 
 export const TEXTURE_ASSET_URLS = {
