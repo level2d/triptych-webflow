@@ -14,6 +14,7 @@ import {
     EpbModel,
     EyeModel,
     GyroModel,
+    KeyModel,
 } from "./Models";
 
 function Model(props) {
@@ -298,19 +299,14 @@ function Model(props) {
                 position={[-1, 1, 1]}
             /> */}
             <EyeModel position={[-1, 1, 1]} />
-            <Box position={[3, 1, 3]}>
-                <mesh
-                    castShadow
-                    receiveShadow
-                    // geometry={nodes.location_014.geometry}
-                    // material={nodes.location_014.material}
-                    // position={[3, 1, 3]}
-                    scale={0.5}
-                >
-                    <boxGeometry />
-                    <meshStandardMaterial color={"red"} />
-                </mesh>
-            </Box>
+            {/* <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes.location_014.geometry}
+                material={nodes.location_014.material}
+                position={[3, 1, 3]}
+            /> */}
+            <KeyModel position={[3, 1, 3]} />
         </group>
     );
 }

@@ -5,3 +5,4 @@ export { default as CultureModel } from "./CultureModel";
 export { default as EpbModel } from "./EpbModel";
 export { default as EyeModel } from "./EyeModel";
 export { default as GyroModel } from "./GyroModel";
+export { default as KeyModel } from "./KeyModel";
