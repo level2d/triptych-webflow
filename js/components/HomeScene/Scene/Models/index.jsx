@@ -7,7 +7,7 @@ export { default as EyeModel } from "./EyeModel";
 export { default as GyroModel } from "./GyroModel";
 export { default as KeyModel } from "./KeyModel";
 export { default as MethodsModel } from "./MethodsModel";
-export { default as NorthfaceModel } from "./NorthFaceModel";
+export { default as NorthfaceModel } from "./NorthfaceModel";
 export { default as PhoneModel } from "./PhoneModel";
 export { default as ShowreelModel } from "./ShowreelModel";
 export { default as SkullModel } from "./SkullModel";
