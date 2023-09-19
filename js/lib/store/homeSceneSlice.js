@@ -1,4 +1,23 @@
-export const createHomeSceneSlice = (set) => ({
+import * as THREE from "three";
+
+// Local cache
+const cameraPosition = new THREE.Vector3();
+const boundingBox = new THREE.Box3();
+
+/**
+ *
+ * @typedef {"up" | "right" | "down" | "left"} direction
+ */
+
+export const createHomeSceneSlice = (set, get) => ({
+    /**
+     * @description This will transform into a getter function once the r3f
+     * canvas is created. This escape hatch allows our local zustand store to
+     * get() the r3f instance's store.
+     */
+    getR3fStore: () => {},
+    setGetR3fStore: (getR3fStore) => set(() => ({ getR3fStore })),
+
     /**
      * @type {(null | string)}
      */
@@ -8,6 +27,7 @@ export const createHomeSceneSlice = (set) => ({
      * @param {string} uuid UUID of object3d or mesh to focus
      */
     setTriptychModelUuid: (uuid) => set(() => ({ triptychModelUuid: uuid })),
+
     /**
      * @type {(null | string)}
      */
@@ -18,6 +38,7 @@ export const createHomeSceneSlice = (set) => ({
      */
     setCurrentBoxUuid: (uuid) => set(() => ({ currentBoxUuid: uuid })),
     resetCurrentBoxUuid: () => set(() => ({ currentBoxUuid: null })),
+
     /**
      * @type {(null | string)}
      */
@@ -27,6 +48,82 @@ export const createHomeSceneSlice = (set) => ({
      * @param {string} uuid UUID of object3d or mesh to focus
      */
     setLookAtMeshUuid: (uuid) => set(() => ({ lookAtMeshUuid: uuid })),
+
+    /**
+     *
+     * @param {direction} direction To orbit camera to
+     */
+    orbit: async (direction) => {
+        const cameraControls = get().getR3fStore().controls;
+        if (!cameraControls) return;
+
+        const scene = get().getR3fStore().scene;
+        const padding = get().padding;
+        const cameraTargetUuid = get().cameraTargetUuid;
+        const cameraTarget = scene.getObjectByProperty(
+            "uuid",
+            cameraTargetUuid,
+        );
+
+        if (!cameraTarget.geometry) return;
+
+        // Store camera position to local Vector3
+        cameraControls.getPosition(cameraPosition, true);
+        // Calc bounds of camera target
+        cameraTarget.geometry.computeBoundingSphere();
+
+        // Store bounding box to local Box3
+        const boundingSphere = cameraTarget.geometry.boundingSphere.clone();
+        boundingSphere.getBoundingBox(boundingBox);
+
+        switch (direction) {
+            case "up": {
+                await cameraControls.rotate(
+                    0,
+                    THREE.MathUtils.degToRad(-90),
+                    true,
+                );
+                await cameraControls.fitToBox(cameraTarget, true, {
+                    paddingTop: padding,
+                    paddingRight: padding,
+                    paddingBottom: padding,
+                    paddingLeft: padding,
+                });
+                break;
+            }
+            case "down": {
+                await cameraControls.rotate(
+                    0,
+                    THREE.MathUtils.degToRad(90),
+                    true,
+                );
+                await cameraControls.fitToBox(cameraTarget, true, {
+                    paddingTop: padding,
+                    paddingRight: padding,
+                    paddingBottom: padding,
+                    paddingLeft: padding,
+                });
+                break;
+            }
+            case "left": {
+                await cameraControls.rotate(
+                    THREE.MathUtils.degToRad(-45),
+                    THREE.MathUtils.degToRad(cameraPosition.y > 0 ? 45 : -45),
+                    true,
+                );
+                break;
+            }
+            case "right":
+            default: {
+                await cameraControls.rotate(
+                    THREE.MathUtils.degToRad(45),
+                    THREE.MathUtils.degToRad(cameraPosition.y > 0 ? 45 : -45),
+                    true,
+                );
+                break;
+            }
+        }
+    },
 });
 
 export const createComputedHomeSceneSlice = (state) => ({
