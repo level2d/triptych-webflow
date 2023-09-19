@@ -35,6 +35,7 @@ export const GLB_ASSET_URLS = {
     Eye: eye_url,
     Gyro: gyro_url,
     Key: key_url,
+    Methods: methods_url,
 };
 
 export const TEXTURE_ASSET_URLS = {

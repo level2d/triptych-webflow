@@ -15,6 +15,7 @@ import {
     EyeModel,
     GyroModel,
     KeyModel,
+    MethodsModel,
 } from "./Models";
 
 function Model(props) {
@@ -231,19 +232,15 @@ function Model(props) {
                 scale={0.5}
             />
             <ContactModel position={[1, -1, -1]} />
-            <Box position={[-1, 3, 3]}>
-                <mesh
-                    castShadow
-                    receiveShadow
-                    // geometry={nodes.location_008.geometry}
-                    // material={nodes.location_008.material}
-                    // position={[-1, 3, 3]}
-                    scale={0.5}
-                >
-                    <boxGeometry />
-                    <meshStandardMaterial color={"red"} />
-                </mesh>
-            </Box>
+            {/* <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes.location_008.geometry}
+                material={nodes.location_008.material}
+                position={[-1, 3, 3]}
+                scale={0.5}
+            /> */}
+            <MethodsModel position={[-1, 3, 3]} />
             {/* <mesh
                 castShadow
                 receiveShadow
