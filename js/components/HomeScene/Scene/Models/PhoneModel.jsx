@@ -125,4 +125,4 @@ export default function PhoneModel(props) {
     );
 }
 
-useGLTF.preload("/phone_01.glb");
+useGLTF.preload(GLB_ASSET_URLS.Phone);
