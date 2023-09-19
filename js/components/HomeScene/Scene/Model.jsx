@@ -13,6 +13,7 @@ import {
     CultureModel,
     EpbModel,
     EyeModel,
+    GyroModel,
 } from "./Models";
 
 function Model(props) {
@@ -165,19 +166,14 @@ function Model(props) {
                 scale={0.5}
             /> */}
             <EpbModel position={[1, 3, -3]} />
-            <Box position={[-3, -1, -3]}>
-                <mesh
-                    castShadow
-                    receiveShadow
-                    geometry={nodes.location_002.geometry}
-                    material={nodes.location_002.material}
-                    // position={[-3, -1, -3]}
-                    scale={0.5}
-                >
-                    <boxGeometry />
-                    <meshStandardMaterial color={"red"} />
-                </mesh>
-            </Box>
+            {/* <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes.location_002.geometry}
+                material={nodes.location_002.material}
+                position={[-3, -1, -3]}
+            /> */}
+            <GyroModel position={[-3, -1, -3]} />
             {/* <mesh
                 castShadow
                 receiveShadow

@@ -33,6 +33,7 @@ export const GLB_ASSET_URLS = {
     Culture: culture_url,
     EPB: epb_url,
     Eye: eye_url,
+    Gyro: gyro_url,
 };
 
 export const TEXTURE_ASSET_URLS = {
