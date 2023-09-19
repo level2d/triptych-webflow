@@ -78,14 +78,13 @@ const ARROWS = {
     down: DownArrow,
 };
 
-const Button = ({ direction = "left" }) => {
-    const orbit = useStore((state) => state.orbit);
+const Button = ({ direction = "left", onClick = () => {} }) => {
     const Component = ARROWS[direction];
     return (
         <button
             className={styles.button}
             onClick={() => {
-                orbit(direction);
+                onClick(direction);
             }}
         >
             <Component />
@@ -94,16 +93,28 @@ const Button = ({ direction = "left" }) => {
 };
 
 export default function Nav() {
+    const orbit = useStore((state) => state.orbit);
+    const resetCurrentBoxUuid = useStore((state) => state.resetCurrentBoxUuid);
+    const currentBoxUuid = useStore((state) => state.currentBoxUuid);
+
     return (
-        <div className={styles.wrapper}>
-            <div className={styles.buttonWrapper}>
-                <Button direction="left" />
-                <div className={styles.middleButtons}>
-                    <Button direction="up" />
-                    <Button direction="down" />
+        <>
+            {typeof currentBoxUuid === "string" ? (
+                <div className={styles.backWrapper}>
+                    <Button direction="left" onClick={resetCurrentBoxUuid} />
                 </div>
-                <Button direction="right" />
-            </div>
-        </div>
+            ) : (
+                <div className={styles.arrowsWrapper}>
+                    <div className={styles.buttonWrapper}>
+                        <Button direction="left" onClick={orbit} />
+                        <div className={styles.middleButtons}>
+                            <Button direction="up" onClick={orbit} />
+                            <Button direction="down" onClick={orbit} />
+                        </div>
+                        <Button direction="right" onClick={orbit} />
+                    </div>
+                </div>
+            )}
+        </>
     );
 }
