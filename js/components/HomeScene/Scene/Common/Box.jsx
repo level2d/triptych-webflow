@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useThree } from "@react-three/fiber";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
@@ -10,9 +10,14 @@ export default function Box({ children, ...rest }) {
     const [mounted, setMounted] = useState(false);
     const scene = useThree((state) => state.scene);
     const setCurrentBoxUuid = useStore((state) => state.setCurrentBoxUuid);
+    const currentBoxUuid = useStore((state) => state.currentBoxUuid);
     const lookAtMeshUuid = useStore((state) => state.lookAtMeshUuid);
     const lookAtVector = useRef(new THREE.Vector3());
     const ref = useRef(null);
+
+    const clickEnabled = useMemo(() => {
+        return currentBoxUuid === null;
+    }, [currentBoxUuid]);
 
     const refClone = useMemo(() => {
         if (mounted) {
@@ -28,12 +33,13 @@ export default function Box({ children, ...rest }) {
         return null;
     }, [mounted, scene, lookAtMeshUuid]);
 
-    const handleClick = () => {
+    const handleClick = useCallback(() => {
+        if (!clickEnabled) return;
         // Use the first child's uuid.
         // Need to do this because camera controls can't target a group
         // only a mesh or object3d.
         setCurrentBoxUuid(ref.current.children[0].uuid);
-    };
+    }, [clickEnabled, setCurrentBoxUuid]);
 
     useFrame(({ delta }) => {
         if (!refClone) return;

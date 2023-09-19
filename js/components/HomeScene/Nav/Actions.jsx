@@ -33,6 +33,14 @@ export default function Actions() {
     useHotkeys("left", async () => {
         await orbit("left");
     });
+    useHotkeys("ctrl+shift+d", () => {
+        const urlParams = new URLSearchParams(location.search);
+        if (urlParams.has("debug")) {
+            window.location.search = "";
+        } else {
+            window.location.search = "debug=true";
+        }
+    });
 
     return null;
 }
