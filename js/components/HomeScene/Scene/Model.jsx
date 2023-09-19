@@ -6,7 +6,7 @@ import { useControls, folder } from "leva";
 import { useStore } from "@/js/lib/store";
 
 import { Box } from "./Common";
-import { CareersModel, CdmModel, ContactModel } from "./Models";
+import { CareersModel, CdmModel, ContactModel, CultureModel } from "./Models";
 
 function Model(props) {
     const { nodes /*, materials */ } = useGLTF(GLB_ASSET_URLS.Locations);
@@ -175,19 +175,14 @@ function Model(props) {
                     <meshStandardMaterial color={"red"} />
                 </mesh>
             </Box>
-            <Box position={[-3, 3, 1]}>
-                <mesh
-                    castShadow
-                    receiveShadow
-                    // geometry={nodes.location_003.geometry}
-                    // material={nodes.location_003.material}
-                    // position={[-3, 3, 1]}
-                    scale={0.5}
-                >
-                    <boxGeometry />
-                    <meshStandardMaterial color={"red"} />
-                </mesh>
-            </Box>
+            {/* <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes.location_003.geometry}
+                material={nodes.location_003.material}
+                position={[-3, 3, 1]}
+            /> */}
+            <CultureModel position={[-3, 3, 1]} />
             <Box position={[-1, -1, 1]}>
                 <mesh
                     castShadow
