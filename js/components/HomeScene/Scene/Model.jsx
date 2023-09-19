@@ -20,6 +20,7 @@ import {
     ShowreelModel,
     SkullModel,
     SosModel,
+    StoriesModel,
 } from "./Models";
 
 function Model(props) {
@@ -210,19 +211,14 @@ function Model(props) {
                     <meshStandardMaterial color={"red"} />
                 </mesh>
             </Box>
-            <Box position={[-1, -3, 1]}>
-                <mesh
-                    castShadow
-                    receiveShadow
-                    // geometry={nodes.location_006.geometry}
-                    // material={nodes.location_006.material}
-                    // position={[-1, -3, 1]}
-                    scale={0.5}
-                >
-                    <boxGeometry />
-                    <meshStandardMaterial color={"red"} />
-                </mesh>
-            </Box>
+            {/* <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes.location_006.geometry}
+                material={nodes.location_006.material}
+                position={[-1, -3, 1]}
+            /> */}
+            <StoriesModel position={[-1, -3, 1]} />
             <mesh
                 castShadow
                 receiveShadow

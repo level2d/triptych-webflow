@@ -12,3 +12,4 @@ export { default as PhoneModel } from "./PhoneModel";
 export { default as ShowreelModel } from "./ShowreelModel";
 export { default as SkullModel } from "./SkullModel";
 export { default as SosModel } from "./SosModel";
+export { default as StoriesModel } from "./StoriesModel";
