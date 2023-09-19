@@ -42,6 +42,7 @@ export const GLB_ASSET_URLS = {
     Skull: skull_url,
     SOS: sos_url,
     Stories: stories_url,
+    Work: work_url,
 };
 
 export const TEXTURE_ASSET_URLS = {
