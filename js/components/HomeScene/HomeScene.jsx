@@ -11,7 +11,7 @@ import Nav from "./Nav";
 const Scene = lazy(() => {
     return Promise.all([
         import("./Scene"),
-        new Promise((resolve) => setTimeout(resolve, debug ? 0 : 1 * 1000)),
+        new Promise((resolve) => setTimeout(resolve, debug ? 0 : 1 * 500)),
     ]).then(([moduleExports]) => moduleExports);
 });
 
