@@ -17,6 +17,7 @@ import {
     KeyModel,
     MethodsModel,
     NorthfaceModel,
+    ShowreelModel,
 } from "./Models";
 
 function Model(props) {
@@ -185,19 +186,15 @@ function Model(props) {
                 position={[-3, 3, 1]}
             /> */}
             <CultureModel position={[-3, 3, 1]} />
-            <Box position={[-1, -1, 1]}>
-                <mesh
-                    castShadow
-                    receiveShadow
-                    // geometry={nodes.location_004.geometry}
-                    // material={nodes.location_004.material}
-                    // position={[-1, -1, 1]}
-                    scale={0.5}
-                >
-                    <boxGeometry />
-                    <meshStandardMaterial color={"red"} />
-                </mesh>
-            </Box>
+            {/* <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes.location_004.geometry}
+                material={nodes.location_004.material}
+                position={[-1, -1, 1]}
+                scale={0.5}
+            /> */}
+            <ShowreelModel position={[-1, -1, 1]} />
             <Box position={[3, -1, 3]}>
                 <mesh
                     castShadow
