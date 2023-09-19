@@ -6,6 +6,8 @@ import { useControls, folder } from "leva";
 import { useStore } from "@/js/lib/store";
 
 import { Box } from "./Common";
+import { CareersModel } from "./Models/CareersModel";
+
 function Model(props) {
     const { nodes /*, materials */ } = useGLTF(GLB_ASSET_URLS.Locations);
     const setTriptychModelUuid = useStore(
@@ -139,19 +141,15 @@ function Model(props) {
                 geometry={nodes.water.geometry}
                 material={nodes.water.material}
             /> */}
-            <Box position={[1, 1, -3]}>
-                <mesh
-                    castShadow
-                    receiveShadow
-                    // geometry={nodes.location_015.geometry}
-                    // material={nodes.location_015.material}
-                    // position={[1, 1, -3]}
-                    scale={0.5}
-                >
-                    <boxGeometry />
-                    <meshStandardMaterial color={"red"} />
-                </mesh>
-            </Box>
+            {/* <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes.location_015.geometry}
+                material={nodes.location_015.material}
+                position={[1, 1, -3]}
+                scale={0.5}
+            /> */}
+            <CareersModel position={[1, 1, -3]} />
             <Box position={[1, 3, -3]}>
                 <mesh
                     castShadow
