@@ -31,7 +31,6 @@ export default function CareersModel(props) {
                 case "fluid":
                     action.clampWhenFinished = false; // stay on last frame
                     action.setLoop(THREE.LoopOnce);
-                    action.repetitions = 1;
                     break;
                 default:
                     break;
