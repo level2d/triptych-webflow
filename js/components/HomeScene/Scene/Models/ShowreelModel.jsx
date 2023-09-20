@@ -11,7 +11,7 @@ import { Box } from "../Common";
 export default function ShowreelModel(props) {
     const [mounted, setMounted] = useState(false);
     const group = useRef();
-    const { nodes, materials, animations } = useGLTF(GLB_ASSET_URLS.Showreel);
+    const { nodes, animations } = useGLTF(GLB_ASSET_URLS.Showreel);
     const { actions, names } = useAnimations(animations, group);
 
     useEffect(() => {

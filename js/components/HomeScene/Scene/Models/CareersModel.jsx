@@ -12,7 +12,7 @@ import { Box } from "../Common";
 export default function CareersModel(props) {
     const [mounted, setMounted] = useState(false);
     const group = useRef();
-    const { nodes, materials, animations } = useGLTF(GLB_ASSET_URLS.Careers);
+    const { nodes, animations } = useGLTF(GLB_ASSET_URLS.Careers);
     const { actions, names } = useAnimations(animations, group.current);
 
     const handleClick = useCallback(() => {

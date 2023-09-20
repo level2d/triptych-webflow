@@ -10,7 +10,7 @@ import { Box } from "../Common";
 
 export default function PhoneModel(props) {
     const group = useRef();
-    const { nodes, materials, animations } = useGLTF(GLB_ASSET_URLS.Phone);
+    const { nodes, animations } = useGLTF(GLB_ASSET_URLS.Phone);
     const { actions } = useAnimations(animations, group);
     return (
         <Box {...props}>

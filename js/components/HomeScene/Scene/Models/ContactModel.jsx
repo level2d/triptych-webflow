@@ -12,7 +12,7 @@ import { Box } from "../Common";
 export default function Model(props) {
     const [mounted, setMounted] = useState(false);
     const group = useRef();
-    const { nodes, materials, animations } = useGLTF(GLB_ASSET_URLS.Contact);
+    const { nodes, animations } = useGLTF(GLB_ASSET_URLS.Contact);
     const { actions, names } = useAnimations(animations, group);
 
     const handleClick = useCallback(() => {
