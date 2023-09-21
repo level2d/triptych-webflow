@@ -5,7 +5,7 @@ import { GLB_ASSET_URLS } from "@/js/core/constants";
 import { useControls, folder } from "leva";
 import { useStore } from "@/js/lib/store";
 
-import { Box } from "./Common";
+import { Box } from "../Common";
 import {
     CareersModel,
     CdmModel,
@@ -95,8 +95,11 @@ function Model(props) {
                         b: 255,
                     },
                     onChange: (v) => {
-                        const color = new THREE.Vector3(v.r, v.g, v.b);
-                        color.divide(new THREE.Vector3(255, 255, 255));
+                        const color = new THREE.Vector3(
+                            v.r,
+                            v.g,
+                            v.b,
+                        ).divideScalar(255);
                         grainShaderMaterialRef.current.uniforms.uGradientColorA.value =
                             color;
                     },
@@ -108,8 +111,11 @@ function Model(props) {
                         b: 119,
                     },
                     onChange: (v) => {
-                        const color = new THREE.Vector3(v.r, v.g, v.b);
-                        color.divide(new THREE.Vector3(255, 255, 255));
+                        const color = new THREE.Vector3(
+                            v.r,
+                            v.g,
+                            v.b,
+                        ).divideScalar(255);
                         grainShaderMaterialRef.current.uniforms.uGradientColorB.value =
                             color;
                     },
