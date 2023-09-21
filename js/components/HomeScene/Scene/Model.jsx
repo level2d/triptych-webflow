@@ -41,8 +41,6 @@ function Model(props) {
         uNoiseContrast,
         uNoiseScalarDistanceFactor,
         uGradientStop,
-        outlineColor,
-        outlineThickness,
         uMatcapEnabled,
         uNoiseEnabled,
         uGradientEnabled,
