@@ -64,9 +64,9 @@ function Model(props) {
                     step: 0.1,
                 },
                 uNoiseContrast: {
-                    value: 1.1,
+                    value: 1,
                     min: 0,
-                    max: 10,
+                    max: 1,
                     step: 0.1,
                 },
             }),
