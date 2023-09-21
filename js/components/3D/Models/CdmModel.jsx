@@ -76,7 +76,6 @@ export default function CdmModel(props) {
                             position={[-0.003, -0.265, -0.005]}
                         >
                             <GrainMaterialYellow boundingBox={boundingBox} />
-                            <Outlines />
                         </mesh>
                         <mesh
                             name="joystick003"
