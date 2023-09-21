@@ -7,16 +7,15 @@ import { useGLTF, useAnimations } from "@react-three/drei";
 import * as THREE from "three";
 
 import { GLB_ASSET_URLS } from "@/js/core/constants";
-import { Box } from "../Common";
 
-export default function NorthfaceModel(props) {
+export default function EyeModel(props) {
     const [mounted, setMounted] = useState(false);
     const group = useRef();
-    const { nodes, animations } = useGLTF(GLB_ASSET_URLS.Northface);
+    const { nodes, animations } = useGLTF(GLB_ASSET_URLS.Eye);
     const { actions, names } = useAnimations(animations, group);
 
     const handleClick = useCallback(() => {
-        actions?.melting.reset().play();
+        actions?.pupil.reset().play();
     }, [actions]);
 
     useEffect(() => {
@@ -25,10 +24,7 @@ export default function NorthfaceModel(props) {
         names.forEach((name) => {
             const action = actions[name];
             switch (name) {
-                case "northface_orbit":
-                    action.play();
-                    break;
-                case "melting":
+                case "pupil":
                     action.loop = THREE.LoopOnce;
                     break;
                 default:
@@ -41,30 +37,42 @@ export default function NorthfaceModel(props) {
         setMounted(true);
     }, []);
     return (
-        <Box {...props}>
-            <group ref={group} dispose={null} onClick={handleClick}>
-                <group name="Scene">
-                    <group name="northface">
-                        <group name="rotation_null011">
+        <group ref={group} {...props} dispose={null} onClick={handleClick}>
+            <group name="Scene">
+                <group name="eye">
+                    <group name="rotation_null008">
+                        <mesh
+                            name="eye001"
+                            castShadow
+                            receiveShadow
+                            geometry={nodes.eye001.geometry}
+                            material={nodes.eye001.material}
+                            morphTargetDictionary={
+                                nodes.eye001.morphTargetDictionary
+                            }
+                            morphTargetInfluences={
+                                nodes.eye001.morphTargetInfluences
+                            }
+                        >
                             <mesh
-                                name="Plane001"
+                                name="iris"
                                 castShadow
                                 receiveShadow
-                                geometry={nodes.Plane001.geometry}
-                                material={nodes.Plane001.material}
+                                geometry={nodes.iris.geometry}
+                                material={nodes.iris.material}
                                 morphTargetDictionary={
-                                    nodes.Plane001.morphTargetDictionary
+                                    nodes.iris.morphTargetDictionary
                                 }
                                 morphTargetInfluences={
-                                    nodes.Plane001.morphTargetInfluences
+                                    nodes.iris.morphTargetInfluences
                                 }
                             />
-                        </group>
+                        </mesh>
                     </group>
                 </group>
             </group>
-        </Box>
+        </group>
     );
 }
 
-useGLTF.preload(GLB_ASSET_URLS.Northface);
+useGLTF.preload(GLB_ASSET_URLS.Eye);

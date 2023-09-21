@@ -7,7 +7,6 @@ import { useGLTF, useAnimations } from "@react-three/drei";
 import * as THREE from "three";
 
 import { GLB_ASSET_URLS } from "@/js/core/constants";
-import { Box } from "../Common";
 
 export default function EpbModel(props) {
     const [mounted, setMounted] = useState(false);
@@ -41,30 +40,28 @@ export default function EpbModel(props) {
         setMounted(true);
     }, []);
     return (
-        <Box {...props}>
-            <group ref={group} dispose={null} onClick={handleClick}>
-                <group name="Scene">
-                    <group name="epb">
-                        <group name="rotation_null013">
-                            <mesh
-                                name="bolt001"
-                                castShadow
-                                receiveShadow
-                                geometry={nodes.bolt001.geometry}
-                                material={nodes.bolt001.material}
-                                morphTargetDictionary={
-                                    nodes.bolt001.morphTargetDictionary
-                                }
-                                morphTargetInfluences={
-                                    nodes.bolt001.morphTargetInfluences
-                                }
-                                position={[-0.024, 0.093, 0.006]}
-                            />
-                        </group>
+        <group ref={group} {...props} dispose={null} onClick={handleClick}>
+            <group name="Scene">
+                <group name="epb">
+                    <group name="rotation_null013">
+                        <mesh
+                            name="bolt001"
+                            castShadow
+                            receiveShadow
+                            geometry={nodes.bolt001.geometry}
+                            material={nodes.bolt001.material}
+                            morphTargetDictionary={
+                                nodes.bolt001.morphTargetDictionary
+                            }
+                            morphTargetInfluences={
+                                nodes.bolt001.morphTargetInfluences
+                            }
+                            position={[-0.024, 0.093, 0.006]}
+                        />
                     </group>
                 </group>
             </group>
-        </Box>
+        </group>
     );
 }
 
