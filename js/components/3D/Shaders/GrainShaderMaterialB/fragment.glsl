@@ -103,8 +103,8 @@ vec3 noise() {
 void main() {
 
     vec3 matcapColor = matcap();
-    vec3 gradientColor = gradient();
     vec3 noiseColor = noise();
+    vec3 gradientColor = gradient();
 
     // set a default color in case everything is turned off
     vec3 color = vec3(0, 0, 0);
@@ -113,12 +113,12 @@ void main() {
         color += matcapColor;
     }
 
-    if(uGradientEnabled) {
-        color += gradientColor;
-    }
-
     if(uNoiseEnabled) {
         color += noiseColor;
+    }
+
+    if(uGradientEnabled) {
+        color = color * gradientColor;
     }
 
     gl_FragColor = vec4(color, 1.0);
