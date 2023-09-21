@@ -8,10 +8,7 @@ import * as THREE from "three";
 
 import { GLB_ASSET_URLS } from "@/js/core/constants";
 import { Outlines } from "@/js/components/3D/Common";
-import {
-    GrainMaterialRed,
-    GrainMaterialRedDark,
-} from "@/js/components/3D/Materials";
+import { GrainMaterialRed } from "@/js/components/3D/Materials";
 
 export default function CareersModel(props) {
     const [boundingBox, setBoundingBox] = useState({
@@ -81,11 +78,7 @@ export default function CareersModel(props) {
                                 material={nodes.fluid.material}
                                 position={[0.01, 0.336, 0.109]}
                                 scale={1.054}
-                            >
-                                <GrainMaterialRedDark
-                                    boundingBox={boundingBox}
-                                />
-                            </mesh>
+                            ></mesh>
                         </mesh>
                     </group>
                 </group>
