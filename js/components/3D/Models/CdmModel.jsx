@@ -7,6 +7,7 @@ import { useGLTF, useAnimations } from "@react-three/drei";
 import * as THREE from "three";
 
 import { GLB_ASSET_URLS } from "@/js/core/constants";
+import { Outlines } from "@/js/components/3D/Common";
 import { GrainMaterialYellow } from "@/js/components/3D/Materials";
 
 export default function CdmModel(props) {
@@ -75,6 +76,7 @@ export default function CdmModel(props) {
                             position={[-0.003, -0.265, -0.005]}
                         >
                             <GrainMaterialYellow boundingBox={boundingBox} />
+                            <Outlines />
                         </mesh>
                         <mesh
                             name="joystick003"
@@ -85,6 +87,7 @@ export default function CdmModel(props) {
                             position={[-0.003, -0.265, -0.005]}
                         >
                             <GrainMaterialYellow boundingBox={boundingBox} />
+                            <Outlines />
                             <mesh
                                 name="joystick001"
                                 castShadow
@@ -96,6 +99,7 @@ export default function CdmModel(props) {
                                 <GrainMaterialYellow
                                     boundingBox={boundingBox}
                                 />
+                                <Outlines />
                             </mesh>
                         </mesh>
                     </group>
