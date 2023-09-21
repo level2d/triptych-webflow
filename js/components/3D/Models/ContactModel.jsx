@@ -7,9 +7,14 @@ import { useGLTF, useAnimations } from "@react-three/drei";
 import * as THREE from "three";
 
 import { GLB_ASSET_URLS } from "@/js/core/constants";
+import { GrainMaterialViolet } from "@/js/components/3D/Materials";
 
-export default function Model(props) {
+export default function ContactModel(props) {
     const [mounted, setMounted] = useState(false);
+    const [boundingBox, setBoundingBox] = useState({
+        min: new THREE.Vector3(0, 0, 0),
+        max: new THREE.Vector3(1, 1, 1),
+    });
     const group = useRef();
     const { nodes, animations } = useGLTF(GLB_ASSET_URLS.Contact);
     const { actions, names } = useAnimations(animations, group);
@@ -40,6 +45,13 @@ export default function Model(props) {
         });
     }, [mounted, actions, names]);
 
+    // setup uniforms
+    useEffect(() => {
+        const bb = new THREE.Box3();
+        bb.setFromObject(group.current);
+        setBoundingBox(bb);
+    }, []);
+
     useEffect(() => {
         setMounted(true);
     }, []);
@@ -63,6 +75,7 @@ export default function Model(props) {
                             position={[0.001, 0.059, 0.028]}
                             rotation={[-0.087, Math.PI / 6, 0]}
                         >
+                            <GrainMaterialViolet boundingBox={boundingBox} />
                             <mesh
                                 name="thruster"
                                 castShadow
@@ -75,7 +88,11 @@ export default function Model(props) {
                                 morphTargetInfluences={
                                     nodes.thruster.morphTargetInfluences
                                 }
-                            />
+                            >
+                                <GrainMaterialViolet
+                                    boundingBox={boundingBox}
+                                />
+                            </mesh>
                             <mesh
                                 name="windows"
                                 castShadow
@@ -88,7 +105,11 @@ export default function Model(props) {
                                 morphTargetInfluences={
                                     nodes.windows.morphTargetInfluences
                                 }
-                            />
+                            >
+                                <GrainMaterialViolet
+                                    boundingBox={boundingBox}
+                                />
+                            </mesh>
                         </mesh>
                     </group>
                 </group>
