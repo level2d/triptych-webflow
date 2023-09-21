@@ -7,7 +7,7 @@ import { useGLTF, useAnimations } from "@react-three/drei";
 import * as THREE from "three";
 
 import { GLB_ASSET_URLS } from "@/js/core/constants";
-import Outlines from "@/js/components/3D/Outlines";
+import { Outlines } from "@/js/components/3D/Common";
 import {
     GrainMaterialRed,
     GrainMaterialRedDark,
