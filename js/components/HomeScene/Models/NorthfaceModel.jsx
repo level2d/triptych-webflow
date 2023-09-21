@@ -7,16 +7,16 @@ import { useGLTF, useAnimations } from "@react-three/drei";
 import * as THREE from "three";
 
 import { GLB_ASSET_URLS } from "@/js/core/constants";
-import { Box } from "../Common";
+import { Box } from "../Scene/Common";
 
-export default function EpbModel(props) {
+export default function NorthfaceModel(props) {
     const [mounted, setMounted] = useState(false);
     const group = useRef();
-    const { nodes, animations } = useGLTF(GLB_ASSET_URLS.EPB);
+    const { nodes, animations } = useGLTF(GLB_ASSET_URLS.Northface);
     const { actions, names } = useAnimations(animations, group);
 
     const handleClick = useCallback(() => {
-        actions?.bolt.reset().play();
+        actions?.melting.reset().play();
     }, [actions]);
 
     useEffect(() => {
@@ -25,10 +25,10 @@ export default function EpbModel(props) {
         names.forEach((name) => {
             const action = actions[name];
             switch (name) {
-                case "epb_orbit":
+                case "northface_orbit":
                     action.play();
                     break;
-                case "bolt":
+                case "melting":
                     action.loop = THREE.LoopOnce;
                     break;
                 default:
@@ -44,21 +44,20 @@ export default function EpbModel(props) {
         <Box {...props}>
             <group ref={group} dispose={null} onClick={handleClick}>
                 <group name="Scene">
-                    <group name="epb">
-                        <group name="rotation_null013">
+                    <group name="northface">
+                        <group name="rotation_null011">
                             <mesh
-                                name="bolt001"
+                                name="Plane001"
                                 castShadow
                                 receiveShadow
-                                geometry={nodes.bolt001.geometry}
-                                material={nodes.bolt001.material}
+                                geometry={nodes.Plane001.geometry}
+                                material={nodes.Plane001.material}
                                 morphTargetDictionary={
-                                    nodes.bolt001.morphTargetDictionary
+                                    nodes.Plane001.morphTargetDictionary
                                 }
                                 morphTargetInfluences={
-                                    nodes.bolt001.morphTargetInfluences
+                                    nodes.Plane001.morphTargetInfluences
                                 }
-                                position={[-0.024, 0.093, 0.006]}
                             />
                         </group>
                     </group>
@@ -68,4 +67,4 @@ export default function EpbModel(props) {
     );
 }
 
-useGLTF.preload(GLB_ASSET_URLS.EPB);
+useGLTF.preload(GLB_ASSET_URLS.Northface);

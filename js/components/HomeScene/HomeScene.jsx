@@ -7,6 +7,7 @@ import { debug } from "@/js/core/constants";
 import { useStore } from "@/js/lib/store";
 import Loading from "./Loading";
 import Nav from "./Nav/Nav";
+import useQueryVariable from "@/js/hooks/useQueryVariable";
 
 const Scene = lazy(() => {
     return Promise.all([
@@ -14,11 +15,13 @@ const Scene = lazy(() => {
         new Promise((resolve) => setTimeout(resolve, debug ? 0 : 1 * 500)),
     ]).then(([moduleExports]) => moduleExports);
 });
+const DebugModelScene = lazy(() => import("./DebugModelScene"));
 
 export default function HomeScene() {
     const ref = useRef(null);
     const setGetR3fStore = useStore((state) => state.setGetR3fStore);
     const wrapperProps = {};
+    const debugModel = useQueryVariable("debugModel");
     if (debug) {
         wrapperProps["data-lenis-prevent"] = true;
     }
@@ -33,13 +36,17 @@ export default function HomeScene() {
                     }}
                 >
                     <Suspense fallback={<Loading />}>
-                        <Scene />
+                        {debug && debugModel ? (
+                            <DebugModelScene model={debugModel} />
+                        ) : (
+                            <Scene />
+                        )}
                     </Suspense>
                 </Canvas>
             </div>
-            <Nav />
+            {!debugModel && <Nav />}
             <div className={styles.levaWrapper}>
-                <Leva hidden={!debug} fill />
+                <Leva hidden={!debug || debugModel} fill />
             </div>
         </div>
     );

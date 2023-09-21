@@ -6,7 +6,7 @@ import { useRef } from "react";
 import { useGLTF, useAnimations } from "@react-three/drei";
 
 import { GLB_ASSET_URLS } from "@/js/core/constants";
-import { Box } from "../Common";
+import { Box } from "../Scene/Common";
 
 export default function PhoneModel(props) {
     const group = useRef();

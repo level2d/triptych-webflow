@@ -7,16 +7,16 @@ import { useGLTF, useAnimations } from "@react-three/drei";
 import * as THREE from "three";
 
 import { GLB_ASSET_URLS } from "@/js/core/constants";
-import { Box } from "../Common";
+import { Box } from "../Scene/Common";
 
-export default function CareersModel(props) {
+export default function SkullModel(props) {
     const [mounted, setMounted] = useState(false);
     const group = useRef();
-    const { nodes, animations } = useGLTF(GLB_ASSET_URLS.Careers);
-    const { actions, names } = useAnimations(animations, group.current);
+    const { nodes, animations } = useGLTF(GLB_ASSET_URLS.Skull);
+    const { actions, names } = useAnimations(animations, group);
 
     const handleClick = useCallback(() => {
-        actions?.fluid.reset().play();
+        actions?.jaw.reset().play();
     }, [actions]);
 
     useEffect(() => {
@@ -25,45 +25,49 @@ export default function CareersModel(props) {
         names.forEach((name) => {
             const action = actions[name];
             switch (name) {
-                case "careers_orbit":
+                case "skull_orbit":
                     action.play();
                     break;
-                case "fluid":
-                    action.clampWhenFinished = false; // stay on last frame
-                    action.setLoop(THREE.LoopOnce);
+                case "jaw":
+                    action.loop = THREE.LoopOnce;
                     break;
                 default:
                     break;
             }
         });
-    }, [actions, names, mounted]);
+    }, [mounted, actions, names]);
 
     useEffect(() => {
         setMounted(true);
     }, []);
-
     return (
         <Box {...props}>
             <group ref={group} dispose={null} onClick={handleClick}>
                 <group name="Scene">
-                    <group name="careers">
-                        <group name="rotation_null012">
+                    <group name="skull">
+                        <group name="rotation_null014">
                             <mesh
-                                name="mug002"
+                                name="skull001"
                                 castShadow
                                 receiveShadow
-                                geometry={nodes.mug002.geometry}
-                                material={nodes.mug002.material}
-                                position={[0.033, -0.017, 0.017]}
+                                geometry={nodes.skull001.geometry}
+                                material={nodes.skull001.material}
+                                position={[-0.004, -0.114, -0.039]}
+                            />
+                            <mesh
+                                name="skull002"
+                                castShadow
+                                receiveShadow
+                                geometry={nodes.skull002.geometry}
+                                material={nodes.skull002.material}
+                                position={[-0.006, -0.152, 0.2]}
                             >
                                 <mesh
-                                    name="fluid"
+                                    name="sockets"
                                     castShadow
                                     receiveShadow
-                                    geometry={nodes.fluid.geometry}
-                                    material={nodes.fluid.material}
-                                    position={[0.01, 0.336, 0.109]}
-                                    scale={1.054}
+                                    geometry={nodes.sockets.geometry}
+                                    material={nodes.sockets.material}
                                 />
                             </mesh>
                         </group>
@@ -74,4 +78,4 @@ export default function CareersModel(props) {
     );
 }
 
-useGLTF.preload(GLB_ASSET_URLS.Careers);
+useGLTF.preload(GLB_ASSET_URLS.Skull);

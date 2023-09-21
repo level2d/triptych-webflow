@@ -7,17 +7,17 @@ import { useGLTF, useAnimations } from "@react-three/drei";
 import * as THREE from "three";
 
 import { GLB_ASSET_URLS } from "@/js/core/constants";
-import { Box } from "../Common";
+import { Box } from "../Scene/Common";
 
-export default function CdmModel(props) {
-    const [mounted, setMounted] = useState(false);
+export default function Model(props) {
+    const [mounted, setMounted] = useState(true);
     const group = useRef();
-    const { nodes, animations } = useGLTF(GLB_ASSET_URLS.CDM);
+    const { nodes, animations } = useGLTF(GLB_ASSET_URLS.Culture);
     const { actions, names } = useAnimations(animations, group);
 
     const handleClick = useCallback(() => {
-        actions?.gasket.reset().play();
-        actions?.joystick.reset().play();
+        actions?.explode_01.reset().play();
+        actions?.explode_02.reset().play();
     }, [actions]);
 
     useEffect(() => {
@@ -26,13 +26,13 @@ export default function CdmModel(props) {
         names.forEach((name) => {
             const action = actions[name];
             switch (name) {
-                case "cdm_orbit":
+                case "culture_orbit":
                     action.play();
                     break;
-                case "gasket":
-                case "joystick":
-                    action.clampWhenFinished = false; // stay on last frame
-                    action.setLoop(THREE.LoopOnce);
+                case "explode_01":
+                case "explode_02":
+                    action.clampWhenFinished = true; // stay on last frame
+                    action.setLoop(THREE.LoopRepeat);
                     action.repetitions = 1;
                     break;
                 default:
@@ -48,37 +48,35 @@ export default function CdmModel(props) {
         <Box {...props}>
             <group ref={group} dispose={null} onClick={handleClick}>
                 <group name="Scene">
-                    <group name="cdm">
-                        <group name="rotation_null006">
+                    <group name="culture">
+                        <group name="rotation_null015">
                             <mesh
-                                name="gasket"
+                                name="camera001"
                                 castShadow
                                 receiveShadow
-                                geometry={nodes.gasket.geometry}
-                                material={nodes.gasket.material}
+                                geometry={nodes.camera001.geometry}
+                                material={nodes.camera001.material}
                                 morphTargetDictionary={
-                                    nodes.gasket.morphTargetDictionary
+                                    nodes.camera001.morphTargetDictionary
                                 }
                                 morphTargetInfluences={
-                                    nodes.gasket.morphTargetInfluences
+                                    nodes.camera001.morphTargetInfluences
                                 }
-                                position={[-0.003, -0.265, -0.005]}
-                            />
-                            <mesh
-                                name="joystick003"
-                                castShadow
-                                receiveShadow
-                                geometry={nodes.joystick003.geometry}
-                                material={nodes.joystick003.material}
-                                position={[-0.003, -0.265, -0.005]}
+                                position={[0.033, -0.076, -0.111]}
+                                rotation={[0, -Math.PI / 9, 0]}
                             >
                                 <mesh
-                                    name="joystick001"
+                                    name="frame"
                                     castShadow
                                     receiveShadow
-                                    geometry={nodes.joystick001.geometry}
-                                    material={nodes.joystick001.material}
-                                    position={[0, 0.075, 0.02]}
+                                    geometry={nodes.frame.geometry}
+                                    material={nodes.frame.material}
+                                    morphTargetDictionary={
+                                        nodes.frame.morphTargetDictionary
+                                    }
+                                    morphTargetInfluences={
+                                        nodes.frame.morphTargetInfluences
+                                    }
                                 />
                             </mesh>
                         </group>
@@ -89,4 +87,4 @@ export default function CdmModel(props) {
     );
 }
 
-useGLTF.preload(GLB_ASSET_URLS.CDM);
+useGLTF.preload(GLB_ASSET_URLS.Culture);

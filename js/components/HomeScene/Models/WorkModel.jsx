@@ -7,7 +7,7 @@ import { useGLTF, useAnimations } from "@react-three/drei";
 import * as THREE from "three";
 
 import { GLB_ASSET_URLS } from "@/js/core/constants";
-import { Box } from "../Common";
+import { Box } from "../Scene/Common";
 
 export default function WorkModel(props) {
     const [mounted, setMounted] = useState(false);

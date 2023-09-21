@@ -7,16 +7,17 @@ import { useGLTF, useAnimations } from "@react-three/drei";
 import * as THREE from "three";
 
 import { GLB_ASSET_URLS } from "@/js/core/constants";
-import { Box } from "../Common";
+import { Box } from "../Scene/Common";
 
-export default function SkullModel(props) {
+export default function CdmModel(props) {
     const [mounted, setMounted] = useState(false);
     const group = useRef();
-    const { nodes, animations } = useGLTF(GLB_ASSET_URLS.Skull);
+    const { nodes, animations } = useGLTF(GLB_ASSET_URLS.CDM);
     const { actions, names } = useAnimations(animations, group);
 
     const handleClick = useCallback(() => {
-        actions?.jaw.reset().play();
+        actions?.gasket.reset().play();
+        actions?.joystick.reset().play();
     }, [actions]);
 
     useEffect(() => {
@@ -25,11 +26,14 @@ export default function SkullModel(props) {
         names.forEach((name) => {
             const action = actions[name];
             switch (name) {
-                case "skull_orbit":
+                case "cdm_orbit":
                     action.play();
                     break;
-                case "jaw":
-                    action.loop = THREE.LoopOnce;
+                case "gasket":
+                case "joystick":
+                    action.clampWhenFinished = false; // stay on last frame
+                    action.setLoop(THREE.LoopOnce);
+                    action.repetitions = 1;
                     break;
                 default:
                     break;
@@ -44,30 +48,37 @@ export default function SkullModel(props) {
         <Box {...props}>
             <group ref={group} dispose={null} onClick={handleClick}>
                 <group name="Scene">
-                    <group name="skull">
-                        <group name="rotation_null014">
+                    <group name="cdm">
+                        <group name="rotation_null006">
                             <mesh
-                                name="skull001"
+                                name="gasket"
                                 castShadow
                                 receiveShadow
-                                geometry={nodes.skull001.geometry}
-                                material={nodes.skull001.material}
-                                position={[-0.004, -0.114, -0.039]}
+                                geometry={nodes.gasket.geometry}
+                                material={nodes.gasket.material}
+                                morphTargetDictionary={
+                                    nodes.gasket.morphTargetDictionary
+                                }
+                                morphTargetInfluences={
+                                    nodes.gasket.morphTargetInfluences
+                                }
+                                position={[-0.003, -0.265, -0.005]}
                             />
                             <mesh
-                                name="skull002"
+                                name="joystick003"
                                 castShadow
                                 receiveShadow
-                                geometry={nodes.skull002.geometry}
-                                material={nodes.skull002.material}
-                                position={[-0.006, -0.152, 0.2]}
+                                geometry={nodes.joystick003.geometry}
+                                material={nodes.joystick003.material}
+                                position={[-0.003, -0.265, -0.005]}
                             >
                                 <mesh
-                                    name="sockets"
+                                    name="joystick001"
                                     castShadow
                                     receiveShadow
-                                    geometry={nodes.sockets.geometry}
-                                    material={nodes.sockets.material}
+                                    geometry={nodes.joystick001.geometry}
+                                    material={nodes.joystick001.material}
+                                    position={[0, 0.075, 0.02]}
                                 />
                             </mesh>
                         </group>
@@ -78,4 +89,4 @@ export default function SkullModel(props) {
     );
 }
 
-useGLTF.preload(GLB_ASSET_URLS.Skull);
+useGLTF.preload(GLB_ASSET_URLS.CDM);
