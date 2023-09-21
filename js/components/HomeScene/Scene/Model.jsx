@@ -22,7 +22,7 @@ import {
     SosModel,
     StoriesModel,
     WorkModel,
-} from "../Models";
+} from "../../3D/Models";
 
 function Model(props) {
     const { nodes /*, materials */ } = useGLTF(GLB_ASSET_URLS.Locations);
