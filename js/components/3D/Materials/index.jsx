@@ -32,10 +32,10 @@ export const GrainMaterialRed = ({ boundingBox }) => {
                     step: 0.1,
                 },
                 uNoiseContrast: {
-                    value: 0.5,
+                    value: 0.25,
                     min: 0,
                     max: 1,
-                    step: 0.1,
+                    step: 0.01,
                 },
             }),
             Gradient: folder({
@@ -127,10 +127,10 @@ export const GrainMaterialRedDark = ({ boundingBox }) => {
                     step: 0.1,
                 },
                 uNoiseContrast: {
-                    value: 0.5,
+                    value: 0.25,
                     min: 0,
                     max: 1,
-                    step: 0.1,
+                    step: 0.01,
                 },
             }),
             Gradient: folder({
@@ -221,10 +221,10 @@ export const GrainMaterialYellow = ({ boundingBox }) => {
                     step: 0.1,
                 },
                 uNoiseContrast: {
-                    value: 0.5,
+                    value: 0.25,
                     min: 0,
                     max: 1,
-                    step: 0.1,
+                    step: 0.01,
                 },
             }),
             Gradient: folder({
@@ -316,10 +316,10 @@ export const GrainMaterialYellowDark = ({ boundingBox }) => {
                     step: 0.1,
                 },
                 uNoiseContrast: {
-                    value: 0.5,
+                    value: 0.25,
                     min: 0,
                     max: 1,
-                    step: 0.1,
+                    step: 0.01,
                 },
             }),
             Gradient: folder({
@@ -410,10 +410,10 @@ export const GrainMaterialViolet = ({ boundingBox }) => {
                     step: 0.1,
                 },
                 uNoiseContrast: {
-                    value: 0.5,
+                    value: 0.25,
                     min: 0,
                     max: 1,
-                    step: 0.1,
+                    step: 0.01,
                 },
             }),
             Gradient: folder({
@@ -505,10 +505,10 @@ export const GrainMaterialVioletDark = ({ boundingBox }) => {
                     step: 0.1,
                 },
                 uNoiseContrast: {
-                    value: 0.5,
+                    value: 0.25,
                     min: 0,
                     max: 1,
-                    step: 0.1,
+                    step: 0.01,
                 },
             }),
             Gradient: folder({
