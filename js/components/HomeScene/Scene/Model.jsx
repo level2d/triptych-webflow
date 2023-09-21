@@ -1,6 +1,6 @@
 import * as THREE from "three";
 import { useEffect, useRef, useState } from "react";
-import { useGLTF, Outlines } from "@react-three/drei";
+import { useGLTF } from "@react-three/drei";
 import { GLB_ASSET_URLS } from "@/js/core/constants";
 import { useControls, folder } from "leva";
 import { useStore } from "@/js/lib/store";
@@ -22,7 +22,8 @@ import {
     SosModel,
     StoriesModel,
     WorkModel,
-} from "../../3D/Models";
+} from "@/js/components/3D/Models";
+import { Outlines } from "@/js/components/3D/Common";
 
 function Model(props) {
     const { nodes /*, materials */ } = useGLTF(GLB_ASSET_URLS.Locations);
@@ -46,15 +47,6 @@ function Model(props) {
         uNoiseEnabled,
         uGradientEnabled,
     } = useControls({
-        Outlines: folder({
-            outlineColor: "#343434",
-            outlineThickness: {
-                value: 0.02,
-                step: 0.01,
-                min: 0.01,
-                max: 0.1,
-            },
-        }),
         "Triptych Shader": folder({
             Matcap: folder({
                 uMatcapEnabled: true,
@@ -155,7 +147,7 @@ function Model(props) {
                     uGradientEnabled={uGradientEnabled}
                     ref={grainShaderMaterialRef}
                 />
-                <Outlines thickness={outlineThickness} color={outlineColor} />
+                <Outlines />
             </mesh>
             {/* <mesh
                 castShadow
