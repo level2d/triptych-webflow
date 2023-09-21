@@ -7,9 +7,17 @@ import { useGLTF, useAnimations } from "@react-three/drei";
 import * as THREE from "three";
 
 import { GLB_ASSET_URLS } from "@/js/core/constants";
-import { Box } from "../Scene/Common";
+import Outlines from "@/js/components/3D/Outlines";
+import {
+    GrainMaterialRed,
+    GrainMaterialRedDark,
+} from "@/js/components/3D/Materials";
 
 export default function CareersModel(props) {
+    const [boundingBox, setBoundingBox] = useState({
+        min: new THREE.Vector3(0, 0, 0),
+        max: new THREE.Vector3(1, 1, 1),
+    });
     const [mounted, setMounted] = useState(false);
     const group = useRef();
     const { nodes, animations } = useGLTF(GLB_ASSET_URLS.Careers);
@@ -19,6 +27,7 @@ export default function CareersModel(props) {
         actions?.fluid.reset().play();
     }, [actions]);
 
+    // setup animations
     useEffect(() => {
         if (!mounted) return;
         if (Object.keys(actions).length === 0) return;
@@ -38,39 +47,50 @@ export default function CareersModel(props) {
         });
     }, [actions, names, mounted]);
 
+    // setup uniforms
+    useEffect(() => {
+        const bb = new THREE.Box3();
+        bb.setFromObject(group.current);
+        setBoundingBox(bb);
+    }, []);
+
     useEffect(() => {
         setMounted(true);
     }, []);
 
     return (
-        <Box {...props}>
-            <group ref={group} dispose={null} onClick={handleClick}>
-                <group name="Scene">
-                    <group name="careers">
-                        <group name="rotation_null012">
+        <group ref={group} {...props} dispose={null} onClick={handleClick}>
+            <group name="Scene">
+                <group name="careers">
+                    <group name="rotation_null012">
+                        <mesh
+                            name="mug002"
+                            castShadow
+                            receiveShadow
+                            geometry={nodes.mug002.geometry}
+                            material={nodes.mug002.material}
+                            position={[0.033, -0.017, 0.017]}
+                        >
+                            <GrainMaterialRed boundingBox={boundingBox} />
+                            <Outlines />
                             <mesh
-                                name="mug002"
+                                name="fluid"
                                 castShadow
                                 receiveShadow
-                                geometry={nodes.mug002.geometry}
-                                material={nodes.mug002.material}
-                                position={[0.033, -0.017, 0.017]}
+                                geometry={nodes.fluid.geometry}
+                                material={nodes.fluid.material}
+                                position={[0.01, 0.336, 0.109]}
+                                scale={1.054}
                             >
-                                <mesh
-                                    name="fluid"
-                                    castShadow
-                                    receiveShadow
-                                    geometry={nodes.fluid.geometry}
-                                    material={nodes.fluid.material}
-                                    position={[0.01, 0.336, 0.109]}
-                                    scale={1.054}
+                                <GrainMaterialRedDark
+                                    boundingBox={boundingBox}
                                 />
                             </mesh>
-                        </group>
+                        </mesh>
                     </group>
                 </group>
             </group>
-        </Box>
+        </group>
     );
 }
 

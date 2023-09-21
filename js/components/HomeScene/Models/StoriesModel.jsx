@@ -7,7 +7,6 @@ import { useGLTF, useAnimations } from "@react-three/drei";
 import * as THREE from "three";
 
 import { GLB_ASSET_URLS } from "@/js/core/constants";
-import { Box } from "../Common";
 
 export default function StoriesModel(props) {
     const [mounted, setMounted] = useState(false);
@@ -45,64 +44,62 @@ export default function StoriesModel(props) {
         setMounted(true);
     }, []);
     return (
-        <Box {...props}>
-            <group ref={group} dispose={null} onClick={handleClick}>
-                <group name="Scene">
-                    <group name="stories">
-                        <group name="rotation_null010">
+        <group ref={group} {...props} dispose={null} onClick={handleClick}>
+            <group name="Scene">
+                <group name="stories">
+                    <group name="rotation_null010">
+                        <mesh
+                            name="Cube001"
+                            castShadow
+                            receiveShadow
+                            geometry={nodes.Cube001.geometry}
+                            material={nodes.Cube001.material}
+                            position={[-0.152, -0.327, 0.498]}
+                        >
                             <mesh
-                                name="Cube001"
+                                name="tac"
                                 castShadow
                                 receiveShadow
-                                geometry={nodes.Cube001.geometry}
-                                material={nodes.Cube001.material}
-                                position={[-0.152, -0.327, 0.498]}
-                            >
-                                <mesh
-                                    name="tac"
-                                    castShadow
-                                    receiveShadow
-                                    geometry={nodes.tac.geometry}
-                                    material={nodes.tac.material}
-                                />
-                            </mesh>
+                                geometry={nodes.tac.geometry}
+                                material={nodes.tac.material}
+                            />
+                        </mesh>
+                        <mesh
+                            name="Cube002"
+                            castShadow
+                            receiveShadow
+                            geometry={nodes.Cube002.geometry}
+                            material={nodes.Cube002.material}
+                            position={[0.239, -0.024, 0.417]}
+                        >
                             <mesh
-                                name="Cube002"
+                                name="cat"
                                 castShadow
                                 receiveShadow
-                                geometry={nodes.Cube002.geometry}
-                                material={nodes.Cube002.material}
-                                position={[0.239, -0.024, 0.417]}
-                            >
-                                <mesh
-                                    name="cat"
-                                    castShadow
-                                    receiveShadow
-                                    geometry={nodes.cat.geometry}
-                                    material={nodes.cat.material}
-                                />
-                            </mesh>
+                                geometry={nodes.cat.geometry}
+                                material={nodes.cat.material}
+                            />
+                        </mesh>
+                        <mesh
+                            name="Cube003"
+                            castShadow
+                            receiveShadow
+                            geometry={nodes.Cube003.geometry}
+                            material={nodes.Cube003.material}
+                            position={[-0.192, 0.273, 0.328]}
+                        >
                             <mesh
-                                name="Cube003"
+                                name="act"
                                 castShadow
                                 receiveShadow
-                                geometry={nodes.Cube003.geometry}
-                                material={nodes.Cube003.material}
-                                position={[-0.192, 0.273, 0.328]}
-                            >
-                                <mesh
-                                    name="act"
-                                    castShadow
-                                    receiveShadow
-                                    geometry={nodes.act.geometry}
-                                    material={nodes.act.material}
-                                />
-                            </mesh>
-                        </group>
+                                geometry={nodes.act.geometry}
+                                material={nodes.act.material}
+                            />
+                        </mesh>
                     </group>
                 </group>
             </group>
-        </Box>
+        </group>
     );
 }
 

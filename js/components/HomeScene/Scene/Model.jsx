@@ -5,7 +5,7 @@ import { GLB_ASSET_URLS } from "@/js/core/constants";
 import { useControls, folder } from "leva";
 import { useStore } from "@/js/lib/store";
 
-import { Box } from "../Common";
+import Box from "./Box";
 import {
     CareersModel,
     CdmModel,
@@ -170,7 +170,9 @@ function Model(props) {
                 material={nodes.location_015.material}
                 position={[1, 1, -3]}
             /> */}
-            <CareersModel position={[1, 1, -3]} />
+            <Box position={[1, 1, -3]}>
+                <CareersModel />
+            </Box>
             {/* <mesh
                 castShadow
                 receiveShadow
@@ -179,7 +181,9 @@ function Model(props) {
                 position={[1, 3, -3]}
                 scale={0.5}
             /> */}
-            <EpbModel position={[1, 3, -3]} />
+            <Box position={[1, 3, -3]}>
+                <EpbModel />
+            </Box>
             {/* <mesh
                 castShadow
                 receiveShadow
@@ -187,7 +191,9 @@ function Model(props) {
                 material={nodes.location_002.material}
                 position={[-3, -1, -3]}
             /> */}
-            <GyroModel position={[-3, -1, -3]} />
+            <Box position={[-3, -1, -3]}>
+                <GyroModel />
+            </Box>
             {/* <mesh
                 castShadow
                 receiveShadow
@@ -195,7 +201,9 @@ function Model(props) {
                 material={nodes.location_003.material}
                 position={[-3, 3, 1]}
             /> */}
-            <CultureModel position={[-3, 3, 1]} />
+            <Box position={[-3, 3, 1]}>
+                <CultureModel />
+            </Box>
             {/* <mesh
                 castShadow
                 receiveShadow
@@ -204,7 +212,9 @@ function Model(props) {
                 position={[-1, -1, 1]}
                 scale={0.5}
             /> */}
-            <ShowreelModel position={[-1, -1, 1]} />
+            <Box position={[-1, -1, 1]}>
+                <ShowreelModel />
+            </Box>
             {/* <mesh
                 castShadow
                 receiveShadow
@@ -212,7 +222,9 @@ function Model(props) {
                 material={nodes.location_005.material}
                 position={[3, -1, 3]}
             /> */}
-            <WorkModel position={[3, -1, 3]} />
+            <Box position={[3, -1, 3]}>
+                <WorkModel />
+            </Box>
             {/* <mesh
                 castShadow
                 receiveShadow
@@ -220,7 +232,9 @@ function Model(props) {
                 material={nodes.location_006.material}
                 position={[-1, -3, 1]}
             /> */}
-            <StoriesModel position={[-1, -3, 1]} />
+            <Box position={[-1, -3, 1]}>
+                <StoriesModel />
+            </Box>
             <mesh
                 castShadow
                 receiveShadow
@@ -229,7 +243,9 @@ function Model(props) {
                 position={[1, -1, -1]}
                 scale={0.5}
             />
-            <ContactModel position={[1, -1, -1]} />
+            <Box position={[1, -1, -1]}>
+                <ContactModel />
+            </Box>
             {/* <mesh
                 castShadow
                 receiveShadow
@@ -238,7 +254,9 @@ function Model(props) {
                 position={[-1, 3, 3]}
                 scale={0.5}
             /> */}
-            <MethodsModel position={[-1, 3, 3]} />
+            <Box position={[-1, 3, 3]}>
+                <MethodsModel />
+            </Box>
             {/* <mesh
                 castShadow
                 receiveShadow
@@ -246,7 +264,9 @@ function Model(props) {
                 material={nodes.location_009.material}
                 position={[-3, -3, -3]}
             /> */}
-            <CdmModel position={[-3, -3, -3]} />
+            <Box position={[-3, -3, -3]}>
+                <CdmModel />
+            </Box>
             {/* <mesh
                 castShadow
                 receiveShadow
@@ -254,7 +274,9 @@ function Model(props) {
                 material={nodes.location_010.material}
                 position={[3, 3, -1]}
             /> */}
-            <SosModel position={[3, 3, -1]} />
+            <Box position={[3, 3, -1]}>
+                <SosModel />
+            </Box>
             {/* <mesh
                 castShadow
                 receiveShadow
@@ -263,7 +285,9 @@ function Model(props) {
                 position={[3, -3, -1]}
                 scale={0.5}
             /> */}
-            <NorthfaceModel position={[3, -3, -1]} />
+            <Box position={[3, -3, -1]}>
+                <NorthfaceModel />
+            </Box>
             {/* <mesh
                 castShadow
                 receiveShadow
@@ -271,7 +295,9 @@ function Model(props) {
                 material={nodes.location_012.material}
                 position={[1, -3, 1]}
             /> */}
-            <SkullModel position={[1, -3, 1]} />
+            <Box position={[1, -3, 1]}>
+                <SkullModel />
+            </Box>
             {/* <mesh
                 castShadow
                 receiveShadow
@@ -279,7 +305,9 @@ function Model(props) {
                 material={nodes.location_013.material}
                 position={[-1, 1, 1]}
             /> */}
-            <EyeModel position={[-1, 1, 1]} />
+            <Box position={[-1, 1, 1]}>
+                <EyeModel />
+            </Box>
             {/* <mesh
                 castShadow
                 receiveShadow
@@ -287,7 +315,9 @@ function Model(props) {
                 material={nodes.location_014.material}
                 position={[3, 1, 3]}
             /> */}
-            <KeyModel position={[3, 1, 3]} />
+            <Box position={[3, 1, 3]}>
+                <KeyModel />
+            </Box>
         </group>
     );
 }

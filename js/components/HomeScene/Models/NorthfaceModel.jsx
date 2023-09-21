@@ -7,7 +7,6 @@ import { useGLTF, useAnimations } from "@react-three/drei";
 import * as THREE from "three";
 
 import { GLB_ASSET_URLS } from "@/js/core/constants";
-import { Box } from "../Common";
 
 export default function NorthfaceModel(props) {
     const [mounted, setMounted] = useState(false);
@@ -41,29 +40,27 @@ export default function NorthfaceModel(props) {
         setMounted(true);
     }, []);
     return (
-        <Box {...props}>
-            <group ref={group} dispose={null} onClick={handleClick}>
-                <group name="Scene">
-                    <group name="northface">
-                        <group name="rotation_null011">
-                            <mesh
-                                name="Plane001"
-                                castShadow
-                                receiveShadow
-                                geometry={nodes.Plane001.geometry}
-                                material={nodes.Plane001.material}
-                                morphTargetDictionary={
-                                    nodes.Plane001.morphTargetDictionary
-                                }
-                                morphTargetInfluences={
-                                    nodes.Plane001.morphTargetInfluences
-                                }
-                            />
-                        </group>
+        <group ref={group} {...props} dispose={null} onClick={handleClick}>
+            <group name="Scene">
+                <group name="northface">
+                    <group name="rotation_null011">
+                        <mesh
+                            name="Plane001"
+                            castShadow
+                            receiveShadow
+                            geometry={nodes.Plane001.geometry}
+                            material={nodes.Plane001.material}
+                            morphTargetDictionary={
+                                nodes.Plane001.morphTargetDictionary
+                            }
+                            morphTargetInfluences={
+                                nodes.Plane001.morphTargetInfluences
+                            }
+                        />
                     </group>
                 </group>
             </group>
-        </Box>
+        </group>
     );
 }
 

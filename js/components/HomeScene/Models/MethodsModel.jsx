@@ -7,7 +7,6 @@ import { useGLTF, useAnimations } from "@react-three/drei";
 import * as THREE from "three";
 
 import { GLB_ASSET_URLS } from "@/js/core/constants";
-import { Box } from "../Common";
 
 export default function MethodsModel(props) {
     const [mounted, setMounted] = useState(false);
@@ -43,63 +42,61 @@ export default function MethodsModel(props) {
         setMounted(true);
     }, []);
     return (
-        <Box {...props}>
-            <group ref={group} dispose={null} onClick={handleClick}>
-                <group name="Scene">
-                    <group name="methods">
-                        <group name="rotation_null005">
-                            <group name="shaft" rotation={[-0.175, 0, 0]}>
-                                <mesh
-                                    name="Cylinder002"
-                                    castShadow
-                                    receiveShadow
-                                    geometry={nodes.Cylinder002.geometry}
-                                    material={nodes.Cylinder002.material}
-                                />
-                                <mesh
-                                    name="Cylinder002_1"
-                                    castShadow
-                                    receiveShadow
-                                    geometry={nodes.Cylinder002_1.geometry}
-                                    material={nodes.Cylinder002_1.material}
-                                />
-                                <mesh
-                                    name="gear_01"
-                                    castShadow
-                                    receiveShadow
-                                    geometry={nodes.gear_01.geometry}
-                                    material={nodes.gear_01.material}
-                                    position={[-0.264, -0.152, 0]}
-                                />
-                                <mesh
-                                    name="gear_02"
-                                    castShadow
-                                    receiveShadow
-                                    geometry={nodes.gear_02.geometry}
-                                    material={nodes.gear_02.material}
-                                    position={[0, 0.305, 0]}
-                                />
-                                <mesh
-                                    name="gear_03"
-                                    castShadow
-                                    receiveShadow
-                                    geometry={nodes.gear_03.geometry}
-                                    material={nodes.gear_03.material}
-                                    position={[0.264, -0.152, 0]}
-                                />
-                                <mesh
-                                    name="gear_04"
-                                    castShadow
-                                    receiveShadow
-                                    geometry={nodes.gear_04.geometry}
-                                    material={nodes.gear_04.material}
-                                />
-                            </group>
+        <group ref={group} {...props} dispose={null} onClick={handleClick}>
+            <group name="Scene">
+                <group name="methods">
+                    <group name="rotation_null005">
+                        <group name="shaft" rotation={[-0.175, 0, 0]}>
+                            <mesh
+                                name="Cylinder002"
+                                castShadow
+                                receiveShadow
+                                geometry={nodes.Cylinder002.geometry}
+                                material={nodes.Cylinder002.material}
+                            />
+                            <mesh
+                                name="Cylinder002_1"
+                                castShadow
+                                receiveShadow
+                                geometry={nodes.Cylinder002_1.geometry}
+                                material={nodes.Cylinder002_1.material}
+                            />
+                            <mesh
+                                name="gear_01"
+                                castShadow
+                                receiveShadow
+                                geometry={nodes.gear_01.geometry}
+                                material={nodes.gear_01.material}
+                                position={[-0.264, -0.152, 0]}
+                            />
+                            <mesh
+                                name="gear_02"
+                                castShadow
+                                receiveShadow
+                                geometry={nodes.gear_02.geometry}
+                                material={nodes.gear_02.material}
+                                position={[0, 0.305, 0]}
+                            />
+                            <mesh
+                                name="gear_03"
+                                castShadow
+                                receiveShadow
+                                geometry={nodes.gear_03.geometry}
+                                material={nodes.gear_03.material}
+                                position={[0.264, -0.152, 0]}
+                            />
+                            <mesh
+                                name="gear_04"
+                                castShadow
+                                receiveShadow
+                                geometry={nodes.gear_04.geometry}
+                                material={nodes.gear_04.material}
+                            />
                         </group>
                     </group>
                 </group>
             </group>
-        </Box>
+        </group>
     );
 }
 

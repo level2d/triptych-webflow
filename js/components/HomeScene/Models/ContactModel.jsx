@@ -7,7 +7,6 @@ import { useGLTF, useAnimations } from "@react-three/drei";
 import * as THREE from "three";
 
 import { GLB_ASSET_URLS } from "@/js/core/constants";
-import { Box } from "../Common";
 
 export default function Model(props) {
     const [mounted, setMounted] = useState(false);
@@ -45,58 +44,56 @@ export default function Model(props) {
         setMounted(true);
     }, []);
     return (
-        <Box {...props}>
-            <group ref={group} dispose={null} onClick={handleClick}>
-                <group name="Scene">
-                    <group name="contact">
-                        <group name="rotation_null">
+        <group ref={group} {...props} dispose={null} onClick={handleClick}>
+            <group name="Scene">
+                <group name="contact">
+                    <group name="rotation_null">
+                        <mesh
+                            name="ufo002"
+                            castShadow
+                            receiveShadow
+                            geometry={nodes.ufo002.geometry}
+                            material={nodes.ufo002.material}
+                            morphTargetDictionary={
+                                nodes.ufo002.morphTargetDictionary
+                            }
+                            morphTargetInfluences={
+                                nodes.ufo002.morphTargetInfluences
+                            }
+                            position={[0.001, 0.059, 0.028]}
+                            rotation={[-0.087, Math.PI / 6, 0]}
+                        >
                             <mesh
-                                name="ufo002"
+                                name="thruster"
                                 castShadow
                                 receiveShadow
-                                geometry={nodes.ufo002.geometry}
-                                material={nodes.ufo002.material}
+                                geometry={nodes.thruster.geometry}
+                                material={nodes.thruster.material}
                                 morphTargetDictionary={
-                                    nodes.ufo002.morphTargetDictionary
+                                    nodes.thruster.morphTargetDictionary
                                 }
                                 morphTargetInfluences={
-                                    nodes.ufo002.morphTargetInfluences
+                                    nodes.thruster.morphTargetInfluences
                                 }
-                                position={[0.001, 0.059, 0.028]}
-                                rotation={[-0.087, Math.PI / 6, 0]}
-                            >
-                                <mesh
-                                    name="thruster"
-                                    castShadow
-                                    receiveShadow
-                                    geometry={nodes.thruster.geometry}
-                                    material={nodes.thruster.material}
-                                    morphTargetDictionary={
-                                        nodes.thruster.morphTargetDictionary
-                                    }
-                                    morphTargetInfluences={
-                                        nodes.thruster.morphTargetInfluences
-                                    }
-                                />
-                                <mesh
-                                    name="windows"
-                                    castShadow
-                                    receiveShadow
-                                    geometry={nodes.windows.geometry}
-                                    material={nodes.windows.material}
-                                    morphTargetDictionary={
-                                        nodes.windows.morphTargetDictionary
-                                    }
-                                    morphTargetInfluences={
-                                        nodes.windows.morphTargetInfluences
-                                    }
-                                />
-                            </mesh>
-                        </group>
+                            />
+                            <mesh
+                                name="windows"
+                                castShadow
+                                receiveShadow
+                                geometry={nodes.windows.geometry}
+                                material={nodes.windows.material}
+                                morphTargetDictionary={
+                                    nodes.windows.morphTargetDictionary
+                                }
+                                morphTargetInfluences={
+                                    nodes.windows.morphTargetInfluences
+                                }
+                            />
+                        </mesh>
                     </group>
                 </group>
             </group>
-        </Box>
+        </group>
     );
 }
 

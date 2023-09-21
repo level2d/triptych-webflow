@@ -7,7 +7,6 @@ import { useGLTF, useAnimations } from "@react-three/drei";
 import * as THREE from "three";
 
 import { GLB_ASSET_URLS } from "@/js/core/constants";
-import { Box } from "../Common";
 
 export default function EyeModel(props) {
     const [mounted, setMounted] = useState(false);
@@ -38,43 +37,41 @@ export default function EyeModel(props) {
         setMounted(true);
     }, []);
     return (
-        <Box {...props}>
-            <group ref={group} dispose={null} onClick={handleClick}>
-                <group name="Scene">
-                    <group name="eye">
-                        <group name="rotation_null008">
+        <group ref={group} {...props} dispose={null} onClick={handleClick}>
+            <group name="Scene">
+                <group name="eye">
+                    <group name="rotation_null008">
+                        <mesh
+                            name="eye001"
+                            castShadow
+                            receiveShadow
+                            geometry={nodes.eye001.geometry}
+                            material={nodes.eye001.material}
+                            morphTargetDictionary={
+                                nodes.eye001.morphTargetDictionary
+                            }
+                            morphTargetInfluences={
+                                nodes.eye001.morphTargetInfluences
+                            }
+                        >
                             <mesh
-                                name="eye001"
+                                name="iris"
                                 castShadow
                                 receiveShadow
-                                geometry={nodes.eye001.geometry}
-                                material={nodes.eye001.material}
+                                geometry={nodes.iris.geometry}
+                                material={nodes.iris.material}
                                 morphTargetDictionary={
-                                    nodes.eye001.morphTargetDictionary
+                                    nodes.iris.morphTargetDictionary
                                 }
                                 morphTargetInfluences={
-                                    nodes.eye001.morphTargetInfluences
+                                    nodes.iris.morphTargetInfluences
                                 }
-                            >
-                                <mesh
-                                    name="iris"
-                                    castShadow
-                                    receiveShadow
-                                    geometry={nodes.iris.geometry}
-                                    material={nodes.iris.material}
-                                    morphTargetDictionary={
-                                        nodes.iris.morphTargetDictionary
-                                    }
-                                    morphTargetInfluences={
-                                        nodes.iris.morphTargetInfluences
-                                    }
-                                />
-                            </mesh>
-                        </group>
+                            />
+                        </mesh>
                     </group>
                 </group>
             </group>
-        </Box>
+        </group>
     );
 }
 

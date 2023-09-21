@@ -7,7 +7,6 @@ import { useGLTF, useAnimations } from "@react-three/drei";
 import * as THREE from "three";
 
 import { GLB_ASSET_URLS } from "@/js/core/constants";
-import { Box } from "../Common";
 
 export default function WorkModel(props) {
     const [mounted, setMounted] = useState(false);
@@ -41,46 +40,42 @@ export default function WorkModel(props) {
         setMounted(true);
     }, []);
     return (
-        <Box {...props}>
-            <group ref={group} dispose={null} onClick={handleClick}>
-                <group name="Scene">
-                    <group name="work">
-                        <group name="rotation_null002">
+        <group ref={group} {...props} dispose={null} onClick={handleClick}>
+            <group name="Scene">
+                <group name="work">
+                    <group name="rotation_null002">
+                        <mesh
+                            name="Hand_-_Stylized_"
+                            castShadow
+                            receiveShadow
+                            geometry={nodes["Hand_-_Stylized_"].geometry}
+                            material={nodes["Hand_-_Stylized_"].material}
+                            morphTargetDictionary={
+                                nodes["Hand_-_Stylized_"].morphTargetDictionary
+                            }
+                            morphTargetInfluences={
+                                nodes["Hand_-_Stylized_"].morphTargetInfluences
+                            }
+                            position={[0.026, -0.067, -0.021]}
+                        >
                             <mesh
-                                name="Hand_-_Stylized_"
+                                name="tie"
                                 castShadow
                                 receiveShadow
-                                geometry={nodes["Hand_-_Stylized_"].geometry}
-                                material={nodes["Hand_-_Stylized_"].material}
+                                geometry={nodes.tie.geometry}
+                                material={nodes.tie.material}
                                 morphTargetDictionary={
-                                    nodes["Hand_-_Stylized_"]
-                                        .morphTargetDictionary
+                                    nodes.tie.morphTargetDictionary
                                 }
                                 morphTargetInfluences={
-                                    nodes["Hand_-_Stylized_"]
-                                        .morphTargetInfluences
+                                    nodes.tie.morphTargetInfluences
                                 }
-                                position={[0.026, -0.067, -0.021]}
-                            >
-                                <mesh
-                                    name="tie"
-                                    castShadow
-                                    receiveShadow
-                                    geometry={nodes.tie.geometry}
-                                    material={nodes.tie.material}
-                                    morphTargetDictionary={
-                                        nodes.tie.morphTargetDictionary
-                                    }
-                                    morphTargetInfluences={
-                                        nodes.tie.morphTargetInfluences
-                                    }
-                                />
-                            </mesh>
-                        </group>
+                            />
+                        </mesh>
                     </group>
                 </group>
             </group>
-        </Box>
+        </group>
     );
 }
 

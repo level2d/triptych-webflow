@@ -7,7 +7,6 @@ import { useGLTF, useAnimations } from "@react-three/drei";
 import * as THREE from "three";
 
 import { GLB_ASSET_URLS } from "@/js/core/constants";
-import { Box } from "../Common";
 
 export default function CdmModel(props) {
     const [mounted, setMounted] = useState(false);
@@ -45,47 +44,45 @@ export default function CdmModel(props) {
         setMounted(true);
     }, []);
     return (
-        <Box {...props}>
-            <group ref={group} dispose={null} onClick={handleClick}>
-                <group name="Scene">
-                    <group name="cdm">
-                        <group name="rotation_null006">
+        <group ref={group} {...props} dispose={null} onClick={handleClick}>
+            <group name="Scene">
+                <group name="cdm">
+                    <group name="rotation_null006">
+                        <mesh
+                            name="gasket"
+                            castShadow
+                            receiveShadow
+                            geometry={nodes.gasket.geometry}
+                            material={nodes.gasket.material}
+                            morphTargetDictionary={
+                                nodes.gasket.morphTargetDictionary
+                            }
+                            morphTargetInfluences={
+                                nodes.gasket.morphTargetInfluences
+                            }
+                            position={[-0.003, -0.265, -0.005]}
+                        />
+                        <mesh
+                            name="joystick003"
+                            castShadow
+                            receiveShadow
+                            geometry={nodes.joystick003.geometry}
+                            material={nodes.joystick003.material}
+                            position={[-0.003, -0.265, -0.005]}
+                        >
                             <mesh
-                                name="gasket"
+                                name="joystick001"
                                 castShadow
                                 receiveShadow
-                                geometry={nodes.gasket.geometry}
-                                material={nodes.gasket.material}
-                                morphTargetDictionary={
-                                    nodes.gasket.morphTargetDictionary
-                                }
-                                morphTargetInfluences={
-                                    nodes.gasket.morphTargetInfluences
-                                }
-                                position={[-0.003, -0.265, -0.005]}
+                                geometry={nodes.joystick001.geometry}
+                                material={nodes.joystick001.material}
+                                position={[0, 0.075, 0.02]}
                             />
-                            <mesh
-                                name="joystick003"
-                                castShadow
-                                receiveShadow
-                                geometry={nodes.joystick003.geometry}
-                                material={nodes.joystick003.material}
-                                position={[-0.003, -0.265, -0.005]}
-                            >
-                                <mesh
-                                    name="joystick001"
-                                    castShadow
-                                    receiveShadow
-                                    geometry={nodes.joystick001.geometry}
-                                    material={nodes.joystick001.material}
-                                    position={[0, 0.075, 0.02]}
-                                />
-                            </mesh>
-                        </group>
+                        </mesh>
                     </group>
                 </group>
             </group>
-        </Box>
+        </group>
     );
 }
 
