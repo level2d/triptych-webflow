@@ -7,7 +7,6 @@ import { useGLTF, useAnimations } from "@react-three/drei";
 import * as THREE from "three";
 
 import { GLB_ASSET_URLS } from "@/js/core/constants";
-import { Box } from "../Common";
 
 export default function GyroModel(props) {
     const [mounted, setMounted] = useState(false);
@@ -42,35 +41,33 @@ export default function GyroModel(props) {
         setMounted(true);
     }, []);
     return (
-        <Box {...props}>
-            <group ref={group} dispose={null} onClick={handleClick}>
-                <group name="Scene">
-                    <group name="gyro">
-                        <group name="rotation_null009">
+        <group ref={group} {...props} dispose={null} onClick={handleClick}>
+            <group name="Scene">
+                <group name="gyro">
+                    <group name="rotation_null009">
+                        <mesh
+                            name="gyro001"
+                            castShadow
+                            receiveShadow
+                            geometry={nodes.gyro001.geometry}
+                            material={nodes.gyro001.material}
+                            position={[0, -0.657, 0.001]}
+                            rotation={[0.028, -0.08, -0.015]}
+                        >
                             <mesh
-                                name="gyro001"
+                                name="axis"
                                 castShadow
                                 receiveShadow
-                                geometry={nodes.gyro001.geometry}
-                                material={nodes.gyro001.material}
-                                position={[0, -0.657, 0.001]}
-                                rotation={[0.028, -0.08, -0.015]}
-                            >
-                                <mesh
-                                    name="axis"
-                                    castShadow
-                                    receiveShadow
-                                    geometry={nodes.axis.geometry}
-                                    material={nodes.axis.material}
-                                    position={[0.002, 0.656, 0]}
-                                    rotation={[0, -0.585, 0]}
-                                />
-                            </mesh>
-                        </group>
+                                geometry={nodes.axis.geometry}
+                                material={nodes.axis.material}
+                                position={[0.002, 0.656, 0]}
+                                rotation={[0, -0.585, 0]}
+                            />
+                        </mesh>
                     </group>
                 </group>
             </group>
-        </Box>
+        </group>
     );
 }
 
