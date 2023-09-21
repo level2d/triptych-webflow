@@ -47,9 +47,7 @@ export default function HomeScene() {
                 </Canvas>
             </div>
             {!debugModel && <Nav />}
-            <div className={styles.levaWrapper}>
-                <Leva hidden={!debug || debugModel} fill />
-            </div>
+            <Leva hidden={!debug} collapsed oneLineLabels />
         </div>
     );
 }
