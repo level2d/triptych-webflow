@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { useGLTF, useAnimations } from "@react-three/drei";
 
 import { GLB_ASSET_URLS } from "@/js/core/constants";
-import { Box } from "../Scene/Common";
+import { Box } from "../Common";
 
 export default function ShowreelModel(props) {
     const [mounted, setMounted] = useState(false);
