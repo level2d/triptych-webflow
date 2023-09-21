@@ -7,9 +7,14 @@ import { useGLTF, useAnimations } from "@react-three/drei";
 import * as THREE from "three";
 
 import { GLB_ASSET_URLS } from "@/js/core/constants";
+import { GrainMaterialYellow } from "@/js/components/3D/Materials";
 
 export default function CdmModel(props) {
     const [mounted, setMounted] = useState(false);
+    const [boundingBox, setBoundingBox] = useState({
+        min: new THREE.Vector3(0, 0, 0),
+        max: new THREE.Vector3(1, 1, 1),
+    });
     const group = useRef();
     const { nodes, animations } = useGLTF(GLB_ASSET_URLS.CDM);
     const { actions, names } = useAnimations(animations, group);
@@ -40,6 +45,13 @@ export default function CdmModel(props) {
         });
     }, [mounted, actions, names]);
 
+    // setup uniforms
+    useEffect(() => {
+        const bb = new THREE.Box3();
+        bb.setFromObject(group.current);
+        setBoundingBox(bb);
+    }, []);
+
     useEffect(() => {
         setMounted(true);
     }, []);
@@ -61,7 +73,9 @@ export default function CdmModel(props) {
                                 nodes.gasket.morphTargetInfluences
                             }
                             position={[-0.003, -0.265, -0.005]}
-                        />
+                        >
+                            <GrainMaterialYellow boundingBox={boundingBox} />
+                        </mesh>
                         <mesh
                             name="joystick003"
                             castShadow
@@ -70,6 +84,7 @@ export default function CdmModel(props) {
                             material={nodes.joystick003.material}
                             position={[-0.003, -0.265, -0.005]}
                         >
+                            <GrainMaterialYellow boundingBox={boundingBox} />
                             <mesh
                                 name="joystick001"
                                 castShadow
@@ -77,7 +92,11 @@ export default function CdmModel(props) {
                                 geometry={nodes.joystick001.geometry}
                                 material={nodes.joystick001.material}
                                 position={[0, 0.075, 0.02]}
-                            />
+                            >
+                                <GrainMaterialYellow
+                                    boundingBox={boundingBox}
+                                />
+                            </mesh>
                         </mesh>
                     </group>
                 </group>
