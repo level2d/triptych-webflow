@@ -9,7 +9,7 @@ import Loading from "./Loading";
 import Nav from "./Nav/Nav";
 import useQueryVariable from "@/js/hooks/useQueryVariable";
 
-import "./Shaders";
+import "../3D/Shaders";
 
 const Scene = lazy(() => {
     return Promise.all([
