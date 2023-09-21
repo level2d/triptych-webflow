@@ -7,7 +7,6 @@ import { useGLTF, useAnimations } from "@react-three/drei";
 import * as THREE from "three";
 
 import { GLB_ASSET_URLS } from "@/js/core/constants";
-import { Box } from "../Common";
 
 export default function SkullModel(props) {
     const [mounted, setMounted] = useState(false);
@@ -41,40 +40,38 @@ export default function SkullModel(props) {
         setMounted(true);
     }, []);
     return (
-        <Box {...props}>
-            <group ref={group} dispose={null} onClick={handleClick}>
-                <group name="Scene">
-                    <group name="skull">
-                        <group name="rotation_null014">
+        <group ref={group} {...props} dispose={null} onClick={handleClick}>
+            <group name="Scene">
+                <group name="skull">
+                    <group name="rotation_null014">
+                        <mesh
+                            name="skull001"
+                            castShadow
+                            receiveShadow
+                            geometry={nodes.skull001.geometry}
+                            material={nodes.skull001.material}
+                            position={[-0.004, -0.114, -0.039]}
+                        />
+                        <mesh
+                            name="skull002"
+                            castShadow
+                            receiveShadow
+                            geometry={nodes.skull002.geometry}
+                            material={nodes.skull002.material}
+                            position={[-0.006, -0.152, 0.2]}
+                        >
                             <mesh
-                                name="skull001"
+                                name="sockets"
                                 castShadow
                                 receiveShadow
-                                geometry={nodes.skull001.geometry}
-                                material={nodes.skull001.material}
-                                position={[-0.004, -0.114, -0.039]}
+                                geometry={nodes.sockets.geometry}
+                                material={nodes.sockets.material}
                             />
-                            <mesh
-                                name="skull002"
-                                castShadow
-                                receiveShadow
-                                geometry={nodes.skull002.geometry}
-                                material={nodes.skull002.material}
-                                position={[-0.006, -0.152, 0.2]}
-                            >
-                                <mesh
-                                    name="sockets"
-                                    castShadow
-                                    receiveShadow
-                                    geometry={nodes.sockets.geometry}
-                                    material={nodes.sockets.material}
-                                />
-                            </mesh>
-                        </group>
+                        </mesh>
                     </group>
                 </group>
             </group>
-        </Box>
+        </group>
     );
 }
 

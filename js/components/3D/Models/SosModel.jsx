@@ -7,7 +7,6 @@ import { useGLTF, useAnimations } from "@react-three/drei";
 import * as THREE from "three";
 
 import { GLB_ASSET_URLS } from "@/js/core/constants";
-import { Box } from "../Common";
 
 export default function SosModel(props) {
     const [mounted, setMounted] = useState(false);
@@ -43,36 +42,34 @@ export default function SosModel(props) {
         setMounted(true);
     }, []);
     return (
-        <Box {...props}>
-            <group ref={group} dispose={null} onClick={handleClick}>
-                <group name="Scene">
-                    <group name="sos">
-                        <group name="rotation_null003">
-                            <mesh
-                                name="fish002"
-                                castShadow
-                                receiveShadow
-                                geometry={nodes.fish002.geometry}
-                                material={nodes.fish002.material}
-                                morphTargetDictionary={
-                                    nodes.fish002.morphTargetDictionary
-                                }
-                                morphTargetInfluences={
-                                    nodes.fish002.morphTargetInfluences
-                                }
-                                position={[0.019, -0.075, 0.072]}
-                                rotation={[0, -0.273, 0]}
-                            />
-                            <group
-                                name="fish_02_holder"
-                                position={[0, -0.075, 0]}
-                                rotation={[0, -Math.PI / 6, 0]}
-                            />
-                        </group>
+        <group ref={group} {...props} dispose={null} onClick={handleClick}>
+            <group name="Scene">
+                <group name="sos">
+                    <group name="rotation_null003">
+                        <mesh
+                            name="fish002"
+                            castShadow
+                            receiveShadow
+                            geometry={nodes.fish002.geometry}
+                            material={nodes.fish002.material}
+                            morphTargetDictionary={
+                                nodes.fish002.morphTargetDictionary
+                            }
+                            morphTargetInfluences={
+                                nodes.fish002.morphTargetInfluences
+                            }
+                            position={[0.019, -0.075, 0.072]}
+                            rotation={[0, -0.273, 0]}
+                        />
+                        <group
+                            name="fish_02_holder"
+                            position={[0, -0.075, 0]}
+                            rotation={[0, -Math.PI / 6, 0]}
+                        />
                     </group>
                 </group>
             </group>
-        </Box>
+        </group>
     );
 }
 
