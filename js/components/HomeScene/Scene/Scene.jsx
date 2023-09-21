@@ -4,7 +4,6 @@ import { Perf } from "r3f-perf";
 import { debug } from "@/js/core/constants";
 import Rig from "./Rig";
 import Model from "./Model";
-import "./Shaders";
 
 export default function Scene() {
     return (
