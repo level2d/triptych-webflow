@@ -11,6 +11,8 @@ export default function Rig() {
     const lookAtMesh = useRef(null);
     const cameraOrbitPoint = useRef(new THREE.Vector3());
     const boxSize = useRef(new THREE.Vector2());
+    const introPlayed = useStore((state) => state.introPlayed);
+    const intro = useStore((state) => state.intro);
     const cameraTargetUuid = useStore((state) => state.cameraTargetUuid);
     const { paddingTop, paddingRight, paddingBottom, paddingLeft } = useStore(
         (state) => ({
@@ -78,6 +80,14 @@ export default function Rig() {
                 paddingBottom: paddingBottom,
                 paddingLeft: paddingLeft,
             });
+
+            if (debug) {
+                return;
+            }
+
+            if (!introPlayed) {
+                intro();
+            }
         };
         focusCamera();
     }, [
@@ -89,6 +99,9 @@ export default function Rig() {
         paddingRight,
         paddingBottom,
         paddingLeft,
+        introPlayed,
+        intro,
+        debug,
     ]);
 
     useEffect(() => {

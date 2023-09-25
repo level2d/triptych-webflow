@@ -1,4 +1,6 @@
 import * as THREE from "three";
+import gsap from "@/js/lib/gsap";
+import { debug } from "@/js/core/constants";
 
 // Local cache
 const cameraPosition = new THREE.Vector3();
@@ -81,6 +83,7 @@ export const createHomeSceneSlice = (set, get) => ({
 
         switch (direction) {
             case "up": {
+                cameraControls.normalizeRotations();
                 await cameraControls.rotate(
                     0,
                     THREE.MathUtils.degToRad(-90),
@@ -126,6 +129,63 @@ export const createHomeSceneSlice = (set, get) => ({
                 break;
             }
         }
+    },
+    interactable: debug,
+    introPlayed: false,
+    intro: async () => {
+        const cameraControls = get().getR3fStore().controls;
+        if (!cameraControls) return;
+
+        const scene = get().getR3fStore().scene;
+        const triptychModelUuid = get().triptychModelUuid;
+        const triptychModel = scene.getObjectByProperty(
+            "uuid",
+            triptychModelUuid,
+        );
+        const triptychModelMaterial = triptychModel.material;
+        const cameraTargetUuid = get().cameraTargetUuid;
+        const cameraTarget = scene.getObjectByProperty(
+            "uuid",
+            cameraTargetUuid,
+        );
+
+        if (!cameraTarget.geometry) return;
+
+        // Store camera position to local Vector3
+        cameraControls.getPosition(cameraPosition, true);
+        // Calc bounds of camera target
+        cameraTarget.geometry.computeBoundingSphere();
+
+        // Store bounding box to local Box3
+        const boundingSphere = cameraTarget.geometry.boundingSphere.clone();
+        boundingSphere.getBoundingBox(boundingBox);
+
+        triptychModelMaterial.opacity = 0.0;
+        gsap.fromTo(
+            triptychModelMaterial,
+            { opacity: 0.0 },
+            {
+                opacity: 1.0,
+                duration: 1,
+            },
+        );
+        cameraControls.smoothTime = 0.5;
+
+        await cameraControls.rotate(
+            THREE.MathUtils.degToRad(135),
+            THREE.MathUtils.degToRad(-45),
+            true,
+        );
+
+        await cameraControls.rotate(
+            THREE.MathUtils.degToRad(135),
+            THREE.MathUtils.degToRad(45),
+            true,
+        );
+
+        cameraControls.smoothTime = 0.25;
+
+        set({ introPlayed: true, interactable: true });
     },
 });
 
