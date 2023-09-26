@@ -333,6 +333,8 @@ export default class FancyImage {
             this.instances = Array.from(this.$targets).map(
                 (target) => new _FancyImage(target),
             );
+
+            console.log("Module: FancyImage: init");
         }
     };
 }

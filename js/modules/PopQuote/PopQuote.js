@@ -16,7 +16,7 @@ export default class Quotes {
             const random = Math.floor(Math.random() * this.quotes.length);
             this.currentQuote = this.quotes[random];
             this.$target.html(this.currentQuote);
-            console.log("module: PopQuote: init");
+            console.log("Module: PopQuote: init");
         }
     }
 }
