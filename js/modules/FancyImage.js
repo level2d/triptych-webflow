@@ -237,6 +237,7 @@ class _FancyImage {
                 this.scaled.height,
             );
             this.DOM.container.classList.add("fancy-image--animate-end");
+            this.DOM.container.classList.remove("fancy-image--animate-start");
             this.pxIndex = this.pxFactorValues.length - 1;
         }
     };
@@ -247,6 +248,7 @@ class _FancyImage {
 
         // Play pixel animation if applicable
         if (this.pixelAnimationEnabled) {
+            this.DOM.container.classList.add("fancy-image--animate-start");
             this.animatePixels();
         }
     };
