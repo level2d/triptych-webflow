@@ -9,6 +9,15 @@ const dom = {
     /**
      *
      * @public
+     * @member document
+     * @memberof core.dom
+     * @description root page document
+     *
+     */
+    document: $(document.documentElement),
+    /**
+     *
+     * @public
      * @member homeExperience
      * @memberof core.dom
      * @description cached nodes for homeExperience module
