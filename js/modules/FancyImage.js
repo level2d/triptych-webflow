@@ -11,6 +11,7 @@ import ScrollTrigger from "gsap/ScrollTrigger";
 import App from "@/js/App";
 
 class _FancyImage {
+    app = null;
     // settings
     src = null;
     ditherEnabled = false;
@@ -117,6 +118,12 @@ class _FancyImage {
             );
             // draw a dithered image to the canvas
             ditherWith(ATKINSON, buf).blitCanvas(this.DOM.canvas);
+            // Apply lighten blend mode to the canvas
+            this.ctx.globalCompositeOperation = "lighten";
+            this.ctx.fillStyle = this.app.core.colors.black;
+            this.ctx.fillRect(0, 0, this.scaled.width, this.scaled.height);
+            // reset this back to normal to not affect the pixelation
+            this.ctx.globalCompositeOperation = "normal";
         } else {
             // Draw the initial image to the canvas
             this.ctx.drawImage(
@@ -170,7 +177,7 @@ class _FancyImage {
 
         // Clear the canvas and fill with white
         this.ctx.clearRect(0, 0, this.scaled.width, this.scaled.height);
-        this.ctx.fillStyle = "white";
+        // this.ctx.fillStyle = "white"; // uncomment if you want a white background
         this.ctx.fillRect(0, 0, this.scaled.width, this.scaled.height);
 
         // Draw the final image at a fraction of the final size
@@ -244,6 +251,7 @@ class _FancyImage {
     init = async (node) => {
         // root el
         this.DOM.el = node;
+        this.app = new App();
 
         // settings from root el
         this.src = this.DOM.el.src;

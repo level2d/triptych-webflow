@@ -24,6 +24,7 @@ import {
     WorkModel,
 } from "@/js/components/3D/Models";
 import { Outlines } from "@/js/components/3D/Common";
+import { GrainShaderMaterial } from "../../3D/Shaders";
 
 function Model(props) {
     const { nodes /*, materials */ } = useGLTF(GLB_ASSET_URLS.Locations);
@@ -144,6 +145,7 @@ function Model(props) {
                     uMatcapEnabled={uMatcapEnabled}
                     uGradientEnabled={uGradientEnabled}
                     ref={grainShaderMaterialRef}
+                    key={GrainShaderMaterial.key}
                 />
                 <Outlines />
             </mesh>
