@@ -93,10 +93,15 @@ const Button = ({ direction = "left", onClick = () => {} }) => {
     );
 };
 
-export default function Nav() {
+const NavUi = () => {
+    const interactable = useStore((state) => state.interactable);
     const orbit = useStore((state) => state.orbit);
     const resetCurrentBoxUuid = useStore((state) => state.resetCurrentBoxUuid);
     const currentBoxUuid = useStore((state) => state.currentBoxUuid);
+
+    if (!interactable) {
+        return null;
+    }
 
     return (
         <>
@@ -116,6 +121,14 @@ export default function Nav() {
                     </div>
                 </div>
             )}
+        </>
+    );
+};
+
+export default function Nav() {
+    return (
+        <>
+            <NavUi />
             <Actions />
         </>
     );
