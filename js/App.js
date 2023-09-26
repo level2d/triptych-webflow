@@ -9,7 +9,13 @@ import Sizes from "./class/Sizes";
 
 // modules
 import * as core from "./core";
-import { FancyImage, HomeExperience, PopQuote, test } from "./modules";
+import {
+    FancyImage,
+    HomeExperience,
+    KeepScrolling,
+    PopQuote,
+    test,
+} from "./modules";
 
 let _instance = null;
 export default class App {
@@ -25,6 +31,7 @@ export default class App {
         this.sizes = new Sizes();
         this.fancyImage = new FancyImage();
         this.homeExperience = new HomeExperience();
+        this.keepScrolling = new KeepScrolling();
         this.popQuote = new PopQuote();
         this.test = test;
 
@@ -56,6 +63,7 @@ export default class App {
     initModules() {
         this.fancyImage.init();
         this.homeExperience.init();
+        this.keepScrolling.init();
         this.popQuote.init();
         this.test.init();
         console.log("Modules: init");
