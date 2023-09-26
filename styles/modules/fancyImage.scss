@@ -72,7 +72,8 @@
     }
 }
 
-[data-module="fancy-image"][data-hover] + .fancy-image:hover {
+[data-module="fancy-image"][data-hover]
+    + .fancy-image:hover:not(.fancy-image--animate-start) {
     canvas.fancy-image__canvas {
         opacity: 0;
         filter: blur(2px);
