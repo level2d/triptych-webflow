@@ -253,7 +253,7 @@ class _FancyImage {
         }
     };
 
-    initScrolltrigger = () => {
+    initScrollTrigger = () => {
         this.scrollTrigger = ScrollTrigger.create({
             trigger: this.DOM.el,
             start: "top+=15% bottom-=15%",
@@ -308,7 +308,7 @@ class _FancyImage {
             this.renderPixelFrame();
         }
 
-        this.initScrolltrigger();
+        this.initScrollTrigger();
     };
 }
 
@@ -333,6 +333,8 @@ export default class FancyImage {
             this.instances = Array.from(this.$targets).map(
                 (target) => new _FancyImage(target),
             );
+
+            console.log("Module: FancyImage: init");
         }
     };
 }

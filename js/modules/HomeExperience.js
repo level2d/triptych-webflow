@@ -12,7 +12,7 @@ export default class HomeExperience {
 
     init() {
         if (this.$target) {
-            console.log("module: HomeExperience: init");
+            console.log("Module: HomeExperience: init");
 
             renderToDOMElement(this.$target, HomeScene);
         }
