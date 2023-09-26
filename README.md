@@ -144,3 +144,10 @@ img[data-module="fancy-image"]{
 | name | required | value | description |
 |------------- |---------- |------------------- |------------------------------------------------------------------ |
 | data-module | yes | "home-experience" | Tells our custom code where to render the Home Experience module |
+
+## Keep Scrolling
+
+**Attributes**
+| name | required | value | description |
+|-------------|----------|------------------|-----------------------------------------------------------------|
+| data-module | yes | "keep-scrolling" | Tells our custom code where to render the Keep Scrolling module |
