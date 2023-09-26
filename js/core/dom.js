@@ -15,6 +15,17 @@ const dom = {
      *
      */
     document: $(document.documentElement),
+
+    /**
+     *
+     * @public
+     * @member keepScrolling
+     * @memberof core.dom
+     * @description cached nodes for keepScrolling module
+     *
+     */
+    keepScrolling: $("[data-module='keep-scrolling']"),
+
     /**
      *
      * @public
