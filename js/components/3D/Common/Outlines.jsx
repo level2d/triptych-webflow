@@ -1,11 +1,12 @@
 import { Outlines as _Outlines } from "@react-three/drei";
+import { useControls } from "leva";
 
-import { useControls, folder } from "leva";
+import * as colors from "@/js/core/colors";
 
 export default function Outlines({ children }) {
     const { outlineThickness, outlineColor } = useControls("Outlines", {
         outlineColor: {
-            value: "#343434",
+            value: colors.black,
         },
         outlineThickness: {
             value: 0.02,
