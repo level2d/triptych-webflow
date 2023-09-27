@@ -7,9 +7,15 @@ import { useGLTF, useAnimations } from "@react-three/drei";
 import * as THREE from "three";
 
 import { GLB_ASSET_URLS } from "@/js/core/constants";
+import { GrainMaterialViolet, GrainMaterialVioletDark } from "../Materials";
+import { Outlines } from "../Common";
 
 export default function SkullModel(props) {
     const [mounted, setMounted] = useState(false);
+    const [boundingBox, setBoundingBox] = useState({
+        min: new THREE.Vector3(0, 0, 0),
+        max: new THREE.Vector3(1, 1, 1),
+    });
     const group = useRef();
     const { nodes, animations } = useGLTF(GLB_ASSET_URLS.Skull);
     const { actions, names } = useAnimations(animations, group);
@@ -36,6 +42,13 @@ export default function SkullModel(props) {
         });
     }, [mounted, actions, names]);
 
+    // setup uniforms
+    useEffect(() => {
+        const bb = new THREE.Box3();
+        bb.setFromObject(group.current);
+        setBoundingBox(bb);
+    }, []);
+
     useEffect(() => {
         setMounted(true);
     }, []);
@@ -49,24 +62,34 @@ export default function SkullModel(props) {
                             castShadow
                             receiveShadow
                             geometry={nodes.skull001.geometry}
-                            material={nodes.skull001.material}
+                            // material={nodes.skull001.material}
                             position={[-0.004, -0.114, -0.039]}
-                        />
+                        >
+                            <GrainMaterialViolet boundingBox={boundingBox} />
+                            <Outlines />
+                        </mesh>
                         <mesh
                             name="skull002"
                             castShadow
                             receiveShadow
                             geometry={nodes.skull002.geometry}
-                            material={nodes.skull002.material}
+                            // material={nodes.skull002.material}
                             position={[-0.006, -0.152, 0.2]}
                         >
+                            <GrainMaterialViolet boundingBox={boundingBox} />
+                            <Outlines />
                             <mesh
                                 name="sockets"
                                 castShadow
                                 receiveShadow
                                 geometry={nodes.sockets.geometry}
-                                material={nodes.sockets.material}
-                            />
+                                // material={nodes.sockets.material}
+                            >
+                                <GrainMaterialVioletDark
+                                    boundingBox={boundingBox}
+                                />
+                                <Outlines />
+                            </mesh>
                         </mesh>
                     </group>
                 </group>
