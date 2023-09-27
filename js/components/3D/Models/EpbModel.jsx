@@ -7,7 +7,7 @@ import { useGLTF, useAnimations } from "@react-three/drei";
 import * as THREE from "three";
 
 import { GLB_ASSET_URLS } from "@/js/core/constants";
-import { GrainMaterialRed } from "../Materials";
+import { GrainMaterialRed, OutlineMaterial } from "../Materials";
 
 export default function EpbModel(props) {
     const [mounted, setMounted] = useState(false);
@@ -20,7 +20,8 @@ export default function EpbModel(props) {
     const { actions, names } = useAnimations(animations, group);
 
     const handleClick = useCallback(() => {
-        actions?.bolt.reset().play();
+        actions?.bolt_01.reset().play();
+        actions?.bolt_02.reset().play();
     }, [actions]);
 
     useEffect(() => {
@@ -32,7 +33,8 @@ export default function EpbModel(props) {
                 case "epb_orbit":
                     action.play();
                     break;
-                case "bolt":
+                case "bolt_01":
+                case "bolt_02":
                     action.loop = THREE.LoopOnce;
                     break;
                 default:
@@ -57,20 +59,32 @@ export default function EpbModel(props) {
                 <group name="epb">
                     <group name="rotation_null013">
                         <mesh
-                            name="bolt001"
-                            castShadow
-                            receiveShadow
-                            geometry={nodes.bolt001.geometry}
-                            // material={nodes.bolt001.material}
+                            name="bolt"
+                            geometry={nodes.bolt.geometry}
+                            //   material={materials.green_01}
                             morphTargetDictionary={
-                                nodes.bolt001.morphTargetDictionary
+                                nodes.bolt.morphTargetDictionary
                             }
                             morphTargetInfluences={
-                                nodes.bolt001.morphTargetInfluences
+                                nodes.bolt.morphTargetInfluences
                             }
                             position={[-0.024, 0.093, 0.006]}
                         >
                             <GrainMaterialRed boundingBox={boundingBox} />
+                        </mesh>
+                        <mesh
+                            name="bolt_outline"
+                            geometry={nodes.bolt_outline.geometry}
+                            //   material={materials.outline}
+                            morphTargetDictionary={
+                                nodes.bolt_outline.morphTargetDictionary
+                            }
+                            morphTargetInfluences={
+                                nodes.bolt_outline.morphTargetInfluences
+                            }
+                            position={[-0.024, 0.093, 0.006]}
+                        >
+                            <OutlineMaterial />
                         </mesh>
                     </group>
                 </group>

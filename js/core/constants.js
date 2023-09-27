@@ -4,7 +4,7 @@ import careers_url from "@/assets/3d/careers_02.glb";
 import cdm_url from "@/assets/3d/cdm_02.glb";
 import contact_url from "@/assets/3d/contact_02.glb";
 import culture_url from "@/assets/3d/culture_02.glb";
-import epb_url from "@/assets/3d/epb_01.glb";
+import epb_url from "@/assets/3d/epb_02.glb";
 import eye_url from "@/assets/3d/eye_01.glb";
 import gyro_url from "@/assets/3d/gyro_01.glb";
 import key_url from "@/assets/3d/key_01.glb";
