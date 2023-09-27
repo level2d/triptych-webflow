@@ -7,7 +7,7 @@ import { useGLTF, useAnimations } from "@react-three/drei";
 import * as THREE from "three";
 
 import { GLB_ASSET_URLS } from "@/js/core/constants";
-import { GrainMaterialRed } from "../Materials";
+import { GrainMaterialRed, OutlineMaterial } from "../Materials";
 
 export default function SosModel(props) {
     const [mounted, setMounted] = useState(false);
@@ -20,7 +20,8 @@ export default function SosModel(props) {
     const { actions, names } = useAnimations(animations, group);
 
     const handleClick = useCallback(() => {
-        actions?.fish_02?.reset().play();
+        actions?.blow_01?.reset().play();
+        actions?.blow_02?.reset().play();
     }, [actions]);
 
     useEffect(() => {
@@ -30,11 +31,12 @@ export default function SosModel(props) {
             const action = actions[name];
             switch (name) {
                 case "fish_orbit":
-                case "fish_01":
-                case "bob":
+                case "bob_01":
+                case "bob_02":
                     action.play();
                     break;
-                case "fish_02":
+                case "blow_01":
+                case "blow_02":
                     action.loop = THREE.LoopOnce;
                     break;
                 default:
@@ -56,30 +58,40 @@ export default function SosModel(props) {
     return (
         <group ref={group} {...props} dispose={null} onClick={handleClick}>
             <group name="Scene">
-                <group name="sos">
-                    <group name="rotation_null003">
+                <group name="sos" position={[6, 0, 0]}>
+                    <group
+                        name="rotation_null003"
+                        position={[0, -0.153, 0.307]}
+                        scale={0.972}
+                    >
                         <mesh
-                            name="fish002"
-                            castShadow
-                            receiveShadow
-                            geometry={nodes.fish002.geometry}
-                            // material={nodes.fish002.material}
+                            name="fish"
+                            geometry={nodes.fish.geometry}
+                            //   material={materials.green_01}
                             morphTargetDictionary={
-                                nodes.fish002.morphTargetDictionary
+                                nodes.fish.morphTargetDictionary
                             }
                             morphTargetInfluences={
-                                nodes.fish002.morphTargetInfluences
+                                nodes.fish.morphTargetInfluences
                             }
-                            position={[0.019, -0.075, 0.072]}
-                            rotation={[0, -0.273, 0]}
+                            rotation={[0, -Math.PI / 6, 0]}
                         >
                             <GrainMaterialRed boundingBox={boundingBox} />
                         </mesh>
-                        <group
-                            name="fish_02_holder"
-                            position={[0, -0.075, 0]}
+                        <mesh
+                            name="fish_outline"
+                            geometry={nodes.fish_outline.geometry}
+                            //   material={materials.outline}
+                            morphTargetDictionary={
+                                nodes.fish_outline.morphTargetDictionary
+                            }
+                            morphTargetInfluences={
+                                nodes.fish_outline.morphTargetInfluences
+                            }
                             rotation={[0, -Math.PI / 6, 0]}
-                        />
+                        >
+                            <OutlineMaterial />
+                        </mesh>
                     </group>
                 </group>
             </group>
