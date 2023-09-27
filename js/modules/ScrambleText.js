@@ -6,6 +6,7 @@ class _ScrambleText {
     el = null;
     timeline = null;
     text = "";
+    height = 0;
     constructor(el) {
         this.el = el;
         this.init();
@@ -17,6 +18,9 @@ class _ScrambleText {
                 trigger: this.el,
                 start: "top+=15% bottom-=15%",
                 once: true,
+            },
+            onComplete: () => {
+                this.el.style.height = "auto";
             },
         });
 
@@ -30,6 +34,11 @@ class _ScrambleText {
         });
     }
 
+    setHeight() {
+        this.height = this.el.offsetHeight;
+        this.el.style.height = this.height + "px";
+    }
+
     setText() {
         if (this.el.dataset.text) {
             this.text = this.el.dataset.text;
@@ -40,6 +49,7 @@ class _ScrambleText {
     }
 
     init() {
+        this.setHeight();
         this.setText();
         this.initTimeline();
     }
