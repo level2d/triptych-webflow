@@ -7,7 +7,7 @@ import { useGLTF, useAnimations } from "@react-three/drei";
 import * as THREE from "three";
 
 import { GLB_ASSET_URLS } from "@/js/core/constants";
-import { GrainMaterialViolet } from "../Materials";
+import { GrainMaterialViolet, OutlineMaterial } from "../Materials";
 
 export default function EyeModel(props) {
     const [mounted, setMounted] = useState(false);
@@ -58,7 +58,7 @@ export default function EyeModel(props) {
                             castShadow
                             receiveShadow
                             geometry={nodes.eye001.geometry}
-                            // material={nodes.eye001.material}
+                            //   material={materials.green_01}
                             morphTargetDictionary={
                                 nodes.eye001.morphTargetDictionary
                             }
@@ -67,23 +67,15 @@ export default function EyeModel(props) {
                             }
                         >
                             <GrainMaterialViolet boundingBox={boundingBox} />
-                            <mesh
-                                name="iris"
-                                castShadow
-                                receiveShadow
-                                geometry={nodes.iris.geometry}
-                                // material={nodes.iris.material}
-                                morphTargetDictionary={
-                                    nodes.iris.morphTargetDictionary
-                                }
-                                morphTargetInfluences={
-                                    nodes.iris.morphTargetInfluences
-                                }
-                            >
-                                <GrainMaterialViolet
-                                    boundingBox={boundingBox}
-                                />
-                            </mesh>
+                        </mesh>
+                        <mesh
+                            name="eye_outline"
+                            castShadow
+                            receiveShadow
+                            geometry={nodes.eye_outline.geometry}
+                            //   material={materials.outline}
+                        >
+                            <OutlineMaterial />
                         </mesh>
                     </group>
                 </group>
