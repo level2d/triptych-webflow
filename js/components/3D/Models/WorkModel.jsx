@@ -7,9 +7,14 @@ import { useGLTF, useAnimations } from "@react-three/drei";
 import * as THREE from "three";
 
 import { GLB_ASSET_URLS } from "@/js/core/constants";
+import { GrainMaterialYellow, GrainMaterialYellowDark } from "../Materials";
 
 export default function WorkModel(props) {
     const [mounted, setMounted] = useState(false);
+    const [boundingBox, setBoundingBox] = useState({
+        min: new THREE.Vector3(0, 0, 0),
+        max: new THREE.Vector3(1, 1, 1),
+    });
     const group = useRef();
     const { nodes, animations } = useGLTF(GLB_ASSET_URLS.Work);
     const { actions, names } = useAnimations(animations, group);
@@ -36,6 +41,13 @@ export default function WorkModel(props) {
         });
     }, [mounted, actions, names]);
 
+    // setup uniforms
+    useEffect(() => {
+        const bb = new THREE.Box3();
+        bb.setFromObject(group.current);
+        setBoundingBox(bb);
+    }, []);
+
     useEffect(() => {
         setMounted(true);
     }, []);
@@ -49,7 +61,7 @@ export default function WorkModel(props) {
                             castShadow
                             receiveShadow
                             geometry={nodes["Hand_-_Stylized_"].geometry}
-                            material={nodes["Hand_-_Stylized_"].material}
+                            // material={nodes["Hand_-_Stylized_"].material}
                             morphTargetDictionary={
                                 nodes["Hand_-_Stylized_"].morphTargetDictionary
                             }
@@ -58,19 +70,24 @@ export default function WorkModel(props) {
                             }
                             position={[0.026, -0.067, -0.021]}
                         >
+                            <GrainMaterialYellow boundingBox={boundingBox} />
                             <mesh
                                 name="tie"
                                 castShadow
                                 receiveShadow
                                 geometry={nodes.tie.geometry}
-                                material={nodes.tie.material}
+                                // material={nodes.tie.material}
                                 morphTargetDictionary={
                                     nodes.tie.morphTargetDictionary
                                 }
                                 morphTargetInfluences={
                                     nodes.tie.morphTargetInfluences
                                 }
-                            />
+                            >
+                                <GrainMaterialYellowDark
+                                    boundingBox={boundingBox}
+                                />
+                            </mesh>
                         </mesh>
                     </group>
                 </group>
