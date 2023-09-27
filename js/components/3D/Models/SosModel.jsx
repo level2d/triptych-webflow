@@ -58,7 +58,7 @@ export default function SosModel(props) {
     return (
         <group ref={group} {...props} dispose={null} onClick={handleClick}>
             <group name="Scene">
-                <group name="sos" position={[6, 0, 0]}>
+                <group name="sos">
                     <group
                         name="rotation_null003"
                         position={[0, -0.153, 0.307]}
