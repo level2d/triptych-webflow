@@ -9,7 +9,7 @@ import eye_url from "@/assets/3d/eye_02.glb";
 import gyro_url from "@/assets/3d/gyro_02.glb";
 import key_url from "@/assets/3d/key_02.glb";
 import methods_url from "@/assets/3d/methods_02.glb";
-import northface_url from "@/assets/3d/northface_01.glb";
+import northface_url from "@/assets/3d/northface_02.glb";
 import phone_url from "@/assets/3d/phone_01.glb";
 import showreel_url from "@/assets/3d/showreel_01.glb";
 import skull_url from "@/assets/3d/skull_01.glb";

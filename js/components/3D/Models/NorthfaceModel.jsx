@@ -21,7 +21,7 @@ export default function NorthfaceModel(props) {
     const { actions, names } = useAnimations(animations, group);
 
     const handleClick = useCallback(() => {
-        actions?.melting.reset().play();
+        actions?.wind.reset().play();
     }, [actions]);
 
     useEffect(() => {
@@ -33,7 +33,7 @@ export default function NorthfaceModel(props) {
                 case "northface_orbit":
                     action.play();
                     break;
-                case "melting":
+                case "wind":
                     action.loop = THREE.LoopOnce;
                     break;
                 default:
@@ -59,19 +59,11 @@ export default function NorthfaceModel(props) {
                     <group name="rotation_null011">
                         <mesh
                             name="Plane001"
-                            castShadow
-                            receiveShadow
                             geometry={nodes.Plane001.geometry}
-                            // material={nodes.Plane001.material}
-                            morphTargetDictionary={
-                                nodes.Plane001.morphTargetDictionary
-                            }
-                            morphTargetInfluences={
-                                nodes.Plane001.morphTargetInfluences
-                            }
+                            //   material={materials.green_01}
                         >
                             <GrainMaterialRed boundingBox={boundingBox} />
-                            {/* <Outlines /> */}
+                            <Outlines />
                         </mesh>
                     </group>
                 </group>
