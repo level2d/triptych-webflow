@@ -7,6 +7,7 @@ import { useGLTF, useAnimations } from "@react-three/drei";
 import * as THREE from "three";
 
 import { GLB_ASSET_URLS } from "@/js/core/constants";
+import { Outlines } from "../Common";
 import { GrainMaterialViolet } from "../Materials";
 
 export default function KeyModel(props) {
@@ -75,6 +76,7 @@ export default function KeyModel(props) {
                             position={[-0.156, -0.34, 0.002]}
                         >
                             <GrainMaterialViolet boundingBox={boundingBox} />
+                            <Outlines />
                         </mesh>
                         <mesh
                             name="key002"
@@ -85,6 +87,7 @@ export default function KeyModel(props) {
                             position={[0.201, 0.316, 0.003]}
                         >
                             <GrainMaterialViolet boundingBox={boundingBox} />
+                            <Outlines />
                         </mesh>
                         <mesh
                             name="key003"
@@ -95,6 +98,7 @@ export default function KeyModel(props) {
                             position={[-0.353, -0.308, 0.002]}
                         >
                             <GrainMaterialViolet boundingBox={boundingBox} />
+                            <Outlines />
                         </mesh>
                         <mesh
                             name="key004"
@@ -105,6 +109,7 @@ export default function KeyModel(props) {
                             position={[0.357, 0.274, 0.006]}
                         >
                             <GrainMaterialViolet boundingBox={boundingBox} />
+                            <Outlines />
                         </mesh>
                         <mesh
                             name="key005"
@@ -115,6 +120,7 @@ export default function KeyModel(props) {
                             position={[0.472, 0.336, 0.007]}
                         >
                             <GrainMaterialViolet boundingBox={boundingBox} />
+                            <Outlines />
                         </mesh>
                         <mesh
                             name="key006"
@@ -125,6 +131,7 @@ export default function KeyModel(props) {
                             position={[-0.34, -0.517, 0.002]}
                         >
                             <GrainMaterialViolet boundingBox={boundingBox} />
+                            <Outlines />
                         </mesh>
                     </group>
                 </group>
