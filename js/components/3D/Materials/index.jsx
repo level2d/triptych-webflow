@@ -20,19 +20,19 @@ export const GrainMaterialRed = ({ boundingBox }) => {
             Noise: folder({
                 uNoiseEnabled: true,
                 uNoiseScale: {
-                    value: 850,
+                    value: 320,
                     min: 10,
                     max: 2000,
                     step: 10,
                 },
                 uNoiseScalarDistanceFactor: {
-                    value: 0.3,
+                    value: 0.5,
                     min: 0,
                     max: 10,
                     step: 0.1,
                 },
                 uNoiseContrast: {
-                    value: 0.25,
+                    value: 0.15,
                     min: 0,
                     max: 1,
                     step: 0.01,
@@ -41,16 +41,16 @@ export const GrainMaterialRed = ({ boundingBox }) => {
             Gradient: folder({
                 uGradientEnabled: true,
                 uGradientStop: {
-                    value: 0.33,
+                    value: 0.4,
                     min: 0.0,
                     max: 0.5,
                     step: 0.01,
                 },
                 uGradientColorA: {
                     value: {
-                        r: 193.480485,
+                        r: 217,
                         g: 0,
-                        b: 1.385925,
+                        b: 33,
                     },
                     onChange: (v) => {
                         const color = new THREE.Vector3(
@@ -64,9 +64,9 @@ export const GrainMaterialRed = ({ boundingBox }) => {
                 },
                 uGradientColorB: {
                     value: {
-                        r: 127.5,
-                        g: 0,
-                        b: 56.0235,
+                        r: 255,
+                        g: 105,
+                        b: 0,
                     },
                     onChange: (v) => {
                         const color = new THREE.Vector3(
@@ -115,19 +115,19 @@ export const GrainMaterialRedDark = ({ boundingBox }) => {
             Noise: folder({
                 uNoiseEnabled: true,
                 uNoiseScale: {
-                    value: 850,
+                    value: 320,
                     min: 10,
                     max: 2000,
                     step: 10,
                 },
                 uNoiseScalarDistanceFactor: {
-                    value: 0.3,
+                    value: 0.5,
                     min: 0,
                     max: 10,
                     step: 0.1,
                 },
                 uNoiseContrast: {
-                    value: 0.25,
+                    value: 0.15,
                     min: 0,
                     max: 1,
                     step: 0.01,
@@ -136,16 +136,16 @@ export const GrainMaterialRedDark = ({ boundingBox }) => {
             Gradient: folder({
                 uGradientEnabled: true,
                 uGradientStop: {
-                    value: 0.33,
+                    value: 0.4,
                     min: 0.0,
                     max: 0.5,
                     step: 0.01,
                 },
                 uGradientColorA: {
                     value: {
-                        r: 193.480485,
+                        r: 217,
                         g: 0,
-                        b: 1.385925,
+                        b: 73,
                     },
                     onChange: (v) => {
                         const color = new THREE.Vector3(
@@ -159,9 +159,9 @@ export const GrainMaterialRedDark = ({ boundingBox }) => {
                 },
                 uGradientColorB: {
                     value: {
-                        r: 127.5,
-                        g: 0,
-                        b: 56.0235,
+                        r: 255,
+                        g: 57,
+                        b: 0,
                     },
                     onChange: (v) => {
                         const color = new THREE.Vector3(
@@ -398,19 +398,19 @@ export const GrainMaterialViolet = ({ boundingBox }) => {
             Noise: folder({
                 uNoiseEnabled: true,
                 uNoiseScale: {
-                    value: 850,
+                    value: 320,
                     min: 10,
                     max: 2000,
                     step: 10,
                 },
                 uNoiseScalarDistanceFactor: {
-                    value: 0.3,
+                    value: 0.5,
                     min: 0,
                     max: 10,
                     step: 0.1,
                 },
                 uNoiseContrast: {
-                    value: 0.25,
+                    value: 0.15,
                     min: 0,
                     max: 1,
                     step: 0.01,
@@ -419,7 +419,7 @@ export const GrainMaterialViolet = ({ boundingBox }) => {
             Gradient: folder({
                 uGradientEnabled: true,
                 uGradientStop: {
-                    value: 0.33,
+                    value: 0.4,
                     min: 0.0,
                     max: 0.5,
                     step: 0.01,
@@ -493,19 +493,19 @@ export const GrainMaterialVioletDark = ({ boundingBox }) => {
             Noise: folder({
                 uNoiseEnabled: true,
                 uNoiseScale: {
-                    value: 850,
+                    value: 320,
                     min: 10,
                     max: 2000,
                     step: 10,
                 },
                 uNoiseScalarDistanceFactor: {
-                    value: 0.3,
+                    value: 0.5,
                     min: 0,
                     max: 10,
                     step: 0.1,
                 },
                 uNoiseContrast: {
-                    value: 0.25,
+                    value: 0.15,
                     min: 0,
                     max: 1,
                     step: 0.01,
@@ -514,7 +514,7 @@ export const GrainMaterialVioletDark = ({ boundingBox }) => {
             Gradient: folder({
                 uGradientEnabled: true,
                 uGradientStop: {
-                    value: 0.33,
+                    value: 0.4,
                     min: 0.0,
                     max: 0.5,
                     step: 0.01,
