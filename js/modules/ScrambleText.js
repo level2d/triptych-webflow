@@ -28,15 +28,12 @@ class _ScrambleText {
             scrambleText: {
                 text: this.text,
                 chars: "upperAndLowerCase",
-                speed: 1,
                 delimiter: " ",
+                revealDelay: 0.5,
+                speed: 0.5,
+                tweenLength: false,
             },
         });
-    }
-
-    setHeight() {
-        this.height = this.el.offsetHeight;
-        this.el.style.height = this.height + "px";
     }
 
     setText() {
@@ -49,7 +46,6 @@ class _ScrambleText {
     }
 
     init() {
-        this.setHeight();
         this.setText();
         this.initTimeline();
     }
