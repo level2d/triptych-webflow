@@ -209,19 +209,19 @@ export const GrainMaterialYellow = ({ boundingBox }) => {
             Noise: folder({
                 uNoiseEnabled: true,
                 uNoiseScale: {
-                    value: 850,
+                    value: 320,
                     min: 10,
                     max: 2000,
                     step: 10,
                 },
                 uNoiseScalarDistanceFactor: {
-                    value: 0.3,
+                    value: 0.5,
                     min: 0,
                     max: 10,
                     step: 0.1,
                 },
                 uNoiseContrast: {
-                    value: 0.25,
+                    value: 0.15,
                     min: 0,
                     max: 1,
                     step: 0.01,
@@ -230,16 +230,16 @@ export const GrainMaterialYellow = ({ boundingBox }) => {
             Gradient: folder({
                 uGradientEnabled: true,
                 uGradientStop: {
-                    value: 0.33,
+                    value: 0.4,
                     min: 0.0,
                     max: 0.5,
                     step: 0.01,
                 },
                 uGradientColorA: {
                     value: {
-                        r: 193.480485,
-                        g: 0,
-                        b: 1.385925,
+                        r: 255,
+                        g: 124,
+                        b: 0,
                     },
                     onChange: (v) => {
                         const color = new THREE.Vector3(
@@ -253,9 +253,9 @@ export const GrainMaterialYellow = ({ boundingBox }) => {
                 },
                 uGradientColorB: {
                     value: {
-                        r: 127.5,
-                        g: 0,
-                        b: 56.0235,
+                        r: 251,
+                        g: 233,
+                        b: 72,
                     },
                     onChange: (v) => {
                         const color = new THREE.Vector3(
@@ -304,19 +304,19 @@ export const GrainMaterialYellowDark = ({ boundingBox }) => {
             Noise: folder({
                 uNoiseEnabled: true,
                 uNoiseScale: {
-                    value: 850,
+                    value: 320,
                     min: 10,
                     max: 2000,
                     step: 10,
                 },
                 uNoiseScalarDistanceFactor: {
-                    value: 0.3,
+                    value: 0.5,
                     min: 0,
                     max: 10,
                     step: 0.1,
                 },
                 uNoiseContrast: {
-                    value: 0.25,
+                    value: 0.15,
                     min: 0,
                     max: 1,
                     step: 0.01,
@@ -325,16 +325,16 @@ export const GrainMaterialYellowDark = ({ boundingBox }) => {
             Gradient: folder({
                 uGradientEnabled: true,
                 uGradientStop: {
-                    value: 0.33,
+                    value: 0.4,
                     min: 0.0,
                     max: 0.5,
                     step: 0.01,
                 },
                 uGradientColorA: {
                     value: {
-                        r: 193.480485,
-                        g: 0,
-                        b: 1.385925,
+                        r: 255,
+                        g: 67,
+                        b: 0,
                     },
                     onChange: (v) => {
                         const color = new THREE.Vector3(
@@ -348,9 +348,9 @@ export const GrainMaterialYellowDark = ({ boundingBox }) => {
                 },
                 uGradientColorB: {
                     value: {
-                        r: 127.5,
-                        g: 0,
-                        b: 56.0235,
+                        r: 250,
+                        g: 159,
+                        b: 72,
                     },
                     onChange: (v) => {
                         const color = new THREE.Vector3(
