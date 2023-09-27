@@ -7,6 +7,7 @@ import { useGLTF, useAnimations } from "@react-three/drei";
 import * as THREE from "three";
 
 import { GLB_ASSET_URLS } from "@/js/core/constants";
+import { Outlines } from "../Common";
 import { GrainMaterialYellow, GrainMaterialYellowDark } from "../Materials";
 
 export default function MethodsModel(props) {
@@ -70,6 +71,7 @@ export default function MethodsModel(props) {
                                 <GrainMaterialYellowDark
                                     boundingBox={boundingBox}
                                 />
+                                <Outlines />
                             </mesh>
                             <mesh
                                 name="Cylinder002_1"
@@ -81,6 +83,7 @@ export default function MethodsModel(props) {
                                 <GrainMaterialYellow
                                     boundingBox={boundingBox}
                                 />
+                                <Outlines />
                             </mesh>
                             <mesh
                                 name="gear_01"
@@ -93,6 +96,7 @@ export default function MethodsModel(props) {
                                 <GrainMaterialYellow
                                     boundingBox={boundingBox}
                                 />
+                                <Outlines />
                             </mesh>
                             <mesh
                                 name="gear_02"
@@ -105,6 +109,7 @@ export default function MethodsModel(props) {
                                 <GrainMaterialYellow
                                     boundingBox={boundingBox}
                                 />
+                                <Outlines />
                             </mesh>
                             <mesh
                                 name="gear_03"
@@ -117,6 +122,7 @@ export default function MethodsModel(props) {
                                 <GrainMaterialYellow
                                     boundingBox={boundingBox}
                                 />
+                                <Outlines />
                             </mesh>
                             <mesh
                                 name="gear_04"
@@ -128,6 +134,7 @@ export default function MethodsModel(props) {
                                 <GrainMaterialYellow
                                     boundingBox={boundingBox}
                                 />
+                                <Outlines />
                             </mesh>
                         </group>
                     </group>
