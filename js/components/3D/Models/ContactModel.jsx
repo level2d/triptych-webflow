@@ -7,7 +7,11 @@ import { useGLTF, useAnimations } from "@react-three/drei";
 import * as THREE from "three";
 
 import { GLB_ASSET_URLS } from "@/js/core/constants";
-import { GrainMaterialViolet } from "@/js/components/3D/Materials";
+import {
+    GrainMaterialYellow,
+    GrainMaterialYellowDark,
+} from "@/js/components/3D/Materials";
+import { Outlines } from "../Common";
 
 export default function ContactModel(props) {
     const [mounted, setMounted] = useState(false);
@@ -75,7 +79,7 @@ export default function ContactModel(props) {
                             position={[0.001, 0.059, 0.028]}
                             rotation={[-0.087, Math.PI / 6, 0]}
                         >
-                            <GrainMaterialViolet boundingBox={boundingBox} />
+                            <GrainMaterialYellow boundingBox={boundingBox} />
                             <mesh
                                 name="thruster"
                                 castShadow
@@ -89,7 +93,7 @@ export default function ContactModel(props) {
                                     nodes.thruster.morphTargetInfluences
                                 }
                             >
-                                <GrainMaterialViolet
+                                <GrainMaterialYellowDark
                                     boundingBox={boundingBox}
                                 />
                             </mesh>
@@ -106,7 +110,7 @@ export default function ContactModel(props) {
                                     nodes.windows.morphTargetInfluences
                                 }
                             >
-                                <GrainMaterialViolet
+                                <GrainMaterialYellow
                                     boundingBox={boundingBox}
                                 />
                             </mesh>
