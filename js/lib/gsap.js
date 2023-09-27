@@ -1,5 +1,6 @@
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/all";
+import { ScrambleTextPlugin } from "gsap/ScrambleTextPlugin";
 
 import lenis from "./lenis";
 
@@ -8,6 +9,7 @@ import lenis from "./lenis";
 gsap.ticker.remove(gsap.updateRoot);
 gsap.ticker.lagSmoothing(0);
 gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrambleTextPlugin);
 
 lenis.on("scroll", ScrollTrigger.update); // Update scroll trigger on lenis scroll
 

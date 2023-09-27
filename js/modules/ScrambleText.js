@@ -1,0 +1,66 @@
+import gsap from "@/js/lib/gsap";
+
+import App from "@/js/App";
+
+class _ScrambleText {
+    el = null;
+    timeline = null;
+    text = "";
+    constructor(el) {
+        this.el = el;
+        this.init();
+    }
+
+    initTimeline() {
+        this.timeline = gsap.timeline({
+            scrollTrigger: {
+                trigger: this.el,
+                start: "top+=15% bottom-=15%",
+                once: true,
+            },
+        });
+
+        this.timeline.to(this.el, {
+            scrambleText: {
+                text: this.text,
+                chars: "upperAndLowerCase",
+                speed: 1,
+                delimiter: " ",
+            },
+        });
+    }
+
+    setText() {
+        if (this.el.dataset.text) {
+            this.text = this.el.dataset.text;
+        } else {
+            this.text = this.el.innerHTML;
+            this.el.innerHTML = ""; // remove the text
+        }
+    }
+
+    init() {
+        this.setText();
+        this.initTimeline();
+    }
+}
+
+export default class ScrambleText {
+    app = null;
+    $targets = null;
+    instances = [];
+    constructor() {
+        this.app = new App();
+        this.$targets = this.app.core.dom.scrambleText;
+    }
+
+    init = () => {
+        if (this.$targets.length > 0) {
+            this.instances = Array.from(this.$targets).map(
+                (target) => new _ScrambleText(target),
+            );
+
+            console.log("Module: ScrambleText: init");
+        }
+    };
+}
