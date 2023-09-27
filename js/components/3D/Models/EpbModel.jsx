@@ -7,9 +7,14 @@ import { useGLTF, useAnimations } from "@react-three/drei";
 import * as THREE from "three";
 
 import { GLB_ASSET_URLS } from "@/js/core/constants";
+import { GrainMaterialRed } from "../Materials";
 
 export default function EpbModel(props) {
     const [mounted, setMounted] = useState(false);
+    const [boundingBox, setBoundingBox] = useState({
+        min: new THREE.Vector3(0, 0, 0),
+        max: new THREE.Vector3(1, 1, 1),
+    });
     const group = useRef();
     const { nodes, animations } = useGLTF(GLB_ASSET_URLS.EPB);
     const { actions, names } = useAnimations(animations, group);
@@ -36,6 +41,13 @@ export default function EpbModel(props) {
         });
     }, [mounted, actions, names]);
 
+    // setup uniforms
+    useEffect(() => {
+        const bb = new THREE.Box3();
+        bb.setFromObject(group.current);
+        setBoundingBox(bb);
+    }, []);
+
     useEffect(() => {
         setMounted(true);
     }, []);
@@ -49,7 +61,7 @@ export default function EpbModel(props) {
                             castShadow
                             receiveShadow
                             geometry={nodes.bolt001.geometry}
-                            material={nodes.bolt001.material}
+                            // material={nodes.bolt001.material}
                             morphTargetDictionary={
                                 nodes.bolt001.morphTargetDictionary
                             }
@@ -57,7 +69,9 @@ export default function EpbModel(props) {
                                 nodes.bolt001.morphTargetInfluences
                             }
                             position={[-0.024, 0.093, 0.006]}
-                        />
+                        >
+                            <GrainMaterialRed boundingBox={boundingBox} />
+                        </mesh>
                     </group>
                 </group>
             </group>
