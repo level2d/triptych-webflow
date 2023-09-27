@@ -1,9 +1,11 @@
 import styles from "./Nav.module.scss";
 
+import { useMemo, useState } from "react";
+import { useHotkeys } from "react-hotkeys-hook";
 import cx from "classnames";
+
 import { useStore } from "@/js/lib/store";
 import Actions from "./Actions";
-import { useMemo, useState } from "react";
 
 const LeftArrow = () => {
     return (
@@ -86,6 +88,7 @@ const ARROWS = {
 };
 
 const COLORS = ["yellow", "orange", "violet"];
+const ACTIVE_COLOR = "white";
 
 const randomColorIndex = () => Math.floor(randomNumber(0, COLORS.length));
 
@@ -93,10 +96,23 @@ const Button = ({
     direction = "left",
     onClick = () => {},
     startingColorIndex = randomColorIndex(),
+    hotkey = null,
 }) => {
+    const [isActive, setIsActive] = useState(false);
     const [colorIndex, setColorIndex] = useState(null);
     const [lastColorIndex, setLastColorIndex] = useState(startingColorIndex);
     const Component = ARROWS[direction];
+    const _hotkey = hotkey ?? direction;
+
+    const colorClassname = useMemo(() => {
+        if (isActive) {
+            return styles[`button--${ACTIVE_COLOR}`];
+        }
+        if (typeof colorIndex === "number") {
+            return styles[`button--${COLORS[colorIndex]}`];
+        }
+        return null;
+    }, [colorIndex, isActive]);
 
     const handleMouseEnter = () => {
         const newColorIndex =
@@ -109,12 +125,22 @@ const Button = ({
         setColorIndex(null);
     };
 
-    const colorClassname = useMemo(() => {
-        if (typeof colorIndex === "number") {
-            return styles[`button--${COLORS[colorIndex]}`];
-        }
-        return null;
-    }, [colorIndex]);
+    const handleMousedown = () => {
+        setIsActive(true);
+    };
+
+    const handleMouseup = () => {
+        setTimeout(() => {
+            setIsActive(false);
+        }, 100);
+    };
+
+    useHotkeys(_hotkey, () => {
+        setIsActive(true);
+        setTimeout(() => {
+            setIsActive(false);
+        }, 100);
+    });
 
     return (
         <button
@@ -124,6 +150,8 @@ const Button = ({
             }}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
+            onMouseDown={handleMousedown}
+            onMouseUp={handleMouseup}
         >
             <Component />
         </button>
@@ -144,7 +172,13 @@ const NavUi = () => {
         <>
             {typeof currentBoxUuid === "string" ? (
                 <div className={styles.backWrapper}>
-                    <Button direction="left" onClick={resetCurrentBoxUuid} />
+                    <Button
+                        direction="left"
+                        onClick={() => {
+                            resetCurrentBoxUuid();
+                        }}
+                        hotkey="esc"
+                    />
                 </div>
             ) : (
                 <div className={styles.arrowsWrapper}>

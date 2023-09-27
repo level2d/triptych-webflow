@@ -7,8 +7,11 @@ import { useGLTF, useAnimations } from "@react-three/drei";
 import * as THREE from "three";
 
 import { GLB_ASSET_URLS } from "@/js/core/constants";
-import { Outlines } from "@/js/components/3D/Common";
-import { GrainMaterialYellow } from "@/js/components/3D/Materials";
+import {
+    GrainMaterialYellow,
+    GrainMaterialYellowDark,
+    OutlineMaterial,
+} from "@/js/components/3D/Materials";
 
 export default function CdmModel(props) {
     const [mounted, setMounted] = useState(false);
@@ -21,8 +24,10 @@ export default function CdmModel(props) {
     const { actions, names } = useAnimations(animations, group);
 
     const handleClick = useCallback(() => {
-        actions?.gasket.reset().play();
-        actions?.joystick.reset().play();
+        actions?.gasket_01.reset().play();
+        actions?.gasket_02.reset().play();
+        actions?.joystick_01.reset().play();
+        actions?.joystick_02.reset().play();
     }, [actions]);
 
     useEffect(() => {
@@ -34,11 +39,11 @@ export default function CdmModel(props) {
                 case "cdm_orbit":
                     action.play();
                     break;
-                case "gasket":
-                case "joystick":
-                    action.clampWhenFinished = false; // stay on last frame
+                case "gasket_01":
+                case "gasket_02":
+                case "joystick_01":
+                case "joystick_02":
                     action.setLoop(THREE.LoopOnce);
-                    action.repetitions = 1;
                     break;
                 default:
                     break;
@@ -62,11 +67,47 @@ export default function CdmModel(props) {
                 <group name="cdm">
                     <group name="rotation_null006">
                         <mesh
+                            name="base"
+                            geometry={nodes.base.geometry}
+                            //   material={materials.green_01}
+                            position={[-0.003, -0.265, -0.005]}
+                        >
+                            <GrainMaterialYellow boundingBox={boundingBox} />
+                            <mesh
+                                name="joystick"
+                                castShadow
+                                receiveShadow
+                                geometry={nodes.joystick.geometry}
+                                // material={materials.green_01}
+                                position={[0, 0.075, 0.02]}
+                            >
+                                <GrainMaterialYellow
+                                    boundingBox={boundingBox}
+                                />
+                            </mesh>
+                            <mesh
+                                name="joystick_outline"
+                                castShadow
+                                receiveShadow
+                                geometry={nodes.joystick_outline.geometry}
+                                // material={materials.outline}
+                                position={[0, 0.075, 0.02]}
+                            >
+                                <OutlineMaterial />
+                            </mesh>
+                        </mesh>
+                        <mesh
+                            name="base_outline"
+                            geometry={nodes.base_outline.geometry}
+                            //   material={materials.outline}
+                            position={[-0.003, -0.265, -0.005]}
+                        >
+                            <OutlineMaterial />
+                        </mesh>
+                        <mesh
                             name="gasket"
-                            castShadow
-                            receiveShadow
                             geometry={nodes.gasket.geometry}
-                            material={nodes.gasket.material}
+                            //   material={materials.green_02}
                             morphTargetDictionary={
                                 nodes.gasket.morphTargetDictionary
                             }
@@ -75,31 +116,23 @@ export default function CdmModel(props) {
                             }
                             position={[-0.003, -0.265, -0.005]}
                         >
-                            <GrainMaterialYellow boundingBox={boundingBox} />
+                            <GrainMaterialYellowDark
+                                boundingBox={boundingBox}
+                            />
                         </mesh>
                         <mesh
-                            name="joystick003"
-                            castShadow
-                            receiveShadow
-                            geometry={nodes.joystick003.geometry}
-                            material={nodes.joystick003.material}
+                            name="gasket_outline"
+                            geometry={nodes.gasket_outline.geometry}
+                            //   material={materials.outline}
+                            morphTargetDictionary={
+                                nodes.gasket_outline.morphTargetDictionary
+                            }
+                            morphTargetInfluences={
+                                nodes.gasket_outline.morphTargetInfluences
+                            }
                             position={[-0.003, -0.265, -0.005]}
                         >
-                            <GrainMaterialYellow boundingBox={boundingBox} />
-                            <Outlines />
-                            <mesh
-                                name="joystick001"
-                                castShadow
-                                receiveShadow
-                                geometry={nodes.joystick001.geometry}
-                                material={nodes.joystick001.material}
-                                position={[0, 0.075, 0.02]}
-                            >
-                                <GrainMaterialYellow
-                                    boundingBox={boundingBox}
-                                />
-                                <Outlines />
-                            </mesh>
+                            <OutlineMaterial />
                         </mesh>
                     </group>
                 </group>
