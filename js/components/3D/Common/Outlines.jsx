@@ -9,7 +9,7 @@ export default function Outlines({ children }) {
             value: colors.black,
         },
         outlineThickness: {
-            value: 0.02,
+            value: 0.001,
             step: 0.01,
             min: 0.01,
             max: 0.1,
