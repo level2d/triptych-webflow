@@ -22,7 +22,7 @@ jobs:
               with:
                   node-version: 18.x
             - name: Install dependencies
-              run: yarn install
+              run: yarn install --skip-integrity-check
             - name: Build
               run: yarn build
             # Configure S3
