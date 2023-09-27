@@ -55,7 +55,6 @@ export default class KeepScrolling {
             trigger: this.app.core.dom.document,
             start: "top-=1px top",
             end: "bottom-=100px bottom",
-            markers: this.app.core.constants.debug,
             once: false,
             onEnter: () => {
                 this.el.classList.add(activeClassname);
