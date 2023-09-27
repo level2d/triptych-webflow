@@ -7,9 +7,14 @@ import { useGLTF, useAnimations } from "@react-three/drei";
 import * as THREE from "three";
 
 import { GLB_ASSET_URLS } from "@/js/core/constants";
+import { GrainMaterialViolet } from "../Materials";
 
 export default function KeyModel(props) {
     const [mounted, setMounted] = useState(false);
+    const [boundingBox, setBoundingBox] = useState({
+        min: new THREE.Vector3(0, 0, 0),
+        max: new THREE.Vector3(1, 1, 1),
+    });
     const group = useRef();
     const { nodes, animations } = useGLTF(GLB_ASSET_URLS.Key);
     const { actions, names } = useAnimations(animations, group);
@@ -46,6 +51,13 @@ export default function KeyModel(props) {
         });
     }, [mounted, actions, names]);
 
+    // setup uniforms
+    useEffect(() => {
+        const bb = new THREE.Box3();
+        bb.setFromObject(group.current);
+        setBoundingBox(bb);
+    }, []);
+
     useEffect(() => {
         setMounted(true);
     }, []);
@@ -59,33 +71,41 @@ export default function KeyModel(props) {
                             castShadow
                             receiveShadow
                             geometry={nodes.key001.geometry}
-                            material={nodes.key001.material}
+                            // material={nodes.key001.material}
                             position={[-0.156, -0.34, 0.002]}
-                        />
+                        >
+                            <GrainMaterialViolet boundingBox={boundingBox} />
+                        </mesh>
                         <mesh
                             name="key002"
                             castShadow
                             receiveShadow
                             geometry={nodes.key002.geometry}
-                            material={nodes.key002.material}
+                            // material={nodes.key002.material}
                             position={[0.201, 0.316, 0.003]}
-                        />
+                        >
+                            <GrainMaterialViolet boundingBox={boundingBox} />
+                        </mesh>
                         <mesh
                             name="key003"
                             castShadow
                             receiveShadow
                             geometry={nodes.key003.geometry}
-                            material={nodes.key003.material}
+                            // material={nodes.key003.material}
                             position={[-0.353, -0.308, 0.002]}
-                        />
+                        >
+                            <GrainMaterialViolet boundingBox={boundingBox} />
+                        </mesh>
                         <mesh
                             name="key004"
                             castShadow
                             receiveShadow
                             geometry={nodes.key004.geometry}
-                            material={nodes.key004.material}
+                            // material={nodes.key004.material}
                             position={[0.357, 0.274, 0.006]}
-                        />
+                        >
+                            <GrainMaterialViolet boundingBox={boundingBox} />
+                        </mesh>
                         <mesh
                             name="key005"
                             castShadow
@@ -93,15 +113,19 @@ export default function KeyModel(props) {
                             geometry={nodes.key005.geometry}
                             material={nodes.key005.material}
                             position={[0.472, 0.336, 0.007]}
-                        />
+                        >
+                            <GrainMaterialViolet boundingBox={boundingBox} />
+                        </mesh>
                         <mesh
                             name="key006"
                             castShadow
                             receiveShadow
                             geometry={nodes.key006.geometry}
-                            material={nodes.key006.material}
+                            // material={nodes.key006.material}
                             position={[-0.34, -0.517, 0.002]}
-                        />
+                        >
+                            <GrainMaterialViolet boundingBox={boundingBox} />
+                        </mesh>
                     </group>
                 </group>
             </group>
