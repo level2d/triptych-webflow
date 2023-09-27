@@ -59,10 +59,8 @@ export default function SkullModel(props) {
                     <group name="rotation_null014">
                         <mesh
                             name="skull001"
-                            castShadow
-                            receiveShadow
                             geometry={nodes.skull001.geometry}
-                            // material={nodes.skull001.material}
+                            //   material={materials.green_01}
                             position={[-0.004, -0.114, -0.039]}
                         >
                             <GrainMaterialViolet boundingBox={boundingBox} />
@@ -70,20 +68,16 @@ export default function SkullModel(props) {
                         </mesh>
                         <mesh
                             name="skull002"
-                            castShadow
-                            receiveShadow
                             geometry={nodes.skull002.geometry}
-                            // material={nodes.skull002.material}
+                            //   material={materials.green_01}
                             position={[-0.006, -0.152, 0.2]}
                         >
                             <GrainMaterialViolet boundingBox={boundingBox} />
                             <Outlines />
                             <mesh
                                 name="sockets"
-                                castShadow
-                                receiveShadow
                                 geometry={nodes.sockets.geometry}
-                                // material={nodes.sockets.material}
+                                // material={materials.green_02}
                             >
                                 <GrainMaterialVioletDark
                                     boundingBox={boundingBox}
