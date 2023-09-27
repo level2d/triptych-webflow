@@ -7,7 +7,11 @@ import { useGLTF, useAnimations } from "@react-three/drei";
 import * as THREE from "three";
 
 import { GLB_ASSET_URLS } from "@/js/core/constants";
-import { GrainMaterialYellow, GrainMaterialYellowDark } from "../Materials";
+import {
+    GrainMaterialYellow,
+    GrainMaterialYellowDark,
+    OutlineMaterial,
+} from "../Materials";
 
 export default function Model(props) {
     const [mounted, setMounted] = useState(true);
@@ -22,6 +26,8 @@ export default function Model(props) {
     const handleClick = useCallback(() => {
         actions?.explode_01.reset().play();
         actions?.explode_02.reset().play();
+        actions?.explode_03.reset().play();
+        actions?.explode_04.reset().play();
     }, [actions]);
 
     useEffect(() => {
@@ -35,9 +41,9 @@ export default function Model(props) {
                     break;
                 case "explode_01":
                 case "explode_02":
-                    action.clampWhenFinished = true; // stay on last frame
-                    action.setLoop(THREE.LoopRepeat);
-                    action.repetitions = 1;
+                case "explode_03":
+                case "explode_04":
+                    action.setLoop(THREE.LoopOnce);
                     break;
                 default:
                     break;
@@ -61,38 +67,66 @@ export default function Model(props) {
                 <group name="culture">
                     <group name="rotation_null015">
                         <mesh
-                            name="camera001"
-                            castShadow
-                            receiveShadow
-                            geometry={nodes.camera001.geometry}
-                            // material={nodes.camera001.material}
+                            name="camera"
+                            geometry={nodes.camera.geometry}
+                            //   material={materials.green_01}
                             morphTargetDictionary={
-                                nodes.camera001.morphTargetDictionary
+                                nodes.camera.morphTargetDictionary
                             }
                             morphTargetInfluences={
-                                nodes.camera001.morphTargetInfluences
+                                nodes.camera.morphTargetInfluences
                             }
                             position={[0.033, -0.076, -0.111]}
                             rotation={[0, -Math.PI / 9, 0]}
                         >
                             <GrainMaterialYellow boundingBox={boundingBox} />
-                            <mesh
-                                name="frame"
-                                castShadow
-                                receiveShadow
-                                geometry={nodes.frame.geometry}
-                                // material={nodes.frame.material}
-                                morphTargetDictionary={
-                                    nodes.frame.morphTargetDictionary
-                                }
-                                morphTargetInfluences={
-                                    nodes.frame.morphTargetInfluences
-                                }
-                            >
-                                <GrainMaterialYellowDark
-                                    boundingBox={boundingBox}
-                                />
-                            </mesh>
+                        </mesh>
+                        <mesh
+                            name="camera_outline"
+                            geometry={nodes.camera_outline.geometry}
+                            //   material={materials.outline}
+                            morphTargetDictionary={
+                                nodes.camera_outline.morphTargetDictionary
+                            }
+                            morphTargetInfluences={
+                                nodes.camera_outline.morphTargetInfluences
+                            }
+                            position={[0.033, -0.076, -0.111]}
+                            rotation={[0, -Math.PI / 9, 0]}
+                        >
+                            <OutlineMaterial />
+                        </mesh>
+                        <mesh
+                            name="frame"
+                            geometry={nodes.frame.geometry}
+                            //   material={materials.green_02}
+                            morphTargetDictionary={
+                                nodes.frame.morphTargetDictionary
+                            }
+                            morphTargetInfluences={
+                                nodes.frame.morphTargetInfluences
+                            }
+                            position={[0.033, -0.076, -0.111]}
+                            rotation={[0, -Math.PI / 9, 0]}
+                        >
+                            <GrainMaterialYellowDark
+                                boundingBox={boundingBox}
+                            />
+                        </mesh>
+                        <mesh
+                            name="frame_outline"
+                            geometry={nodes.frame_outline.geometry}
+                            //   material={materials.outline}
+                            morphTargetDictionary={
+                                nodes.frame_outline.morphTargetDictionary
+                            }
+                            morphTargetInfluences={
+                                nodes.frame_outline.morphTargetInfluences
+                            }
+                            position={[0.033, -0.076, -0.111]}
+                            rotation={[0, -Math.PI / 9, 0]}
+                        >
+                            <OutlineMaterial />
                         </mesh>
                     </group>
                 </group>
