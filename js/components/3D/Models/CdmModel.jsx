@@ -64,7 +64,7 @@ export default function CdmModel(props) {
     return (
         <group ref={group} {...props} dispose={null} onClick={handleClick}>
             <group name="Scene">
-                <group name="cdm" position={[24, 0, 0]}>
+                <group name="cdm">
                     <group name="rotation_null006">
                         <mesh
                             name="base"

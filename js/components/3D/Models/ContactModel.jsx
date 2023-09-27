@@ -24,8 +24,14 @@ export default function ContactModel(props) {
     const { actions, names } = useAnimations(animations, group);
 
     const handleClick = useCallback(() => {
-        actions?.ufo_01.reset().play();
-        actions?.ufo_02.reset().play();
+        actions?.blade_01.reset().play();
+        actions?.blade_02.reset().play();
+        actions?.blade_03.reset().play();
+        actions?.blade_04.reset().play();
+        actions?.blade_05.reset().play();
+        actions?.blade_06.reset().play();
+        actions?.blade_07.reset().play();
+        actions?.blade_08.reset().play();
     }, [actions]);
 
     useEffect(() => {
@@ -37,11 +43,15 @@ export default function ContactModel(props) {
                 case "contact_orbit":
                     action.play();
                     break;
-                case "ufo_01":
-                case "ufo_02":
-                    action.clampWhenFinished = true; // stay on last frame
-                    action.setLoop(THREE.LoopRepeat);
-                    action.repetitions = 1;
+                case "blade_01":
+                case "blade_02":
+                case "blade_03":
+                case "blade_04":
+                case "blade_05":
+                case "blade_06":
+                case "blade_07":
+                case "blade_08":
+                    action.setLoop(THREE.LoopOnce);
                     break;
                 default:
                     break;
@@ -66,10 +76,8 @@ export default function ContactModel(props) {
                     <group name="rotation_null">
                         <mesh
                             name="ufo002"
-                            castShadow
-                            receiveShadow
                             geometry={nodes.ufo002.geometry}
-                            material={nodes.ufo002.material}
+                            //   material={materials.green_01}
                             morphTargetDictionary={
                                 nodes.ufo002.morphTargetDictionary
                             }
@@ -77,32 +85,109 @@ export default function ContactModel(props) {
                                 nodes.ufo002.morphTargetInfluences
                             }
                             position={[0.001, 0.059, 0.028]}
-                            rotation={[-0.087, Math.PI / 6, 0]}
+                            rotation={[-0.204, 0, 0]}
                         >
                             <GrainMaterialYellow boundingBox={boundingBox} />
+                            {/* <Outlines /> */}
                             <mesh
-                                name="thruster"
-                                castShadow
-                                receiveShadow
-                                geometry={nodes.thruster.geometry}
-                                material={nodes.thruster.material}
-                                morphTargetDictionary={
-                                    nodes.thruster.morphTargetDictionary
-                                }
-                                morphTargetInfluences={
-                                    nodes.thruster.morphTargetInfluences
-                                }
+                                name="thruster_01"
+                                geometry={nodes.thruster_01.geometry}
+                                // material={materials.green_02}
+                                position={[0.19, -0.367, 0.002]}
                             >
                                 <GrainMaterialYellowDark
                                     boundingBox={boundingBox}
                                 />
+                                <Outlines />
+                            </mesh>
+                            <mesh
+                                name="thruster_02"
+                                geometry={nodes.thruster_02.geometry}
+                                // material={materials.green_02}
+                                position={[0.136, -0.367, -0.133]}
+                                rotation={[0, Math.PI / 4, 0]}
+                            >
+                                <GrainMaterialYellowDark
+                                    boundingBox={boundingBox}
+                                />
+                                <Outlines />
+                            </mesh>
+                            <mesh
+                                name="thruster_03"
+                                geometry={nodes.thruster_03.geometry}
+                                // material={materials.green_02}
+                                position={[0.002, -0.367, -0.19]}
+                                rotation={[0, Math.PI / 2, 0]}
+                            >
+                                <GrainMaterialYellowDark
+                                    boundingBox={boundingBox}
+                                />
+                                <Outlines />
+                            </mesh>
+                            <mesh
+                                name="thruster_04"
+                                geometry={nodes.thruster_04.geometry}
+                                // material={materials.green_02}
+                                position={[-0.133, -0.367, -0.136]}
+                                rotation={[-Math.PI, Math.PI / 4, -Math.PI]}
+                            >
+                                <GrainMaterialYellowDark
+                                    boundingBox={boundingBox}
+                                />
+                                <Outlines />
+                            </mesh>
+                            <mesh
+                                name="thruster_05"
+                                geometry={nodes.thruster_05.geometry}
+                                // material={materials.green_02}
+                                position={[-0.19, -0.367, -0.002]}
+                                rotation={[Math.PI, 0, Math.PI]}
+                            >
+                                <GrainMaterialYellowDark
+                                    boundingBox={boundingBox}
+                                />
+                                <Outlines />
+                            </mesh>
+                            <mesh
+                                name="thruster_06"
+                                geometry={nodes.thruster_06.geometry}
+                                // material={materials.green_02}
+                                position={[-0.136, -0.367, 0.133]}
+                                rotation={[Math.PI, -Math.PI / 4, Math.PI]}
+                            >
+                                <GrainMaterialYellowDark
+                                    boundingBox={boundingBox}
+                                />
+                                <Outlines />
+                            </mesh>
+                            <mesh
+                                name="thruster_07"
+                                geometry={nodes.thruster_07.geometry}
+                                // material={materials.green_02}
+                                position={[-0.002, -0.367, 0.19]}
+                                rotation={[0, -1.571, 0]}
+                            >
+                                <GrainMaterialYellowDark
+                                    boundingBox={boundingBox}
+                                />
+                                <Outlines />
+                            </mesh>
+                            <mesh
+                                name="thruster_08"
+                                geometry={nodes.thruster_08.geometry}
+                                // material={materials.green_02}
+                                position={[0.133, -0.367, 0.136]}
+                                rotation={[0, -Math.PI / 4, 0]}
+                            >
+                                <GrainMaterialYellowDark
+                                    boundingBox={boundingBox}
+                                />
+                                <Outlines />
                             </mesh>
                             <mesh
                                 name="windows"
-                                castShadow
-                                receiveShadow
                                 geometry={nodes.windows.geometry}
-                                material={nodes.windows.material}
+                                // material={materials.green_02}
                                 morphTargetDictionary={
                                     nodes.windows.morphTargetDictionary
                                 }
@@ -110,9 +195,10 @@ export default function ContactModel(props) {
                                     nodes.windows.morphTargetInfluences
                                 }
                             >
-                                <GrainMaterialYellow
+                                <GrainMaterialYellowDark
                                     boundingBox={boundingBox}
                                 />
+                                {/* <Outlines /> */}
                             </mesh>
                         </mesh>
                     </group>
