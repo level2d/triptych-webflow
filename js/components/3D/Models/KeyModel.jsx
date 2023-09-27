@@ -69,10 +69,8 @@ export default function KeyModel(props) {
                     <group name="rotation_null001">
                         <mesh
                             name="key001"
-                            castShadow
-                            receiveShadow
                             geometry={nodes.key001.geometry}
-                            // material={nodes.key001.material}
+                            // material={materials.green_01}
                             position={[-0.156, -0.34, 0.002]}
                         >
                             <GrainMaterialViolet boundingBox={boundingBox} />
@@ -80,8 +78,6 @@ export default function KeyModel(props) {
                         </mesh>
                         <mesh
                             name="key002"
-                            castShadow
-                            receiveShadow
                             geometry={nodes.key002.geometry}
                             // material={nodes.key002.material}
                             position={[0.201, 0.316, 0.003]}
@@ -91,8 +87,6 @@ export default function KeyModel(props) {
                         </mesh>
                         <mesh
                             name="key003"
-                            castShadow
-                            receiveShadow
                             geometry={nodes.key003.geometry}
                             // material={nodes.key003.material}
                             position={[-0.353, -0.308, 0.002]}
@@ -102,8 +96,6 @@ export default function KeyModel(props) {
                         </mesh>
                         <mesh
                             name="key004"
-                            castShadow
-                            receiveShadow
                             geometry={nodes.key004.geometry}
                             // material={nodes.key004.material}
                             position={[0.357, 0.274, 0.006]}
@@ -113,8 +105,6 @@ export default function KeyModel(props) {
                         </mesh>
                         <mesh
                             name="key005"
-                            castShadow
-                            receiveShadow
                             geometry={nodes.key005.geometry}
                             material={nodes.key005.material}
                             position={[0.472, 0.336, 0.007]}
@@ -124,8 +114,6 @@ export default function KeyModel(props) {
                         </mesh>
                         <mesh
                             name="key006"
-                            castShadow
-                            receiveShadow
                             geometry={nodes.key006.geometry}
                             // material={nodes.key006.material}
                             position={[-0.34, -0.517, 0.002]}
