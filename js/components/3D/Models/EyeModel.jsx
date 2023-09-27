@@ -7,9 +7,14 @@ import { useGLTF, useAnimations } from "@react-three/drei";
 import * as THREE from "three";
 
 import { GLB_ASSET_URLS } from "@/js/core/constants";
+import { GrainMaterialViolet } from "../Materials";
 
 export default function EyeModel(props) {
     const [mounted, setMounted] = useState(false);
+    const [boundingBox, setBoundingBox] = useState({
+        min: new THREE.Vector3(0, 0, 0),
+        max: new THREE.Vector3(1, 1, 1),
+    });
     const group = useRef();
     const { nodes, animations } = useGLTF(GLB_ASSET_URLS.Eye);
     const { actions, names } = useAnimations(animations, group);
@@ -33,6 +38,13 @@ export default function EyeModel(props) {
         });
     }, [mounted, actions, names]);
 
+    // setup uniforms
+    useEffect(() => {
+        const bb = new THREE.Box3();
+        bb.setFromObject(group.current);
+        setBoundingBox(bb);
+    }, []);
+
     useEffect(() => {
         setMounted(true);
     }, []);
@@ -46,7 +58,7 @@ export default function EyeModel(props) {
                             castShadow
                             receiveShadow
                             geometry={nodes.eye001.geometry}
-                            material={nodes.eye001.material}
+                            // material={nodes.eye001.material}
                             morphTargetDictionary={
                                 nodes.eye001.morphTargetDictionary
                             }
@@ -54,19 +66,24 @@ export default function EyeModel(props) {
                                 nodes.eye001.morphTargetInfluences
                             }
                         >
+                            <GrainMaterialViolet boundingBox={boundingBox} />
                             <mesh
                                 name="iris"
                                 castShadow
                                 receiveShadow
                                 geometry={nodes.iris.geometry}
-                                material={nodes.iris.material}
+                                // material={nodes.iris.material}
                                 morphTargetDictionary={
                                     nodes.iris.morphTargetDictionary
                                 }
                                 morphTargetInfluences={
                                     nodes.iris.morphTargetInfluences
                                 }
-                            />
+                            >
+                                <GrainMaterialViolet
+                                    boundingBox={boundingBox}
+                                />
+                            </mesh>
                         </mesh>
                     </group>
                 </group>
