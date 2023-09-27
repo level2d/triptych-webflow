@@ -426,9 +426,9 @@ export const GrainMaterialViolet = ({ boundingBox }) => {
                 },
                 uGradientColorA: {
                     value: {
-                        r: 193.480485,
+                        r: 103,
                         g: 0,
-                        b: 1.385925,
+                        b: 242,
                     },
                     onChange: (v) => {
                         const color = new THREE.Vector3(
@@ -442,9 +442,9 @@ export const GrainMaterialViolet = ({ boundingBox }) => {
                 },
                 uGradientColorB: {
                     value: {
-                        r: 127.5,
+                        r: 217,
                         g: 0,
-                        b: 56.0235,
+                        b: 255,
                     },
                     onChange: (v) => {
                         const color = new THREE.Vector3(
@@ -521,9 +521,9 @@ export const GrainMaterialVioletDark = ({ boundingBox }) => {
                 },
                 uGradientColorA: {
                     value: {
-                        r: 193.480485,
+                        r: 67,
                         g: 0,
-                        b: 1.385925,
+                        b: 242,
                     },
                     onChange: (v) => {
                         const color = new THREE.Vector3(
@@ -537,9 +537,9 @@ export const GrainMaterialVioletDark = ({ boundingBox }) => {
                 },
                 uGradientColorB: {
                     value: {
-                        r: 127.5,
+                        r: 128,
                         g: 0,
-                        b: 56.0235,
+                        b: 255,
                     },
                     onChange: (v) => {
                         const color = new THREE.Vector3(
