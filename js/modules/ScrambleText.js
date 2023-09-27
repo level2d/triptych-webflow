@@ -16,7 +16,7 @@ class _ScrambleText {
         this.timeline = gsap.timeline({
             scrollTrigger: {
                 trigger: this.el,
-                start: "top+=15% bottom-=15%",
+                start: "top+=30% bottom-=30%",
                 once: true,
             },
             onComplete: () => {
