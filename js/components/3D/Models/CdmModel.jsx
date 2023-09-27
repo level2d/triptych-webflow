@@ -86,7 +86,6 @@ export default function CdmModel(props) {
                             position={[-0.003, -0.265, -0.005]}
                         >
                             <GrainMaterialYellow boundingBox={boundingBox} />
-                            <Outlines />
                             <mesh
                                 name="joystick001"
                                 castShadow
@@ -98,7 +97,6 @@ export default function CdmModel(props) {
                                 <GrainMaterialYellow
                                     boundingBox={boundingBox}
                                 />
-                                <Outlines />
                             </mesh>
                         </mesh>
                     </group>
