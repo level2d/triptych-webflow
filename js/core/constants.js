@@ -1,7 +1,7 @@
 // glbs
 import box_locations_url from "@/assets/3d/box_locations_05.glb";
 import careers_url from "@/assets/3d/careers_02.glb";
-import cdm_url from "@/assets/3d/cdm_01.glb";
+import cdm_url from "@/assets/3d/cdm_02.glb";
 import contact_url from "@/assets/3d/contact_01.glb";
 import culture_url from "@/assets/3d/culture_01.glb";
 import epb_url from "@/assets/3d/epb_01.glb";
