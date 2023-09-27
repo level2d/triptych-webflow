@@ -14,6 +14,7 @@ import {
     HomeExperience,
     KeepScrolling,
     PopQuote,
+    ScrambleText,
     test,
 } from "./modules";
 
@@ -33,6 +34,7 @@ export default class App {
         this.homeExperience = new HomeExperience();
         this.keepScrolling = new KeepScrolling();
         this.popQuote = new PopQuote();
+        this.scrambleText = new ScrambleText();
         this.test = test;
 
         this.update = this.update.bind(this);
@@ -65,6 +67,7 @@ export default class App {
         this.homeExperience.init();
         this.keepScrolling.init();
         this.popQuote.init();
+        this.scrambleText.init();
         this.test.init();
         console.log("Modules: init");
     }
