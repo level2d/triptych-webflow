@@ -42,7 +42,7 @@ class _FancyImage {
     // visible for a longer time.
     // Towards the end we don't add many values as
     // we want the sharpening up to happen quickly here.
-    pxFactorValues = [1, 2, 4, 9, 44, 100];
+    pxFactorValues = [1, 2, 4, 9, 100];
     pxIndex = 0;
     scrollTrigger = null;
 
@@ -225,7 +225,7 @@ class _FancyImage {
                     this.pxIndex++;
                     this.animatePixels();
                 },
-                this.pxIndex === 0 ? 250 : 100,
+                this.pxIndex === 0 ? 100 : 80,
             ); // The first time should be the longest.
         } else {
             // Draw that final image
@@ -263,7 +263,7 @@ class _FancyImage {
     initScrollTrigger = () => {
         this.scrollTrigger = ScrollTrigger.create({
             trigger: this.DOM.el,
-            start: "top+=15% bottom-=15%",
+            start: "top+=30% bottom-=30%",
             onEnter: () => {
                 this.showImage();
             },
