@@ -8,7 +8,10 @@ import * as THREE from "three";
 
 import { GLB_ASSET_URLS } from "@/js/core/constants";
 import { Outlines } from "@/js/components/3D/Common";
-import { GrainMaterialRed } from "@/js/components/3D/Materials";
+import {
+    GrainMaterialYellow,
+    GrainMaterialYellowDark,
+} from "@/js/components/3D/Materials";
 
 export default function CareersModel(props) {
     const [boundingBox, setBoundingBox] = useState({
@@ -35,7 +38,6 @@ export default function CareersModel(props) {
                     action.play();
                     break;
                 case "fluid":
-                    action.clampWhenFinished = false; // stay on last frame
                     action.setLoop(THREE.LoopOnce);
                     break;
                 default:
@@ -62,23 +64,24 @@ export default function CareersModel(props) {
                     <group name="rotation_null012">
                         <mesh
                             name="mug002"
-                            castShadow
-                            receiveShadow
                             geometry={nodes.mug002.geometry}
-                            material={nodes.mug002.material}
+                            //   material={materials.green_01}
                             position={[0.033, -0.017, 0.017]}
                         >
-                            <GrainMaterialRed boundingBox={boundingBox} />
+                            <GrainMaterialYellow boundingBox={boundingBox} />
                             <Outlines />
                             <mesh
                                 name="fluid"
-                                castShadow
-                                receiveShadow
                                 geometry={nodes.fluid.geometry}
-                                material={nodes.fluid.material}
+                                // material={materials.green_02}
                                 position={[0.01, 0.336, 0.109]}
                                 scale={1.054}
-                            ></mesh>
+                            >
+                                <GrainMaterialYellowDark
+                                    boundingBox={boundingBox}
+                                />
+                                <Outlines />
+                            </mesh>
                         </mesh>
                     </group>
                 </group>

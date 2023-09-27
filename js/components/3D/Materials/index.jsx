@@ -2,6 +2,8 @@ import * as THREE from "three";
 import { useControls, folder } from "leva";
 import { useRef } from "react";
 
+import * as colors from "@/js/core/colors";
+
 export const GrainMaterialRed = ({ boundingBox }) => {
     const shaderRef = useRef();
     const {
@@ -568,4 +570,8 @@ export const GrainMaterialVioletDark = ({ boundingBox }) => {
             ref={shaderRef}
         />
     );
+};
+
+export const OutlineMaterial = () => {
+    return <meshBasicMaterial color={colors.black} />;
 };

@@ -7,9 +7,15 @@ import { useGLTF, useAnimations } from "@react-three/drei";
 import * as THREE from "three";
 
 import { GLB_ASSET_URLS } from "@/js/core/constants";
+import { GrainMaterialViolet, GrainMaterialVioletDark } from "../Materials";
+import { Outlines } from "../Common";
 
 export default function GyroModel(props) {
     const [mounted, setMounted] = useState(false);
+    const [boundingBox, setBoundingBox] = useState({
+        min: new THREE.Vector3(0, 0, 0),
+        max: new THREE.Vector3(1, 1, 1),
+    });
     const group = useRef();
     const { nodes, animations } = useGLTF(GLB_ASSET_URLS.Gyro);
     const { actions, names } = useAnimations(animations, group);
@@ -37,6 +43,13 @@ export default function GyroModel(props) {
         });
     }, [mounted, actions, names]);
 
+    // setup uniforms
+    useEffect(() => {
+        const bb = new THREE.Box3();
+        bb.setFromObject(group.current);
+        setBoundingBox(bb);
+    }, []);
+
     useEffect(() => {
         setMounted(true);
     }, []);
@@ -50,19 +63,26 @@ export default function GyroModel(props) {
                             castShadow
                             receiveShadow
                             geometry={nodes.gyro001.geometry}
-                            material={nodes.gyro001.material}
+                            //   material={materials.green_01}
                             position={[0, -0.657, 0.001]}
                             rotation={[0.028, -0.08, -0.015]}
                         >
+                            <GrainMaterialViolet boundingBox={boundingBox} />
+                            <Outlines />
                             <mesh
                                 name="axis"
                                 castShadow
                                 receiveShadow
                                 geometry={nodes.axis.geometry}
-                                material={nodes.axis.material}
+                                // material={materials.green_02}
                                 position={[0.002, 0.656, 0]}
                                 rotation={[0, -0.585, 0]}
-                            />
+                            >
+                                <GrainMaterialVioletDark
+                                    boundingBox={boundingBox}
+                                />
+                                <Outlines />
+                            </mesh>
                         </mesh>
                     </group>
                 </group>
