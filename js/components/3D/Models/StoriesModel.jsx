@@ -7,9 +7,15 @@ import { useGLTF, useAnimations } from "@react-three/drei";
 import * as THREE from "three";
 
 import { GLB_ASSET_URLS } from "@/js/core/constants";
+import { GrainMaterialYellow, GrainMaterialYellowDark } from "../Materials";
+import { Outlines } from "../Common";
 
 export default function StoriesModel(props) {
     const [mounted, setMounted] = useState(false);
+    const [boundingBox, setBoundingBox] = useState({
+        min: new THREE.Vector3(0, 0, 0),
+        max: new THREE.Vector3(1, 1, 1),
+    });
     const group = useRef();
     const { nodes, animations } = useGLTF(GLB_ASSET_URLS.Stories);
     const { actions, names } = useAnimations(animations, group);
@@ -40,6 +46,13 @@ export default function StoriesModel(props) {
         });
     }, [mounted, actions, names]);
 
+    // setup uniforms
+    useEffect(() => {
+        const bb = new THREE.Box3();
+        bb.setFromObject(group.current);
+        setBoundingBox(bb);
+    }, []);
+
     useEffect(() => {
         setMounted(true);
     }, []);
@@ -53,48 +66,69 @@ export default function StoriesModel(props) {
                             castShadow
                             receiveShadow
                             geometry={nodes.Cube001.geometry}
-                            material={nodes.Cube001.material}
+                            // material={nodes.Cube001.material}
                             position={[-0.152, -0.327, 0.498]}
                         >
+                            <GrainMaterialYellow boundingBox={boundingBox} />
+                            <Outlines />
                             <mesh
                                 name="tac"
                                 castShadow
                                 receiveShadow
                                 geometry={nodes.tac.geometry}
-                                material={nodes.tac.material}
-                            />
+                                // material={nodes.tac.material}
+                            >
+                                <GrainMaterialYellowDark
+                                    boundingBox={boundingBox}
+                                />
+                                <Outlines />
+                            </mesh>
                         </mesh>
                         <mesh
                             name="Cube002"
                             castShadow
                             receiveShadow
                             geometry={nodes.Cube002.geometry}
-                            material={nodes.Cube002.material}
+                            // material={nodes.Cube002.material}
                             position={[0.239, -0.024, 0.417]}
                         >
+                            <GrainMaterialYellow boundingBox={boundingBox} />
+                            <Outlines />
                             <mesh
                                 name="cat"
                                 castShadow
                                 receiveShadow
                                 geometry={nodes.cat.geometry}
-                                material={nodes.cat.material}
-                            />
+                                // material={nodes.cat.material}
+                            >
+                                <GrainMaterialYellowDark
+                                    boundingBox={boundingBox}
+                                />
+                                <Outlines />
+                            </mesh>
                         </mesh>
                         <mesh
                             name="Cube003"
                             castShadow
                             receiveShadow
                             geometry={nodes.Cube003.geometry}
-                            material={nodes.Cube003.material}
+                            // material={nodes.Cube003.material}
                             position={[-0.192, 0.273, 0.328]}
                         >
+                            <GrainMaterialYellow boundingBox={boundingBox} />
+                            <Outlines />
                             <mesh
                                 name="act"
                                 castShadow
                                 receiveShadow
                                 geometry={nodes.act.geometry}
-                                material={nodes.act.material}
-                            />
+                                // material={nodes.act.material}
+                            >
+                                <GrainMaterialYellowDark
+                                    boundingBox={boundingBox}
+                                />
+                                <Outlines />
+                            </mesh>
                         </mesh>
                     </group>
                 </group>
