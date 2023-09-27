@@ -11,7 +11,7 @@ import key_url from "@/assets/3d/key_02.glb";
 import methods_url from "@/assets/3d/methods_02.glb";
 import northface_url from "@/assets/3d/northface_02.glb";
 import phone_url from "@/assets/3d/phone_01.glb";
-import showreel_url from "@/assets/3d/showreel_01.glb";
+import showreel_url from "@/assets/3d/showreel_02.glb";
 import skull_url from "@/assets/3d/skull_01.glb";
 import sos_url from "@/assets/3d/sos_01.glb";
 import stories_url from "@/assets/3d/stories_01.glb";

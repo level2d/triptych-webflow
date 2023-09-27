@@ -52,41 +52,47 @@ export default function ShowreelModel(props) {
                     <group name="rotation_null007">
                         <mesh
                             name="tv005"
-                            castShadow
-                            receiveShadow
                             geometry={nodes.tv005.geometry}
-                            // material={nodes.tv005.material}
+                            //   material={materials.green_01}
+                            morphTargetDictionary={
+                                nodes.tv005.morphTargetDictionary
+                            }
+                            morphTargetInfluences={
+                                nodes.tv005.morphTargetInfluences
+                            }
                             position={[0.002, 0.037, 0.033]}
                             rotation={[0, -0.262, 0]}
                             scale={0.908}
                         >
                             <GrainMaterialYellow boundingBox={boundingBox} />
-                            <Outlines />
+                            {/* <Outlines /> */}
                             <mesh
                                 name="bezel"
-                                castShadow
-                                receiveShadow
                                 geometry={nodes.bezel.geometry}
-                                // material={nodes.bezel.material}
+                                // material={materials.green_02}
+                                morphTargetDictionary={
+                                    nodes.bezel.morphTargetDictionary
+                                }
+                                morphTargetInfluences={
+                                    nodes.bezel.morphTargetInfluences
+                                }
                             >
                                 <GrainMaterialYellowDark
                                     boundingBox={boundingBox}
                                 />
-                                <Outlines />
+                                {/* <Outlines /> */}
                             </mesh>
                             <mesh
                                 name="tv003"
-                                castShadow
-                                receiveShadow
                                 geometry={nodes.tv003.geometry}
-                                // material={nodes.tv003.material}
+                                // material={materials.green_01}
                                 position={[0, 0.092, 0.242]}
                                 scale={1.209}
                             >
                                 <GrainMaterialYellow
                                     boundingBox={boundingBox}
                                 />
-                                <Outlines />
+                                {/* <Outlines /> */}
                             </mesh>
                         </mesh>
                     </group>
