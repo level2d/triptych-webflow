@@ -63,7 +63,7 @@ export default function GyroModel(props) {
                             castShadow
                             receiveShadow
                             geometry={nodes.gyro001.geometry}
-                            // material={nodes.gyro001.material}
+                            //   material={materials.green_01}
                             position={[0, -0.657, 0.001]}
                             rotation={[0.028, -0.08, -0.015]}
                         >
@@ -74,7 +74,7 @@ export default function GyroModel(props) {
                                 castShadow
                                 receiveShadow
                                 geometry={nodes.axis.geometry}
-                                // material={nodes.axis.material}
+                                // material={materials.green_02}
                                 position={[0.002, 0.656, 0]}
                                 rotation={[0, -0.585, 0]}
                             >
