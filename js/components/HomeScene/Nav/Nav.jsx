@@ -158,10 +158,40 @@ const Button = ({
     );
 };
 
+const NavArrows = () => {
+    const orbit = useStore((state) => state.orbit);
+    return (
+        <div className={styles.arrowsWrapper}>
+            <div className={styles.buttonWrapper}>
+                <Button direction="left" onClick={orbit} />
+                <div className={styles.middleButtons}>
+                    <Button direction="up" onClick={orbit} />
+                    <Button direction="down" onClick={orbit} />
+                </div>
+                <Button direction="right" onClick={orbit} />
+            </div>
+        </div>
+    );
+};
+
+const NavBack = () => {
+    const resetCurrentBoxUuid = useStore((state) => state.resetCurrentBoxUuid);
+    return (
+        <div className={styles.backWrapper}>
+            <Button
+                direction="left"
+                onClick={() => {
+                    resetCurrentBoxUuid();
+                }}
+                hotkey="esc"
+            />
+        </div>
+    );
+};
+
 const NavUi = () => {
     const interactable = useStore((state) => state.interactable);
-    const orbit = useStore((state) => state.orbit);
-    const resetCurrentBoxUuid = useStore((state) => state.resetCurrentBoxUuid);
+
     const currentBoxUuid = useStore((state) => state.currentBoxUuid);
 
     if (!interactable) {
@@ -170,28 +200,8 @@ const NavUi = () => {
 
     return (
         <>
-            {typeof currentBoxUuid === "string" ? (
-                <div className={styles.backWrapper}>
-                    <Button
-                        direction="left"
-                        onClick={() => {
-                            resetCurrentBoxUuid();
-                        }}
-                        hotkey="esc"
-                    />
-                </div>
-            ) : (
-                <div className={styles.arrowsWrapper}>
-                    <div className={styles.buttonWrapper}>
-                        <Button direction="left" onClick={orbit} />
-                        <div className={styles.middleButtons}>
-                            <Button direction="up" onClick={orbit} />
-                            <Button direction="down" onClick={orbit} />
-                        </div>
-                        <Button direction="right" onClick={orbit} />
-                    </div>
-                </div>
-            )}
+            <NavBack visible={typeof currentBoxUuid === "string"} />
+            <NavArrows visible={currentBoxUuid === null} />
         </>
     );
 };
