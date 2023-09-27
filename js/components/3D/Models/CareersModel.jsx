@@ -61,7 +61,7 @@ export default function CareersModel(props) {
         <group ref={group} {...props} dispose={null} onClick={handleClick}>
             <group name="Scene">
                 <group name="careers">
-                    <group name="rotation_null012" rotation={[0, 1.498, 0]}>
+                    <group name="rotation_null012">
                         <mesh
                             name="mug002"
                             geometry={nodes.mug002.geometry}
