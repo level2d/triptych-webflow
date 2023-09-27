@@ -55,8 +55,6 @@ export default function EyeModel(props) {
                     <group name="rotation_null008">
                         <mesh
                             name="eye001"
-                            castShadow
-                            receiveShadow
                             geometry={nodes.eye001.geometry}
                             //   material={materials.green_01}
                             morphTargetDictionary={
@@ -70,8 +68,6 @@ export default function EyeModel(props) {
                         </mesh>
                         <mesh
                             name="eye_outline"
-                            castShadow
-                            receiveShadow
                             geometry={nodes.eye_outline.geometry}
                             //   material={materials.outline}
                         >
