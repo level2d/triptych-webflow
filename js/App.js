@@ -73,6 +73,10 @@ export default class App {
     }
 
     init() {
+        // reset scroll position
+        window.scrollTo(0, 0);
+        window.history.scrollRestoration = "manual";
+
         this.bindListeners();
         this.initModules();
         this.bus.emit("app: init");
