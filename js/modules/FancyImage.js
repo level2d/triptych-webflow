@@ -243,14 +243,21 @@ class _FancyImage {
     };
 
     showImage = () => {
-        // add class to fade in image
-        this.DOM.container.classList.add("fancy-image--ready");
-
         // Play pixel animation if applicable
         if (this.pixelAnimationEnabled) {
-            this.DOM.container.classList.add("fancy-image--animate-start");
-            this.animatePixels();
+            this.DOM.container.addEventListener(
+                "transitionend",
+                () => {
+                    this.DOM.container.classList.add(
+                        "fancy-image--animate-start",
+                    );
+                    this.animatePixels();
+                },
+                { once: true },
+            );
         }
+        // add class to fade in image
+        this.DOM.container.classList.add("fancy-image--ready");
     };
 
     initScrollTrigger = () => {
