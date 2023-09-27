@@ -8,6 +8,7 @@ import * as THREE from "three";
 
 import { GLB_ASSET_URLS } from "@/js/core/constants";
 import { GrainMaterialViolet, GrainMaterialVioletDark } from "../Materials";
+import { Outlines } from "../Common";
 
 export default function GyroModel(props) {
     const [mounted, setMounted] = useState(false);
@@ -67,6 +68,7 @@ export default function GyroModel(props) {
                             rotation={[0.028, -0.08, -0.015]}
                         >
                             <GrainMaterialViolet boundingBox={boundingBox} />
+                            <Outlines />
                             <mesh
                                 name="axis"
                                 castShadow
@@ -79,6 +81,7 @@ export default function GyroModel(props) {
                                 <GrainMaterialVioletDark
                                     boundingBox={boundingBox}
                                 />
+                                <Outlines />
                             </mesh>
                         </mesh>
                     </group>
