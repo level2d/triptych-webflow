@@ -225,7 +225,7 @@ class _FancyImage {
                     this.pxIndex++;
                     this.animatePixels();
                 },
-                this.pxIndex === 0 ? 500 : 100,
+                this.pxIndex === 0 ? 250 : 100,
             ); // The first time should be the longest.
         } else {
             // Draw that final image
