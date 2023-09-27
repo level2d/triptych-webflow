@@ -151,3 +151,27 @@ img[data-module="fancy-image"]{
 | name | required | value | description |
 |-------------|----------|------------------|-----------------------------------------------------------------|
 | data-module | yes | "keep-scrolling" | Tells our custom code where to render the Keep Scrolling module |
+
+## Scramble Text
+
+Requirements:
+
+-   You can only use this module on an empty node, or on a node that only contains text.
+
+E.g.:
+
+```
+<h1 data-module="scramble-text">My Heading</h1>
+```
+
+or
+
+```
+<span data-module="scramble-text" data-text="Text to scramble"></span>
+```
+
+**Attributes**
+| name | required | value | description |
+|-------------|----------|-----------------|----------------------------------------------------------------|
+| data-module | yes | "scramble-text" | Tells our custom code where to render the Scramble Text module |
+| data-text. | no. | `string` | Optionally specify a string to scramble via a data attribute |
