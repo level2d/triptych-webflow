@@ -19,12 +19,12 @@ const dom = {
     /**
      *
      * @public
-     * @member keepScrolling
+     * @member fancyImage
      * @memberof core.dom
-     * @description cached nodes for keepScrolling module
+     * @description cached nodes for fancyImage module
      *
      */
-    keepScrolling: $("[data-module='keep-scrolling']"),
+    fancyImage: $("[data-module='fancy-image']"),
 
     /**
      *
@@ -39,6 +39,16 @@ const dom = {
     /**
      *
      * @public
+     * @member keepScrolling
+     * @memberof core.dom
+     * @description cached nodes for keepScrolling module
+     *
+     */
+    keepScrolling: $("[data-module='keep-scrolling']"),
+
+    /**
+     *
+     * @public
      * @member popQuote
      * @memberof core.dom
      * @description cached nodes for PopQuote module
@@ -49,12 +59,12 @@ const dom = {
     /**
      *
      * @public
-     * @member fancyImage
+     * @member scrambleText
      * @memberof core.dom
-     * @description cached nodes for fancyImage module
+     * @description cached nodes for ScrambleText module
      *
      */
-    fancyImage: $("[data-module='fancy-image']"),
+    scrambleText: $("[data-module='scramble-text']"),
 };
 
 export default dom;

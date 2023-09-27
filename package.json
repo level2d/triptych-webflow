@@ -36,7 +36,7 @@
         "@types/three": "^0.155.1",
         "camera-controls": "^2.7.1",
         "events": "^3.3.0",
-        "gsap": "^3.12.2",
+        "gsap": "npm:@gsap/shockingly",
         "intrinsic-scale": "^3.0.4",
         "leva": "^0.9.35",
         "lil-gui": "^0.18.2",
