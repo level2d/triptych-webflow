@@ -23,6 +23,8 @@ export default function MethodsModel(props) {
     const handleClick = useCallback(() => {
         actions?.gear_01?.reset().play();
         actions?.gear_02?.reset().play();
+        actions?.gear_03?.reset().play();
+        actions?.gear_04?.reset().play();
     }, [actions]);
 
     useEffect(() => {
@@ -36,6 +38,8 @@ export default function MethodsModel(props) {
                     break;
                 case "gear_01":
                 case "gear_02":
+                case "gear_03":
+                case "gear_04":
                     action.loop = THREE.LoopOnce;
                     break;
                 default:
@@ -59,14 +63,12 @@ export default function MethodsModel(props) {
         <group ref={group} {...props} dispose={null} onClick={handleClick}>
             <group name="Scene">
                 <group name="methods">
-                    <group name="rotation_null005">
-                        <group name="shaft" rotation={[-0.175, 0, 0]}>
+                    <group name="rotation_null016">
+                        <group name="shaft" rotation={[-0.262, 0, 0]}>
                             <mesh
-                                name="Cylinder002"
-                                castShadow
-                                receiveShadow
-                                geometry={nodes.Cylinder002.geometry}
-                                // material={nodes.Cylinder002.material}
+                                name="Cylinder010"
+                                geometry={nodes.Cylinder010.geometry}
+                                // material={materials.green_02}
                             >
                                 <GrainMaterialYellowDark
                                     boundingBox={boundingBox}
@@ -74,11 +76,9 @@ export default function MethodsModel(props) {
                                 <Outlines />
                             </mesh>
                             <mesh
-                                name="Cylinder002_1"
-                                castShadow
-                                receiveShadow
-                                geometry={nodes.Cylinder002_1.geometry}
-                                // material={nodes.Cylinder002_1.material}
+                                name="Cylinder010_1"
+                                geometry={nodes.Cylinder010_1.geometry}
+                                // material={materials.green_02}
                             >
                                 <GrainMaterialYellow
                                     boundingBox={boundingBox}
@@ -86,11 +86,9 @@ export default function MethodsModel(props) {
                                 <Outlines />
                             </mesh>
                             <mesh
-                                name="gear_01"
-                                castShadow
-                                receiveShadow
-                                geometry={nodes.gear_01.geometry}
-                                // material={nodes.gear_01.material}
+                                name="gear_01001"
+                                geometry={nodes.gear_01001.geometry}
+                                // material={materials.green_01}
                                 position={[-0.264, -0.152, 0]}
                             >
                                 <GrainMaterialYellow
@@ -99,11 +97,9 @@ export default function MethodsModel(props) {
                                 <Outlines />
                             </mesh>
                             <mesh
-                                name="gear_02"
-                                castShadow
-                                receiveShadow
-                                geometry={nodes.gear_02.geometry}
-                                // material={nodes.gear_02.material}
+                                name="gear_02001"
+                                geometry={nodes.gear_02001.geometry}
+                                // material={materials.green_01}
                                 position={[0, 0.305, 0]}
                             >
                                 <GrainMaterialYellow
@@ -112,11 +108,9 @@ export default function MethodsModel(props) {
                                 <Outlines />
                             </mesh>
                             <mesh
-                                name="gear_03"
-                                castShadow
-                                receiveShadow
-                                geometry={nodes.gear_03.geometry}
-                                // material={nodes.gear_03.material}
+                                name="gear_03001"
+                                geometry={nodes.gear_03001.geometry}
+                                // material={materials.green_01}
                                 position={[0.264, -0.152, 0]}
                             >
                                 <GrainMaterialYellow
@@ -125,11 +119,9 @@ export default function MethodsModel(props) {
                                 <Outlines />
                             </mesh>
                             <mesh
-                                name="gear_04"
-                                castShadow
-                                receiveShadow
-                                geometry={nodes.gear_04.geometry}
-                                // material={nodes.gear_04.material}
+                                name="gear_04001"
+                                geometry={nodes.gear_04001.geometry}
+                                // material={materials.green_01}
                             >
                                 <GrainMaterialYellow
                                     boundingBox={boundingBox}
