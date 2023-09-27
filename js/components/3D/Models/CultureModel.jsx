@@ -7,9 +7,14 @@ import { useGLTF, useAnimations } from "@react-three/drei";
 import * as THREE from "three";
 
 import { GLB_ASSET_URLS } from "@/js/core/constants";
+import { GrainMaterialYellow, GrainMaterialYellowDark } from "../Materials";
 
 export default function Model(props) {
     const [mounted, setMounted] = useState(true);
+    const [boundingBox, setBoundingBox] = useState({
+        min: new THREE.Vector3(0, 0, 0),
+        max: new THREE.Vector3(1, 1, 1),
+    });
     const group = useRef();
     const { nodes, animations } = useGLTF(GLB_ASSET_URLS.Culture);
     const { actions, names } = useAnimations(animations, group);
@@ -40,6 +45,13 @@ export default function Model(props) {
         });
     }, [mounted, actions, names]);
 
+    // setup uniforms
+    useEffect(() => {
+        const bb = new THREE.Box3();
+        bb.setFromObject(group.current);
+        setBoundingBox(bb);
+    }, []);
+
     useEffect(() => {
         setMounted(true);
     }, []);
@@ -53,7 +65,7 @@ export default function Model(props) {
                             castShadow
                             receiveShadow
                             geometry={nodes.camera001.geometry}
-                            material={nodes.camera001.material}
+                            // material={nodes.camera001.material}
                             morphTargetDictionary={
                                 nodes.camera001.morphTargetDictionary
                             }
@@ -63,19 +75,24 @@ export default function Model(props) {
                             position={[0.033, -0.076, -0.111]}
                             rotation={[0, -Math.PI / 9, 0]}
                         >
+                            <GrainMaterialYellow boundingBox={boundingBox} />
                             <mesh
                                 name="frame"
                                 castShadow
                                 receiveShadow
                                 geometry={nodes.frame.geometry}
-                                material={nodes.frame.material}
+                                // material={nodes.frame.material}
                                 morphTargetDictionary={
                                     nodes.frame.morphTargetDictionary
                                 }
                                 morphTargetInfluences={
                                     nodes.frame.morphTargetInfluences
                                 }
-                            />
+                            >
+                                <GrainMaterialYellowDark
+                                    boundingBox={boundingBox}
+                                />
+                            </mesh>
                         </mesh>
                     </group>
                 </group>
