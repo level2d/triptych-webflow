@@ -7,7 +7,11 @@ import { useGLTF, useAnimations } from "@react-three/drei";
 import * as THREE from "three";
 
 import { GLB_ASSET_URLS } from "@/js/core/constants";
-import { GrainMaterialYellow, GrainMaterialYellowDark } from "../Materials";
+import {
+    GrainMaterialYellow,
+    GrainMaterialYellowDark,
+    OutlineMaterial,
+} from "../Materials";
 
 export default function WorkModel(props) {
     const [mounted, setMounted] = useState(false);
@@ -20,7 +24,8 @@ export default function WorkModel(props) {
     const { actions, names } = useAnimations(animations, group);
 
     const handleClick = useCallback(() => {
-        actions?.glove.reset().play();
+        actions?.glove_01.reset().play();
+        actions?.glove_02.reset().play();
     }, [actions]);
 
     useEffect(() => {
@@ -32,7 +37,8 @@ export default function WorkModel(props) {
                 case "work_orbit":
                     action.play();
                     break;
-                case "glove":
+                case "glove_01":
+                case "glove_02":
                     action.loop = THREE.LoopOnce;
                     break;
                 default:
@@ -57,37 +63,62 @@ export default function WorkModel(props) {
                 <group name="work">
                     <group name="rotation_null002">
                         <mesh
-                            name="Hand_-_Stylized_"
-                            castShadow
-                            receiveShadow
-                            geometry={nodes["Hand_-_Stylized_"].geometry}
-                            // material={nodes["Hand_-_Stylized_"].material}
+                            name="hand"
+                            geometry={nodes.hand.geometry}
+                            //   material={materials.green_01}
                             morphTargetDictionary={
-                                nodes["Hand_-_Stylized_"].morphTargetDictionary
+                                nodes.hand.morphTargetDictionary
                             }
                             morphTargetInfluences={
-                                nodes["Hand_-_Stylized_"].morphTargetInfluences
+                                nodes.hand.morphTargetInfluences
                             }
                             position={[0.026, -0.067, -0.021]}
                         >
                             <GrainMaterialYellow boundingBox={boundingBox} />
-                            <mesh
-                                name="tie"
-                                castShadow
-                                receiveShadow
-                                geometry={nodes.tie.geometry}
-                                // material={nodes.tie.material}
-                                morphTargetDictionary={
-                                    nodes.tie.morphTargetDictionary
-                                }
-                                morphTargetInfluences={
-                                    nodes.tie.morphTargetInfluences
-                                }
-                            >
-                                <GrainMaterialYellowDark
-                                    boundingBox={boundingBox}
-                                />
-                            </mesh>
+                        </mesh>
+                        <mesh
+                            name="hand_outline"
+                            geometry={nodes.hand_outline.geometry}
+                            //   material={materials.outline}
+                            morphTargetDictionary={
+                                nodes.hand_outline.morphTargetDictionary
+                            }
+                            morphTargetInfluences={
+                                nodes.hand_outline.morphTargetInfluences
+                            }
+                            position={[0.026, -0.067, -0.021]}
+                        >
+                            <OutlineMaterial />
+                        </mesh>
+                        <mesh
+                            name="tie"
+                            geometry={nodes.tie.geometry}
+                            //   material={materials.green_02}
+                            morphTargetDictionary={
+                                nodes.tie.morphTargetDictionary
+                            }
+                            morphTargetInfluences={
+                                nodes.tie.morphTargetInfluences
+                            }
+                            position={[0.026, -0.067, -0.021]}
+                        >
+                            <GrainMaterialYellowDark
+                                boundingBox={boundingBox}
+                            />
+                        </mesh>
+                        <mesh
+                            name="tie_outline"
+                            geometry={nodes.tie_outline.geometry}
+                            //   material={materials.outline}
+                            morphTargetDictionary={
+                                nodes.tie_outline.morphTargetDictionary
+                            }
+                            morphTargetInfluences={
+                                nodes.tie_outline.morphTargetInfluences
+                            }
+                            position={[0.026, -0.067, -0.021]}
+                        >
+                            <OutlineMaterial />
                         </mesh>
                     </group>
                 </group>
