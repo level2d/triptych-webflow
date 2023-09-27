@@ -14,7 +14,7 @@ import phone_url from "@/assets/3d/phone_01.glb";
 import showreel_url from "@/assets/3d/showreel_02.glb";
 import skull_url from "@/assets/3d/skull_02.glb";
 import sos_url from "@/assets/3d/sos_02.glb";
-import stories_url from "@/assets/3d/stories_01.glb";
+import stories_url from "@/assets/3d/stories_02.glb";
 import work_url from "@/assets/3d/work_01.glb";
 
 // textures

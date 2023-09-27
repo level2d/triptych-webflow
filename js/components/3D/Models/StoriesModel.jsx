@@ -63,20 +63,16 @@ export default function StoriesModel(props) {
                     <group name="rotation_null010">
                         <mesh
                             name="Cube001"
-                            castShadow
-                            receiveShadow
                             geometry={nodes.Cube001.geometry}
-                            // material={nodes.Cube001.material}
+                            //   material={materials.green_01}
                             position={[-0.152, -0.327, 0.498]}
                         >
                             <GrainMaterialYellow boundingBox={boundingBox} />
                             <Outlines />
                             <mesh
                                 name="tac"
-                                castShadow
-                                receiveShadow
                                 geometry={nodes.tac.geometry}
-                                // material={nodes.tac.material}
+                                // material={materials.green_02}
                             >
                                 <GrainMaterialYellowDark
                                     boundingBox={boundingBox}
@@ -86,20 +82,16 @@ export default function StoriesModel(props) {
                         </mesh>
                         <mesh
                             name="Cube002"
-                            castShadow
-                            receiveShadow
                             geometry={nodes.Cube002.geometry}
-                            // material={nodes.Cube002.material}
+                            // material={materials.green_01}
                             position={[0.239, -0.024, 0.417]}
                         >
                             <GrainMaterialYellow boundingBox={boundingBox} />
                             <Outlines />
                             <mesh
                                 name="cat"
-                                castShadow
-                                receiveShadow
                                 geometry={nodes.cat.geometry}
-                                // material={nodes.cat.material}
+                                // material={materials.green_02}
                             >
                                 <GrainMaterialYellowDark
                                     boundingBox={boundingBox}
@@ -109,20 +101,16 @@ export default function StoriesModel(props) {
                         </mesh>
                         <mesh
                             name="Cube003"
-                            castShadow
-                            receiveShadow
                             geometry={nodes.Cube003.geometry}
-                            // material={nodes.Cube003.material}
+                            //   material={materials.green_01}
                             position={[-0.192, 0.273, 0.328]}
                         >
                             <GrainMaterialYellow boundingBox={boundingBox} />
                             <Outlines />
                             <mesh
                                 name="act"
-                                castShadow
-                                receiveShadow
                                 geometry={nodes.act.geometry}
-                                // material={nodes.act.material}
+                                // material={materials.green_02}
                             >
                                 <GrainMaterialYellowDark
                                     boundingBox={boundingBox}
