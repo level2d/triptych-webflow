@@ -96,11 +96,13 @@ const Button = ({
     direction = "left",
     onClick = () => {},
     startingColorIndex = randomColorIndex(),
+    hotkey = null,
 }) => {
     const [isActive, setIsActive] = useState(false);
     const [colorIndex, setColorIndex] = useState(null);
     const [lastColorIndex, setLastColorIndex] = useState(startingColorIndex);
     const Component = ARROWS[direction];
+    const _hotkey = hotkey ?? direction;
 
     const colorClassname = useMemo(() => {
         if (isActive) {
@@ -133,7 +135,7 @@ const Button = ({
         }, 100);
     };
 
-    useHotkeys(direction, () => {
+    useHotkeys(_hotkey, () => {
         setIsActive(true);
         setTimeout(() => {
             setIsActive(false);
@@ -170,7 +172,13 @@ const NavUi = () => {
         <>
             {typeof currentBoxUuid === "string" ? (
                 <div className={styles.backWrapper}>
-                    <Button direction="left" onClick={resetCurrentBoxUuid} />
+                    <Button
+                        direction="left"
+                        onClick={() => {
+                            resetCurrentBoxUuid();
+                        }}
+                        hotkey="esc"
+                    />
                 </div>
             ) : (
                 <div className={styles.arrowsWrapper}>
