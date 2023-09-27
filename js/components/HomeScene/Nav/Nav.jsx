@@ -1,9 +1,11 @@
 import styles from "./Nav.module.scss";
 
+import { useMemo, useState } from "react";
+import { useHotkeys } from "react-hotkeys-hook";
 import cx from "classnames";
+
 import { useStore } from "@/js/lib/store";
 import Actions from "./Actions";
-import { useMemo, useState } from "react";
 
 const LeftArrow = () => {
     return (
@@ -130,6 +132,13 @@ const Button = ({
             setIsActive(false);
         }, 100);
     };
+
+    useHotkeys(direction, () => {
+        setIsActive(true);
+        setTimeout(() => {
+            setIsActive(false);
+        }, 100);
+    });
 
     return (
         <button
