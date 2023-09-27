@@ -191,7 +191,6 @@ const NavBack = () => {
 
 const NavUi = () => {
     const interactable = useStore((state) => state.interactable);
-
     const currentBoxUuid = useStore((state) => state.currentBoxUuid);
 
     if (!interactable) {
