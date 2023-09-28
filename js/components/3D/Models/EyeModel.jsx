@@ -9,7 +9,7 @@ import * as THREE from "three";
 import { GLB_ASSET_URLS } from "@/js/core/constants";
 import { GrainMaterialViolet, OutlineMaterial } from "../Materials";
 
-export default function EyeModel(props) {
+export default function EyeModel({ opacity = 1, ...props }) {
     const [mounted, setMounted] = useState(false);
     const [boundingBox, setBoundingBox] = useState({
         min: new THREE.Vector3(0, 0, 0),
@@ -64,14 +64,17 @@ export default function EyeModel(props) {
                                 nodes.eye001.morphTargetInfluences
                             }
                         >
-                            <GrainMaterialViolet boundingBox={boundingBox} />
+                            <GrainMaterialViolet
+                                opacity={opacity}
+                                boundingBox={boundingBox}
+                            />
                         </mesh>
                         <mesh
                             name="eye_outline"
                             geometry={nodes.eye_outline.geometry}
                             //   material={materials.outline}
                         >
-                            <OutlineMaterial />
+                            <OutlineMaterial opacity={opacity} />
                         </mesh>
                     </group>
                 </group>

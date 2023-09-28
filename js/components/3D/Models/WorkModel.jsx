@@ -13,7 +13,7 @@ import {
     OutlineMaterial,
 } from "../Materials";
 
-export default function WorkModel(props) {
+export default function WorkModel({ opacity = 1, ...props }) {
     const [mounted, setMounted] = useState(false);
     const [boundingBox, setBoundingBox] = useState({
         min: new THREE.Vector3(0, 0, 0),
@@ -74,7 +74,10 @@ export default function WorkModel(props) {
                             }
                             position={[0.026, -0.067, -0.021]}
                         >
-                            <GrainMaterialYellow boundingBox={boundingBox} />
+                            <GrainMaterialYellow
+                                opacity={opacity}
+                                boundingBox={boundingBox}
+                            />
                         </mesh>
                         <mesh
                             name="hand_outline"
@@ -88,7 +91,7 @@ export default function WorkModel(props) {
                             }
                             position={[0.026, -0.067, -0.021]}
                         >
-                            <OutlineMaterial />
+                            <OutlineMaterial opacity={opacity} />
                         </mesh>
                         <mesh
                             name="tie"
@@ -103,6 +106,7 @@ export default function WorkModel(props) {
                             position={[0.026, -0.067, -0.021]}
                         >
                             <GrainMaterialYellowDark
+                                opacity={opacity}
                                 boundingBox={boundingBox}
                             />
                         </mesh>
@@ -118,7 +122,7 @@ export default function WorkModel(props) {
                             }
                             position={[0.026, -0.067, -0.021]}
                         >
-                            <OutlineMaterial />
+                            <OutlineMaterial opacity={opacity} />
                         </mesh>
                     </group>
                 </group>
