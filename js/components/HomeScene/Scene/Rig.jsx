@@ -35,7 +35,7 @@ export default function Rig() {
 
     const { lookAtMeshVisible, lookAtFactor } = useControls({
         Rig: folder({
-            lookAtMeshVisible: debug,
+            lookAtMeshVisible: false,
             lookAtFactor: {
                 value: 8,
                 min: 0.1,
@@ -74,7 +74,7 @@ export default function Rig() {
                 cameraOrbitPoint.current.y,
                 cameraOrbitPoint.current.z,
             );
-            await cameraControls.fitToBox(cameraTarget, true, {
+            await cameraControls.fitToBox(cameraTarget, false, {
                 paddingTop: paddingTop,
                 paddingRight: paddingRight,
                 paddingBottom: paddingBottom,
