@@ -28,6 +28,7 @@ export const GrainShaderMaterialB = shaderMaterial(
         uNoiseScale: 1000.0,
         uNoiseContrast: 1.5,
         uNoiseScalarDistanceFactor: 1.5,
+        opacity: 1.0,
     },
     // Vertex Shader
     `${vertexShaderCode}`,

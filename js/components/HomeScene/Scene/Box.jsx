@@ -1,4 +1,11 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+    cloneElement,
+    useCallback,
+    useEffect,
+    useMemo,
+    useRef,
+    useState,
+} from "react";
 import { useThree } from "@react-three/fiber";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
@@ -18,6 +25,15 @@ export default function Box({ children, ...rest }) {
     const clickEnabled = useMemo(() => {
         return currentBoxUuid === null;
     }, [currentBoxUuid]);
+
+    const isCurrentBox = useMemo(() => {
+        return currentBoxUuid === ref.current?.children[0]?.uuid;
+    }, [currentBoxUuid]);
+
+    const Child = cloneElement(children, {
+        extraProp: "Some extra prop",
+        opacity: isCurrentBox ? 1 : children.props.opacity, // override opacity when selected
+    });
 
     const refClone = useMemo(() => {
         if (mounted) {
@@ -58,7 +74,7 @@ export default function Box({ children, ...rest }) {
 
     return (
         <group ref={ref} {...rest} onClick={handleClick}>
-            {children}
+            {Child}
         </group>
     );
 }

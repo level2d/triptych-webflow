@@ -10,7 +10,7 @@ import { GLB_ASSET_URLS } from "@/js/core/constants";
 import { Outlines } from "../Common";
 import { GrainMaterialYellow, GrainMaterialYellowDark } from "../Materials";
 
-export default function MethodsModel(props) {
+export default function MethodsModel({ opacity = 1, ...props }) {
     const [mounted, setMounted] = useState(false);
     const [boundingBox, setBoundingBox] = useState({
         min: new THREE.Vector3(0, 0, 0),
@@ -71,9 +71,10 @@ export default function MethodsModel(props) {
                                 // material={materials.green_02}
                             >
                                 <GrainMaterialYellowDark
+                                    opacity={opacity}
                                     boundingBox={boundingBox}
                                 />
-                                <Outlines />
+                                <Outlines opacity={opacity} />
                             </mesh>
                             <mesh
                                 name="Cylinder010_1"
@@ -81,9 +82,10 @@ export default function MethodsModel(props) {
                                 // material={materials.green_02}
                             >
                                 <GrainMaterialYellow
+                                    opacity={opacity}
                                     boundingBox={boundingBox}
                                 />
-                                <Outlines />
+                                <Outlines opacity={opacity} />
                             </mesh>
                             <mesh
                                 name="gear_01001"
@@ -92,9 +94,10 @@ export default function MethodsModel(props) {
                                 position={[-0.264, -0.152, 0]}
                             >
                                 <GrainMaterialYellow
+                                    opacity={opacity}
                                     boundingBox={boundingBox}
                                 />
-                                <Outlines />
+                                <Outlines opacity={opacity} />
                             </mesh>
                             <mesh
                                 name="gear_02001"
@@ -103,9 +106,10 @@ export default function MethodsModel(props) {
                                 position={[0, 0.305, 0]}
                             >
                                 <GrainMaterialYellow
+                                    opacity={opacity}
                                     boundingBox={boundingBox}
                                 />
-                                <Outlines />
+                                <Outlines opacity={opacity} />
                             </mesh>
                             <mesh
                                 name="gear_03001"
@@ -114,9 +118,10 @@ export default function MethodsModel(props) {
                                 position={[0.264, -0.152, 0]}
                             >
                                 <GrainMaterialYellow
+                                    opacity={opacity}
                                     boundingBox={boundingBox}
                                 />
-                                <Outlines />
+                                <Outlines opacity={opacity} />
                             </mesh>
                             <mesh
                                 name="gear_04001"
@@ -124,9 +129,10 @@ export default function MethodsModel(props) {
                                 // material={materials.green_01}
                             >
                                 <GrainMaterialYellow
+                                    opacity={opacity}
                                     boundingBox={boundingBox}
                                 />
-                                <Outlines />
+                                <Outlines opacity={opacity} />
                             </mesh>
                         </group>
                     </group>

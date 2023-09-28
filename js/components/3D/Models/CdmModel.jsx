@@ -13,7 +13,7 @@ import {
     OutlineMaterial,
 } from "@/js/components/3D/Materials";
 
-export default function CdmModel(props) {
+export default function CdmModel({ opacity = 1, ...props }) {
     const [mounted, setMounted] = useState(false);
     const [boundingBox, setBoundingBox] = useState({
         min: new THREE.Vector3(0, 0, 0),
@@ -72,7 +72,10 @@ export default function CdmModel(props) {
                             //   material={materials.green_01}
                             position={[-0.003, -0.265, -0.005]}
                         >
-                            <GrainMaterialYellow boundingBox={boundingBox} />
+                            <GrainMaterialYellow
+                                opacity={opacity}
+                                boundingBox={boundingBox}
+                            />
                             <mesh
                                 name="joystick"
                                 castShadow
@@ -82,6 +85,7 @@ export default function CdmModel(props) {
                                 position={[0, 0.075, 0.02]}
                             >
                                 <GrainMaterialYellow
+                                    opacity={opacity}
                                     boundingBox={boundingBox}
                                 />
                             </mesh>
@@ -93,7 +97,7 @@ export default function CdmModel(props) {
                                 // material={materials.outline}
                                 position={[0, 0.075, 0.02]}
                             >
-                                <OutlineMaterial />
+                                <OutlineMaterial opacity={opacity} />
                             </mesh>
                         </mesh>
                         <mesh
@@ -102,7 +106,7 @@ export default function CdmModel(props) {
                             //   material={materials.outline}
                             position={[-0.003, -0.265, -0.005]}
                         >
-                            <OutlineMaterial />
+                            <OutlineMaterial opacity={opacity} />
                         </mesh>
                         <mesh
                             name="gasket"
@@ -117,6 +121,7 @@ export default function CdmModel(props) {
                             position={[-0.003, -0.265, -0.005]}
                         >
                             <GrainMaterialYellowDark
+                                opacity={opacity}
                                 boundingBox={boundingBox}
                             />
                         </mesh>
@@ -132,7 +137,7 @@ export default function CdmModel(props) {
                             }
                             position={[-0.003, -0.265, -0.005]}
                         >
-                            <OutlineMaterial />
+                            <OutlineMaterial opacity={opacity} />
                         </mesh>
                     </group>
                 </group>

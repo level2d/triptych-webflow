@@ -3,6 +3,7 @@ import styles from "./HomeScene.module.scss";
 import { Suspense, lazy, useRef } from "react";
 import { Canvas } from "@react-three/fiber";
 import { Leva } from "leva";
+
 import { debug } from "@/js/core/constants";
 import { useStore } from "@/js/lib/store";
 import Loading from "./Loading";
@@ -32,9 +33,14 @@ export default function HomeScene() {
             <div className={styles.canvasWrapper} {...wrapperProps} ref={ref}>
                 <Canvas
                     shadows
-                    onCreated={({ get }) => {
+                    onCreated={({ get, gl }) => {
                         // Pass r3f store getter to our local store
                         setGetR3fStore(get);
+                        gl.setClearAlpha(0);
+                    }}
+                    gl={{
+                        antialias: true,
+                        alpha: true,
                     }}
                 >
                     <Suspense fallback={<Loading />}>

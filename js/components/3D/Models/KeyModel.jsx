@@ -10,7 +10,7 @@ import { GLB_ASSET_URLS } from "@/js/core/constants";
 import { Outlines } from "../Common";
 import { GrainMaterialViolet } from "../Materials";
 
-export default function KeyModel(props) {
+export default function KeyModel({ opacity = 1, ...props }) {
     const [mounted, setMounted] = useState(false);
     const [boundingBox, setBoundingBox] = useState({
         min: new THREE.Vector3(0, 0, 0),
@@ -73,8 +73,11 @@ export default function KeyModel(props) {
                             // material={materials.green_01}
                             position={[-0.156, -0.34, 0.002]}
                         >
-                            <GrainMaterialViolet boundingBox={boundingBox} />
-                            <Outlines />
+                            <GrainMaterialViolet
+                                opacity={opacity}
+                                boundingBox={boundingBox}
+                            />
+                            <Outlines opacity={opacity} />
                         </mesh>
                         <mesh
                             name="key002"
@@ -82,8 +85,11 @@ export default function KeyModel(props) {
                             // material={nodes.key002.material}
                             position={[0.201, 0.316, 0.003]}
                         >
-                            <GrainMaterialViolet boundingBox={boundingBox} />
-                            <Outlines />
+                            <GrainMaterialViolet
+                                opacity={opacity}
+                                boundingBox={boundingBox}
+                            />
+                            <Outlines opacity={opacity} />
                         </mesh>
                         <mesh
                             name="key003"
@@ -91,8 +97,11 @@ export default function KeyModel(props) {
                             // material={nodes.key003.material}
                             position={[-0.353, -0.308, 0.002]}
                         >
-                            <GrainMaterialViolet boundingBox={boundingBox} />
-                            <Outlines />
+                            <GrainMaterialViolet
+                                opacity={opacity}
+                                boundingBox={boundingBox}
+                            />
+                            <Outlines opacity={opacity} />
                         </mesh>
                         <mesh
                             name="key004"
@@ -100,8 +109,11 @@ export default function KeyModel(props) {
                             // material={nodes.key004.material}
                             position={[0.357, 0.274, 0.006]}
                         >
-                            <GrainMaterialViolet boundingBox={boundingBox} />
-                            <Outlines />
+                            <GrainMaterialViolet
+                                opacity={opacity}
+                                boundingBox={boundingBox}
+                            />
+                            <Outlines opacity={opacity} />
                         </mesh>
                         <mesh
                             name="key005"
@@ -109,8 +121,11 @@ export default function KeyModel(props) {
                             material={nodes.key005.material}
                             position={[0.472, 0.336, 0.007]}
                         >
-                            <GrainMaterialViolet boundingBox={boundingBox} />
-                            <Outlines />
+                            <GrainMaterialViolet
+                                opacity={opacity}
+                                boundingBox={boundingBox}
+                            />
+                            <Outlines opacity={opacity} />
                         </mesh>
                         <mesh
                             name="key006"
@@ -118,8 +133,11 @@ export default function KeyModel(props) {
                             // material={nodes.key006.material}
                             position={[-0.34, -0.517, 0.002]}
                         >
-                            <GrainMaterialViolet boundingBox={boundingBox} />
-                            <Outlines />
+                            <GrainMaterialViolet
+                                opacity={opacity}
+                                boundingBox={boundingBox}
+                            />
+                            <Outlines opacity={opacity} />
                         </mesh>
                     </group>
                 </group>

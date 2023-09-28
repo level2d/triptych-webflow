@@ -10,7 +10,7 @@ import { GLB_ASSET_URLS } from "@/js/core/constants";
 import { GrainMaterialRed } from "../Materials";
 import { Outlines } from "../Common";
 
-export default function NorthfaceModel(props) {
+export default function NorthfaceModel({ opacity = 1, ...props }) {
     const [mounted, setMounted] = useState(false);
     const [boundingBox, setBoundingBox] = useState({
         min: new THREE.Vector3(0, 0, 0),
@@ -62,8 +62,11 @@ export default function NorthfaceModel(props) {
                             geometry={nodes.Plane001.geometry}
                             //   material={materials.green_01}
                         >
-                            <GrainMaterialRed boundingBox={boundingBox} />
-                            <Outlines />
+                            <GrainMaterialRed
+                                opacity={opacity}
+                                boundingBox={boundingBox}
+                            />
+                            <Outlines opacity={opacity} />
                         </mesh>
                     </group>
                 </group>

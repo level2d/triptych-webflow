@@ -10,7 +10,7 @@ import { GLB_ASSET_URLS } from "@/js/core/constants";
 import { GrainMaterialYellow, GrainMaterialYellowDark } from "../Materials";
 import { Outlines } from "../Common";
 
-export default function ShowreelModel(props) {
+export default function ShowreelModel({ opacity = 1, ...props }) {
     const [mounted, setMounted] = useState(false);
     const [boundingBox, setBoundingBox] = useState({
         min: new THREE.Vector3(0, 0, 0),
@@ -64,7 +64,10 @@ export default function ShowreelModel(props) {
                             rotation={[0, -0.262, 0]}
                             scale={0.908}
                         >
-                            <GrainMaterialYellow boundingBox={boundingBox} />
+                            <GrainMaterialYellow
+                                opacity={opacity}
+                                boundingBox={boundingBox}
+                            />
                             {/* <Outlines /> */}
                             <mesh
                                 name="bezel"
@@ -78,6 +81,7 @@ export default function ShowreelModel(props) {
                                 }
                             >
                                 <GrainMaterialYellowDark
+                                    opacity={opacity}
                                     boundingBox={boundingBox}
                                 />
                                 {/* <Outlines /> */}
@@ -90,6 +94,7 @@ export default function ShowreelModel(props) {
                                 scale={1.209}
                             >
                                 <GrainMaterialYellow
+                                    opacity={opacity}
                                     boundingBox={boundingBox}
                                 />
                                 {/* <Outlines /> */}

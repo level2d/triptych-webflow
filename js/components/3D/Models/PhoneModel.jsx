@@ -7,7 +7,7 @@ import { useGLTF, useAnimations } from "@react-three/drei";
 
 import { GLB_ASSET_URLS } from "@/js/core/constants";
 
-export default function PhoneModel(props) {
+export default function PhoneModel({ opacity = 1, ...props }) {
     const group = useRef();
     const { nodes, animations } = useGLTF(GLB_ASSET_URLS.Phone);
     const { actions } = useAnimations(animations, group);
