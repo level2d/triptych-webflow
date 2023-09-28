@@ -4,7 +4,7 @@ import { useRef } from "react";
 
 import * as colors from "@/js/core/colors";
 
-export const GrainMaterialRed = ({ boundingBox }) => {
+export const GrainMaterialRed = ({ boundingBox, opacity = 1 }) => {
     const shaderRef = useRef();
     const {
         uNoiseScale,
@@ -94,12 +94,14 @@ export const GrainMaterialRed = ({ boundingBox }) => {
             uMatcapEnabled={uMatcapEnabled}
             uNoiseEnabled={uNoiseEnabled}
             uGradientEnabled={uGradientEnabled}
+            opacity={opacity}
+            transparent
             ref={shaderRef}
         />
     );
 };
 
-export const GrainMaterialRedDark = ({ boundingBox }) => {
+export const GrainMaterialRedDark = ({ boundingBox, opacity = 1 }) => {
     const shaderRef = useRef();
     const {
         uNoiseScale,
@@ -189,11 +191,13 @@ export const GrainMaterialRedDark = ({ boundingBox }) => {
             uMatcapEnabled={uMatcapEnabled}
             uNoiseEnabled={uNoiseEnabled}
             uGradientEnabled={uGradientEnabled}
+            opacity={opacity}
+            transparent
             ref={shaderRef}
         />
     );
 };
-export const GrainMaterialYellow = ({ boundingBox }) => {
+export const GrainMaterialYellow = ({ boundingBox, opacity = 1 }) => {
     const shaderRef = useRef();
     const {
         uNoiseScale,
@@ -283,12 +287,14 @@ export const GrainMaterialYellow = ({ boundingBox }) => {
             uMatcapEnabled={uMatcapEnabled}
             uNoiseEnabled={uNoiseEnabled}
             uGradientEnabled={uGradientEnabled}
+            opacity={opacity}
+            transparent
             ref={shaderRef}
         />
     );
 };
 
-export const GrainMaterialYellowDark = ({ boundingBox }) => {
+export const GrainMaterialYellowDark = ({ boundingBox, opacity = 1 }) => {
     const shaderRef = useRef();
     const {
         uNoiseScale,
@@ -378,11 +384,13 @@ export const GrainMaterialYellowDark = ({ boundingBox }) => {
             uMatcapEnabled={uMatcapEnabled}
             uNoiseEnabled={uNoiseEnabled}
             uGradientEnabled={uGradientEnabled}
+            opacity={opacity}
+            transparent
             ref={shaderRef}
         />
     );
 };
-export const GrainMaterialViolet = ({ boundingBox }) => {
+export const GrainMaterialViolet = ({ boundingBox, opacity = 1 }) => {
     const shaderRef = useRef();
     const {
         uNoiseScale,
@@ -472,12 +480,14 @@ export const GrainMaterialViolet = ({ boundingBox }) => {
             uMatcapEnabled={uMatcapEnabled}
             uNoiseEnabled={uNoiseEnabled}
             uGradientEnabled={uGradientEnabled}
+            opacity={opacity}
+            transparent
             ref={shaderRef}
         />
     );
 };
 
-export const GrainMaterialVioletDark = ({ boundingBox }) => {
+export const GrainMaterialVioletDark = ({ boundingBox, opacity = 1 }) => {
     const shaderRef = useRef();
     const {
         uNoiseScale,
@@ -567,11 +577,15 @@ export const GrainMaterialVioletDark = ({ boundingBox }) => {
             uMatcapEnabled={uMatcapEnabled}
             uNoiseEnabled={uNoiseEnabled}
             uGradientEnabled={uGradientEnabled}
+            opacity={opacity}
+            transparent
             ref={shaderRef}
         />
     );
 };
 
-export const OutlineMaterial = () => {
-    return <meshBasicMaterial color={colors.black} />;
+export const OutlineMaterial = ({ opacity = 1 }) => {
+    return (
+        <meshBasicMaterial color={colors.black} transparent opacity={opacity} />
+    );
 };

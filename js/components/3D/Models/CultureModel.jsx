@@ -13,7 +13,7 @@ import {
     OutlineMaterial,
 } from "../Materials";
 
-export default function Model(props) {
+export default function Model({ opacity = 1, ...props }) {
     const [mounted, setMounted] = useState(true);
     const [boundingBox, setBoundingBox] = useState({
         min: new THREE.Vector3(0, 0, 0),
@@ -79,7 +79,10 @@ export default function Model(props) {
                             position={[0.033, -0.076, -0.111]}
                             rotation={[0, -Math.PI / 9, 0]}
                         >
-                            <GrainMaterialYellow boundingBox={boundingBox} />
+                            <GrainMaterialYellow
+                                opacity={opacity}
+                                boundingBox={boundingBox}
+                            />
                         </mesh>
                         <mesh
                             name="camera_outline"
@@ -94,7 +97,7 @@ export default function Model(props) {
                             position={[0.033, -0.076, -0.111]}
                             rotation={[0, -Math.PI / 9, 0]}
                         >
-                            <OutlineMaterial />
+                            <OutlineMaterial opacity={opacity} />
                         </mesh>
                         <mesh
                             name="frame"
@@ -110,6 +113,7 @@ export default function Model(props) {
                             rotation={[0, -Math.PI / 9, 0]}
                         >
                             <GrainMaterialYellowDark
+                                opacity={opacity}
                                 boundingBox={boundingBox}
                             />
                         </mesh>
@@ -126,7 +130,7 @@ export default function Model(props) {
                             position={[0.033, -0.076, -0.111]}
                             rotation={[0, -Math.PI / 9, 0]}
                         >
-                            <OutlineMaterial />
+                            <OutlineMaterial opacity={opacity} />
                         </mesh>
                     </group>
                 </group>

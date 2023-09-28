@@ -10,7 +10,7 @@ import { GLB_ASSET_URLS } from "@/js/core/constants";
 import { GrainMaterialViolet, GrainMaterialVioletDark } from "../Materials";
 import { Outlines } from "../Common";
 
-export default function SkullModel(props) {
+export default function SkullModel({ opacity = 1, ...props }) {
     const [mounted, setMounted] = useState(false);
     const [boundingBox, setBoundingBox] = useState({
         min: new THREE.Vector3(0, 0, 0),
@@ -63,8 +63,11 @@ export default function SkullModel(props) {
                             //   material={materials.green_01}
                             position={[-0.004, -0.114, -0.039]}
                         >
-                            <GrainMaterialViolet boundingBox={boundingBox} />
-                            <Outlines />
+                            <GrainMaterialViolet
+                                opacity={opacity}
+                                boundingBox={boundingBox}
+                            />
+                            <Outlines opacity={opacity} />
                         </mesh>
                         <mesh
                             name="skull002"
@@ -72,17 +75,21 @@ export default function SkullModel(props) {
                             //   material={materials.green_01}
                             position={[-0.006, -0.152, 0.2]}
                         >
-                            <GrainMaterialViolet boundingBox={boundingBox} />
-                            <Outlines />
+                            <GrainMaterialViolet
+                                opacity={opacity}
+                                boundingBox={boundingBox}
+                            />
+                            <Outlines opacity={opacity} />
                             <mesh
                                 name="sockets"
                                 geometry={nodes.sockets.geometry}
                                 // material={materials.green_02}
                             >
                                 <GrainMaterialVioletDark
+                                    opacity={opacity}
                                     boundingBox={boundingBox}
                                 />
-                                <Outlines />
+                                <Outlines opacity={opacity} />
                             </mesh>
                         </mesh>
                     </group>

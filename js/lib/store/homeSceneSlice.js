@@ -20,6 +20,8 @@ export const createHomeSceneSlice = (set, get) => ({
     getR3fStore: () => {},
     setGetR3fStore: (getR3fStore) => set(() => ({ getR3fStore })),
 
+    homeSceneOpacity: debug ? 1.0 : 0.0,
+
     /**
      * @type {(null | string)}
      */
@@ -38,8 +40,47 @@ export const createHomeSceneSlice = (set, get) => ({
      *
      * @param {string} uuid UUID of object3d or mesh to focus
      */
-    setCurrentBoxUuid: (uuid) => set(() => ({ currentBoxUuid: uuid })),
-    resetCurrentBoxUuid: () => set(() => ({ currentBoxUuid: null })),
+    setCurrentBoxUuid: async (uuid) => {
+        const obj = {
+            opacity: 1.0,
+        };
+
+        gsap.fromTo(
+            obj,
+            { opacity: 1.0 },
+            {
+                opacity: 0.0,
+                duration: 0.25,
+                ease: "power2.inOut",
+                onStart: () => {
+                    set(() => ({ currentBoxUuid: uuid }));
+                },
+                onUpdate: () => {
+                    set({ homeSceneOpacity: obj.opacity });
+                },
+            },
+        );
+    },
+    resetCurrentBoxUuid: async () => {
+        const obj = {
+            opacity: 0.0,
+        };
+        gsap.fromTo(
+            obj,
+            { opacity: 0.0 },
+            {
+                opacity: 1.0,
+                duration: 0.25,
+                ease: "power2.inOut",
+                onUpdate: () => {
+                    set({ homeSceneOpacity: obj.opacity });
+                },
+                onComplete: () => {
+                    set(() => ({ currentBoxUuid: null }));
+                },
+            },
+        );
+    },
 
     /**
      * @type {(null | string)}
@@ -137,12 +178,6 @@ export const createHomeSceneSlice = (set, get) => ({
         if (!cameraControls) return;
 
         const scene = get().getR3fStore().scene;
-        const triptychModelUuid = get().triptychModelUuid;
-        const triptychModel = scene.getObjectByProperty(
-            "uuid",
-            triptychModelUuid,
-        );
-        const triptychModelMaterial = triptychModel.material;
         const cameraTargetUuid = get().cameraTargetUuid;
         const cameraTarget = scene.getObjectByProperty(
             "uuid",
@@ -160,30 +195,40 @@ export const createHomeSceneSlice = (set, get) => ({
         const boundingSphere = cameraTarget.geometry.boundingSphere.clone();
         boundingSphere.getBoundingBox(boundingBox);
 
-        triptychModelMaterial.opacity = 0.0;
+        const obj = {
+            opacity: 0.0,
+        };
+
         gsap.fromTo(
-            triptychModelMaterial,
+            obj,
             { opacity: 0.0 },
             {
                 opacity: 1.0,
-                duration: 1,
+                duration: 0.25,
+                ease: "power2.inOut",
+                onUpdate: () => {
+                    set({ homeSceneOpacity: obj.opacity });
+                },
             },
         );
+
         cameraControls.smoothTime = 0.5;
 
         await cameraControls.rotate(
-            THREE.MathUtils.degToRad(135),
+            THREE.MathUtils.degToRad(-45),
             THREE.MathUtils.degToRad(-45),
             true,
         );
 
+        cameraControls.smoothTime = 0.25; // reset back to default
+
         await cameraControls.rotate(
-            THREE.MathUtils.degToRad(135),
+            THREE.MathUtils.degToRad(-45),
             THREE.MathUtils.degToRad(45),
             true,
         );
 
-        cameraControls.smoothTime = 0.25;
+        cameraControls.normalizeRotations();
 
         set({ introPlayed: true, interactable: true });
     },

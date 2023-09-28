@@ -13,7 +13,7 @@ import {
     GrainMaterialYellowDark,
 } from "@/js/components/3D/Materials";
 
-export default function CareersModel(props) {
+export default function CareersModel({ opacity = 1, ...props }) {
     const [boundingBox, setBoundingBox] = useState({
         min: new THREE.Vector3(0, 0, 0),
         max: new THREE.Vector3(1, 1, 1),
@@ -68,8 +68,11 @@ export default function CareersModel(props) {
                             //   material={materials.green_01}
                             position={[0.033, -0.017, 0.017]}
                         >
-                            <GrainMaterialYellow boundingBox={boundingBox} />
-                            <Outlines />
+                            <GrainMaterialYellow
+                                boundingBox={boundingBox}
+                                opacity={opacity}
+                            />
+                            <Outlines opacity={opacity} />
                             <mesh
                                 name="fluid"
                                 geometry={nodes.fluid.geometry}
@@ -79,8 +82,9 @@ export default function CareersModel(props) {
                             >
                                 <GrainMaterialYellowDark
                                     boundingBox={boundingBox}
+                                    opacity={opacity}
                                 />
-                                <Outlines />
+                                <Outlines opacity={opacity} />
                             </mesh>
                         </mesh>
                     </group>

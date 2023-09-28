@@ -10,7 +10,7 @@ import { GLB_ASSET_URLS } from "@/js/core/constants";
 import { GrainMaterialViolet, GrainMaterialVioletDark } from "../Materials";
 import { Outlines } from "../Common";
 
-export default function GyroModel(props) {
+export default function GyroModel({ opacity = 1, ...props }) {
     const [mounted, setMounted] = useState(false);
     const [boundingBox, setBoundingBox] = useState({
         min: new THREE.Vector3(0, 0, 0),
@@ -67,8 +67,11 @@ export default function GyroModel(props) {
                             position={[0, -0.657, 0.001]}
                             rotation={[0.028, -0.08, -0.015]}
                         >
-                            <GrainMaterialViolet boundingBox={boundingBox} />
-                            <Outlines />
+                            <GrainMaterialViolet
+                                opacity={opacity}
+                                boundingBox={boundingBox}
+                            />
+                            <Outlines opacity={opacity} />
                             <mesh
                                 name="axis"
                                 castShadow
@@ -79,9 +82,10 @@ export default function GyroModel(props) {
                                 rotation={[0, -0.585, 0]}
                             >
                                 <GrainMaterialVioletDark
+                                    opacity={opacity}
                                     boundingBox={boundingBox}
                                 />
-                                <Outlines />
+                                <Outlines opacity={opacity} />
                             </mesh>
                         </mesh>
                     </group>

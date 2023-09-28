@@ -13,7 +13,7 @@ import {
 } from "@/js/components/3D/Materials";
 import { Outlines } from "../Common";
 
-export default function ContactModel(props) {
+export default function ContactModel({ opacity = 1, ...props }) {
     const [mounted, setMounted] = useState(false);
     const [boundingBox, setBoundingBox] = useState({
         min: new THREE.Vector3(0, 0, 0),
@@ -87,7 +87,10 @@ export default function ContactModel(props) {
                             position={[0.001, 0.059, 0.028]}
                             rotation={[-0.204, 0, 0]}
                         >
-                            <GrainMaterialYellow boundingBox={boundingBox} />
+                            <GrainMaterialYellow
+                                opacity={opacity}
+                                boundingBox={boundingBox}
+                            />
                             {/* <Outlines /> */}
                             <mesh
                                 name="thruster_01"
@@ -96,9 +99,10 @@ export default function ContactModel(props) {
                                 position={[0.19, -0.367, 0.002]}
                             >
                                 <GrainMaterialYellowDark
+                                    opacity={opacity}
                                     boundingBox={boundingBox}
                                 />
-                                <Outlines />
+                                <Outlines opacity={opacity} />
                             </mesh>
                             <mesh
                                 name="thruster_02"
@@ -108,9 +112,10 @@ export default function ContactModel(props) {
                                 rotation={[0, Math.PI / 4, 0]}
                             >
                                 <GrainMaterialYellowDark
+                                    opacity={opacity}
                                     boundingBox={boundingBox}
                                 />
-                                <Outlines />
+                                <Outlines opacity={opacity} />
                             </mesh>
                             <mesh
                                 name="thruster_03"
@@ -120,9 +125,10 @@ export default function ContactModel(props) {
                                 rotation={[0, Math.PI / 2, 0]}
                             >
                                 <GrainMaterialYellowDark
+                                    opacity={opacity}
                                     boundingBox={boundingBox}
                                 />
-                                <Outlines />
+                                <Outlines opacity={opacity} />
                             </mesh>
                             <mesh
                                 name="thruster_04"
@@ -132,9 +138,10 @@ export default function ContactModel(props) {
                                 rotation={[-Math.PI, Math.PI / 4, -Math.PI]}
                             >
                                 <GrainMaterialYellowDark
+                                    opacity={opacity}
                                     boundingBox={boundingBox}
                                 />
-                                <Outlines />
+                                <Outlines opacity={opacity} />
                             </mesh>
                             <mesh
                                 name="thruster_05"
@@ -144,9 +151,10 @@ export default function ContactModel(props) {
                                 rotation={[Math.PI, 0, Math.PI]}
                             >
                                 <GrainMaterialYellowDark
+                                    opacity={opacity}
                                     boundingBox={boundingBox}
                                 />
-                                <Outlines />
+                                <Outlines opacity={opacity} />
                             </mesh>
                             <mesh
                                 name="thruster_06"
@@ -156,9 +164,10 @@ export default function ContactModel(props) {
                                 rotation={[Math.PI, -Math.PI / 4, Math.PI]}
                             >
                                 <GrainMaterialYellowDark
+                                    opacity={opacity}
                                     boundingBox={boundingBox}
                                 />
-                                <Outlines />
+                                <Outlines opacity={opacity} />
                             </mesh>
                             <mesh
                                 name="thruster_07"
@@ -168,9 +177,10 @@ export default function ContactModel(props) {
                                 rotation={[0, -1.571, 0]}
                             >
                                 <GrainMaterialYellowDark
+                                    opacity={opacity}
                                     boundingBox={boundingBox}
                                 />
-                                <Outlines />
+                                <Outlines opacity={opacity} />
                             </mesh>
                             <mesh
                                 name="thruster_08"
@@ -180,9 +190,10 @@ export default function ContactModel(props) {
                                 rotation={[0, -Math.PI / 4, 0]}
                             >
                                 <GrainMaterialYellowDark
+                                    opacity={opacity}
                                     boundingBox={boundingBox}
                                 />
-                                <Outlines />
+                                <Outlines opacity={opacity} />
                             </mesh>
                             <mesh
                                 name="windows"
@@ -196,6 +207,7 @@ export default function ContactModel(props) {
                                 }
                             >
                                 <GrainMaterialYellowDark
+                                    opacity={opacity}
                                     boundingBox={boundingBox}
                                 />
                                 {/* <Outlines /> */}
