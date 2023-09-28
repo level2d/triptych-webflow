@@ -163,11 +163,12 @@ const NavArrows = ({ visible }) => {
     const el = useRef(null);
     const orbit = useStore((state) => state.orbit);
     useLayoutEffect(() => {
-        if (!el.current) {
+        const target = el.current;
+        if (!target) {
             return;
         }
         gsap.fromTo(
-            el.current,
+            target,
             {
                 opacity: visible ? 0 : 1,
                 y: visible ? 50 : 0,
@@ -183,7 +184,7 @@ const NavArrows = ({ visible }) => {
             },
         );
         return () => {
-            gsap.killTweensOf(el.current);
+            gsap.killTweensOf(target);
         };
     }, [visible]);
     return (
@@ -204,11 +205,12 @@ const NavBack = ({ visible }) => {
     const el = useRef(null);
     const resetCurrentBoxUuid = useStore((state) => state.resetCurrentBoxUuid);
     useLayoutEffect(() => {
-        if (!el.current) {
+        const target = el.current;
+        if (!target) {
             return;
         }
         gsap.fromTo(
-            el.current,
+            target,
             {
                 opacity: visible ? 0 : 1,
                 y: visible ? 50 : 0,
@@ -224,7 +226,7 @@ const NavBack = ({ visible }) => {
             },
         );
         return () => {
-            gsap.killTweensOf(el.current);
+            gsap.killTweensOf(target);
         };
     }, [visible]);
     return (
