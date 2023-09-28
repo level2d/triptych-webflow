@@ -74,7 +74,7 @@ export default function Rig() {
                 cameraOrbitPoint.current.y,
                 cameraOrbitPoint.current.z,
             );
-            await cameraControls.fitToBox(cameraTarget, false, {
+            await cameraControls.fitToBox(cameraTarget, true, {
                 paddingTop: paddingTop,
                 paddingRight: paddingRight,
                 paddingBottom: paddingBottom,
@@ -101,7 +101,6 @@ export default function Rig() {
         paddingLeft,
         introPlayed,
         intro,
-        debug,
     ]);
 
     useEffect(() => {
