@@ -31,6 +31,7 @@ function Model(props) {
     const setTriptychModelUuid = useStore(
         (state) => state.setTriptychModelUuid,
     );
+    const opacity = useStore((state) => state.homeSceneOpacity);
     const [boundingBox, setBoundingBox] = useState({
         min: new THREE.Vector3(0, 0, 0),
         max: new THREE.Vector3(1, 1, 1),
@@ -128,11 +129,10 @@ function Model(props) {
         <group {...props} dispose={null} scale={0.1}>
             <mesh
                 name="Triptych"
-                castShadow
-                receiveShadow
                 geometry={nodes.triptych.geometry}
                 // material={nodes.triptych.material}
                 ref={tripTychRef}
+                visible={true}
             >
                 <grainShaderMaterial
                     uNoiseEnabled={uNoiseEnabled}
@@ -146,8 +146,10 @@ function Model(props) {
                     uGradientEnabled={uGradientEnabled}
                     ref={grainShaderMaterialRef}
                     key={GrainShaderMaterial.key}
+                    opacity={opacity}
+                    transparent
                 />
-                <Outlines />
+                <Outlines opacity={opacity} />
             </mesh>
             {/* <mesh
                 castShadow
@@ -163,7 +165,7 @@ function Model(props) {
                 position={[1, 1, -3]}
             /> */}
             <Box position={[1, 1, -3]}>
-                <CareersModel />
+                <CareersModel opacity={opacity} />
             </Box>
             {/* <mesh
                 castShadow
@@ -174,7 +176,7 @@ function Model(props) {
                 scale={0.5}
             /> */}
             <Box position={[1, 3, -3]}>
-                <EpbModel />
+                <EpbModel opacity={opacity} />
             </Box>
             {/* <mesh
                 castShadow
@@ -184,7 +186,7 @@ function Model(props) {
                 position={[-3, -1, -3]}
             /> */}
             <Box position={[-3, -1, -3]}>
-                <GyroModel />
+                <GyroModel opacity={opacity} />
             </Box>
             {/* <mesh
                 castShadow
@@ -194,7 +196,7 @@ function Model(props) {
                 position={[-3, 3, 1]}
             /> */}
             <Box position={[-3, 3, 1]}>
-                <CultureModel />
+                <CultureModel opacity={opacity} />
             </Box>
             {/* <mesh
                 castShadow
@@ -205,7 +207,7 @@ function Model(props) {
                 scale={0.5}
             /> */}
             <Box position={[-1, -1, 1]}>
-                <ShowreelModel />
+                <ShowreelModel opacity={opacity} />
             </Box>
             {/* <mesh
                 castShadow
@@ -215,7 +217,7 @@ function Model(props) {
                 position={[3, -1, 3]}
             /> */}
             <Box position={[3, -1, 3]}>
-                <WorkModel />
+                <WorkModel opacity={opacity} />
             </Box>
             {/* <mesh
                 castShadow
@@ -225,7 +227,7 @@ function Model(props) {
                 position={[-1, -3, 1]}
             /> */}
             <Box position={[-1, -3, 1]}>
-                <StoriesModel />
+                <StoriesModel opacity={opacity} />
             </Box>
             <mesh
                 castShadow
@@ -236,7 +238,7 @@ function Model(props) {
                 scale={0.5}
             />
             <Box position={[1, -1, -1]}>
-                <ContactModel />
+                <ContactModel opacity={opacity} />
             </Box>
             {/* <mesh
                 castShadow
@@ -247,7 +249,7 @@ function Model(props) {
                 scale={0.5}
             /> */}
             <Box position={[-1, 3, 3]}>
-                <MethodsModel />
+                <MethodsModel opacity={opacity} />
             </Box>
             {/* <mesh
                 castShadow
@@ -257,7 +259,7 @@ function Model(props) {
                 position={[-3, -3, -3]}
             /> */}
             <Box position={[-3, -3, -3]}>
-                <CdmModel />
+                <CdmModel opacity={opacity} />
             </Box>
             {/* <mesh
                 castShadow
@@ -267,7 +269,7 @@ function Model(props) {
                 position={[3, 3, -1]}
             /> */}
             <Box position={[3, 3, -1]}>
-                <SosModel />
+                <SosModel opacity={opacity} />
             </Box>
             {/* <mesh
                 castShadow
@@ -278,7 +280,7 @@ function Model(props) {
                 scale={0.5}
             /> */}
             <Box position={[3, -3, -1]}>
-                <NorthfaceModel />
+                <NorthfaceModel opacity={opacity} />
             </Box>
             {/* <mesh
                 castShadow
@@ -288,7 +290,7 @@ function Model(props) {
                 position={[1, -3, 1]}
             /> */}
             <Box position={[1, -3, 1]}>
-                <SkullModel />
+                <SkullModel opacity={opacity} />
             </Box>
             {/* <mesh
                 castShadow
@@ -298,7 +300,7 @@ function Model(props) {
                 position={[-1, 1, 1]}
             /> */}
             <Box position={[-1, 1, 1]}>
-                <EyeModel />
+                <EyeModel opacity={opacity} />
             </Box>
             {/* <mesh
                 castShadow
@@ -308,7 +310,7 @@ function Model(props) {
                 position={[3, 1, 3]}
             /> */}
             <Box position={[3, 1, 3]}>
-                <KeyModel />
+                <KeyModel opacity={opacity} />
             </Box>
         </group>
     );
