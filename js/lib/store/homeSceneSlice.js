@@ -40,8 +40,47 @@ export const createHomeSceneSlice = (set, get) => ({
      *
      * @param {string} uuid UUID of object3d or mesh to focus
      */
-    setCurrentBoxUuid: (uuid) => set(() => ({ currentBoxUuid: uuid })),
-    resetCurrentBoxUuid: () => set(() => ({ currentBoxUuid: null })),
+    setCurrentBoxUuid: async (uuid) => {
+        const obj = {
+            opacity: 1.0,
+        };
+
+        gsap.fromTo(
+            obj,
+            { opacity: 1.0 },
+            {
+                opacity: 0.0,
+                duration: 0.25,
+                ease: "power2.inOut",
+                onStart: () => {
+                    set(() => ({ currentBoxUuid: uuid }));
+                },
+                onUpdate: () => {
+                    set({ homeSceneOpacity: obj.opacity });
+                },
+            },
+        );
+    },
+    resetCurrentBoxUuid: async () => {
+        const obj = {
+            opacity: 0.0,
+        };
+        gsap.fromTo(
+            obj,
+            { opacity: 0.0 },
+            {
+                opacity: 1.0,
+                duration: 0.25,
+                ease: "power2.inOut",
+                onUpdate: () => {
+                    set({ homeSceneOpacity: obj.opacity });
+                },
+                onComplete: () => {
+                    set(() => ({ currentBoxUuid: null }));
+                },
+            },
+        );
+    },
 
     /**
      * @type {(null | string)}
