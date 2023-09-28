@@ -229,14 +229,14 @@ function Model(props) {
             <Box position={[-1, -3, 1]}>
                 <StoriesModel opacity={opacity} />
             </Box>
-            <mesh
+            {/* <mesh
                 castShadow
                 receiveShadow
                 geometry={nodes.location_007.geometry}
                 material={nodes.location_007.material}
                 position={[1, -1, -1]}
                 scale={0.5}
-            />
+            /> */}
             <Box position={[1, -1, -1]}>
                 <ContactModel opacity={opacity} />
             </Box>
