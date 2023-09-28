@@ -9,7 +9,7 @@ import * as THREE from "three";
 import { GLB_ASSET_URLS } from "@/js/core/constants";
 import { GrainMaterialRed, OutlineMaterial } from "../Materials";
 
-export default function SosModel(props) {
+export default function SosModel({ opacity = 1, ...props }) {
     const [mounted, setMounted] = useState(false);
     const [boundingBox, setBoundingBox] = useState({
         min: new THREE.Vector3(0, 0, 0),
@@ -76,7 +76,10 @@ export default function SosModel(props) {
                             }
                             rotation={[0, -Math.PI / 6, 0]}
                         >
-                            <GrainMaterialRed boundingBox={boundingBox} />
+                            <GrainMaterialRed
+                                opacity={opacity}
+                                boundingBox={boundingBox}
+                            />
                         </mesh>
                         <mesh
                             name="fish_outline"
@@ -90,7 +93,7 @@ export default function SosModel(props) {
                             }
                             rotation={[0, -Math.PI / 6, 0]}
                         >
-                            <OutlineMaterial />
+                            <OutlineMaterial opacity={opacity} />
                         </mesh>
                     </group>
                 </group>

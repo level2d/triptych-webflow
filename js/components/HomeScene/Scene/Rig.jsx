@@ -35,7 +35,7 @@ export default function Rig() {
 
     const { lookAtMeshVisible, lookAtFactor } = useControls({
         Rig: folder({
-            lookAtMeshVisible: debug,
+            lookAtMeshVisible: false,
             lookAtFactor: {
                 value: 8,
                 min: 0.1,
@@ -101,7 +101,6 @@ export default function Rig() {
         paddingLeft,
         introPlayed,
         intro,
-        debug,
     ]);
 
     useEffect(() => {

@@ -1,9 +1,10 @@
 import styles from "./Nav.module.scss";
 
-import { useMemo, useState } from "react";
+import { useLayoutEffect, useMemo, useRef, useState } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 import cx from "classnames";
 
+import gsap from "@/js/lib/gsap";
 import { useStore } from "@/js/lib/store";
 import Actions from "./Actions";
 
@@ -158,10 +159,36 @@ const Button = ({
     );
 };
 
-const NavArrows = () => {
+const NavArrows = ({ visible }) => {
+    const el = useRef(null);
     const orbit = useStore((state) => state.orbit);
+    useLayoutEffect(() => {
+        const target = el.current;
+        if (!target) {
+            return;
+        }
+        gsap.fromTo(
+            target,
+            {
+                opacity: visible ? 0 : 1,
+                y: visible ? 50 : 0,
+                zIndex: visible ? -1 : 1,
+                visibility: visible ? "hidden" : "visible",
+            },
+            {
+                opacity: visible ? 1 : 0,
+                y: visible ? 0 : 50,
+                zIndex: visible ? 1 : -1,
+                visibility: visible ? "visible" : "hidden",
+                duration: 0.2,
+            },
+        );
+        return () => {
+            gsap.killTweensOf(target);
+        };
+    }, [visible]);
     return (
-        <div className={styles.arrowsWrapper}>
+        <div className={styles.arrowsWrapper} ref={el}>
             <div className={styles.buttonWrapper}>
                 <Button direction="left" onClick={orbit} />
                 <div className={styles.middleButtons}>
@@ -174,10 +201,36 @@ const NavArrows = () => {
     );
 };
 
-const NavBack = () => {
+const NavBack = ({ visible }) => {
+    const el = useRef(null);
     const resetCurrentBoxUuid = useStore((state) => state.resetCurrentBoxUuid);
+    useLayoutEffect(() => {
+        const target = el.current;
+        if (!target) {
+            return;
+        }
+        gsap.fromTo(
+            target,
+            {
+                opacity: visible ? 0 : 1,
+                y: visible ? 50 : 0,
+                zIndex: visible ? -1 : 1,
+                visibility: visible ? "hidden" : "visible",
+            },
+            {
+                opacity: visible ? 1 : 0,
+                y: visible ? 0 : 50,
+                zIndex: visible ? 1 : -1,
+                visibility: visible ? "visible" : "hidden",
+                duration: 0.2,
+            },
+        );
+        return () => {
+            gsap.killTweensOf(target);
+        };
+    }, [visible]);
     return (
-        <div className={styles.backWrapper}>
+        <div className={styles.backWrapper} ref={el}>
             <Button
                 direction="left"
                 onClick={() => {
@@ -193,14 +246,22 @@ const NavUi = () => {
     const interactable = useStore((state) => state.interactable);
     const currentBoxUuid = useStore((state) => state.currentBoxUuid);
 
+    const isNavBackVisible = useMemo(() => {
+        return typeof currentBoxUuid === "string";
+    }, [currentBoxUuid]);
+
+    const isNavArrowsVisible = useMemo(() => {
+        return currentBoxUuid === null;
+    }, [currentBoxUuid]);
+
     if (!interactable) {
         return null;
     }
 
     return (
         <>
-            <NavBack visible={typeof currentBoxUuid === "string"} />
-            <NavArrows visible={currentBoxUuid === null} />
+            <NavBack visible={isNavBackVisible} />
+            <NavArrows visible={isNavArrowsVisible} />
         </>
     );
 };

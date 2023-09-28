@@ -10,7 +10,7 @@ import { GLB_ASSET_URLS } from "@/js/core/constants";
 import { GrainMaterialYellow, GrainMaterialYellowDark } from "../Materials";
 import { Outlines } from "../Common";
 
-export default function StoriesModel(props) {
+export default function StoriesModel({ opacity = 1, ...props }) {
     const [mounted, setMounted] = useState(false);
     const [boundingBox, setBoundingBox] = useState({
         min: new THREE.Vector3(0, 0, 0),
@@ -67,17 +67,21 @@ export default function StoriesModel(props) {
                             //   material={materials.green_01}
                             position={[-0.152, -0.327, 0.498]}
                         >
-                            <GrainMaterialYellow boundingBox={boundingBox} />
-                            <Outlines />
+                            <GrainMaterialYellow
+                                opacity={opacity}
+                                boundingBox={boundingBox}
+                            />
+                            <Outlines opacity={opacity} />
                             <mesh
                                 name="tac"
                                 geometry={nodes.tac.geometry}
                                 // material={materials.green_02}
                             >
                                 <GrainMaterialYellowDark
+                                    opacity={opacity}
                                     boundingBox={boundingBox}
                                 />
-                                <Outlines />
+                                <Outlines opacity={opacity} />
                             </mesh>
                         </mesh>
                         <mesh
@@ -86,17 +90,21 @@ export default function StoriesModel(props) {
                             // material={materials.green_01}
                             position={[0.239, -0.024, 0.417]}
                         >
-                            <GrainMaterialYellow boundingBox={boundingBox} />
-                            <Outlines />
+                            <GrainMaterialYellow
+                                opacity={opacity}
+                                boundingBox={boundingBox}
+                            />
+                            <Outlines opacity={opacity} />
                             <mesh
                                 name="cat"
                                 geometry={nodes.cat.geometry}
                                 // material={materials.green_02}
                             >
                                 <GrainMaterialYellowDark
+                                    opacity={opacity}
                                     boundingBox={boundingBox}
                                 />
-                                <Outlines />
+                                <Outlines opacity={opacity} />
                             </mesh>
                         </mesh>
                         <mesh
@@ -105,17 +113,21 @@ export default function StoriesModel(props) {
                             //   material={materials.green_01}
                             position={[-0.192, 0.273, 0.328]}
                         >
-                            <GrainMaterialYellow boundingBox={boundingBox} />
-                            <Outlines />
+                            <GrainMaterialYellow
+                                opacity={opacity}
+                                boundingBox={boundingBox}
+                            />
+                            <Outlines opacity={opacity} />
                             <mesh
                                 name="act"
                                 geometry={nodes.act.geometry}
                                 // material={materials.green_02}
                             >
                                 <GrainMaterialYellowDark
+                                    opacity={opacity}
                                     boundingBox={boundingBox}
                                 />
-                                <Outlines />
+                                <Outlines opacity={opacity} />
                             </mesh>
                         </mesh>
                     </group>

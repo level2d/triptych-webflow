@@ -1,4 +1,4 @@
-import { Environment } from "@react-three/drei";
+// import { Environment } from "@react-three/drei";
 import { Perf } from "r3f-perf";
 
 import { debug } from "@/js/core/constants";
@@ -16,7 +16,7 @@ export default function Scene() {
             <Rig />
 
             {/* environment */}
-            <Environment preset="sunset" blur={1} />
+            {/* <Environment preset="sunset" blur={1} /> */}
 
             {/* models */}
             <Model />
