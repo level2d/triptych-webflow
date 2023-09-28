@@ -21,6 +21,7 @@ uniform bool uGradientEnabled;
 uniform bool uNoiseEnabled;
 uniform float uNoiseContrast;
 uniform float uNoiseScalarDistanceFactor;
+uniform float opacity;
 
 varying vec2 vScreenSpace;
 varying vec2 vUv;
@@ -121,5 +122,5 @@ void main() {
         color += noiseColor;
     }
 
-    gl_FragColor = vec4(color, 1.0);
+    gl_FragColor = vec4(color, opacity);
 }
