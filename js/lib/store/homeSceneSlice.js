@@ -156,37 +156,38 @@ export const createHomeSceneSlice = (set, get) => ({
         const boundingSphere = cameraTarget.geometry.boundingSphere.clone();
         boundingSphere.getBoundingBox(boundingBox);
 
-        cameraControls.smoothTime = 0.5;
-
         const obj = {
             opacity: 0.0,
         };
+
         gsap.fromTo(
             obj,
             { opacity: 0.0 },
             {
                 opacity: 1.0,
-                duration: 2,
+                duration: 0.25,
+                ease: "power2.inOut",
                 onUpdate: () => {
                     set({ homeSceneOpacity: obj.opacity });
                 },
             },
         );
+
+        cameraControls.smoothTime = 0.5;
+
         await cameraControls.rotate(
-            THREE.MathUtils.degToRad(135),
             THREE.MathUtils.degToRad(-45),
-            false,
-        );
-
-        cameraControls.smoothTime = 0.4;
-
-        await cameraControls.rotate(
-            THREE.MathUtils.degToRad(-135),
-            THREE.MathUtils.degToRad(45),
+            THREE.MathUtils.degToRad(-45),
             true,
         );
 
-        cameraControls.smoothTime = 0.25;
+        cameraControls.smoothTime = 0.25; // reset back to default
+
+        await cameraControls.rotate(
+            THREE.MathUtils.degToRad(-45),
+            THREE.MathUtils.degToRad(45),
+            true,
+        );
 
         cameraControls.normalizeRotations();
 
