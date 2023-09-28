@@ -79,7 +79,10 @@ export default function Model({ opacity = 1, ...props }) {
                             position={[0.033, -0.076, -0.111]}
                             rotation={[0, -Math.PI / 9, 0]}
                         >
-                            <GrainMaterialYellow boundingBox={boundingBox} />
+                            <GrainMaterialYellow
+                                opacity={opacity}
+                                boundingBox={boundingBox}
+                            />
                         </mesh>
                         <mesh
                             name="camera_outline"
