@@ -33,6 +33,7 @@ export default function Box({ children, ...rest }) {
     const Child = cloneElement(children, {
         extraProp: "Some extra prop",
         opacity: isCurrentBox ? 1 : children.props.opacity, // override opacity when selected
+        scale: 0.78,
     });
 
     const refClone = useMemo(() => {
