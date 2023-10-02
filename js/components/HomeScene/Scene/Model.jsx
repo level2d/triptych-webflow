@@ -123,7 +123,7 @@ function Model(props) {
     useEffect(() => {
         // Sync store
         setTriptychModelUuid(tripTychRef.current.uuid);
-    }, []);
+    }, [setTriptychModelUuid]);
 
     return (
         <group {...props} dispose={null} scale={0.1}>
