@@ -177,7 +177,7 @@ const NavArrows = ({ visible }) => {
             },
             {
                 opacity: visible ? 1 : 0,
-                y: visible ? 0 : 50,
+                y: visible ? 0 : -50,
                 zIndex: visible ? 1 : -1,
                 visibility: visible ? "visible" : "hidden",
                 duration: 0.2,
@@ -219,7 +219,7 @@ const NavBack = ({ visible }) => {
             },
             {
                 opacity: visible ? 1 : 0,
-                y: visible ? 0 : 50,
+                y: visible ? 0 : -50,
                 zIndex: visible ? 1 : -1,
                 visibility: visible ? "visible" : "hidden",
                 duration: 0.2,

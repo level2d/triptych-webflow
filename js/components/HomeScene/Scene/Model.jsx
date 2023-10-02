@@ -123,7 +123,7 @@ function Model(props) {
     useEffect(() => {
         // Sync store
         setTriptychModelUuid(tripTychRef.current.uuid);
-    }, []);
+    }, [setTriptychModelUuid]);
 
     return (
         <group {...props} dispose={null} scale={0.1}>
@@ -152,149 +152,27 @@ function Model(props) {
                 <Outlines opacity={opacity} />
             </mesh>
             {/* <mesh
-                castShadow
-                receiveShadow
                 geometry={nodes.water.geometry}
                 material={nodes.water.material}
+                position={[0, -5.565, 0]}
             /> */}
             {/* <mesh
-                castShadow
-                receiveShadow
                 geometry={nodes.location_015.geometry}
                 material={nodes.location_015.material}
-                position={[1, 1, -3]}
-            /> */}
-            <Box position={[1, 1, -3]}>
-                <CareersModel opacity={opacity} />
-            </Box>
-            {/* <mesh
-                castShadow
-                receiveShadow
-                geometry={nodes.location_001.geometry}
-                material={nodes.location_001.material}
-                position={[1, 3, -3]}
-                scale={0.5}
-            /> */}
-            <Box position={[1, 3, -3]}>
-                <EpbModel opacity={opacity} />
-            </Box>
-            {/* <mesh
-                castShadow
-                receiveShadow
-                geometry={nodes.location_002.geometry}
-                material={nodes.location_002.material}
                 position={[-3, -1, -3]}
             /> */}
             <Box position={[-3, -1, -3]}>
-                <GyroModel opacity={opacity} />
+                <CareersModel opacity={opacity} />
             </Box>
             {/* <mesh
-                castShadow
-                receiveShadow
-                geometry={nodes.location_003.geometry}
-                material={nodes.location_003.material}
-                position={[-3, 3, 1]}
+                geometry={nodes.location_014.geometry}
+                material={nodes.location_014.material}
+                position={[3, 1, 3]}
             /> */}
-            <Box position={[-3, 3, 1]}>
-                <CultureModel opacity={opacity} />
+            <Box position={[3, 1, 3]}>
+                <KeyModel opacity={opacity} />
             </Box>
             {/* <mesh
-                castShadow
-                receiveShadow
-                geometry={nodes.location_004.geometry}
-                material={nodes.location_004.material}
-                position={[-1, -1, 1]}
-                scale={0.5}
-            /> */}
-            <Box position={[-1, -1, 1]}>
-                <ShowreelModel opacity={opacity} />
-            </Box>
-            {/* <mesh
-                castShadow
-                receiveShadow
-                geometry={nodes.location_005.geometry}
-                material={nodes.location_005.material}
-                position={[3, -1, 3]}
-            /> */}
-            <Box position={[3, -1, 3]}>
-                <WorkModel opacity={opacity} />
-            </Box>
-            {/* <mesh
-                castShadow
-                receiveShadow
-                geometry={nodes.location_006.geometry}
-                material={nodes.location_006.material}
-                position={[-1, -3, 1]}
-            /> */}
-            <Box position={[-1, -3, 1]}>
-                <StoriesModel opacity={opacity} />
-            </Box>
-            {/* <mesh
-                castShadow
-                receiveShadow
-                geometry={nodes.location_007.geometry}
-                material={nodes.location_007.material}
-                position={[1, -1, -1]}
-                scale={0.5}
-            /> */}
-            <Box position={[1, -1, -1]}>
-                <ContactModel opacity={opacity} />
-            </Box>
-            {/* <mesh
-                castShadow
-                receiveShadow
-                geometry={nodes.location_008.geometry}
-                material={nodes.location_008.material}
-                position={[-1, 3, 3]}
-                scale={0.5}
-            /> */}
-            <Box position={[-1, 3, 3]}>
-                <MethodsModel opacity={opacity} />
-            </Box>
-            {/* <mesh
-                castShadow
-                receiveShadow
-                geometry={nodes.location_009.geometry}
-                material={nodes.location_009.material}
-                position={[-3, -3, -3]}
-            /> */}
-            <Box position={[-3, -3, -3]}>
-                <CdmModel opacity={opacity} />
-            </Box>
-            {/* <mesh
-                castShadow
-                receiveShadow
-                geometry={nodes.location_010.geometry}
-                material={nodes.location_010.material}
-                position={[3, 3, -1]}
-            /> */}
-            <Box position={[3, 3, -1]}>
-                <SosModel opacity={opacity} />
-            </Box>
-            {/* <mesh
-                castShadow
-                receiveShadow
-                geometry={nodes.location_011.geometry}
-                material={nodes.location_011.material}
-                position={[3, -3, -1]}
-                scale={0.5}
-            /> */}
-            <Box position={[3, -3, -1]}>
-                <NorthfaceModel opacity={opacity} />
-            </Box>
-            {/* <mesh
-                castShadow
-                receiveShadow
-                geometry={nodes.location_012.geometry}
-                material={nodes.location_012.material}
-                position={[1, -3, 1]}
-            /> */}
-            <Box position={[1, -3, 1]}>
-                <SkullModel opacity={opacity} />
-            </Box>
-            {/* <mesh
-                castShadow
-                receiveShadow
                 geometry={nodes.location_013.geometry}
                 material={nodes.location_013.material}
                 position={[-1, 1, 1]}
@@ -303,14 +181,100 @@ function Model(props) {
                 <EyeModel opacity={opacity} />
             </Box>
             {/* <mesh
-                castShadow
-                receiveShadow
-                geometry={nodes.location_014.geometry}
-                material={nodes.location_014.material}
-                position={[3, 1, 3]}
+                geometry={nodes.location_012.geometry}
+                material={nodes.location_012.material}
+                position={[1, -3, 1]}
             /> */}
-            <Box position={[3, 1, 3]}>
-                <KeyModel opacity={opacity} />
+            <Box position={[1, -3, 1]}>
+                <SkullModel opacity={opacity} />
+            </Box>
+            {/* <mesh
+                geometry={nodes.location_011.geometry}
+                material={nodes.location_011.material}
+                position={[3, -3, -1]}
+            /> */}
+            <Box position={[3, -3, -1]}>
+                <NorthfaceModel opacity={opacity} />
+            </Box>
+            {/* <mesh
+                geometry={nodes.location_010.geometry}
+                material={nodes.location_010.material}
+                position={[3, 2.767, -0.849]}
+            /> */}
+            <Box position={[3, 2.767, -0.849]}>
+                <SosModel opacity={opacity} />
+            </Box>
+            {/* <mesh
+                geometry={nodes.location_009.geometry}
+                material={nodes.location_009.material}
+                position={[-3, -3, -3]}
+            /> */}
+            <Box position={[-3, -3, -3]}>
+                <CdmModel opacity={opacity} />
+            </Box>
+            {/* <mesh
+                geometry={nodes.location_008.geometry}
+                material={nodes.location_008.material}
+                position={[-1, 2.828, 3.158]}
+            /> */}
+            <Box position={[-1, 2.828, 3.158]}>
+                <MethodsModel opacity={opacity} />
+            </Box>
+            {/* <mesh
+                geometry={nodes.location_007.geometry}
+                material={nodes.location_007.material}
+                position={[-3, 2.808, 0.883]}
+            /> */}
+            <Box position={[-3, 2.808, 0.883]}>
+                <ContactModel opacity={opacity} />
+            </Box>
+            {/* <mesh
+                geometry={nodes.location_006.geometry}
+                material={nodes.location_006.material}
+                position={[-1, -3, 1]}
+            /> */}
+            <Box position={[-1, -3, 1]}>
+                <StoriesModel opacity={opacity} />
+            </Box>
+            {/* <mesh
+                geometry={nodes.location_005.geometry}
+                material={nodes.location_005.material}
+                position={[3, -1, 3]}
+            /> */}
+            <Box position={[3, -1, 3]}>
+                <WorkModel opacity={opacity} />
+            </Box>
+            {/* <mesh
+                geometry={nodes.location_004.geometry}
+                material={nodes.location_004.material}
+                position={[-1, -1, 1]}
+            /> */}
+            <Box position={[-1, -1, 1]}>
+                <ShowreelModel opacity={opacity} />
+            </Box>
+            {/* <mesh
+                geometry={nodes.location_003.geometry}
+                material={nodes.location_003.material}
+                position={[1, -1, -1]}
+            /> */}
+            <Box position={[1, -1, -1]}>
+                <CultureModel opacity={opacity} />
+            </Box>
+            {/* <mesh
+                geometry={nodes.location_002.geometry}
+                material={nodes.location_002.material}
+                position={[1, 1, -3]}
+            /> */}
+            <Box position={[1, 1, -3]}>
+                <GyroModel opacity={opacity} />
+            </Box>
+            {/* <mesh
+                geometry={nodes.location_001.geometry}
+                material={nodes.location_001.material}
+                position={[1, 2.964, -3.531]}
+            /> */}
+            <Box position={[1, 2.964, -3.531]}>
+                <EpbModel opacity={opacity} />
             </Box>
         </group>
     );

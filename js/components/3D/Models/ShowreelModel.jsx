@@ -27,7 +27,8 @@ export default function ShowreelModel({ opacity = 1, ...props }) {
             const action = actions[name];
             switch (name) {
                 case "showreel_orbit":
-                    action.play();
+                    // temp disable this one
+                    // action.play();
                     break;
                 default:
                     break;
@@ -68,7 +69,7 @@ export default function ShowreelModel({ opacity = 1, ...props }) {
                                 opacity={opacity}
                                 boundingBox={boundingBox}
                             />
-                            {/* <Outlines /> */}
+                            <Outlines />
                             <mesh
                                 name="bezel"
                                 geometry={nodes.bezel.geometry}
@@ -84,7 +85,7 @@ export default function ShowreelModel({ opacity = 1, ...props }) {
                                     opacity={opacity}
                                     boundingBox={boundingBox}
                                 />
-                                {/* <Outlines /> */}
+                                <Outlines />
                             </mesh>
                             <mesh
                                 name="tv003"
@@ -97,7 +98,7 @@ export default function ShowreelModel({ opacity = 1, ...props }) {
                                     opacity={opacity}
                                     boundingBox={boundingBox}
                                 />
-                                {/* <Outlines /> */}
+                                <Outlines />
                             </mesh>
                         </mesh>
                     </group>
