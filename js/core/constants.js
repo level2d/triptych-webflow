@@ -1,5 +1,5 @@
 // glbs
-import box_locations_url from "@/assets/3d/box_locations_05.glb";
+import triptych_locations_url from "@/assets/3d/triptych_locations_01.glb";
 import careers_url from "@/assets/3d/careers_02.glb";
 import cdm_url from "@/assets/3d/cdm_02.glb";
 import contact_url from "@/assets/3d/contact_02.glb";
@@ -26,7 +26,7 @@ import matcap_shader_url from "@/assets/2d/matcap_02.json?url";
 
 export const GLB_ASSET_URLS = {
     // location meshes
-    Locations: box_locations_url,
+    Locations: triptych_locations_url,
     Careers: careers_url,
     CDM: cdm_url,
     Contact: contact_url,
