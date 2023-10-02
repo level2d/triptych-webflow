@@ -22,9 +22,6 @@ import work_url from "@/assets/3d/work_02.glb";
 import hatching_matcap_url from "@/assets/img/hatching_matcap_02.png";
 import matcap_rim_lit_url from "@/assets/img/matcap_rim_lit.jpg";
 
-// shaders
-import matcap_shader_url from "@/assets/2d/matcap_02.json?url";
-
 export const GLB_ASSET_URLS = {
     // location meshes
     Locations: triptych_locations_url,
@@ -50,10 +47,6 @@ export const GLB_ASSET_URLS = {
 export const TEXTURE_ASSET_URLS = {
     hatching_matcap: hatching_matcap_url,
     rim_lit_matcap: matcap_rim_lit_url,
-};
-
-export const SHADER_ASSET_URLS = {
-    matcap: matcap_shader_url,
 };
 
 export const debug = Boolean(
