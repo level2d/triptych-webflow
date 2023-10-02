@@ -122,6 +122,9 @@ export const createHomeSceneSlice = (set, get) => ({
         const boundingSphere = cameraTarget.geometry.boundingSphere.clone();
         boundingSphere.getBoundingBox(boundingBox);
 
+        // determine if camera is animating from an "up" position
+        const isFromUp = cameraPosition.y > 0;
+
         switch (direction) {
             case "up": {
                 cameraControls.normalizeRotations();
@@ -130,12 +133,6 @@ export const createHomeSceneSlice = (set, get) => ({
                     THREE.MathUtils.degToRad(-90),
                     true,
                 );
-                await cameraControls.fitToBox(cameraTarget, true, {
-                    paddingTop: paddingTop,
-                    paddingRight: paddingRight,
-                    paddingBottom: paddingBottom,
-                    paddingLeft: paddingLeft,
-                });
                 break;
             }
             case "down": {
@@ -144,18 +141,12 @@ export const createHomeSceneSlice = (set, get) => ({
                     THREE.MathUtils.degToRad(90),
                     true,
                 );
-                await cameraControls.fitToBox(cameraTarget, true, {
-                    paddingTop: paddingTop,
-                    paddingRight: paddingRight,
-                    paddingBottom: paddingBottom,
-                    paddingLeft: paddingLeft,
-                });
                 break;
             }
             case "left": {
                 await cameraControls.rotate(
                     THREE.MathUtils.degToRad(-45),
-                    THREE.MathUtils.degToRad(cameraPosition.y > 0 ? 45 : -45),
+                    THREE.MathUtils.degToRad(isFromUp ? 45 : -45),
                     true,
                 );
                 break;
@@ -164,11 +155,21 @@ export const createHomeSceneSlice = (set, get) => ({
             default: {
                 await cameraControls.rotate(
                     THREE.MathUtils.degToRad(45),
-                    THREE.MathUtils.degToRad(cameraPosition.y > 0 ? 45 : -45),
+                    THREE.MathUtils.degToRad(isFromUp ? 45 : -45),
                     true,
                 );
                 break;
             }
+        }
+
+        if (isFromUp || direction === "up") {
+            // focus camera to target when coming from an up position, or if orbiting up
+            await cameraControls.fitToBox(cameraTarget, true, {
+                paddingTop: paddingTop,
+                paddingRight: paddingRight,
+                paddingBottom: paddingBottom,
+                paddingLeft: paddingLeft,
+            });
         }
     },
     interactable: debug,
