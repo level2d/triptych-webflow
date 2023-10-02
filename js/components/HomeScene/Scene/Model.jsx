@@ -133,6 +133,9 @@ function Model(props) {
                 // material={nodes.triptych.material}
                 ref={tripTychRef}
                 visible={true}
+                onClick={(e) => {
+                    e.stopPropagation();
+                }}
             >
                 <grainShaderMaterial
                     uNoiseEnabled={uNoiseEnabled}
@@ -162,7 +165,7 @@ function Model(props) {
                 position={[-3, -1, -3]}
             /> */}
             <Box position={[-3, -1, -3]}>
-                <CareersModel opacity={opacity} />
+                <CareersModel />
             </Box>
             {/* <mesh
                 geometry={nodes.location_014.geometry}
@@ -170,7 +173,7 @@ function Model(props) {
                 position={[3, 1, 3]}
             /> */}
             <Box position={[3, 1, 3]}>
-                <KeyModel opacity={opacity} />
+                <KeyModel />
             </Box>
             {/* <mesh
                 geometry={nodes.location_013.geometry}
@@ -178,7 +181,7 @@ function Model(props) {
                 position={[-1, 1, 1]}
             /> */}
             <Box position={[-1, 1, 1]}>
-                <EyeModel opacity={opacity} />
+                <EyeModel />
             </Box>
             {/* <mesh
                 geometry={nodes.location_012.geometry}
@@ -186,7 +189,7 @@ function Model(props) {
                 position={[1, -3, 1]}
             /> */}
             <Box position={[1, -3, 1]}>
-                <SkullModel opacity={opacity} />
+                <SkullModel />
             </Box>
             {/* <mesh
                 geometry={nodes.location_011.geometry}
@@ -194,7 +197,7 @@ function Model(props) {
                 position={[3, -3, -1]}
             /> */}
             <Box position={[3, -3, -1]}>
-                <NorthfaceModel opacity={opacity} />
+                <NorthfaceModel />
             </Box>
             {/* <mesh
                 geometry={nodes.location_010.geometry}
@@ -202,7 +205,7 @@ function Model(props) {
                 position={[3, 2.767, -0.849]}
             /> */}
             <Box position={[3, 2.767, -0.849]}>
-                <SosModel opacity={opacity} />
+                <SosModel />
             </Box>
             {/* <mesh
                 geometry={nodes.location_009.geometry}
@@ -210,7 +213,7 @@ function Model(props) {
                 position={[-3, -3, -3]}
             /> */}
             <Box position={[-3, -3, -3]}>
-                <CdmModel opacity={opacity} />
+                <CdmModel />
             </Box>
             {/* <mesh
                 geometry={nodes.location_008.geometry}
@@ -218,7 +221,7 @@ function Model(props) {
                 position={[-1, 2.828, 3.158]}
             /> */}
             <Box position={[-1, 2.828, 3.158]}>
-                <MethodsModel opacity={opacity} />
+                <MethodsModel />
             </Box>
             {/* <mesh
                 geometry={nodes.location_007.geometry}
@@ -226,7 +229,7 @@ function Model(props) {
                 position={[-3, 2.808, 0.883]}
             /> */}
             <Box position={[-3, 2.808, 0.883]}>
-                <ContactModel opacity={opacity} />
+                <ContactModel />
             </Box>
             {/* <mesh
                 geometry={nodes.location_006.geometry}
@@ -234,7 +237,7 @@ function Model(props) {
                 position={[-1, -3, 1]}
             /> */}
             <Box position={[-1, -3, 1]}>
-                <StoriesModel opacity={opacity} />
+                <StoriesModel />
             </Box>
             {/* <mesh
                 geometry={nodes.location_005.geometry}
@@ -242,7 +245,7 @@ function Model(props) {
                 position={[3, -1, 3]}
             /> */}
             <Box position={[3, -1, 3]}>
-                <WorkModel opacity={opacity} />
+                <WorkModel />
             </Box>
             {/* <mesh
                 geometry={nodes.location_004.geometry}
@@ -250,7 +253,7 @@ function Model(props) {
                 position={[-1, -1, 1]}
             /> */}
             <Box position={[-1, -1, 1]}>
-                <ShowreelModel opacity={opacity} />
+                <ShowreelModel />
             </Box>
             {/* <mesh
                 geometry={nodes.location_003.geometry}
@@ -258,7 +261,7 @@ function Model(props) {
                 position={[1, -1, -1]}
             /> */}
             <Box position={[1, -1, -1]}>
-                <CultureModel opacity={opacity} />
+                <CultureModel />
             </Box>
             {/* <mesh
                 geometry={nodes.location_002.geometry}
@@ -266,7 +269,7 @@ function Model(props) {
                 position={[1, 1, -3]}
             /> */}
             <Box position={[1, 1, -3]}>
-                <GyroModel opacity={opacity} />
+                <GyroModel />
             </Box>
             {/* <mesh
                 geometry={nodes.location_001.geometry}
@@ -274,7 +277,7 @@ function Model(props) {
                 position={[1, 2.964, -3.531]}
             /> */}
             <Box position={[1, 2.964, -3.531]}>
-                <EpbModel opacity={opacity} />
+                <EpbModel />
             </Box>
         </group>
     );

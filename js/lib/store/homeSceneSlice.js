@@ -22,6 +22,9 @@ export const createHomeSceneSlice = (set, get) => ({
 
     homeSceneOpacity: debug ? 1.0 : 0.0,
 
+    isClickable: false,
+    setIsClickable: (isClickable) => set(() => ({ isClickable })),
+
     /**
      * @type {(null | string)}
      */

@@ -16,9 +16,11 @@ import { useStore } from "@/js/lib/store";
 export default function Box({ children, ...rest }) {
     const [mounted, setMounted] = useState(false);
     const scene = useThree((state) => state.scene);
+    const setIsClickable = useStore((state) => state.setIsClickable);
     const setCurrentBoxUuid = useStore((state) => state.setCurrentBoxUuid);
     const currentBoxUuid = useStore((state) => state.currentBoxUuid);
     const lookAtMeshUuid = useStore((state) => state.lookAtMeshUuid);
+    const opacity = useStore((state) => state.homeSceneOpacity);
     const lookAtVector = useRef(new THREE.Vector3());
     const ref = useRef(null);
 
@@ -30,9 +32,19 @@ export default function Box({ children, ...rest }) {
         return currentBoxUuid === ref.current?.children[0]?.uuid;
     }, [currentBoxUuid]);
 
+    const handlePointerEnter = (e) => {
+        e.stopPropagation();
+        setIsClickable(true);
+    };
+    const handlePointerLeave = (e) => {
+        e.stopPropagation();
+        setIsClickable(false);
+    };
+
     const Child = cloneElement(children, {
-        extraProp: "Some extra prop",
-        opacity: isCurrentBox ? 1 : children.props.opacity, // override opacity when selected
+        opacity: isCurrentBox ? 1 : opacity, // override opacity when selected
+        onPointerEnter: handlePointerEnter,
+        onPointerLeave: handlePointerLeave,
     });
 
     const refClone = useMemo(() => {
@@ -49,13 +61,17 @@ export default function Box({ children, ...rest }) {
         return null;
     }, [mounted, scene, lookAtMeshUuid]);
 
-    const handleClick = useCallback(() => {
-        if (!clickEnabled) return;
-        // Use the first child's uuid.
-        // Need to do this because camera controls can't target a group
-        // only a mesh or object3d.
-        setCurrentBoxUuid(ref.current.children[0].uuid);
-    }, [clickEnabled, setCurrentBoxUuid]);
+    const handleClick = useCallback(
+        (e) => {
+            if (!clickEnabled) return;
+            e.stopPropagation(); // prevent ray from hitting meshes behind this one
+            // Use the first child's uuid.
+            // Need to do this because camera controls can't target a group
+            // only a mesh or object3d.
+            setCurrentBoxUuid(ref.current.children[0].uuid);
+        },
+        [clickEnabled, setCurrentBoxUuid],
+    );
 
     useFrame(({ delta }) => {
         if (!refClone) return;
