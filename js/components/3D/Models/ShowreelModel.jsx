@@ -27,7 +27,8 @@ export default function ShowreelModel({ opacity = 1, ...props }) {
             const action = actions[name];
             switch (name) {
                 case "showreel_orbit":
-                    action.play();
+                    // temp disable this one
+                    // action.play();
                     break;
                 default:
                     break;
