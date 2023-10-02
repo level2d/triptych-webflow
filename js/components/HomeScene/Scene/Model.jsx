@@ -133,6 +133,9 @@ function Model(props) {
                 // material={nodes.triptych.material}
                 ref={tripTychRef}
                 visible={true}
+                onClick={(e) => {
+                    e.stopPropagation();
+                }}
             >
                 <grainShaderMaterial
                     uNoiseEnabled={uNoiseEnabled}

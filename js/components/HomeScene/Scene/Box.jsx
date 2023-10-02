@@ -49,13 +49,17 @@ export default function Box({ children, ...rest }) {
         return null;
     }, [mounted, scene, lookAtMeshUuid]);
 
-    const handleClick = useCallback(() => {
-        if (!clickEnabled) return;
-        // Use the first child's uuid.
-        // Need to do this because camera controls can't target a group
-        // only a mesh or object3d.
-        setCurrentBoxUuid(ref.current.children[0].uuid);
-    }, [clickEnabled, setCurrentBoxUuid]);
+    const handleClick = useCallback(
+        (e) => {
+            if (!clickEnabled) return;
+            e.stopPropagation(); // prevent ray from hitting meshes behind this one
+            // Use the first child's uuid.
+            // Need to do this because camera controls can't target a group
+            // only a mesh or object3d.
+            setCurrentBoxUuid(ref.current.children[0].uuid);
+        },
+        [clickEnabled, setCurrentBoxUuid],
+    );
 
     useFrame(({ delta }) => {
         if (!refClone) return;
