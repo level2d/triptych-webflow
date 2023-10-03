@@ -162,9 +162,9 @@ function Model(props) {
             {/* <mesh
                 geometry={nodes.location_015.geometry}
                 material={nodes.location_015.material}
-                position={[-3, -1, -3]}
+                position={[-2.882, -1, -2.792]}
             /> */}
-            <Box position={[-3, -1, -3]}>
+            <Box position={[-2.882, -1, -2.792]}>
                 <CareersModel />
             </Box>
             {/* <mesh
@@ -226,9 +226,9 @@ function Model(props) {
             {/* <mesh
                 geometry={nodes.location_007.geometry}
                 material={nodes.location_007.material}
-                position={[-3, 2.808, 0.883]}
+                position={[-3, 2.872, 0.762]}
             /> */}
-            <Box position={[-3, 2.808, 0.883]}>
+            <Box position={[-3, 2.872, 0.762]}>
                 <ContactModel />
             </Box>
             {/* <mesh
