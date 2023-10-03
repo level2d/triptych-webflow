@@ -58,7 +58,7 @@ export default function HomeScene() {
                 </Canvas>
             </div>
             {!debugModel && <Nav />}
-            {/* {!debugModel && <CurrentItemUi />} */}
+            {!debugModel && <CurrentItemUi />}
             <Leva hidden={!debug} collapsed oneLineLabels />
         </div>
     );
