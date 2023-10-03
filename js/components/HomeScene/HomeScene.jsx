@@ -7,7 +7,8 @@ import { Leva } from "leva";
 import { debug } from "@/js/core/constants";
 import { useStore } from "@/js/lib/store";
 import Loading from "./Loading";
-import Nav from "./Nav/Nav";
+import Nav from "./Nav";
+import CurrentItemUi from "./CurrentItemUi";
 import useQueryVariable from "@/js/hooks/useQueryVariable";
 
 import "../3D/Shaders";
@@ -29,8 +30,12 @@ export default function HomeScene() {
         wrapperProps["data-lenis-prevent"] = true;
     }
     return (
-        <div className={styles.wrapper}>
-            <div className={styles.canvasWrapper} {...wrapperProps} ref={ref}>
+        <div className={styles.homeScene}>
+            <div
+                className={styles.homeSceneCanvasWrapper}
+                {...wrapperProps}
+                ref={ref}
+            >
                 <Canvas
                     shadows
                     onCreated={({ get, gl }) => {
@@ -53,6 +58,7 @@ export default function HomeScene() {
                 </Canvas>
             </div>
             {!debugModel && <Nav />}
+            {/* {!debugModel && <CurrentItemUi />} */}
             <Leva hidden={!debug} collapsed oneLineLabels />
         </div>
     );
