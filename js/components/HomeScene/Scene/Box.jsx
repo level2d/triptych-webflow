@@ -17,7 +17,9 @@ export default function Box({ children, ...rest }) {
     const [mounted, setMounted] = useState(false);
     const scene = useThree((state) => state.scene);
     const setIsClickable = useStore((state) => state.setIsClickable);
-    const setCurrentBoxUuid = useStore((state) => state.setCurrentBoxUuid);
+    const setCurrentBoxFromObject3d = useStore(
+        (state) => state.setCurrentBoxFromObject3d,
+    );
     const currentBoxUuid = useStore((state) => state.currentBoxUuid);
     const lookAtMeshUuid = useStore((state) => state.lookAtMeshUuid);
     const opacity = useStore((state) => state.homeSceneOpacity);
@@ -68,9 +70,9 @@ export default function Box({ children, ...rest }) {
             // Use the first child's uuid.
             // Need to do this because camera controls can't target a group
             // only a mesh or object3d.
-            setCurrentBoxUuid(ref.current.children[0].uuid);
+            setCurrentBoxFromObject3d(ref.current.children[0]);
         },
-        [clickEnabled, setCurrentBoxUuid],
+        [clickEnabled, setCurrentBoxFromObject3d],
     );
 
     useFrame(({ delta }) => {

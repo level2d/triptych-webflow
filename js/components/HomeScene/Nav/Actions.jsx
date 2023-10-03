@@ -5,10 +5,12 @@ import { useStore } from "@/js/lib/store";
 
 export default function Actions() {
     const orbit = useStore((state) => state.orbit);
-    const resetCurrentBoxUuid = useStore((state) => state.resetCurrentBoxUuid);
+    const resetCurrentBoxState = useStore(
+        (state) => state.resetCurrentBoxState,
+    );
 
     const resetCameraTarget = () => {
-        resetCurrentBoxUuid();
+        resetCurrentBoxState();
     };
 
     useControls("Camera Actions", {
