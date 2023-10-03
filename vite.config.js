@@ -53,5 +53,10 @@ export default defineConfig((command, mode) => {
                 external: ["jquery"],
             },
         },
+        css: {
+            modules: {
+                localsConvention: "camelCase",
+            },
+        },
     };
 });

@@ -1,0 +1,41 @@
+.current-item-ui {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    height: 100%;
+    visibility: hidden;
+
+    &__inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
+
+    &__content {
+        position: relative;
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: center;
+        overflow-y: auto;
+        gap: 3.75rem;
+        padding: var(--margin);
+
+        @media screen and (min-width: 768px) {
+            max-width: 600px;
+        }
+
+        & > * {
+            z-index: var(--z-index-ui);
+        }
+    }
+
+    &__nav {
+        display: flex;
+        justify-content: start;
+        align-items: start;
+        gap: 0.5rem;
+    }
+}
