@@ -5,7 +5,7 @@ import { useLayoutEffect, useMemo, useRef } from "react";
 import gsap from "@/js/lib/gsap";
 import { useStore } from "@/js/lib/store";
 import Actions from "./Actions";
-import NavButton from "./NavButton";
+import NavButton from "../NavButton";
 
 const NavArrows = ({ visible }) => {
     const el = useRef(null);
@@ -38,12 +38,32 @@ const NavArrows = ({ visible }) => {
     return (
         <div className={styles.arrowsWrapper} ref={el}>
             <div className={styles.buttonWrapper}>
-                <NavButton direction="left" onClick={orbit} />
+                <NavButton
+                    direction="left"
+                    onClick={() => {
+                        orbit("left");
+                    }}
+                />
                 <div className={styles.middleButtons}>
-                    <NavButton direction="up" onClick={orbit} />
-                    <NavButton direction="down" onClick={orbit} />
+                    <NavButton
+                        direction="up"
+                        onClick={() => {
+                            orbit("up");
+                        }}
+                    />
+                    <NavButton
+                        direction="down"
+                        onClick={() => {
+                            orbit("down");
+                        }}
+                    />
                 </div>
-                <NavButton direction="right" onClick={orbit} />
+                <NavButton
+                    direction="right"
+                    onClick={() => {
+                        orbit("right");
+                    }}
+                />
             </div>
         </div>
     );
