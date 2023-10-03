@@ -61,12 +61,13 @@ export default function CareersModel({ opacity = 1, ...props }) {
         <group ref={group} {...props} dispose={null} onClick={handleClick}>
             <group name="Scene">
                 <group name="careers">
-                    <group name="rotation_null012">
+                    <group name="rotation_null012" rotation={[0, 1.498, 0]}>
                         <mesh
                             name="mug002"
                             geometry={nodes.mug002.geometry}
                             //   material={materials.green_01}
-                            position={[0.033, -0.017, 0.017]}
+                            position={[0.026, -0.014, 0.013]}
+                            scale={0.8}
                         >
                             <GrainMaterialYellow
                                 boundingBox={boundingBox}

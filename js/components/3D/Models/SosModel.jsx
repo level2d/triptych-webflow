@@ -75,6 +75,7 @@ export default function SosModel({ opacity = 1, ...props }) {
                                 nodes.fish.morphTargetInfluences
                             }
                             rotation={[0, -Math.PI / 6, 0]}
+                            scale={0.777}
                         >
                             <GrainMaterialRed
                                 opacity={opacity}
@@ -92,6 +93,7 @@ export default function SosModel({ opacity = 1, ...props }) {
                                 nodes.fish_outline.morphTargetInfluences
                             }
                             rotation={[0, -Math.PI / 6, 0]}
+                            scale={0.777}
                         >
                             <OutlineMaterial opacity={opacity} />
                         </mesh>
