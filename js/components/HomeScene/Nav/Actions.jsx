@@ -5,10 +5,12 @@ import { useStore } from "@/js/lib/store";
 
 export default function Actions() {
     const orbit = useStore((state) => state.orbit);
-    const resetCurrentBoxUuid = useStore((state) => state.resetCurrentBoxUuid);
+    const resetCurrentBoxState = useStore(
+        (state) => state.resetCurrentBoxState,
+    );
 
     const resetCameraTarget = () => {
-        resetCurrentBoxUuid();
+        resetCurrentBoxState();
     };
 
     useControls("Camera Actions", {
@@ -18,21 +20,7 @@ export default function Actions() {
         orbitDown: button(async () => await orbit("down")),
         resetCameraTarget: button(() => resetCameraTarget()),
     });
-    useHotkeys("esc", () => {
-        resetCurrentBoxUuid();
-    });
-    useHotkeys("up", async () => {
-        await orbit("up");
-    });
-    useHotkeys("down", async () => {
-        await orbit("down");
-    });
-    useHotkeys("right", async () => {
-        await orbit("right");
-    });
-    useHotkeys("left", async () => {
-        await orbit("left");
-    });
+
     useHotkeys("ctrl+shift+d", () => {
         const urlParams = new URLSearchParams(location.search);
         if (urlParams.has("debug")) {

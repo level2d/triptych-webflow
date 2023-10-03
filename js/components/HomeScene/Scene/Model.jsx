@@ -128,7 +128,7 @@ function Model(props) {
     return (
         <group {...props} dispose={null} scale={0.1}>
             <mesh
-                name="Triptych"
+                name="TriptychModel"
                 geometry={nodes.triptych.geometry}
                 // material={nodes.triptych.material}
                 ref={tripTychRef}

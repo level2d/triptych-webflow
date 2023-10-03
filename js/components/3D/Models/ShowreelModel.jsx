@@ -47,7 +47,7 @@ export default function ShowreelModel({ opacity = 1, ...props }) {
         setMounted(true);
     }, []);
     return (
-        <group ref={group} {...props} dispose={null}>
+        <group {...props} name="ShowreelModel" ref={group} dispose={null}>
             <group name="Scene">
                 <group name="showreel">
                     <group name="rotation_null007">

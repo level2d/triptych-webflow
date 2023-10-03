@@ -58,7 +58,13 @@ export default function CareersModel({ opacity = 1, ...props }) {
     }, []);
 
     return (
-        <group ref={group} {...props} dispose={null} onClick={handleClick}>
+        <group
+            {...props}
+            name="CareersModel"
+            ref={group}
+            dispose={null}
+            onClick={handleClick}
+        >
             <group name="Scene">
                 <group name="careers">
                     <group name="rotation_null012" rotation={[0, 1.498, 0]}>

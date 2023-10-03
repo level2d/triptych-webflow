@@ -12,7 +12,7 @@ export default function PhoneModel({ opacity = 1, ...props }) {
     const { nodes, animations } = useGLTF(GLB_ASSET_URLS.Phone);
     const { actions } = useAnimations(animations, group);
     return (
-        <group ref={group} {...props} dispose={null}>
+        <group {...props} name="PhoneModel" ref={group} dispose={null}>
             <group name="Scene">
                 <group name="phone">
                     <group name="rotation_null004">
