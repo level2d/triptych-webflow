@@ -1,7 +1,9 @@
+import { useStore } from "@/js/lib/store";
 import NavButton from "../NavButton";
 import styles from "./CurrentItemUi.module.scss";
 
 export default function CurrentItemUi() {
+    const resetCurrentBoxUuid = useStore((state) => state.resetCurrentBoxUuid);
     return (
         <div className={styles.currentItemUi}>
             <div className={styles.currentItemUiInner}>
@@ -20,7 +22,13 @@ export default function CurrentItemUi() {
                     </div>
                     {/* nav */}
                     <div className={styles.currentItemUiNav}>
-                        <NavButton direction="left"></NavButton>
+                        <NavButton
+                            direction="left"
+                            onClick={() => {
+                                resetCurrentBoxUuid();
+                            }}
+                            hotkey="esc"
+                        ></NavButton>
                         <NavButton>Check it out ↗</NavButton>
                     </div>
                 </div>
