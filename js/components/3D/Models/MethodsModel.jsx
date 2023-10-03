@@ -64,7 +64,11 @@ export default function MethodsModel({ opacity = 1, ...props }) {
             <group name="Scene">
                 <group name="methods">
                     <group name="rotation_null016">
-                        <group name="shaft" rotation={[-0.262, 0, 0]}>
+                        <group
+                            name="shaft"
+                            rotation={[-0.262, 0, 0]}
+                            scale={0.8}
+                        >
                             <mesh
                                 name="Cylinder010"
                                 geometry={nodes.Cylinder010.geometry}
