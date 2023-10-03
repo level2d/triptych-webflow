@@ -59,11 +59,7 @@ export default function SosModel({ opacity = 1, ...props }) {
         <group ref={group} {...props} dispose={null} onClick={handleClick}>
             <group name="Scene">
                 <group name="sos">
-                    <group
-                        name="rotation_null003"
-                        position={[0, -0.153, 0.307]}
-                        scale={0.972}
-                    >
+                    <group name="rotation_null003">
                         <mesh
                             name="fish"
                             geometry={nodes.fish.geometry}
