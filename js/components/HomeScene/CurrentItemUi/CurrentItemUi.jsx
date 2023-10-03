@@ -62,7 +62,7 @@ export default function CurrentItemUi() {
                             onClick={() => {
                                 resetCurrentBoxUuid();
                             }}
-                            hotkey="esc"
+                            hotkey={["esc", "left"]}
                         ></NavButton>
                         <NavButton>Check it out ↗</NavButton>
                     </div>
