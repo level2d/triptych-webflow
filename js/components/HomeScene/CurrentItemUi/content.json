@@ -1,0 +1,110 @@
+{
+    "SampleModel": {
+        "subtitle": "Subtitle",
+        "title": "Title",
+        "description": "This is a sample model",
+        "cta": {
+            "text": "Check it out",
+            "url": "http://www.google.com"
+        }
+    },
+    "WorkModel": {
+        "subtitle": "Work",
+        "title": "What we've made",
+        "description": "See examples of our passion, creativity, and dedication to client satisfaction come to life.",
+        "cta": {
+            "text": "Check it out",
+            "url": "/work"
+        }
+    },
+    "MethodsModel": {
+        "subtitle": "Methods",
+        "title": "How we make it",
+        "description": "At Triptych, our strategy, design, and development teams work in perfect unison, united by a shared purpose.",
+        "cta": {
+            "text": "Get Info",
+            "url": "/methods"
+        }
+    },
+    "CultureModel": {
+        "subtitle": "Culture",
+        "title": "Who we are",
+        "description": "Where thinkers, renegades, and jesters unite. Our culture defines who we are.",
+        "cta": {
+            "text": "Explore",
+            "url": "/culture"
+        }
+    },
+    "ShowreelModel": {
+        "subtitle": "Showreel",
+        "title": "Take a look",
+        "description": "A visual story of solutions delivered. A greatest hits compilation of work executed with excellence.",
+        "cta": {
+            "text": "Take a look",
+            "url": "/showreel"
+        }
+    },
+    "StoriesModel": {
+        "subtitle": "Stories",
+        "title": "What we’re talking about",
+        "description": "The articles featured here provide a behind-the-scenes look at Triptych's work across strategy, development, and design.",
+        "cta": {
+            "text": "Check it out",
+            "url": "/stories"
+        }
+    },
+    "SosModel": {
+        "subtitle": "Case Study",
+        "title": "A nationwide internet safety game",
+        "description": "The FBI enlisted us to build an interactive game that teaches kids how to safely search the internet.",
+        "cta": {
+            "text": "Check it out",
+            "url": "/#"
+        }
+    },
+    "ContactModel": {
+        "subtitle": "We've got ideas",
+        "title": "Let's start talking",
+        "description": "Have a project in mind? We'd love to hear more. Reach out so we can discuss how we can partner for success.",
+        "cta": {
+            "text": "New Inquiry",
+            "url": "/contact"
+        }
+    },
+    "CdmModel": {
+        "subtitle": "Case Study",
+        "title": "Bit Saves the Daytle",
+        "description": "The Creative Discovery Museum commissioned Triptych to develop an interactive touchscreen game for their museum featuring a configurable robot.",
+        "cta": {
+            "text": "Get the details",
+            "url": "/#"
+        }
+    },
+    "CareersModel": {
+        "subtitle": "Careers",
+        "title": "Want to join our team?",
+        "description": "We’re eager to welcome talented, motivated people. See open positions and apply today.",
+        "cta": {
+            "text": "View openings",
+            "url": "/careers"
+        }
+    },
+    "NorthfaceModel": {
+        "subtitle": "Case Study",
+        "title": "Mobile AR Brings Ski Run to Life",
+        "description": "Atlantic re:Think, The North Face, and Triptych recreate a Himalayan achievement.",
+        "cta": {
+            "text": "Check it out",
+            "url": "/#"
+        }
+    },
+    "EpbModel": {
+        "subtitle": "Case Study",
+        "title": "Local ISP ",
+        "description": "Chattanooga's Electric Power Board relies on our expertise to deliver a wide range of technical projects, from complex user experience design to websites like their World Quantum Day site. ",
+        "cta": {
+            "text": "Check it out",
+            "url": "/#"
+        }
+    }
+}
