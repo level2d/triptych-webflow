@@ -127,9 +127,13 @@ export const createHomeSceneSlice = (set, get) => ({
 
         // determine if camera is animating from an "up" position
         const isFromUp = cameraPosition.y > 0;
+        const isFromDown = cameraPosition.y <= 0;
 
         switch (direction) {
             case "up": {
+                if (isFromUp) {
+                    return; // short circuit if camera is from an up position
+                }
                 cameraControls.normalizeRotations();
                 await cameraControls.rotate(
                     0,
@@ -139,6 +143,9 @@ export const createHomeSceneSlice = (set, get) => ({
                 break;
             }
             case "down": {
+                if (isFromDown) {
+                    return; // short circuit if camera is from a down position
+                }
                 await cameraControls.rotate(
                     0,
                     THREE.MathUtils.degToRad(90),
