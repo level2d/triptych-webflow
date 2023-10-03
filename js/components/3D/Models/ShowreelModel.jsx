@@ -69,7 +69,7 @@ export default function ShowreelModel({ opacity = 1, ...props }) {
                                 opacity={opacity}
                                 boundingBox={boundingBox}
                             />
-                            <Outlines />
+                            <Outlines opacity={opacity} />
                             <mesh
                                 name="bezel"
                                 geometry={nodes.bezel.geometry}
@@ -85,7 +85,7 @@ export default function ShowreelModel({ opacity = 1, ...props }) {
                                     opacity={opacity}
                                     boundingBox={boundingBox}
                                 />
-                                <Outlines />
+                                <Outlines opacity={opacity} />
                             </mesh>
                             <mesh
                                 name="tv003"
@@ -98,7 +98,7 @@ export default function ShowreelModel({ opacity = 1, ...props }) {
                                     opacity={opacity}
                                     boundingBox={boundingBox}
                                 />
-                                <Outlines />
+                                <Outlines opacity={opacity} />
                             </mesh>
                         </mesh>
                     </group>

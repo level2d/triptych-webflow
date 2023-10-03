@@ -84,14 +84,15 @@ export default function ContactModel({ opacity = 1, ...props }) {
                             morphTargetInfluences={
                                 nodes.ufo002.morphTargetInfluences
                             }
-                            position={[0.001, 0.059, 0.028]}
+                            position={[0.001, 0.047, 0.022]}
                             rotation={[-0.204, 0, 0]}
+                            scale={0.8}
                         >
                             <GrainMaterialYellow
                                 opacity={opacity}
                                 boundingBox={boundingBox}
                             />
-                            <Outlines />
+                            <Outlines opacity={opacity} />
                             <mesh
                                 name="thruster_01"
                                 geometry={nodes.thruster_01.geometry}
@@ -210,7 +211,7 @@ export default function ContactModel({ opacity = 1, ...props }) {
                                     opacity={opacity}
                                     boundingBox={boundingBox}
                                 />
-                                <Outlines />
+                                <Outlines opacity={opacity} />
                             </mesh>
                         </mesh>
                     </group>
