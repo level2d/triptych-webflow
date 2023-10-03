@@ -49,7 +49,13 @@ export default function EyeModel({ opacity = 1, ...props }) {
         setMounted(true);
     }, []);
     return (
-        <group ref={group} {...props} dispose={null} onClick={handleClick}>
+        <group
+            {...props}
+            name="EyeModel"
+            ref={group}
+            dispose={null}
+            onClick={handleClick}
+        >
             <group name="Scene">
                 <group name="eye">
                     <group name="rotation_null008">

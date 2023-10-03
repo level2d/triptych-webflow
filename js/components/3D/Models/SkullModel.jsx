@@ -53,7 +53,13 @@ export default function SkullModel({ opacity = 1, ...props }) {
         setMounted(true);
     }, []);
     return (
-        <group ref={group} {...props} dispose={null} onClick={handleClick}>
+        <group
+            {...props}
+            name="SkullModel"
+            ref={group}
+            dispose={null}
+            onClick={handleClick}
+        >
             <group name="Scene">
                 <group name="skull">
                     <group name="rotation_null014">

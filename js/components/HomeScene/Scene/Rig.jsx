@@ -120,7 +120,7 @@ export default function Rig() {
             lookAtMesh.current.geometry.boundingBox.min.y;
         boxSize.current.set(boxWidth, boxHeight);
         setLookAtMeshUuid(lookAtMesh.current.uuid);
-    }, []);
+    }, [setLookAtMeshUuid]);
 
     return (
         <>

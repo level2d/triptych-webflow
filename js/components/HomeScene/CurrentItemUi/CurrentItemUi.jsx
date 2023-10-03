@@ -2,15 +2,68 @@ import { useMemo, useLayoutEffect, useRef } from "react";
 import { useStore } from "@/js/lib/store";
 import gsap from "@/js/lib/gsap";
 import NavButton from "../NavButton";
+import data from "./data.json";
 import styles from "./CurrentItemUi.module.scss";
 
 export default function CurrentItemUi() {
     const el = useRef(null);
     const currentBoxUuid = useStore((state) => state.currentBoxUuid);
-    const resetCurrentBoxUuid = useStore((state) => state.resetCurrentBoxUuid);
+    const currentBoxModelName = useStore((state) => state.currentBoxModelName);
+    const resetCurrentBoxState = useStore(
+        (state) => state.resetCurrentBoxState,
+    );
+
+    const modelData = useMemo(() => {
+        if (Object.keys(data).includes(currentBoxModelName)) {
+            return data[currentBoxModelName];
+        } else {
+            return null;
+        }
+    }, [currentBoxModelName]);
+
     const visible = useMemo(() => {
-        return typeof currentBoxUuid === "string";
+        return currentBoxUuid !== null;
     }, [currentBoxUuid]);
+
+    const renderTitle = () => {
+        if (!modelData || !modelData.subtitle || !modelData.title) {
+            return null;
+        }
+        return (
+            <div>
+                <span className="metadata">{modelData.subtitle}</span>
+                <h1 className="h1">{modelData.title}</h1>
+            </div>
+        );
+    };
+
+    const renderDescription = () => {
+        if (!modelData || !modelData.description) {
+            return null;
+        }
+        return (
+            <div className="body-display">
+                <p>{modelData.description}</p>
+            </div>
+        );
+    };
+
+    const renderNav = () => {
+        return (
+            <div className={styles.currentItemUiNav}>
+                <NavButton
+                    direction="left"
+                    onClick={() => {
+                        resetCurrentBoxState();
+                    }}
+                    hotkey={["esc", "left"]}
+                ></NavButton>
+                {modelData && modelData.cta && (
+                    <NavButton>{modelData.cta.text} ↗</NavButton>
+                )}
+            </div>
+        );
+    };
 
     useLayoutEffect(() => {
         const target = el.current;
@@ -38,34 +91,15 @@ export default function CurrentItemUi() {
     }, [visible]);
 
     return (
-        <div className={styles.currentItemUi} ref={el}>
+        <div className={styles.currentItemUi} ref={el} data-lenis-prevent>
             <div className={styles.currentItemUiInner}>
                 <div className={styles.currentItemUiContent}>
                     {/* titles */}
-                    <div>
-                        {" "}
-                        <span className="metadata">Subtitle</span>
-                        <h1 className="h1">Really Long Title With Letters</h1>
-                    </div>
+                    {renderTitle()}
                     {/* description */}
-                    <div className="body-display">
-                        <p>
-                            {
-                                "The articles featured here provide a behind-the-scenes look at Triptych's work across strategy, development, and design."
-                            }
-                        </p>
-                    </div>
+                    {renderDescription()}
                     {/* nav */}
-                    <div className={styles.currentItemUiNav}>
-                        <NavButton
-                            direction="left"
-                            onClick={() => {
-                                resetCurrentBoxUuid();
-                            }}
-                            hotkey="esc"
-                        ></NavButton>
-                        <NavButton>Check it out ↗</NavButton>
-                    </div>
+                    {renderNav()}
                 </div>
             </div>
         </div>

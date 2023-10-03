@@ -10,21 +10,30 @@
         position: relative;
         width: 100%;
         height: 100%;
+        padding: var(--margin) 0;
     }
 
     &__content {
         position: relative;
-        height: 100%;
-        width: 100%;
         display: flex;
+        height: 100%;
         flex-flow: column nowrap;
         justify-content: center;
+        overflow-x: hidden;
         overflow-y: auto;
         gap: 3.75rem;
-        padding: var(--margin);
+        padding: 0 var(--margin);
 
         @media screen and (min-width: 768px) {
             max-width: 600px;
+        }
+
+        @media screen and (min-width: 1024px) {
+            max-width: 800px;
+        }
+
+        @media screen and (min-width: 1280px) {
+            max-width: 50vw;
         }
 
         & > * {

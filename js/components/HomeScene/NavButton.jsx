@@ -136,6 +136,7 @@ export default function NavButton({
 
     useHotkeys(_hotkey, () => {
         setIsActive(true);
+        onClick();
         setTimeout(() => {
             setIsActive(false);
         }, 100);

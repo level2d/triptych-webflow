@@ -70,7 +70,13 @@ export default function ContactModel({ opacity = 1, ...props }) {
         setMounted(true);
     }, []);
     return (
-        <group ref={group} {...props} dispose={null} onClick={handleClick}>
+        <group
+            {...props}
+            name="ContactModel"
+            ref={group}
+            dispose={null}
+            onClick={handleClick}
+        >
             <group name="Scene">
                 <group name="contact">
                     <group name="rotation_null">

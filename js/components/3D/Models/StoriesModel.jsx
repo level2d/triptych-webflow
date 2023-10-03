@@ -57,7 +57,13 @@ export default function StoriesModel({ opacity = 1, ...props }) {
         setMounted(true);
     }, []);
     return (
-        <group ref={group} {...props} dispose={null} onClick={handleClick}>
+        <group
+            {...props}
+            name="StoriesModel"
+            ref={group}
+            dispose={null}
+            onClick={handleClick}
+        >
             <group name="Scene">
                 <group name="stories">
                     <group name="rotation_null010">

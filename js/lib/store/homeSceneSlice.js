@@ -5,6 +5,12 @@ import { debug } from "@/js/core/constants";
 // Local cache
 const cameraPosition = new THREE.Vector3();
 const boundingBox = new THREE.Box3();
+const INTERACTIVE_MODEL_NAMES = [
+    "EyeModel",
+    "SkullModel",
+    "KeyModel",
+    "GyroModel",
+];
 
 /**
  *
@@ -40,10 +46,15 @@ export const createHomeSceneSlice = (set, get) => ({
      */
     currentBoxUuid: null,
     /**
-     *
-     * @param {string} uuid UUID of object3d or mesh to focus
+     * @type {(null | string)}
      */
-    setCurrentBoxUuid: async (uuid) => {
+    currentBoxModelName: null,
+    /**
+     *
+     * @param {typeof import("three").Object3D} object3d Object3d to focus
+     */
+    setCurrentBoxFromObject3d: async (object3d) => {
+        const { uuid, name } = object3d;
         const obj = {
             opacity: 1.0,
         };
@@ -56,7 +67,10 @@ export const createHomeSceneSlice = (set, get) => ({
                 duration: 0.25,
                 ease: "power2.inOut",
                 onStart: () => {
-                    set(() => ({ currentBoxUuid: uuid }));
+                    set(() => ({
+                        currentBoxUuid: uuid,
+                        currentBoxModelName: name,
+                    }));
                 },
                 onUpdate: () => {
                     set({ homeSceneOpacity: obj.opacity });
@@ -64,7 +78,7 @@ export const createHomeSceneSlice = (set, get) => ({
             },
         );
     },
-    resetCurrentBoxUuid: async () => {
+    resetCurrentBoxState: async () => {
         const obj = {
             opacity: 0.0,
         };
@@ -79,7 +93,10 @@ export const createHomeSceneSlice = (set, get) => ({
                     set({ homeSceneOpacity: obj.opacity });
                 },
                 onComplete: () => {
-                    set(() => ({ currentBoxUuid: null }));
+                    set(() => ({
+                        currentBoxUuid: null,
+                        currentBoxModelName: null,
+                    }));
                 },
             },
         );
@@ -127,9 +144,13 @@ export const createHomeSceneSlice = (set, get) => ({
 
         // determine if camera is animating from an "up" position
         const isFromUp = cameraPosition.y > 0;
+        const isFromDown = cameraPosition.y <= 0;
 
         switch (direction) {
             case "up": {
+                if (isFromUp) {
+                    return; // short circuit if camera is from an up position
+                }
                 cameraControls.normalizeRotations();
                 await cameraControls.rotate(
                     0,
@@ -139,6 +160,9 @@ export const createHomeSceneSlice = (set, get) => ({
                 break;
             }
             case "down": {
+                if (isFromDown) {
+                    return; // short circuit if camera is from a down position
+                }
                 await cameraControls.rotate(
                     0,
                     THREE.MathUtils.degToRad(90),
@@ -243,8 +267,12 @@ export const createComputedHomeSceneSlice = (state) => ({
     // parent triptych model
     cameraTargetUuid: state.currentBoxUuid ?? state.triptychModelUuid,
     // decrease padding when focussing a box
-    paddingTop: state.currentBoxUuid ? 0.0 : 0.3,
+    paddingTop: state.currentBoxUuid ? 0.01 : 0.3,
     paddingRight: state.currentBoxUuid ? 0.01 : 0.1,
     paddingBottom: state.currentBoxUuid ? 0.01 : 0.4,
-    paddingLeft: state.currentBoxUuid ? 0.09 : 0.1,
+    paddingLeft: state.currentBoxUuid
+        ? INTERACTIVE_MODEL_NAMES.includes(state.currentBoxModelName)
+            ? 0.01
+            : 0.09
+        : 0.1,
 });
