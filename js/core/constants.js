@@ -1,20 +1,20 @@
 // glbs
 import triptych_locations_url from "@/assets/3d/triptych_locations_03.glb";
 import triptych_mobile_locations_url from "@/assets/3d/triptych_mobile_locations_01.glb";
-import careers_url from "@/assets/3d/careers_02.glb";
+import careers_url from "@/assets/3d/careers_03.glb";
 import cdm_url from "@/assets/3d/cdm_02.glb";
-import contact_url from "@/assets/3d/contact_03.glb";
+import contact_url from "@/assets/3d/contact_04.glb";
 import culture_url from "@/assets/3d/culture_02.glb";
 import epb_url from "@/assets/3d/epb_02.glb";
 import eye_url from "@/assets/3d/eye_02.glb";
 import gyro_url from "@/assets/3d/gyro_02.glb";
 import key_url from "@/assets/3d/key_02.glb";
-import methods_url from "@/assets/3d/methods_02.glb";
+import methods_url from "@/assets/3d/methods_03.glb";
 import northface_url from "@/assets/3d/northface_02.glb";
 import phone_url from "@/assets/3d/phone_01.glb";
 import showreel_url from "@/assets/3d/showreel_03.glb";
 import skull_url from "@/assets/3d/skull_02.glb";
-import sos_url from "@/assets/3d/sos_02.glb";
+import sos_url from "@/assets/3d/sos_03.glb";
 import stories_url from "@/assets/3d/stories_02.glb";
 import work_url from "@/assets/3d/work_02.glb";
 
