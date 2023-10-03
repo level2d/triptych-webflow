@@ -92,7 +92,7 @@ export default function ContactModel({ opacity = 1, ...props }) {
                                 opacity={opacity}
                                 boundingBox={boundingBox}
                             />
-                            <Outlines />
+                            <Outlines opacity={opacity} />
                             <mesh
                                 name="thruster_01"
                                 geometry={nodes.thruster_01.geometry}
