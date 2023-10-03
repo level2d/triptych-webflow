@@ -95,6 +95,7 @@ export default function NavButton({
     onClick = () => {},
     startingColorIndex = randomColorIndex(),
     hotkey = null,
+    children,
 }) {
     const [isActive, setIsActive] = useState(false);
     const [colorIndex, setColorIndex] = useState(null);
@@ -149,7 +150,7 @@ export default function NavButton({
             onMouseDown={handleMousedown}
             onMouseUp={handleMouseup}
         >
-            <Component />
+            {children ?? <Component />}
         </Button>
     );
 }
