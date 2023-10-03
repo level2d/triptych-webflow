@@ -41,12 +41,14 @@ export default function CurrentItemUi() {
         <div className={styles.currentItemUi} ref={el}>
             <div className={styles.currentItemUiInner}>
                 <div className={styles.currentItemUiContent}>
-                    {/* subtitle */}
-                    <div>Subtitle</div>
-                    {/* title */}
-                    <div>Really Long Title With Letters</div>
-                    {/* description */}
+                    {/* titles */}
                     <div>
+                        {" "}
+                        <span className="metadata">Subtitle</span>
+                        <h1 className="h1">Really Long Title With Letters</h1>
+                    </div>
+                    {/* description */}
+                    <div className="body-display">
                         <p>
                             {
                                 "The articles featured here provide a behind-the-scenes look at Triptych's work across strategy, development, and design."

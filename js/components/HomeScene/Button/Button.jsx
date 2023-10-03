@@ -13,7 +13,10 @@ export default function Button({
     }, [theme]);
 
     return (
-        <button className={cx(styles.button, themeClassname)} {...props}>
+        <button
+            className={cx("caption-regular", styles.button, themeClassname)}
+            {...props}
+        >
             {children}
         </button>
     );
