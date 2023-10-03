@@ -38,14 +38,14 @@ export default function CurrentItemUi() {
     }, [visible]);
 
     return (
-        <div className={styles.currentItemUi} ref={el}>
+        <div className={styles.currentItemUi} ref={el} data-lenis-prevent>
             <div className={styles.currentItemUiInner}>
                 <div className={styles.currentItemUiContent}>
                     {/* titles */}
                     <div>
                         {" "}
                         <span className="metadata">Subtitle</span>
-                        <h1 className="h1">Really Long Title With Letters</h1>
+                        <h1 className="h1">Big Title</h1>
                     </div>
                     {/* description */}
                     <div className="body-display">
