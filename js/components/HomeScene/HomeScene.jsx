@@ -22,7 +22,6 @@ const Scene = lazy(() => {
 const DebugModelScene = lazy(() => import("./DebugModelScene"));
 
 export default function HomeScene() {
-    const ref = useRef(null);
     const setGetR3fStore = useStore((state) => state.setGetR3fStore);
     const wrapperProps = {};
     const debugModel = useQueryVariable("debugModel");
@@ -31,11 +30,7 @@ export default function HomeScene() {
     }
     return (
         <div className={styles.homeScene}>
-            <div
-                className={styles.homeSceneCanvasWrapper}
-                {...wrapperProps}
-                ref={ref}
-            >
+            <div className={styles.homeSceneCanvasWrapper} {...wrapperProps}>
                 <Canvas
                     shadows
                     onCreated={({ get, gl }) => {
