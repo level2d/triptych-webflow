@@ -55,6 +55,12 @@ export const createHomeSceneSlice = (set, get) => ({
      */
     setCurrentBoxFromObject3d: async (object3d) => {
         const { uuid, name } = object3d;
+
+        set(() => ({
+            currentBoxUuid: uuid,
+            currentBoxModelName: name,
+        }));
+
         const obj = {
             opacity: 1.0,
         };
@@ -65,13 +71,8 @@ export const createHomeSceneSlice = (set, get) => ({
             {
                 opacity: 0.0,
                 duration: 0.25,
+                delay: 0.4,
                 ease: "power2.inOut",
-                onStart: () => {
-                    set(() => ({
-                        currentBoxUuid: uuid,
-                        currentBoxModelName: name,
-                    }));
-                },
                 onUpdate: () => {
                     set({ homeSceneOpacity: obj.opacity });
                 },
@@ -82,6 +83,7 @@ export const createHomeSceneSlice = (set, get) => ({
         const obj = {
             opacity: 0.0,
         };
+
         gsap.fromTo(
             obj,
             { opacity: 0.0 },
@@ -93,10 +95,12 @@ export const createHomeSceneSlice = (set, get) => ({
                     set({ homeSceneOpacity: obj.opacity });
                 },
                 onComplete: () => {
-                    set(() => ({
-                        currentBoxUuid: null,
-                        currentBoxModelName: null,
-                    }));
+                    setTimeout(() => {
+                        set(() => ({
+                            currentBoxUuid: null,
+                            currentBoxModelName: null,
+                        }));
+                    }, 200);
                 },
             },
         );
