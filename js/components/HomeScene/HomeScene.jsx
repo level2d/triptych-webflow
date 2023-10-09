@@ -1,6 +1,6 @@
 import styles from "./HomeScene.module.scss";
 
-import { Suspense, lazy, useRef } from "react";
+import { Suspense, lazy } from "react";
 import { Canvas } from "@react-three/fiber";
 import { Leva } from "leva";
 
