@@ -3,6 +3,9 @@ import dom from "./dom";
 export const black = getComputedStyle(dom.document[0]).getPropertyValue(
     "--color-black",
 );
+export const outlineBlack = getComputedStyle(dom.document[0]).getPropertyValue(
+    "--color-outline-black",
+);
 export const white = getComputedStyle(dom.document[0]).getPropertyValue(
     "--color-white",
 );
