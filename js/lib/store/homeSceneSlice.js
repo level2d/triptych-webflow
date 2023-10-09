@@ -76,10 +76,15 @@ export const createHomeSceneSlice = (set, get) => ({
                 onUpdate: () => {
                     set({ homeSceneOpacity: obj.opacity });
                 },
+                onComplete: () => {
+                    set({ currentItemUiVisible: true });
+                },
             },
         );
     },
     resetCurrentBoxState: async () => {
+        set({ currentItemUiVisible: false });
+
         const obj = {
             opacity: 0.0,
         };
@@ -105,6 +110,12 @@ export const createHomeSceneSlice = (set, get) => ({
             },
         );
     },
+
+    /**
+     * @type {boolean}
+     * @description Whether the current item ui is visible or not
+     */
+    currentItemUiVisible: false,
 
     /**
      * @type {(null | string)}

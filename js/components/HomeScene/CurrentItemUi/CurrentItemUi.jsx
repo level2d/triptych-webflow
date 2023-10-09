@@ -7,8 +7,8 @@ import styles from "./CurrentItemUi.module.scss";
 
 export default function CurrentItemUi() {
     const el = useRef(null);
-    const currentBoxUuid = useStore((state) => state.currentBoxUuid);
     const currentBoxModelName = useStore((state) => state.currentBoxModelName);
+    const visible = useStore((state) => state.currentItemUiVisible);
     const resetCurrentBoxState = useStore(
         (state) => state.resetCurrentBoxState,
     );
@@ -20,10 +20,6 @@ export default function CurrentItemUi() {
             return null;
         }
     }, [currentBoxModelName]);
-
-    const visible = useMemo(() => {
-        return currentBoxUuid !== null;
-    }, [currentBoxUuid]);
 
     const renderTitle = () => {
         if (!modelData || !modelData.subtitle || !modelData.title) {
