@@ -188,7 +188,7 @@ export const createHomeSceneSlice = (set, get) => ({
             case "left": {
                 await cameraControls.rotate(
                     THREE.MathUtils.degToRad(-45),
-                    THREE.MathUtils.degToRad(isFromUp ? 45 : -45),
+                    THREE.MathUtils.degToRad(isFromUp ? 35 : -35),
                     true,
                 );
                 break;
@@ -197,7 +197,7 @@ export const createHomeSceneSlice = (set, get) => ({
             default: {
                 await cameraControls.rotate(
                     THREE.MathUtils.degToRad(45),
-                    THREE.MathUtils.degToRad(isFromUp ? 45 : -45),
+                    THREE.MathUtils.degToRad(isFromUp ? 35 : -35),
                     true,
                 );
                 break;
@@ -259,7 +259,7 @@ export const createHomeSceneSlice = (set, get) => ({
 
         await cameraControls.rotate(
             THREE.MathUtils.degToRad(-45),
-            THREE.MathUtils.degToRad(-45),
+            THREE.MathUtils.degToRad(-35),
             true,
         );
 
@@ -267,7 +267,7 @@ export const createHomeSceneSlice = (set, get) => ({
 
         await cameraControls.rotate(
             THREE.MathUtils.degToRad(-45),
-            THREE.MathUtils.degToRad(45),
+            THREE.MathUtils.degToRad(35),
             true,
         );
 

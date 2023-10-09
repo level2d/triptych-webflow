@@ -6,7 +6,7 @@ import * as colors from "@/js/core/colors";
 export default function Outlines({ children, opacity = 1 }) {
     const { outlineThickness, outlineColor } = useControls("Outlines", {
         outlineColor: {
-            value: colors.black,
+            value: colors.black2,
         },
         outlineThickness: {
             value: 0.02,
