@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useGLTF } from "@react-three/drei";
 import { GLB_ASSET_URLS } from "@/js/core/constants";
 import { useControls, folder } from "leva";
@@ -115,6 +115,11 @@ function Model(props) {
             }),
         }),
     });
+
+    const visible = useMemo(() => {
+        return opacity > 0;
+    }, [opacity]);
+
     useEffect(() => {
         nodes.triptych.geometry.computeBoundingBox();
         setBoundingBox(nodes.triptych.geometry.boundingBox);
@@ -132,7 +137,7 @@ function Model(props) {
                 geometry={nodes.triptych.geometry}
                 // material={nodes.triptych.material}
                 ref={tripTychRef}
-                visible={true}
+                visible={visible}
                 onClick={(e) => {
                     e.stopPropagation();
                 }}
@@ -152,7 +157,7 @@ function Model(props) {
                     opacity={opacity}
                     transparent
                 />
-                <Outlines opacity={opacity} />
+                <Outlines opacity={opacity} visible={visible} />
             </mesh>
             {/* <mesh
                 geometry={nodes.water.geometry}
