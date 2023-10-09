@@ -5,7 +5,7 @@ import { GLB_ASSET_URLS } from "@/js/core/constants";
 import { useControls, folder } from "leva";
 import { useStore } from "@/js/lib/store";
 
-import { GrainShaderMaterial } from "../../3D/Shaders";
+// import { GrainShaderMaterialC } from "../../3D/Shaders";
 
 function ReflectionModel(props) {
     const { nodes /*, materials */ } = useGLTF(GLB_ASSET_URLS.Locations);
@@ -14,7 +14,6 @@ function ReflectionModel(props) {
         min: new THREE.Vector3(0, 0, 0),
         max: new THREE.Vector3(1, 1, 1),
     });
-    const tripTychRef = useRef(null);
     const grainShaderMaterialRef = useRef();
     // const {
     //     uNoiseScale,
@@ -134,7 +133,7 @@ function ReflectionModel(props) {
                     opacity={opacity}
                     transparent
                 /> */}
-                <meshBasicMaterial color="#000000" />
+                <grainShaderMaterialC />
             </mesh>
         </group>
     );
