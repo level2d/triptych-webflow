@@ -49,13 +49,16 @@ export default function CurrentItemUi() {
             <div className={styles.currentItemUiNav}>
                 <NavButton
                     direction="left"
+                    enabled={visible}
                     onClick={() => {
                         resetCurrentBoxState();
                     }}
                     hotkey={["esc", "left"]}
                 ></NavButton>
                 {modelData && modelData.cta && (
-                    <NavButton>{modelData.cta.text} ↗</NavButton>
+                    <NavButton hotkey="enter" enabled={visible}>
+                        {modelData.cta.text} ↗
+                    </NavButton>
                 )}
             </div>
         );
