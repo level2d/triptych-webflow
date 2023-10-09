@@ -122,14 +122,6 @@ export default function Rig() {
         setLookAtMeshUuid(lookAtMesh.current.uuid);
     }, [setLookAtMeshUuid]);
 
-    const controls = useThree((state) => state.controls);
-    useEffect(() => {
-        if (controls) {
-            window.THREE = THREE;
-            window.controls = controls;
-        }
-    }, [controls]);
-
     return (
         <>
             {/* camera */}
