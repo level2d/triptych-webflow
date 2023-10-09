@@ -23,6 +23,7 @@ import {
     StoriesModel,
     WorkModel,
 } from "@/js/components/3D/Models";
+import ReflectionModel from "./ReflectionModel";
 import { Outlines } from "@/js/components/3D/Common";
 import { GrainShaderMaterial } from "../../3D/Shaders";
 
@@ -164,6 +165,7 @@ function Model(props) {
                 material={nodes.water.material}
                 position={[0, -5.565, 0]}
             /> */}
+            <ReflectionModel />
             {/* <mesh
                 geometry={nodes.location_015.geometry}
                 material={nodes.location_015.material}
