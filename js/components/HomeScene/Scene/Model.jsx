@@ -75,16 +75,16 @@ function Model(props) {
             Gradient: folder({
                 uGradientEnabled: true,
                 uGradientStop: {
-                    value: 0.02,
+                    value: 0.04,
                     min: 0.0,
                     max: 0.5,
                     step: 0.01,
                 },
                 uGradientColorA: {
                     value: {
-                        r: 255,
-                        g: 255,
-                        b: 255,
+                        r: 147,
+                        g: 147,
+                        b: 147,
                     },
                     onChange: (v) => {
                         const color = new THREE.Vector3(
@@ -98,9 +98,9 @@ function Model(props) {
                 },
                 uGradientColorB: {
                     value: {
-                        r: 119,
-                        g: 119,
-                        b: 119,
+                        r: 23,
+                        g: 23,
+                        b: 23,
                     },
                     onChange: (v) => {
                         const color = new THREE.Vector3(
