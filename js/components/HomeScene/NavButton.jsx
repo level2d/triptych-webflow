@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 import Button, { BUTTON_THEMES } from "@/js/components/HomeScene/Button";
 
@@ -91,6 +91,7 @@ const ARROWS = {
 };
 
 export default function NavButton({
+    enabled = true,
     direction = "left",
     onClick = () => {},
     startingColorIndex = randomColorIndex(),
@@ -134,13 +135,18 @@ export default function NavButton({
         }, 100);
     };
 
-    useHotkeys(_hotkey, () => {
-        setIsActive(true);
-        onClick();
-        setTimeout(() => {
-            setIsActive(false);
-        }, 100);
-    });
+    useHotkeys(
+        _hotkey,
+        () => {
+            setIsActive(true);
+            onClick();
+            setTimeout(() => {
+                setIsActive(false);
+            }, 100);
+        },
+        { enabled },
+        [enabled],
+    );
 
     return (
         <Button
