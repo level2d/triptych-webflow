@@ -6,6 +6,9 @@ export const black = getComputedStyle(dom.document[0]).getPropertyValue(
 export const black2 = getComputedStyle(dom.document[0]).getPropertyValue(
     "--color-black-2",
 );
+export const black3 = getComputedStyle(dom.document[0]).getPropertyValue(
+    "--color-black-3",
+);
 export const white = getComputedStyle(dom.document[0]).getPropertyValue(
     "--color-white",
 );
