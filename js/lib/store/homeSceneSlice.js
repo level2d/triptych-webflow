@@ -168,7 +168,7 @@ export const createHomeSceneSlice = (set, get) => ({
         const isFromRightUp = isFromRight && cameraPosition.y > 0;
         const isFromLeftUp = isFromLeft && cameraPosition.y > 0;
         const isFromHorizontalUp = isFromLeftUp || isFromRightUp;
-        console.log({ isFromUp, isFromDown, isFromRight, isFromLeft });
+
         switch (direction) {
             case "up": {
                 if (isFromUp || isFromLeft || isFromRight) {
