@@ -1,4 +1,8 @@
-.arrows-wrapper {
+.arrows {
+    --gap: 1rem;
+    display: flex;
+    justify-content: space-between;
+    gap: var(--gap);
     position: absolute;
     bottom: var(--margin);
     left: var(--margin);
@@ -15,7 +19,7 @@
 .button-wrapper {
     position: relative;
     display: flex;
-    gap: 0.5rem;
+    gap: var(--gap);
     flex-flow: row nowrap;
     align-items: end;
 }
@@ -23,5 +27,16 @@
 .middle-buttons {
     display: flex;
     flex-flow: column nowrap;
-    gap: 0.5rem;
+    gap: var(--gap);
+}
+
+.text-wrapper {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: flex-start;
+    justify-content: flex-end;
+}
+
+.text {
+    padding: 0.5rem 0;
 }
