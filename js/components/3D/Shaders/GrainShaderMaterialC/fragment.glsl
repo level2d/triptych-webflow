@@ -16,6 +16,7 @@ uniform bool uPerlinEnabled;
 uniform float uPerlinResolution;
 uniform float uPerlinYScale;
 uniform float uPerlinSpeed;
+uniform float uPerlinLightenFactor;
 uniform sampler2D uMatcapTexture;
 uniform float uNoiseScale;
 uniform vec3 uGradientColorA;
@@ -216,7 +217,7 @@ void main() {
     vec3 color = vec3(0, 0, 0);
 
     if(uPerlinEnabled) {
-        color += perlinColor;
+        color += perlinColor * vec3(uPerlinLightenFactor);
     }
 
     if(uMatcapEnabled) {

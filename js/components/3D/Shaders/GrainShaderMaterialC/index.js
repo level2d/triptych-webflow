@@ -18,6 +18,7 @@ export const GrainShaderMaterialC = shaderMaterial(
         uPerlinResolution: 1,
         uPerlinSpeed: 0.1,
         uPerlinYScale: 1.0,
+        uPerlinLightenFactor: 0.5,
         // matcap pass
         uMatcapEnabled: true,
         uMatcapTexture: matcapTexture,
