@@ -24,7 +24,7 @@ import {
     WorkModel,
 } from "@/js/components/3D/Models";
 import { Outlines2 } from "@/js/components/3D/Common";
-import { GrainShaderMaterial } from "../../3D/Shaders";
+import { TriptychShaderMaterial } from "../../3D/Shaders";
 import ReflectionModel from "./ReflectionModel";
 
 function Model(props) {
@@ -38,7 +38,7 @@ function Model(props) {
         max: new THREE.Vector3(1, 1, 1),
     });
     const tripTychRef = useRef(null);
-    const grainShaderMaterialRef = useRef();
+    const triptychShaderMaterialRef = useRef();
     const {
         uNoiseScale,
         uNoiseContrast,
@@ -93,7 +93,7 @@ function Model(props) {
                             v.g,
                             v.b,
                         ).divideScalar(255);
-                        grainShaderMaterialRef.current.uniforms.uGradientColorA.value =
+                        triptychShaderMaterialRef.current.uniforms.uGradientColorA.value =
                             color;
                     },
                 },
@@ -109,7 +109,7 @@ function Model(props) {
                             v.g,
                             v.b,
                         ).divideScalar(255);
-                        grainShaderMaterialRef.current.uniforms.uGradientColorB.value =
+                        triptychShaderMaterialRef.current.uniforms.uGradientColorB.value =
                             color;
                     },
                 },
@@ -143,7 +143,7 @@ function Model(props) {
                     e.stopPropagation();
                 }}
             >
-                <grainShaderMaterial
+                <triptychShaderMaterial
                     uNoiseEnabled={uNoiseEnabled}
                     uNoiseScale={uNoiseScale}
                     uNoiseScalarDistanceFactor={uNoiseScalarDistanceFactor}
@@ -153,8 +153,8 @@ function Model(props) {
                     uGradientStop={uGradientStop}
                     uMatcapEnabled={uMatcapEnabled}
                     uGradientEnabled={uGradientEnabled}
-                    ref={grainShaderMaterialRef}
-                    key={GrainShaderMaterial.key}
+                    ref={triptychShaderMaterialRef}
+                    key={TriptychShaderMaterial.key}
                     opacity={opacity}
                     transparent
                 />
