@@ -13,10 +13,15 @@ const matcapTexture = new THREE.TextureLoader().load(
 export const GrainShaderMaterialC = shaderMaterial(
     // Uniform
     {
+        time: 1.0,
+        uPerlinEnabled: true,
+        uPerlinResolution: 1,
+        uPerlinSpeed: 0.1,
+        uPerlinYScale: 1.0,
         // matcap pass
         uMatcapEnabled: true,
         uMatcapTexture: matcapTexture,
-        // color pass
+        // gradient pass
         uGradientEnabled: true,
         uBoundingBoxMin: new THREE.Vector3(0, 0, 0),
         uBoundingBoxMax: new THREE.Vector3(1, 1, 1),
@@ -29,6 +34,10 @@ export const GrainShaderMaterialC = shaderMaterial(
         uNoiseContrast: 1.5,
         uNoiseScalarDistanceFactor: 1.5,
         opacity: 1.0,
+        // color clamp pass
+        uClampColorEnabled: true,
+        uClampColorMin: new THREE.Vector3(0, 0, 0),
+        uClampColorMax: new THREE.Vector3(1, 1, 1),
     },
     // Vertex Shader
     `${vertexShaderCode}`,
