@@ -4,12 +4,12 @@ import { useControls } from "leva";
 import * as colors from "@/js/core/colors";
 
 export default function Outlines({ children, opacity = 1 }) {
-    const { outlineThickness, outlineColor } = useControls("Outlines", {
+    const { outlineThickness, outlineColor } = useControls("Model Outlines", {
         outlineColor: {
-            value: colors.black,
+            value: colors.black2,
         },
         outlineThickness: {
-            value: 0.02,
+            value: 0.01,
             step: 0.01,
             min: 0.01,
             max: 0.1,

@@ -127,11 +127,14 @@ export const createHomeSceneSlice = (set, get) => ({
      */
     setLookAtMeshUuid: (uuid) => set(() => ({ lookAtMeshUuid: uuid })),
 
+    lastOrbitDirection: "down",
+
     /**
      *
      * @param {direction} direction To orbit camera to
      */
     orbit: async (direction) => {
+        const lastOrbitDirection = get().lastOrbitDirection;
         const cameraControls = get().getR3fStore().controls;
         if (!cameraControls) return;
 
@@ -158,13 +161,26 @@ export const createHomeSceneSlice = (set, get) => ({
         boundingSphere.getBoundingBox(boundingBox);
 
         // determine if camera is animating from an "up" position
-        const isFromUp = cameraPosition.y > 0;
-        const isFromDown = cameraPosition.y <= 0;
-
+        const isFromUp = lastOrbitDirection === "up";
+        const isFromDown = lastOrbitDirection === "down";
+        const isFromRight = lastOrbitDirection === "right";
+        const isFromLeft = lastOrbitDirection === "left";
+        const isFromRightUp = isFromRight && cameraPosition.y > 0;
+        const isFromLeftUp = isFromLeft && cameraPosition.y > 0;
+        const isFromHorizontalUp = isFromLeftUp || isFromRightUp;
+        console.log({
+            isFromUp,
+            isFromDown,
+            isFromRight,
+            isFromLeft,
+            isFromRightUp,
+            isFromLeftUp,
+            isFromHorizontalUp,
+        });
         switch (direction) {
             case "up": {
-                if (isFromUp) {
-                    return; // short circuit if camera is from an up position
+                if (isFromUp || isFromHorizontalUp) {
+                    return; // short circuit
                 }
                 cameraControls.normalizeRotations();
                 await cameraControls.rotate(
@@ -175,8 +191,8 @@ export const createHomeSceneSlice = (set, get) => ({
                 break;
             }
             case "down": {
-                if (isFromDown) {
-                    return; // short circuit if camera is from a down position
+                if (isFromDown || isFromLeft || isFromRight) {
+                    return; // short circuit
                 }
                 await cameraControls.rotate(
                     0,
@@ -186,25 +202,27 @@ export const createHomeSceneSlice = (set, get) => ({
                 break;
             }
             case "left": {
+                if (isFromUp) return;
                 await cameraControls.rotate(
                     THREE.MathUtils.degToRad(-45),
-                    THREE.MathUtils.degToRad(isFromUp ? 45 : -45),
+                    THREE.MathUtils.degToRad(isFromHorizontalUp ? 35 : -35),
                     true,
                 );
                 break;
             }
             case "right":
             default: {
+                if (isFromUp) return;
                 await cameraControls.rotate(
                     THREE.MathUtils.degToRad(45),
-                    THREE.MathUtils.degToRad(isFromUp ? 45 : -45),
+                    THREE.MathUtils.degToRad(isFromHorizontalUp ? 35 : -35),
                     true,
                 );
                 break;
             }
         }
 
-        if (isFromUp || direction === "up") {
+        if (direction === "up" || isFromHorizontalUp) {
             // focus camera to target when coming from an up position, or if orbiting up
             await cameraControls.fitToBox(cameraTarget, true, {
                 paddingTop: paddingTop,
@@ -213,30 +231,13 @@ export const createHomeSceneSlice = (set, get) => ({
                 paddingLeft: paddingLeft,
             });
         }
+
+        set({ lastOrbitDirection: direction });
     },
     interactable: debug,
     introPlayed: false,
     intro: async () => {
-        const cameraControls = get().getR3fStore().controls;
-        if (!cameraControls) return;
-
-        const scene = get().getR3fStore().scene;
-        const cameraTargetUuid = get().cameraTargetUuid;
-        const cameraTarget = scene.getObjectByProperty(
-            "uuid",
-            cameraTargetUuid,
-        );
-
-        if (!cameraTarget.geometry) return;
-
-        // Store camera position to local Vector3
-        cameraControls.getPosition(cameraPosition, true);
-        // Calc bounds of camera target
-        cameraTarget.geometry.computeBoundingSphere();
-
-        // Store bounding box to local Box3
-        const boundingSphere = cameraTarget.geometry.boundingSphere.clone();
-        boundingSphere.getBoundingBox(boundingBox);
+        if (get().introPlayed) return;
 
         const obj = {
             opacity: 0.0,
@@ -252,28 +253,12 @@ export const createHomeSceneSlice = (set, get) => ({
                 onUpdate: () => {
                     set({ homeSceneOpacity: obj.opacity });
                 },
+                onComplete: async () => {
+                    await get().orbit("right");
+                    set({ introPlayed: true, interactable: true });
+                },
             },
         );
-
-        cameraControls.smoothTime = 0.5;
-
-        await cameraControls.rotate(
-            THREE.MathUtils.degToRad(-45),
-            THREE.MathUtils.degToRad(-45),
-            true,
-        );
-
-        cameraControls.smoothTime = 0.25; // reset back to default
-
-        await cameraControls.rotate(
-            THREE.MathUtils.degToRad(-45),
-            THREE.MathUtils.degToRad(45),
-            true,
-        );
-
-        cameraControls.normalizeRotations();
-
-        set({ introPlayed: true, interactable: true });
     },
 });
 
