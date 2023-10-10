@@ -586,6 +586,10 @@ export const GrainMaterialVioletDark = ({ boundingBox, opacity = 1 }) => {
 
 export const OutlineMaterial = ({ opacity = 1 }) => {
     return (
-        <meshBasicMaterial color={colors.black} transparent opacity={opacity} />
+        <meshBasicMaterial
+            color={colors.black2}
+            transparent
+            opacity={opacity}
+        />
     );
 };
