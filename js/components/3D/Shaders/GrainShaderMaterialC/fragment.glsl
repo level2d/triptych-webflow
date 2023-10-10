@@ -1,3 +1,6 @@
+// Perlin shader
+// https://shaderfrog.com/app/view/50
+
 // Matcap shader
 // @see: https://www.clicktorelease.com/blog/creating-spherical-environment-mapping-shader/
 
