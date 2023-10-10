@@ -217,26 +217,7 @@ export const createHomeSceneSlice = (set, get) => ({
     interactable: debug,
     introPlayed: false,
     intro: async () => {
-        const cameraControls = get().getR3fStore().controls;
-        if (!cameraControls) return;
-
-        const scene = get().getR3fStore().scene;
-        const cameraTargetUuid = get().cameraTargetUuid;
-        const cameraTarget = scene.getObjectByProperty(
-            "uuid",
-            cameraTargetUuid,
-        );
-
-        if (!cameraTarget.geometry) return;
-
-        // Store camera position to local Vector3
-        cameraControls.getPosition(cameraPosition, true);
-        // Calc bounds of camera target
-        cameraTarget.geometry.computeBoundingSphere();
-
-        // Store bounding box to local Box3
-        const boundingSphere = cameraTarget.geometry.boundingSphere.clone();
-        boundingSphere.getBoundingBox(boundingBox);
+        if (get().introPlayed) return;
 
         const obj = {
             opacity: 0.0,
@@ -255,23 +236,7 @@ export const createHomeSceneSlice = (set, get) => ({
             },
         );
 
-        cameraControls.smoothTime = 0.5;
-
-        await cameraControls.rotate(
-            THREE.MathUtils.degToRad(-45),
-            THREE.MathUtils.degToRad(-35),
-            true,
-        );
-
-        cameraControls.smoothTime = 0.25; // reset back to default
-
-        await cameraControls.rotate(
-            THREE.MathUtils.degToRad(-45),
-            THREE.MathUtils.degToRad(35),
-            true,
-        );
-
-        cameraControls.normalizeRotations();
+        await get().orbit("right");
 
         set({ introPlayed: true, interactable: true });
     },
