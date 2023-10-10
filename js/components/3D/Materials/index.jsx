@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { useControls, folder } from "leva";
 import { useRef } from "react";
-
+import { ItemShaderMaterial } from "../Shaders";
 import * as colors from "@/js/core/colors";
 
 export const ItemMaterialRed = ({ boundingBox, opacity = 1 }) => {
@@ -85,6 +85,7 @@ export const ItemMaterialRed = ({ boundingBox, opacity = 1 }) => {
     });
     return (
         <itemShaderMaterial
+            key={ItemShaderMaterial.key}
             uBoundingBoxMin={boundingBox.min}
             uBoundingBoxMax={boundingBox.max}
             uNoiseScale={uNoiseScale}
@@ -182,6 +183,7 @@ export const ItemMaterialRedDark = ({ boundingBox, opacity = 1 }) => {
     });
     return (
         <itemShaderMaterial
+            key={ItemShaderMaterial.key}
             uBoundingBoxMin={boundingBox.min}
             uBoundingBoxMax={boundingBox.max}
             uNoiseScale={uNoiseScale}
@@ -278,6 +280,7 @@ export const ItemMaterialYellow = ({ boundingBox, opacity = 1 }) => {
     });
     return (
         <itemShaderMaterial
+            key={ItemShaderMaterial.key}
             uBoundingBoxMin={boundingBox.min}
             uBoundingBoxMax={boundingBox.max}
             uNoiseScale={uNoiseScale}
@@ -375,6 +378,7 @@ export const ItemMaterialYellowDark = ({ boundingBox, opacity = 1 }) => {
     });
     return (
         <itemShaderMaterial
+            key={ItemShaderMaterial.key}
             uBoundingBoxMin={boundingBox.min}
             uBoundingBoxMax={boundingBox.max}
             uNoiseScale={uNoiseScale}
@@ -471,6 +475,7 @@ export const ItemMaterialViolet = ({ boundingBox, opacity = 1 }) => {
     });
     return (
         <itemShaderMaterial
+            key={ItemShaderMaterial.key}
             uBoundingBoxMin={boundingBox.min}
             uBoundingBoxMax={boundingBox.max}
             uNoiseScale={uNoiseScale}
@@ -568,6 +573,7 @@ export const ItemMaterialVioletDark = ({ boundingBox, opacity = 1 }) => {
     });
     return (
         <itemShaderMaterial
+            key={ItemShaderMaterial.key}
             uBoundingBoxMin={boundingBox.min}
             uBoundingBoxMax={boundingBox.max}
             uNoiseScale={uNoiseScale}
