@@ -84,7 +84,7 @@ export const GrainMaterialRed = ({ boundingBox, opacity = 1 }) => {
         }),
     });
     return (
-        <grainShaderMaterialB
+        <itemShaderMaterial
             uBoundingBoxMin={boundingBox.min}
             uBoundingBoxMax={boundingBox.max}
             uNoiseScale={uNoiseScale}
@@ -181,7 +181,7 @@ export const GrainMaterialRedDark = ({ boundingBox, opacity = 1 }) => {
         }),
     });
     return (
-        <grainShaderMaterialB
+        <itemShaderMaterial
             uBoundingBoxMin={boundingBox.min}
             uBoundingBoxMax={boundingBox.max}
             uNoiseScale={uNoiseScale}
@@ -277,7 +277,7 @@ export const GrainMaterialYellow = ({ boundingBox, opacity = 1 }) => {
         }),
     });
     return (
-        <grainShaderMaterialB
+        <itemShaderMaterial
             uBoundingBoxMin={boundingBox.min}
             uBoundingBoxMax={boundingBox.max}
             uNoiseScale={uNoiseScale}
@@ -374,7 +374,7 @@ export const GrainMaterialYellowDark = ({ boundingBox, opacity = 1 }) => {
         }),
     });
     return (
-        <grainShaderMaterialB
+        <itemShaderMaterial
             uBoundingBoxMin={boundingBox.min}
             uBoundingBoxMax={boundingBox.max}
             uNoiseScale={uNoiseScale}
@@ -470,7 +470,7 @@ export const GrainMaterialViolet = ({ boundingBox, opacity = 1 }) => {
         }),
     });
     return (
-        <grainShaderMaterialB
+        <itemShaderMaterial
             uBoundingBoxMin={boundingBox.min}
             uBoundingBoxMax={boundingBox.max}
             uNoiseScale={uNoiseScale}
@@ -567,7 +567,7 @@ export const GrainMaterialVioletDark = ({ boundingBox, opacity = 1 }) => {
         }),
     });
     return (
-        <grainShaderMaterialB
+        <itemShaderMaterial
             uBoundingBoxMin={boundingBox.min}
             uBoundingBoxMax={boundingBox.max}
             uNoiseScale={uNoiseScale}

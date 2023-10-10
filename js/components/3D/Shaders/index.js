@@ -1,3 +1,3 @@
 export { TriptychShaderMaterial } from "./TriptychShaderMaterial";
-export { GrainShaderMaterialB } from "./GrainShaderMaterialB";
+export { ItemShaderMaterial } from "./ItemShaderMaterial";
 export { GrainShaderMaterialC } from "./GrainShaderMaterialC";
