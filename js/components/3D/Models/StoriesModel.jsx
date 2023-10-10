@@ -7,7 +7,7 @@ import { useGLTF, useAnimations } from "@react-three/drei";
 import * as THREE from "three";
 
 import { GLB_ASSET_URLS } from "@/js/core/constants";
-import { GrainMaterialYellow, GrainMaterialYellowDark } from "../Materials";
+import { ItemMaterialYellow, ItemMaterialYellowDark } from "../Materials";
 import { Outlines } from "../Common";
 
 export default function StoriesModel({ opacity = 1, ...props }) {
@@ -73,7 +73,7 @@ export default function StoriesModel({ opacity = 1, ...props }) {
                             //   material={materials.green_01}
                             position={[-0.152, -0.327, 0.498]}
                         >
-                            <GrainMaterialYellow
+                            <ItemMaterialYellow
                                 opacity={opacity}
                                 boundingBox={boundingBox}
                             />
@@ -83,7 +83,7 @@ export default function StoriesModel({ opacity = 1, ...props }) {
                                 geometry={nodes.tac.geometry}
                                 // material={materials.green_02}
                             >
-                                <GrainMaterialYellowDark
+                                <ItemMaterialYellowDark
                                     opacity={opacity}
                                     boundingBox={boundingBox}
                                 />
@@ -96,7 +96,7 @@ export default function StoriesModel({ opacity = 1, ...props }) {
                             // material={materials.green_01}
                             position={[0.239, -0.024, 0.417]}
                         >
-                            <GrainMaterialYellow
+                            <ItemMaterialYellow
                                 opacity={opacity}
                                 boundingBox={boundingBox}
                             />
@@ -106,7 +106,7 @@ export default function StoriesModel({ opacity = 1, ...props }) {
                                 geometry={nodes.cat.geometry}
                                 // material={materials.green_02}
                             >
-                                <GrainMaterialYellowDark
+                                <ItemMaterialYellowDark
                                     opacity={opacity}
                                     boundingBox={boundingBox}
                                 />
@@ -119,7 +119,7 @@ export default function StoriesModel({ opacity = 1, ...props }) {
                             //   material={materials.green_01}
                             position={[-0.192, 0.273, 0.328]}
                         >
-                            <GrainMaterialYellow
+                            <ItemMaterialYellow
                                 opacity={opacity}
                                 boundingBox={boundingBox}
                             />
@@ -129,7 +129,7 @@ export default function StoriesModel({ opacity = 1, ...props }) {
                                 geometry={nodes.act.geometry}
                                 // material={materials.green_02}
                             >
-                                <GrainMaterialYellowDark
+                                <ItemMaterialYellowDark
                                     opacity={opacity}
                                     boundingBox={boundingBox}
                                 />

@@ -4,7 +4,7 @@ import { useRef } from "react";
 
 import * as colors from "@/js/core/colors";
 
-export const GrainMaterialRed = ({ boundingBox, opacity = 1 }) => {
+export const ItemMaterialRed = ({ boundingBox, opacity = 1 }) => {
     const shaderRef = useRef();
     const {
         uNoiseScale,
@@ -101,7 +101,7 @@ export const GrainMaterialRed = ({ boundingBox, opacity = 1 }) => {
     );
 };
 
-export const GrainMaterialRedDark = ({ boundingBox, opacity = 1 }) => {
+export const ItemMaterialRedDark = ({ boundingBox, opacity = 1 }) => {
     const shaderRef = useRef();
     const {
         uNoiseScale,
@@ -197,7 +197,7 @@ export const GrainMaterialRedDark = ({ boundingBox, opacity = 1 }) => {
         />
     );
 };
-export const GrainMaterialYellow = ({ boundingBox, opacity = 1 }) => {
+export const ItemMaterialYellow = ({ boundingBox, opacity = 1 }) => {
     const shaderRef = useRef();
     const {
         uNoiseScale,
@@ -294,7 +294,7 @@ export const GrainMaterialYellow = ({ boundingBox, opacity = 1 }) => {
     );
 };
 
-export const GrainMaterialYellowDark = ({ boundingBox, opacity = 1 }) => {
+export const ItemMaterialYellowDark = ({ boundingBox, opacity = 1 }) => {
     const shaderRef = useRef();
     const {
         uNoiseScale,
@@ -390,7 +390,7 @@ export const GrainMaterialYellowDark = ({ boundingBox, opacity = 1 }) => {
         />
     );
 };
-export const GrainMaterialViolet = ({ boundingBox, opacity = 1 }) => {
+export const ItemMaterialViolet = ({ boundingBox, opacity = 1 }) => {
     const shaderRef = useRef();
     const {
         uNoiseScale,
@@ -487,7 +487,7 @@ export const GrainMaterialViolet = ({ boundingBox, opacity = 1 }) => {
     );
 };
 
-export const GrainMaterialVioletDark = ({ boundingBox, opacity = 1 }) => {
+export const ItemMaterialVioletDark = ({ boundingBox, opacity = 1 }) => {
     const shaderRef = useRef();
     const {
         uNoiseScale,
