@@ -127,11 +127,14 @@ export const createHomeSceneSlice = (set, get) => ({
      */
     setLookAtMeshUuid: (uuid) => set(() => ({ lookAtMeshUuid: uuid })),
 
+    lastOrbitDirection: "down",
+
     /**
      *
      * @param {direction} direction To orbit camera to
      */
     orbit: async (direction) => {
+        const lastOrbitDirection = get().lastOrbitDirection;
         const cameraControls = get().getR3fStore().controls;
         if (!cameraControls) return;
 
@@ -158,13 +161,18 @@ export const createHomeSceneSlice = (set, get) => ({
         boundingSphere.getBoundingBox(boundingBox);
 
         // determine if camera is animating from an "up" position
-        const isFromUp = cameraPosition.y > 0;
-        const isFromDown = cameraPosition.y <= 0;
-
+        const isFromUp = lastOrbitDirection === "up";
+        const isFromDown = lastOrbitDirection === "down";
+        const isFromRight = lastOrbitDirection === "right";
+        const isFromLeft = lastOrbitDirection === "left";
+        const isFromRightUp = isFromRight && cameraPosition.y > 0;
+        const isFromLeftUp = isFromLeft && cameraPosition.y > 0;
+        const isFromHorizontalUp = isFromLeftUp || isFromRightUp;
+        console.log({ isFromUp, isFromDown, isFromRight, isFromLeft });
         switch (direction) {
             case "up": {
-                if (isFromUp) {
-                    return; // short circuit if camera is from an up position
+                if (isFromUp || isFromLeft || isFromRight) {
+                    return; // short circuit
                 }
                 cameraControls.normalizeRotations();
                 await cameraControls.rotate(
@@ -175,8 +183,8 @@ export const createHomeSceneSlice = (set, get) => ({
                 break;
             }
             case "down": {
-                if (isFromDown) {
-                    return; // short circuit if camera is from a down position
+                if (isFromDown || isFromLeft || isFromRight) {
+                    return; // short circuit
                 }
                 await cameraControls.rotate(
                     0,
@@ -188,7 +196,7 @@ export const createHomeSceneSlice = (set, get) => ({
             case "left": {
                 await cameraControls.rotate(
                     THREE.MathUtils.degToRad(-45),
-                    THREE.MathUtils.degToRad(isFromUp ? 35 : -35),
+                    THREE.MathUtils.degToRad(isFromHorizontalUp ? 35 : -35),
                     true,
                 );
                 break;
@@ -197,7 +205,7 @@ export const createHomeSceneSlice = (set, get) => ({
             default: {
                 await cameraControls.rotate(
                     THREE.MathUtils.degToRad(45),
-                    THREE.MathUtils.degToRad(isFromUp ? 35 : -35),
+                    THREE.MathUtils.degToRad(isFromHorizontalUp ? 35 : -35),
                     true,
                 );
                 break;
@@ -213,6 +221,8 @@ export const createHomeSceneSlice = (set, get) => ({
                 paddingLeft: paddingLeft,
             });
         }
+
+        set({ lastOrbitDirection: direction });
     },
     interactable: debug,
     introPlayed: false,
