@@ -1,6 +1,7 @@
 import styles from "./Nav.module.scss";
 
 import { useLayoutEffect, useMemo, useRef } from "react";
+import cx from "classnames";
 
 import gsap from "@/js/lib/gsap";
 import { useStore } from "@/js/lib/store";
@@ -36,7 +37,7 @@ const NavArrows = ({ visible }) => {
         };
     }, [visible]);
     return (
-        <div className={styles.arrowsWrapper} ref={el}>
+        <div className={styles.arrows} ref={el}>
             <div className={styles.buttonWrapper}>
                 <NavButton
                     direction="left"
@@ -64,6 +65,11 @@ const NavArrows = ({ visible }) => {
                         orbit("right");
                     }}
                 />
+            </div>
+            <div className={styles.textWrapper}>
+                <span className={cx("subheading-regular", styles.text)}>
+                    Use arrows to explore
+                </span>
             </div>
         </div>
     );
