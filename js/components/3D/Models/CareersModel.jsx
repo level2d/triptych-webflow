@@ -9,8 +9,8 @@ import * as THREE from "three";
 import { GLB_ASSET_URLS } from "@/js/core/constants";
 import { Outlines } from "@/js/components/3D/Common";
 import {
-    GrainMaterialYellow,
-    GrainMaterialYellowDark,
+    ItemMaterialYellow,
+    ItemMaterialYellowDark,
 } from "@/js/components/3D/Materials";
 
 export default function CareersModel({ opacity = 1, ...props }) {
@@ -75,7 +75,7 @@ export default function CareersModel({ opacity = 1, ...props }) {
                             position={[0.026, -0.014, 0.013]}
                             scale={0.8}
                         >
-                            <GrainMaterialYellow
+                            <ItemMaterialYellow
                                 boundingBox={boundingBox}
                                 opacity={opacity}
                             />
@@ -87,7 +87,7 @@ export default function CareersModel({ opacity = 1, ...props }) {
                                 position={[0.01, 0.336, 0.109]}
                                 scale={1.054}
                             >
-                                <GrainMaterialYellowDark
+                                <ItemMaterialYellowDark
                                     boundingBox={boundingBox}
                                     opacity={opacity}
                                 />

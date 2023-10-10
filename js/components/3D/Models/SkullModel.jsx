@@ -7,7 +7,7 @@ import { useGLTF, useAnimations } from "@react-three/drei";
 import * as THREE from "three";
 
 import { GLB_ASSET_URLS } from "@/js/core/constants";
-import { GrainMaterialViolet, GrainMaterialVioletDark } from "../Materials";
+import { ItemMaterialViolet, ItemMaterialVioletDark } from "../Materials";
 import { Outlines } from "../Common";
 
 export default function SkullModel({ opacity = 1, ...props }) {
@@ -69,7 +69,7 @@ export default function SkullModel({ opacity = 1, ...props }) {
                             //   material={materials.green_01}
                             position={[-0.004, -0.114, -0.039]}
                         >
-                            <GrainMaterialViolet
+                            <ItemMaterialViolet
                                 opacity={opacity}
                                 boundingBox={boundingBox}
                             />
@@ -81,7 +81,7 @@ export default function SkullModel({ opacity = 1, ...props }) {
                             //   material={materials.green_01}
                             position={[-0.006, -0.152, 0.2]}
                         >
-                            <GrainMaterialViolet
+                            <ItemMaterialViolet
                                 opacity={opacity}
                                 boundingBox={boundingBox}
                             />
@@ -91,7 +91,7 @@ export default function SkullModel({ opacity = 1, ...props }) {
                                 geometry={nodes.sockets.geometry}
                                 // material={materials.green_02}
                             >
-                                <GrainMaterialVioletDark
+                                <ItemMaterialVioletDark
                                     opacity={opacity}
                                     boundingBox={boundingBox}
                                 />

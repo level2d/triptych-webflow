@@ -7,7 +7,7 @@ import { useGLTF, useAnimations } from "@react-three/drei";
 import * as THREE from "three";
 
 import { GLB_ASSET_URLS } from "@/js/core/constants";
-import { GrainMaterialViolet, OutlineMaterial } from "../Materials";
+import { ItemMaterialViolet, OutlineMaterial } from "../Materials";
 
 export default function EyeModel({ opacity = 1, ...props }) {
     const [mounted, setMounted] = useState(false);
@@ -70,7 +70,7 @@ export default function EyeModel({ opacity = 1, ...props }) {
                                 nodes.eye001.morphTargetInfluences
                             }
                         >
-                            <GrainMaterialViolet
+                            <ItemMaterialViolet
                                 opacity={opacity}
                                 boundingBox={boundingBox}
                             />

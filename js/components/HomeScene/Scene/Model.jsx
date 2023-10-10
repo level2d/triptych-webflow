@@ -2,7 +2,6 @@ import * as THREE from "three";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useGLTF } from "@react-three/drei";
 import { GLB_ASSET_URLS } from "@/js/core/constants";
-import { useControls, folder } from "leva";
 import { useStore } from "@/js/lib/store";
 
 import Box from "./Box";
@@ -24,7 +23,7 @@ import {
     WorkModel,
 } from "@/js/components/3D/Models";
 import { Outlines2 } from "@/js/components/3D/Common";
-import { GrainShaderMaterial } from "../../3D/Shaders";
+import { TriptychMaterial } from "../../3D/Materials";
 import ReflectionModel from "./ReflectionModel";
 
 function Model(props) {
@@ -38,84 +37,6 @@ function Model(props) {
         max: new THREE.Vector3(1, 1, 1),
     });
     const tripTychRef = useRef(null);
-    const grainShaderMaterialRef = useRef();
-    const {
-        uNoiseScale,
-        uNoiseContrast,
-        uNoiseScalarDistanceFactor,
-        uGradientStop,
-        uMatcapEnabled,
-        uNoiseEnabled,
-        uGradientEnabled,
-    } = useControls({
-        "Triptych Shader": folder({
-            Matcap: folder({
-                uMatcapEnabled: true,
-            }),
-            Noise: folder({
-                uNoiseEnabled: true,
-                uNoiseScale: {
-                    value: 850,
-                    min: 10,
-                    max: 2000,
-                    step: 10,
-                },
-                uNoiseScalarDistanceFactor: {
-                    value: 0.3,
-                    min: 0,
-                    max: 10,
-                    step: 0.1,
-                },
-                uNoiseContrast: {
-                    value: 1,
-                    min: 0,
-                    max: 1,
-                    step: 0.1,
-                },
-            }),
-            Gradient: folder({
-                uGradientEnabled: true,
-                uGradientStop: {
-                    value: 0.04,
-                    min: 0.0,
-                    max: 0.5,
-                    step: 0.01,
-                },
-                uGradientColorA: {
-                    value: {
-                        r: 147,
-                        g: 147,
-                        b: 147,
-                    },
-                    onChange: (v) => {
-                        const color = new THREE.Vector3(
-                            v.r,
-                            v.g,
-                            v.b,
-                        ).divideScalar(255);
-                        grainShaderMaterialRef.current.uniforms.uGradientColorA.value =
-                            color;
-                    },
-                },
-                uGradientColorB: {
-                    value: {
-                        r: 23,
-                        g: 23,
-                        b: 23,
-                    },
-                    onChange: (v) => {
-                        const color = new THREE.Vector3(
-                            v.r,
-                            v.g,
-                            v.b,
-                        ).divideScalar(255);
-                        grainShaderMaterialRef.current.uniforms.uGradientColorB.value =
-                            color;
-                    },
-                },
-            }),
-        }),
-    });
 
     const visible = useMemo(() => {
         return opacity > 0;
@@ -143,21 +64,7 @@ function Model(props) {
                     e.stopPropagation();
                 }}
             >
-                <grainShaderMaterial
-                    uNoiseEnabled={uNoiseEnabled}
-                    uNoiseScale={uNoiseScale}
-                    uNoiseScalarDistanceFactor={uNoiseScalarDistanceFactor}
-                    uNoiseContrast={uNoiseContrast}
-                    uBoundingBoxMin={boundingBox.min}
-                    uBoundingBoxMax={boundingBox.max}
-                    uGradientStop={uGradientStop}
-                    uMatcapEnabled={uMatcapEnabled}
-                    uGradientEnabled={uGradientEnabled}
-                    ref={grainShaderMaterialRef}
-                    key={GrainShaderMaterial.key}
-                    opacity={opacity}
-                    transparent
-                />
+                <TriptychMaterial boundingBox={boundingBox} opacity={opacity} />
                 <Outlines2 opacity={opacity} visible={visible} />
             </mesh>
             {/* <mesh

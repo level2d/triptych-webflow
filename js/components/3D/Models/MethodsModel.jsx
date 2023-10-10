@@ -8,7 +8,7 @@ import * as THREE from "three";
 
 import { GLB_ASSET_URLS } from "@/js/core/constants";
 import { Outlines } from "../Common";
-import { GrainMaterialYellow, GrainMaterialYellowDark } from "../Materials";
+import { ItemMaterialYellow, ItemMaterialYellowDark } from "../Materials";
 
 export default function MethodsModel({ opacity = 1, ...props }) {
     const [mounted, setMounted] = useState(false);
@@ -80,7 +80,7 @@ export default function MethodsModel({ opacity = 1, ...props }) {
                                 geometry={nodes.Cylinder010.geometry}
                                 // material={materials.green_02}
                             >
-                                <GrainMaterialYellowDark
+                                <ItemMaterialYellowDark
                                     opacity={opacity}
                                     boundingBox={boundingBox}
                                 />
@@ -91,7 +91,7 @@ export default function MethodsModel({ opacity = 1, ...props }) {
                                 geometry={nodes.Cylinder010_1.geometry}
                                 // material={materials.green_02}
                             >
-                                <GrainMaterialYellow
+                                <ItemMaterialYellow
                                     opacity={opacity}
                                     boundingBox={boundingBox}
                                 />
@@ -103,7 +103,7 @@ export default function MethodsModel({ opacity = 1, ...props }) {
                                 // material={materials.green_01}
                                 position={[-0.264, -0.152, 0]}
                             >
-                                <GrainMaterialYellow
+                                <ItemMaterialYellow
                                     opacity={opacity}
                                     boundingBox={boundingBox}
                                 />
@@ -115,7 +115,7 @@ export default function MethodsModel({ opacity = 1, ...props }) {
                                 // material={materials.green_01}
                                 position={[0, 0.305, 0]}
                             >
-                                <GrainMaterialYellow
+                                <ItemMaterialYellow
                                     opacity={opacity}
                                     boundingBox={boundingBox}
                                 />
@@ -127,7 +127,7 @@ export default function MethodsModel({ opacity = 1, ...props }) {
                                 // material={materials.green_01}
                                 position={[0.264, -0.152, 0]}
                             >
-                                <GrainMaterialYellow
+                                <ItemMaterialYellow
                                     opacity={opacity}
                                     boundingBox={boundingBox}
                                 />
@@ -138,7 +138,7 @@ export default function MethodsModel({ opacity = 1, ...props }) {
                                 geometry={nodes.gear_04001.geometry}
                                 // material={materials.green_01}
                             >
-                                <GrainMaterialYellow
+                                <ItemMaterialYellow
                                     opacity={opacity}
                                     boundingBox={boundingBox}
                                 />

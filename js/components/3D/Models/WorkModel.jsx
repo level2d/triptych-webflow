@@ -8,8 +8,8 @@ import * as THREE from "three";
 
 import { GLB_ASSET_URLS } from "@/js/core/constants";
 import {
-    GrainMaterialYellow,
-    GrainMaterialYellowDark,
+    ItemMaterialYellow,
+    ItemMaterialYellowDark,
     OutlineMaterial,
 } from "../Materials";
 
@@ -80,7 +80,7 @@ export default function WorkModel({ opacity = 1, ...props }) {
                             }
                             position={[0.026, -0.067, -0.021]}
                         >
-                            <GrainMaterialYellow
+                            <ItemMaterialYellow
                                 opacity={opacity}
                                 boundingBox={boundingBox}
                             />
@@ -111,7 +111,7 @@ export default function WorkModel({ opacity = 1, ...props }) {
                             }
                             position={[0.026, -0.067, -0.021]}
                         >
-                            <GrainMaterialYellowDark
+                            <ItemMaterialYellowDark
                                 opacity={opacity}
                                 boundingBox={boundingBox}
                             />
