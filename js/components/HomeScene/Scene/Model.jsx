@@ -25,6 +25,7 @@ import {
 } from "@/js/components/3D/Models";
 import { Outlines2 } from "@/js/components/3D/Common";
 import { GrainShaderMaterial } from "../../3D/Shaders";
+import ReflectionModel from "./ReflectionModel";
 
 function Model(props) {
     const { nodes /*, materials */ } = useGLTF(GLB_ASSET_URLS.Locations);
