@@ -222,7 +222,7 @@ export const createHomeSceneSlice = (set, get) => ({
             }
         }
 
-        if (direction === "up" || isFromHorizontalUp) {
+        if (direction === "up" || direction === "down" || isFromHorizontalUp) {
             // focus camera to target when coming from an up position, or if orbiting up
             await cameraControls.fitToBox(cameraTarget, true, {
                 paddingTop: paddingTop,
