@@ -23,7 +23,7 @@ import {
     StoriesModel,
     WorkModel,
 } from "@/js/components/3D/Models";
-import { Outlines } from "@/js/components/3D/Common";
+import { Outlines2 } from "@/js/components/3D/Common";
 import { GrainShaderMaterial } from "../../3D/Shaders";
 
 function Model(props) {
@@ -157,7 +157,7 @@ function Model(props) {
                     opacity={opacity}
                     transparent
                 />
-                <Outlines opacity={opacity} visible={visible} />
+                <Outlines2 opacity={opacity} visible={visible} />
             </mesh>
             {/* <mesh
                 geometry={nodes.water.geometry}
