@@ -168,10 +168,18 @@ export const createHomeSceneSlice = (set, get) => ({
         const isFromRightUp = isFromRight && cameraPosition.y > 0;
         const isFromLeftUp = isFromLeft && cameraPosition.y > 0;
         const isFromHorizontalUp = isFromLeftUp || isFromRightUp;
-
+        console.log({
+            isFromUp,
+            isFromDown,
+            isFromRight,
+            isFromLeft,
+            isFromRightUp,
+            isFromLeftUp,
+            isFromHorizontalUp,
+        });
         switch (direction) {
             case "up": {
-                if (isFromUp || isFromLeft || isFromRight) {
+                if (isFromUp || isFromHorizontalUp) {
                     return; // short circuit
                 }
                 cameraControls.normalizeRotations();
@@ -194,6 +202,7 @@ export const createHomeSceneSlice = (set, get) => ({
                 break;
             }
             case "left": {
+                if (isFromUp) return;
                 await cameraControls.rotate(
                     THREE.MathUtils.degToRad(-45),
                     THREE.MathUtils.degToRad(isFromHorizontalUp ? 35 : -35),
@@ -203,6 +212,7 @@ export const createHomeSceneSlice = (set, get) => ({
             }
             case "right":
             default: {
+                if (isFromUp) return;
                 await cameraControls.rotate(
                     THREE.MathUtils.degToRad(45),
                     THREE.MathUtils.degToRad(isFromHorizontalUp ? 35 : -35),
@@ -212,7 +222,7 @@ export const createHomeSceneSlice = (set, get) => ({
             }
         }
 
-        if (isFromUp || direction === "up") {
+        if (direction === "up" || isFromHorizontalUp) {
             // focus camera to target when coming from an up position, or if orbiting up
             await cameraControls.fitToBox(cameraTarget, true, {
                 paddingTop: paddingTop,
