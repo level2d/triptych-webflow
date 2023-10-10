@@ -217,7 +217,7 @@ void main() {
     vec3 color = vec3(0, 0, 0);
 
     if(uPerlinEnabled) {
-        color += perlinColor * vec3(uPerlinLightenFactor);
+        color += clamp(perlinColor, vec3(uPerlinLightenFactor), vec3(1.0));
     }
 
     if(uMatcapEnabled) {
