@@ -222,7 +222,7 @@ export const createHomeSceneSlice = (set, get) => ({
             }
         }
 
-        if (direction === "up" || isFromHorizontalUp) {
+        if (direction === "up" || direction === "down" || isFromHorizontalUp) {
             // focus camera to target when coming from an up position, or if orbiting up
             await cameraControls.fitToBox(cameraTarget, true, {
                 paddingTop: paddingTop,
@@ -267,9 +267,9 @@ export const createComputedHomeSceneSlice = (state) => ({
     // parent triptych model
     cameraTargetUuid: state.currentBoxUuid ?? state.triptychModelUuid,
     // decrease padding when focussing a box
-    paddingTop: state.currentBoxUuid ? 0.01 : 0.3,
+    paddingTop: state.currentBoxUuid ? 0.01 : 0.2,
     paddingRight: state.currentBoxUuid ? 0.01 : 0.1,
-    paddingBottom: state.currentBoxUuid ? 0.01 : 0.4,
+    paddingBottom: state.currentBoxUuid ? 0.01 : 0.6,
     paddingLeft: state.currentBoxUuid
         ? INTERACTIVE_MODEL_NAMES.includes(state.currentBoxModelName)
             ? 0.01
