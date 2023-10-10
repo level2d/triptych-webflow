@@ -5,7 +5,7 @@ import { GLB_ASSET_URLS } from "@/js/core/constants";
 import { useControls, folder } from "leva";
 import { useStore } from "@/js/lib/store";
 
-import { GrainShaderMaterialC } from "../../3D/Shaders";
+import { ReflectionShaderMaterial } from "../../3D/Shaders";
 import { useFrame } from "@react-three/fiber";
 
 function ReflectionModel(props) {
@@ -162,7 +162,7 @@ function ReflectionModel(props) {
                 }}
                 ref={meshRef}
             >
-                <grainShaderMaterialC
+                <reflectionShaderMaterial
                     uPerlinEnabled={uPerlinEnabled}
                     uPerlinResolution={uPerlinResolution}
                     uPerlinSpeed={uPerlinSpeed}
@@ -182,7 +182,7 @@ function ReflectionModel(props) {
                     uClampColorMin={uClampColorMin}
                     time={time}
                     ref={grainShaderMaterialRef}
-                    key={GrainShaderMaterialC.key}
+                    key={ReflectionShaderMaterial.key}
                     opacity={opacity}
                     transparent
                 />
