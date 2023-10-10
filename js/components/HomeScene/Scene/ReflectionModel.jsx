@@ -1,6 +1,6 @@
 import * as THREE from "three";
 import { useLayoutEffect, useMemo, useRef, useState } from "react";
-import { useGLTF, useHelper } from "@react-three/drei";
+import { useGLTF } from "@react-three/drei";
 import { GLB_ASSET_URLS } from "@/js/core/constants";
 import { useControls, folder } from "leva";
 import { useStore } from "@/js/lib/store";
@@ -23,6 +23,7 @@ function ReflectionModel(props) {
         uPerlinResolution,
         uPerlinYScale,
         uPerlinSpeed,
+        uPerlinLightenFactor,
         uNoiseScale,
         uNoiseContrast,
         uNoiseScalarDistanceFactor,
@@ -42,6 +43,12 @@ function ReflectionModel(props) {
                     min: 1,
                     max: 1000,
                     step: 1,
+                },
+                uPerlinLightenFactor: {
+                    value: 0.5,
+                    min: 0,
+                    max: 1,
+                    step: 0.1,
                 },
                 uPerlinYScale: {
                     value: 4.0,
@@ -86,7 +93,7 @@ function ReflectionModel(props) {
                     value: 0.2,
                     min: 0.0,
                     max: 1.0,
-                    step: 0.1,
+                    step: 0.01,
                 },
             }),
             ColorClamp: folder({
@@ -139,10 +146,7 @@ function ReflectionModel(props) {
     useLayoutEffect(() => {
         meshRef.current.geometry.computeBoundingBox();
         setBoundingBox(meshRef.current.geometry.boundingBox);
-        console.log(boundingBox);
     }, [setBoundingBox, nodes.triptych.geometry, boundingBox]);
-
-    useHelper(meshRef, THREE.BoxHelper, "cyan");
 
     return (
         <group {...props} dispose={null}>
@@ -163,6 +167,7 @@ function ReflectionModel(props) {
                     uPerlinResolution={uPerlinResolution}
                     uPerlinSpeed={uPerlinSpeed}
                     uPerlinYScale={uPerlinYScale}
+                    uPerlinLightenFactor={uPerlinLightenFactor}
                     uNoiseEnabled={uNoiseEnabled}
                     uNoiseScale={uNoiseScale}
                     uNoiseScalarDistanceFactor={uNoiseScalarDistanceFactor}
