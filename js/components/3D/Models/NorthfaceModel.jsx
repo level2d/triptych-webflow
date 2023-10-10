@@ -7,7 +7,7 @@ import { useGLTF, useAnimations } from "@react-three/drei";
 import * as THREE from "three";
 
 import { GLB_ASSET_URLS } from "@/js/core/constants";
-import { GrainMaterialRed } from "../Materials";
+import { ItemMaterialRed } from "../Materials";
 import { Outlines } from "../Common";
 
 export default function NorthfaceModel({ opacity = 1, ...props }) {
@@ -68,7 +68,7 @@ export default function NorthfaceModel({ opacity = 1, ...props }) {
                             geometry={nodes.Plane001.geometry}
                             //   material={materials.green_01}
                         >
-                            <GrainMaterialRed
+                            <ItemMaterialRed
                                 opacity={opacity}
                                 boundingBox={boundingBox}
                             />

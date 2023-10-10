@@ -8,8 +8,8 @@ import * as THREE from "three";
 
 import { GLB_ASSET_URLS } from "@/js/core/constants";
 import {
-    GrainMaterialYellow,
-    GrainMaterialYellowDark,
+    ItemMaterialYellow,
+    ItemMaterialYellowDark,
 } from "@/js/components/3D/Materials";
 import { Outlines } from "../Common";
 
@@ -94,7 +94,7 @@ export default function ContactModel({ opacity = 1, ...props }) {
                             rotation={[-0.204, 0, 0]}
                             scale={0.8}
                         >
-                            <GrainMaterialYellow
+                            <ItemMaterialYellow
                                 opacity={opacity}
                                 boundingBox={boundingBox}
                             />
@@ -105,7 +105,7 @@ export default function ContactModel({ opacity = 1, ...props }) {
                                 // material={materials.green_02}
                                 position={[0.19, -0.367, 0.002]}
                             >
-                                <GrainMaterialYellowDark
+                                <ItemMaterialYellowDark
                                     opacity={opacity}
                                     boundingBox={boundingBox}
                                 />
@@ -118,7 +118,7 @@ export default function ContactModel({ opacity = 1, ...props }) {
                                 position={[0.136, -0.367, -0.133]}
                                 rotation={[0, Math.PI / 4, 0]}
                             >
-                                <GrainMaterialYellowDark
+                                <ItemMaterialYellowDark
                                     opacity={opacity}
                                     boundingBox={boundingBox}
                                 />
@@ -131,7 +131,7 @@ export default function ContactModel({ opacity = 1, ...props }) {
                                 position={[0.002, -0.367, -0.19]}
                                 rotation={[0, Math.PI / 2, 0]}
                             >
-                                <GrainMaterialYellowDark
+                                <ItemMaterialYellowDark
                                     opacity={opacity}
                                     boundingBox={boundingBox}
                                 />
@@ -144,7 +144,7 @@ export default function ContactModel({ opacity = 1, ...props }) {
                                 position={[-0.133, -0.367, -0.136]}
                                 rotation={[-Math.PI, Math.PI / 4, -Math.PI]}
                             >
-                                <GrainMaterialYellowDark
+                                <ItemMaterialYellowDark
                                     opacity={opacity}
                                     boundingBox={boundingBox}
                                 />
@@ -157,7 +157,7 @@ export default function ContactModel({ opacity = 1, ...props }) {
                                 position={[-0.19, -0.367, -0.002]}
                                 rotation={[Math.PI, 0, Math.PI]}
                             >
-                                <GrainMaterialYellowDark
+                                <ItemMaterialYellowDark
                                     opacity={opacity}
                                     boundingBox={boundingBox}
                                 />
@@ -170,7 +170,7 @@ export default function ContactModel({ opacity = 1, ...props }) {
                                 position={[-0.136, -0.367, 0.133]}
                                 rotation={[Math.PI, -Math.PI / 4, Math.PI]}
                             >
-                                <GrainMaterialYellowDark
+                                <ItemMaterialYellowDark
                                     opacity={opacity}
                                     boundingBox={boundingBox}
                                 />
@@ -183,7 +183,7 @@ export default function ContactModel({ opacity = 1, ...props }) {
                                 position={[-0.002, -0.367, 0.19]}
                                 rotation={[0, -1.571, 0]}
                             >
-                                <GrainMaterialYellowDark
+                                <ItemMaterialYellowDark
                                     opacity={opacity}
                                     boundingBox={boundingBox}
                                 />
@@ -196,7 +196,7 @@ export default function ContactModel({ opacity = 1, ...props }) {
                                 position={[0.133, -0.367, 0.136]}
                                 rotation={[0, -Math.PI / 4, 0]}
                             >
-                                <GrainMaterialYellowDark
+                                <ItemMaterialYellowDark
                                     opacity={opacity}
                                     boundingBox={boundingBox}
                                 />
@@ -213,7 +213,7 @@ export default function ContactModel({ opacity = 1, ...props }) {
                                     nodes.windows.morphTargetInfluences
                                 }
                             >
-                                <GrainMaterialYellowDark
+                                <ItemMaterialYellowDark
                                     opacity={opacity}
                                     boundingBox={boundingBox}
                                 />

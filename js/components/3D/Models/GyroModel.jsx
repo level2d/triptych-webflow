@@ -7,7 +7,7 @@ import { useGLTF, useAnimations } from "@react-three/drei";
 import * as THREE from "three";
 
 import { GLB_ASSET_URLS } from "@/js/core/constants";
-import { GrainMaterialViolet, GrainMaterialVioletDark } from "../Materials";
+import { ItemMaterialViolet, ItemMaterialVioletDark } from "../Materials";
 import { Outlines } from "../Common";
 
 export default function GyroModel({ opacity = 1, ...props }) {
@@ -73,7 +73,7 @@ export default function GyroModel({ opacity = 1, ...props }) {
                             position={[0, -0.657, 0.001]}
                             rotation={[0.028, -0.08, -0.015]}
                         >
-                            <GrainMaterialViolet
+                            <ItemMaterialViolet
                                 opacity={opacity}
                                 boundingBox={boundingBox}
                             />
@@ -87,7 +87,7 @@ export default function GyroModel({ opacity = 1, ...props }) {
                                 position={[0.002, 0.656, 0]}
                                 rotation={[0, -0.585, 0]}
                             >
-                                <GrainMaterialVioletDark
+                                <ItemMaterialVioletDark
                                     opacity={opacity}
                                     boundingBox={boundingBox}
                                 />

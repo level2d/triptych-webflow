@@ -7,7 +7,7 @@ import { useGLTF, useAnimations } from "@react-three/drei";
 import * as THREE from "three";
 
 import { GLB_ASSET_URLS } from "@/js/core/constants";
-import { GrainMaterialRed, OutlineMaterial } from "../Materials";
+import { ItemMaterialRed, OutlineMaterial } from "../Materials";
 
 export default function SosModel({ opacity = 1, ...props }) {
     const [mounted, setMounted] = useState(false);
@@ -79,7 +79,7 @@ export default function SosModel({ opacity = 1, ...props }) {
                             rotation={[0, -Math.PI / 6, 0]}
                             scale={0.777}
                         >
-                            <GrainMaterialRed
+                            <ItemMaterialRed
                                 opacity={opacity}
                                 boundingBox={boundingBox}
                             />

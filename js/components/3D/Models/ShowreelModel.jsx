@@ -7,7 +7,7 @@ import { useGLTF, useAnimations } from "@react-three/drei";
 import * as THREE from "three";
 
 import { GLB_ASSET_URLS } from "@/js/core/constants";
-import { GrainMaterialYellow, GrainMaterialYellowDark } from "../Materials";
+import { ItemMaterialYellow, ItemMaterialYellowDark } from "../Materials";
 import { Outlines } from "../Common";
 
 export default function ShowreelModel({ opacity = 1, ...props }) {
@@ -65,7 +65,7 @@ export default function ShowreelModel({ opacity = 1, ...props }) {
                             rotation={[0, -0.262, 0]}
                             scale={0.908}
                         >
-                            <GrainMaterialYellow
+                            <ItemMaterialYellow
                                 opacity={opacity}
                                 boundingBox={boundingBox}
                             />
@@ -81,7 +81,7 @@ export default function ShowreelModel({ opacity = 1, ...props }) {
                                     nodes.bezel.morphTargetInfluences
                                 }
                             >
-                                <GrainMaterialYellowDark
+                                <ItemMaterialYellowDark
                                     opacity={opacity}
                                     boundingBox={boundingBox}
                                 />
@@ -94,7 +94,7 @@ export default function ShowreelModel({ opacity = 1, ...props }) {
                                 position={[0, 0.092, 0.242]}
                                 scale={1.209}
                             >
-                                <GrainMaterialYellow
+                                <ItemMaterialYellow
                                     opacity={opacity}
                                     boundingBox={boundingBox}
                                 />

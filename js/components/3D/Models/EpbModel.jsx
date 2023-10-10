@@ -7,7 +7,7 @@ import { useGLTF, useAnimations } from "@react-three/drei";
 import * as THREE from "three";
 
 import { GLB_ASSET_URLS } from "@/js/core/constants";
-import { GrainMaterialRed, OutlineMaterial } from "../Materials";
+import { ItemMaterialRed, OutlineMaterial } from "../Materials";
 
 export default function EpbModel({ opacity = 1, ...props }) {
     const [mounted, setMounted] = useState(false);
@@ -76,7 +76,7 @@ export default function EpbModel({ opacity = 1, ...props }) {
                             }
                             position={[-0.024, 0.093, 0.006]}
                         >
-                            <GrainMaterialRed
+                            <ItemMaterialRed
                                 opacity={opacity}
                                 boundingBox={boundingBox}
                             />

@@ -8,8 +8,8 @@ import * as THREE from "three";
 
 import { GLB_ASSET_URLS } from "@/js/core/constants";
 import {
-    GrainMaterialRed,
-    GrainMaterialRedDark,
+    ItemMaterialRed,
+    ItemMaterialRedDark,
     OutlineMaterial,
 } from "@/js/components/3D/Materials";
 
@@ -78,7 +78,7 @@ export default function CdmModel({ opacity = 1, ...props }) {
                             //   material={materials.green_01}
                             position={[-0.003, -0.265, -0.005]}
                         >
-                            <GrainMaterialRed
+                            <ItemMaterialRed
                                 opacity={opacity}
                                 boundingBox={boundingBox}
                             />
@@ -90,7 +90,7 @@ export default function CdmModel({ opacity = 1, ...props }) {
                                 // material={materials.green_01}
                                 position={[0, 0.075, 0.02]}
                             >
-                                <GrainMaterialRed
+                                <ItemMaterialRed
                                     opacity={opacity}
                                     boundingBox={boundingBox}
                                 />
@@ -126,7 +126,7 @@ export default function CdmModel({ opacity = 1, ...props }) {
                             }
                             position={[-0.003, -0.265, -0.005]}
                         >
-                            <GrainMaterialRedDark
+                            <ItemMaterialRedDark
                                 opacity={opacity}
                                 boundingBox={boundingBox}
                             />

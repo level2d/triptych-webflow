@@ -10,7 +10,7 @@ const matcapTexture = new THREE.TextureLoader().load(
     constants.TEXTURE_ASSET_URLS.hatching_matcap,
 );
 
-export const GrainShaderMaterial = shaderMaterial(
+export const ItemShaderMaterial = shaderMaterial(
     // Uniform
     {
         // matcap pass
@@ -36,4 +36,4 @@ export const GrainShaderMaterial = shaderMaterial(
     `${fragmentShaderCode}`,
 );
 
-extend({ GrainShaderMaterial });
+extend({ ItemShaderMaterial });
