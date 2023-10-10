@@ -39,25 +39,25 @@ function ReflectionModel(props) {
             Perlin: folder({
                 uPerlinEnabled: true,
                 uPerlinResolution: {
-                    value: 20,
+                    value: 8,
                     min: 1,
-                    max: 1000,
+                    max: 50,
                     step: 1,
                 },
                 uPerlinLightenFactor: {
-                    value: 0.5,
+                    value: 0.3,
                     min: 0,
                     max: 1,
                     step: 0.1,
                 },
                 uPerlinYScale: {
-                    value: 4.0,
+                    value: 6.0,
                     min: 1.0,
                     max: 10.0,
                     step: 1.0,
                 },
                 uPerlinSpeed: {
-                    value: 1,
+                    value: 0.5,
                     min: 0.1,
                     max: 10,
                     step: 0.1,
@@ -75,13 +75,13 @@ function ReflectionModel(props) {
                     step: 10,
                 },
                 uNoiseScalarDistanceFactor: {
-                    value: 0.3,
+                    value: 0.9,
                     min: 0,
                     max: 10,
                     step: 0.1,
                 },
                 uNoiseContrast: {
-                    value: 1,
+                    value: 1.0,
                     min: 0,
                     max: 1,
                     step: 0.1,
@@ -90,7 +90,7 @@ function ReflectionModel(props) {
             Gradient: folder({
                 uGradientEnabled: true,
                 uGradientStop: {
-                    value: 0.2,
+                    value: 0.21,
                     min: 0.0,
                     max: 1.0,
                     step: 0.01,
@@ -100,9 +100,9 @@ function ReflectionModel(props) {
                 uClampColorEnabled: true,
                 uClampColorMin: {
                     value: {
-                        r: 0,
-                        g: 0,
-                        b: 0,
+                        r: 52,
+                        g: 52,
+                        b: 52,
                     },
                     onChange: (v) => {
                         const color = new THREE.Vector3(
