@@ -233,12 +233,12 @@ export const createHomeSceneSlice = (set, get) => ({
                 onUpdate: () => {
                     set({ homeSceneOpacity: obj.opacity });
                 },
+                onComplete: async () => {
+                    await get().orbit("right");
+                    set({ introPlayed: true, interactable: true });
+                },
             },
         );
-
-        await get().orbit("right");
-
-        set({ introPlayed: true, interactable: true });
     },
 });
 
