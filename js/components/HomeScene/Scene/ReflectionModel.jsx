@@ -31,8 +31,6 @@ function ReflectionModel(props) {
                 name="ReflectionModel"
                 // material={nodes.water.material}
                 geometry={nodes.water.geometry}
-                rotation={[-Math.PI, 0, -Math.PI]}
-                scale={-1}
                 visible={visible}
                 onClick={(e) => {
                     e.stopPropagation();

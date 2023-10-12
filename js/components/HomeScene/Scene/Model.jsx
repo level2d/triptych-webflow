@@ -67,6 +67,13 @@ function Model(props) {
                 <TriptychMaterial boundingBox={boundingBox} opacity={opacity} />
                 <Outlines2 opacity={opacity} visible={visible} />
             </mesh>
+            <mesh
+                geometry={nodes.water_objects.geometry}
+                // material={nodes.water_objects.material}
+            >
+                <TriptychMaterial boundingBox={boundingBox} opacity={opacity} />
+                <Outlines2 opacity={opacity} visible={visible} />
+            </mesh>
             {/* <mesh
                 geometry={nodes.water.geometry}
                 material={nodes.water.material}
