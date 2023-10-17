@@ -25,6 +25,8 @@ import {
 import { TriptychOutlines } from "@/js/components/3D/Common";
 import { TriptychMaterial } from "../../3D/Materials";
 import ReflectionModel from "./ReflectionModel";
+import WaterModel from "./WaterModel";
+import StarsModel from "./StarsModel";
 
 function Model(props) {
     const { nodes /*, materials */ } = useGLTF(GLB_ASSET_URLS.Locations);
@@ -74,12 +76,13 @@ function Model(props) {
                 <TriptychMaterial boundingBox={boundingBox} opacity={opacity} />
                 <TriptychOutlines opacity={opacity} visible={visible} />
             </mesh>
-            {/* <mesh
-                geometry={nodes.water.geometry}
-                material={nodes.water.material}
-                position={[0, -5.565, 0]}
-            /> */}
+
+            <WaterModel />
+
+            <StarsModel />
+
             <ReflectionModel />
+
             {/* <mesh
                 geometry={nodes.location_015.geometry}
                 material={nodes.location_015.material}
@@ -96,6 +99,7 @@ function Model(props) {
             <Box position={[3, 1, 3]}>
                 <KeyModel />
             </Box>
+
             {/* <mesh
                 geometry={nodes.location_013.geometry}
                 material={nodes.location_013.material}
@@ -104,6 +108,7 @@ function Model(props) {
             <Box position={[-1, 1, 1]}>
                 <EyeModel />
             </Box>
+
             {/* <mesh
                 geometry={nodes.location_012.geometry}
                 material={nodes.location_012.material}
@@ -112,6 +117,7 @@ function Model(props) {
             <Box position={[1, -3, 1]}>
                 <SkullModel />
             </Box>
+
             {/* <mesh
                 geometry={nodes.location_011.geometry}
                 material={nodes.location_011.material}
@@ -120,6 +126,7 @@ function Model(props) {
             <Box position={[3, -3, -1]}>
                 <NorthfaceModel />
             </Box>
+
             {/* <mesh
                 geometry={nodes.location_010.geometry}
                 material={nodes.location_010.material}
@@ -128,6 +135,7 @@ function Model(props) {
             <Box position={[3, 2.767, -0.849]}>
                 <SosModel />
             </Box>
+
             {/* <mesh
                 geometry={nodes.location_009.geometry}
                 material={nodes.location_009.material}
@@ -136,6 +144,7 @@ function Model(props) {
             <Box position={[-3, -3, -3]}>
                 <CdmModel />
             </Box>
+
             {/* <mesh
                 geometry={nodes.location_008.geometry}
                 material={nodes.location_008.material}
@@ -144,6 +153,7 @@ function Model(props) {
             <Box position={[-1, 2.828, 3.158]}>
                 <MethodsModel />
             </Box>
+
             {/* <mesh
                 geometry={nodes.location_007.geometry}
                 material={nodes.location_007.material}
@@ -152,6 +162,7 @@ function Model(props) {
             <Box position={[-3, 2.872, 0.762]}>
                 <ContactModel />
             </Box>
+
             {/* <mesh
                 geometry={nodes.location_006.geometry}
                 material={nodes.location_006.material}
@@ -160,6 +171,7 @@ function Model(props) {
             <Box position={[-1, -3, 1]}>
                 <StoriesModel />
             </Box>
+
             {/* <mesh
                 geometry={nodes.location_005.geometry}
                 material={nodes.location_005.material}
@@ -168,6 +180,7 @@ function Model(props) {
             <Box position={[3, -1, 3]}>
                 <WorkModel />
             </Box>
+
             {/* <mesh
                 geometry={nodes.location_004.geometry}
                 material={nodes.location_004.material}
@@ -176,6 +189,7 @@ function Model(props) {
             <Box position={[-1, -1, 1]}>
                 <ShowreelModel />
             </Box>
+
             {/* <mesh
                 geometry={nodes.location_003.geometry}
                 material={nodes.location_003.material}
@@ -184,6 +198,7 @@ function Model(props) {
             <Box position={[1, -1, -1]}>
                 <CultureModel />
             </Box>
+
             {/* <mesh
                 geometry={nodes.location_002.geometry}
                 material={nodes.location_002.material}
@@ -192,6 +207,7 @@ function Model(props) {
             <Box position={[1, 1, -3]}>
                 <GyroModel />
             </Box>
+
             {/* <mesh
                 geometry={nodes.location_001.geometry}
                 material={nodes.location_001.material}

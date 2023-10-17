@@ -5,6 +5,8 @@ import {
     ItemShaderMaterial,
     TriptychShaderMaterial,
     ReflectionShaderMaterial,
+    StarsShaderMaterial,
+    WaterShaderMaterial,
 } from "../Shaders";
 import * as colors from "@/js/core/colors";
 import { useFrame } from "@react-three/fiber";
@@ -251,6 +253,212 @@ export const ReflectionMaterial = ({ boundingBox, opacity = 1 }) => {
             uClampColorMin={uClampColorMin}
             ref={shaderRef}
             key={ReflectionShaderMaterial.key}
+            opacity={opacity}
+            transparent
+        />
+    );
+};
+
+export const WaterMaterial = ({ boundingBox, opacity = 1 }) => {
+    const shaderRef = useRef();
+    const time = useRef(1.0);
+    const {
+        uPerlinEnabled,
+        uPerlinResolution,
+        uPerlinYScale,
+        uPerlinSpeed,
+        uPerlinMultiplier,
+        uClampColorEnabled,
+        uClampColorMax,
+        uClampColorMin,
+    } = useControls({
+        "Water Shader": folder({
+            Perlin: folder({
+                uPerlinEnabled: true,
+                uPerlinResolution: {
+                    value: 8,
+                    min: 1,
+                    max: 50,
+                    step: 1,
+                },
+                uPerlinYScale: {
+                    value: 6.0,
+                    min: 1.0,
+                    max: 50.0,
+                    step: 1.0,
+                },
+                uPerlinSpeed: {
+                    value: 0.5,
+                    min: 0.1,
+                    max: 10,
+                    step: 0.1,
+                },
+                uPerlinMultiplier: {
+                    value: 0.7,
+                    min: 0.1,
+                    max: 5,
+                    step: 0.1,
+                },
+            }),
+            ColorClamp: folder({
+                uClampColorEnabled: true,
+                uClampColorMin: {
+                    value: {
+                        r: 52,
+                        g: 52,
+                        b: 52,
+                    },
+                    onChange: (v) => {
+                        const color = new THREE.Vector3(
+                            v.r,
+                            v.g,
+                            v.b,
+                        ).divideScalar(255);
+                        shaderRef.current.uniforms.uClampColorMin.value = color;
+                    },
+                },
+                uClampColorMax: {
+                    value: {
+                        r: 255,
+                        g: 255,
+                        b: 255,
+                    },
+                    onChange: (v) => {
+                        const color = new THREE.Vector3(
+                            v.r,
+                            v.g,
+                            v.b,
+                        ).divideScalar(255);
+                        shaderRef.current.uniforms.uClampColorMax.value = color;
+                    },
+                },
+            }),
+        }),
+    });
+
+    useFrame(({ clock }) => {
+        time.current = clock.getElapsedTime();
+        shaderRef.current.uniforms.time.value = time.current;
+    });
+
+    return (
+        <waterShaderMaterial
+            uPerlinEnabled={uPerlinEnabled}
+            uPerlinResolution={uPerlinResolution}
+            uPerlinSpeed={uPerlinSpeed}
+            uPerlinYScale={uPerlinYScale}
+            uPerlinMultiplier={uPerlinMultiplier}
+            uClampColorEnabled={uClampColorEnabled}
+            uClampColorMax={uClampColorMax}
+            uClampColorMin={uClampColorMin}
+            uBoundingBoxMin={boundingBox.min}
+            uBoundingBoxMax={boundingBox.max}
+            ref={shaderRef}
+            key={WaterShaderMaterial.key}
+            opacity={opacity}
+            transparent
+        />
+    );
+};
+export const StarsMaterial = ({ boundingBox, opacity = 1 }) => {
+    const shaderRef = useRef();
+    const time = useRef(1.0);
+    const {
+        uNoiseScale,
+        uNoiseContrast,
+        uNoiseScalarDistanceFactor,
+        uNoiseMultiplier,
+        uGradientStop,
+        uMatcapEnabled,
+        uNoiseEnabled,
+        uGradientEnabled,
+        uClampColorEnabled,
+        uClampColorMax,
+        uClampColorMin,
+    } = useControls({
+        "Stars Shader": folder({
+            Noise: folder({
+                uNoiseEnabled: true,
+                uNoiseScale: {
+                    value: 100,
+                    min: 10,
+                    max: 500,
+                    step: 10,
+                },
+                uNoiseScalarDistanceFactor: {
+                    value: 0.9,
+                    min: 0,
+                    max: 10,
+                    step: 0.1,
+                },
+                uNoiseContrast: {
+                    value: 1.0,
+                    min: 0,
+                    max: 1,
+                    step: 0.1,
+                },
+                uNoiseMultiplier: {
+                    value: 1.5,
+                    min: 0,
+                    max: 10,
+                    step: 0.01,
+                },
+            }),
+            ColorClamp: folder({
+                uClampColorEnabled: true,
+                uClampColorMin: {
+                    value: {
+                        r: 52,
+                        g: 52,
+                        b: 52,
+                    },
+                    onChange: (v) => {
+                        const color = new THREE.Vector3(
+                            v.r,
+                            v.g,
+                            v.b,
+                        ).divideScalar(255);
+                        shaderRef.current.uniforms.uClampColorMin.value = color;
+                    },
+                },
+                uClampColorMax: {
+                    value: {
+                        r: 255,
+                        g: 255,
+                        b: 255,
+                    },
+                    onChange: (v) => {
+                        const color = new THREE.Vector3(
+                            v.r,
+                            v.g,
+                            v.b,
+                        ).divideScalar(255);
+                        shaderRef.current.uniforms.uClampColorMax.value = color;
+                    },
+                },
+            }),
+        }),
+    });
+
+    useFrame(({ clock }) => {
+        time.current = clock.getElapsedTime();
+        shaderRef.current.uniforms.time.value = time.current;
+    });
+
+    return (
+        <starsShaderMaterial
+            uNoiseEnabled={uNoiseEnabled}
+            uNoiseScale={uNoiseScale}
+            uNoiseScalarDistanceFactor={uNoiseScalarDistanceFactor}
+            uNoiseContrast={uNoiseContrast}
+            uNoiseMultiplier={uNoiseMultiplier}
+            uBoundingBoxMin={boundingBox.min}
+            uBoundingBoxMax={boundingBox.max}
+            uClampColorEnabled={uClampColorEnabled}
+            uClampColorMax={uClampColorMax}
+            uClampColorMin={uClampColorMin}
+            ref={shaderRef}
+            key={StarsShaderMaterial.key}
             opacity={opacity}
             transparent
         />
