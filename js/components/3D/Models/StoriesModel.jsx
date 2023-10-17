@@ -8,7 +8,7 @@ import * as THREE from "three";
 
 import { GLB_ASSET_URLS } from "@/js/core/constants";
 import { ItemMaterialYellow, ItemMaterialYellowDark } from "../Materials";
-import { Outlines } from "../Common";
+import { ModelOutlines } from "@/js/components/3D/Common";
 
 export default function StoriesModel({ opacity = 1, ...props }) {
     const [mounted, setMounted] = useState(false);
@@ -77,7 +77,7 @@ export default function StoriesModel({ opacity = 1, ...props }) {
                                 opacity={opacity}
                                 boundingBox={boundingBox}
                             />
-                            <Outlines opacity={opacity} />
+                            <ModelOutlines opacity={opacity} />
                             <mesh
                                 name="tac"
                                 geometry={nodes.tac.geometry}
@@ -87,7 +87,7 @@ export default function StoriesModel({ opacity = 1, ...props }) {
                                     opacity={opacity}
                                     boundingBox={boundingBox}
                                 />
-                                <Outlines opacity={opacity} />
+                                <ModelOutlines opacity={opacity} />
                             </mesh>
                         </mesh>
                         <mesh
@@ -100,7 +100,7 @@ export default function StoriesModel({ opacity = 1, ...props }) {
                                 opacity={opacity}
                                 boundingBox={boundingBox}
                             />
-                            <Outlines opacity={opacity} />
+                            <ModelOutlines opacity={opacity} />
                             <mesh
                                 name="cat"
                                 geometry={nodes.cat.geometry}
@@ -110,7 +110,7 @@ export default function StoriesModel({ opacity = 1, ...props }) {
                                     opacity={opacity}
                                     boundingBox={boundingBox}
                                 />
-                                <Outlines opacity={opacity} />
+                                <ModelOutlines opacity={opacity} />
                             </mesh>
                         </mesh>
                         <mesh
@@ -123,7 +123,7 @@ export default function StoriesModel({ opacity = 1, ...props }) {
                                 opacity={opacity}
                                 boundingBox={boundingBox}
                             />
-                            <Outlines opacity={opacity} />
+                            <ModelOutlines opacity={opacity} />
                             <mesh
                                 name="act"
                                 geometry={nodes.act.geometry}
@@ -133,7 +133,7 @@ export default function StoriesModel({ opacity = 1, ...props }) {
                                     opacity={opacity}
                                     boundingBox={boundingBox}
                                 />
-                                <Outlines opacity={opacity} />
+                                <ModelOutlines opacity={opacity} />
                             </mesh>
                         </mesh>
                     </group>

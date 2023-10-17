@@ -7,7 +7,7 @@ import { useGLTF, useAnimations } from "@react-three/drei";
 import * as THREE from "three";
 
 import { GLB_ASSET_URLS } from "@/js/core/constants";
-import { Outlines } from "../Common";
+import { ModelOutlines } from "@/js/components/3D/Common";
 import { ItemMaterialViolet } from "../Materials";
 
 export default function KeyModel({ opacity = 1, ...props }) {
@@ -83,7 +83,7 @@ export default function KeyModel({ opacity = 1, ...props }) {
                                 opacity={opacity}
                                 boundingBox={boundingBox}
                             />
-                            <Outlines opacity={opacity} />
+                            <ModelOutlines opacity={opacity} />
                         </mesh>
                         <mesh
                             name="key002"
@@ -95,7 +95,7 @@ export default function KeyModel({ opacity = 1, ...props }) {
                                 opacity={opacity}
                                 boundingBox={boundingBox}
                             />
-                            <Outlines opacity={opacity} />
+                            <ModelOutlines opacity={opacity} />
                         </mesh>
                         <mesh
                             name="key003"
@@ -107,7 +107,7 @@ export default function KeyModel({ opacity = 1, ...props }) {
                                 opacity={opacity}
                                 boundingBox={boundingBox}
                             />
-                            <Outlines opacity={opacity} />
+                            <ModelOutlines opacity={opacity} />
                         </mesh>
                         <mesh
                             name="key004"
@@ -119,7 +119,7 @@ export default function KeyModel({ opacity = 1, ...props }) {
                                 opacity={opacity}
                                 boundingBox={boundingBox}
                             />
-                            <Outlines opacity={opacity} />
+                            <ModelOutlines opacity={opacity} />
                         </mesh>
                         <mesh
                             name="key005"
@@ -131,7 +131,7 @@ export default function KeyModel({ opacity = 1, ...props }) {
                                 opacity={opacity}
                                 boundingBox={boundingBox}
                             />
-                            <Outlines opacity={opacity} />
+                            <ModelOutlines opacity={opacity} />
                         </mesh>
                         <mesh
                             name="key006"
@@ -143,7 +143,7 @@ export default function KeyModel({ opacity = 1, ...props }) {
                                 opacity={opacity}
                                 boundingBox={boundingBox}
                             />
-                            <Outlines opacity={opacity} />
+                            <ModelOutlines opacity={opacity} />
                         </mesh>
                     </group>
                 </group>

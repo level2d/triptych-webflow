@@ -1,2 +1,2 @@
-export { default as Outlines } from "./Outlines";
-export { default as Outlines2 } from "./Outlines2";
+export { default as ModelOutlines } from "./ModelOutlines";
+export { default as TriptychOutlines } from "./TriptychOutlines";

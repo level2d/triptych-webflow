@@ -8,7 +8,7 @@ import * as THREE from "three";
 
 import { GLB_ASSET_URLS } from "@/js/core/constants";
 import { ItemMaterialRed } from "../Materials";
-import { Outlines } from "../Common";
+import { ModelOutlines } from "@/js/components/3D/Common";
 
 export default function NorthfaceModel({ opacity = 1, ...props }) {
     const [mounted, setMounted] = useState(false);
@@ -72,7 +72,7 @@ export default function NorthfaceModel({ opacity = 1, ...props }) {
                                 opacity={opacity}
                                 boundingBox={boundingBox}
                             />
-                            <Outlines opacity={opacity} />
+                            <ModelOutlines opacity={opacity} />
                         </mesh>
                     </group>
                 </group>

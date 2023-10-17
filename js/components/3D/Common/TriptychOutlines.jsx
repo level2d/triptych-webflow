@@ -1,9 +1,9 @@
-import { Outlines as _Outlines } from "@react-three/drei";
+import { Outlines } from "@react-three/drei";
 import { useControls } from "leva";
 
 import * as colors from "@/js/core/colors";
 
-export default function Outlines2({ children, opacity = 1 }) {
+export default function TriptychOutlines({ children, opacity = 1 }) {
     const { outlineThickness, outlineColor } = useControls(
         "Triptych Outlines",
         {
@@ -19,13 +19,13 @@ export default function Outlines2({ children, opacity = 1 }) {
         },
     );
     return (
-        <_Outlines
+        <Outlines
             thickness={outlineThickness}
             color={outlineColor}
             transparent
             opacity={opacity}
         >
             {children}
-        </_Outlines>
+        </Outlines>
     );
 }

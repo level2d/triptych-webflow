@@ -7,7 +7,7 @@ import { useGLTF, useAnimations } from "@react-three/drei";
 import * as THREE from "three";
 
 import { GLB_ASSET_URLS } from "@/js/core/constants";
-import { Outlines } from "../Common";
+import { ModelOutlines } from "@/js/components/3D/Common";
 import { ItemMaterialYellow, ItemMaterialYellowDark } from "../Materials";
 
 export default function MethodsModel({ opacity = 1, ...props }) {
@@ -84,7 +84,7 @@ export default function MethodsModel({ opacity = 1, ...props }) {
                                     opacity={opacity}
                                     boundingBox={boundingBox}
                                 />
-                                <Outlines opacity={opacity} />
+                                <ModelOutlines opacity={opacity} />
                             </mesh>
                             <mesh
                                 name="Cylinder010_1"
@@ -95,7 +95,7 @@ export default function MethodsModel({ opacity = 1, ...props }) {
                                     opacity={opacity}
                                     boundingBox={boundingBox}
                                 />
-                                <Outlines opacity={opacity} />
+                                <ModelOutlines opacity={opacity} />
                             </mesh>
                             <mesh
                                 name="gear_01001"
@@ -107,7 +107,7 @@ export default function MethodsModel({ opacity = 1, ...props }) {
                                     opacity={opacity}
                                     boundingBox={boundingBox}
                                 />
-                                <Outlines opacity={opacity} />
+                                <ModelOutlines opacity={opacity} />
                             </mesh>
                             <mesh
                                 name="gear_02001"
@@ -119,7 +119,7 @@ export default function MethodsModel({ opacity = 1, ...props }) {
                                     opacity={opacity}
                                     boundingBox={boundingBox}
                                 />
-                                <Outlines opacity={opacity} />
+                                <ModelOutlines opacity={opacity} />
                             </mesh>
                             <mesh
                                 name="gear_03001"
@@ -131,7 +131,7 @@ export default function MethodsModel({ opacity = 1, ...props }) {
                                     opacity={opacity}
                                     boundingBox={boundingBox}
                                 />
-                                <Outlines opacity={opacity} />
+                                <ModelOutlines opacity={opacity} />
                             </mesh>
                             <mesh
                                 name="gear_04001"
@@ -142,7 +142,7 @@ export default function MethodsModel({ opacity = 1, ...props }) {
                                     opacity={opacity}
                                     boundingBox={boundingBox}
                                 />
-                                <Outlines opacity={opacity} />
+                                <ModelOutlines opacity={opacity} />
                             </mesh>
                         </group>
                     </group>
