@@ -25,6 +25,7 @@ import {
 import { TriptychOutlines } from "@/js/components/3D/Common";
 import { TriptychMaterial } from "../../3D/Materials";
 import ReflectionModel from "./ReflectionModel";
+import WaterModel from "./WaterModel";
 
 function Model(props) {
     const { nodes /*, materials */ } = useGLTF(GLB_ASSET_URLS.Locations);
@@ -79,6 +80,13 @@ function Model(props) {
                 material={nodes.water.material}
                 position={[0, -5.565, 0]}
             /> */}
+            <WaterModel />
+            {/* <mesh
+                geometry={nodes.stars.geometry}
+                // material={nodes.stars.material}
+            >
+                <starsShaderMaterial />
+            </mesh> */}
             <ReflectionModel />
             {/* <mesh
                 geometry={nodes.location_015.geometry}
