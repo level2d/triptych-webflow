@@ -11,7 +11,7 @@ import {
     ItemMaterialYellow,
     ItemMaterialYellowDark,
 } from "@/js/components/3D/Materials";
-import { Outlines } from "../Common";
+import { ModelOutlines } from "@/js/components/3D/Common";
 
 export default function ContactModel({ opacity = 1, ...props }) {
     const [mounted, setMounted] = useState(false);
@@ -98,7 +98,7 @@ export default function ContactModel({ opacity = 1, ...props }) {
                                 opacity={opacity}
                                 boundingBox={boundingBox}
                             />
-                            <Outlines opacity={opacity} />
+                            <ModelOutlines opacity={opacity} />
                             <mesh
                                 name="thruster_01"
                                 geometry={nodes.thruster_01.geometry}
@@ -109,7 +109,7 @@ export default function ContactModel({ opacity = 1, ...props }) {
                                     opacity={opacity}
                                     boundingBox={boundingBox}
                                 />
-                                <Outlines opacity={opacity} />
+                                <ModelOutlines opacity={opacity} />
                             </mesh>
                             <mesh
                                 name="thruster_02"
@@ -122,7 +122,7 @@ export default function ContactModel({ opacity = 1, ...props }) {
                                     opacity={opacity}
                                     boundingBox={boundingBox}
                                 />
-                                <Outlines opacity={opacity} />
+                                <ModelOutlines opacity={opacity} />
                             </mesh>
                             <mesh
                                 name="thruster_03"
@@ -135,7 +135,7 @@ export default function ContactModel({ opacity = 1, ...props }) {
                                     opacity={opacity}
                                     boundingBox={boundingBox}
                                 />
-                                <Outlines opacity={opacity} />
+                                <ModelOutlines opacity={opacity} />
                             </mesh>
                             <mesh
                                 name="thruster_04"
@@ -148,7 +148,7 @@ export default function ContactModel({ opacity = 1, ...props }) {
                                     opacity={opacity}
                                     boundingBox={boundingBox}
                                 />
-                                <Outlines opacity={opacity} />
+                                <ModelOutlines opacity={opacity} />
                             </mesh>
                             <mesh
                                 name="thruster_05"
@@ -161,7 +161,7 @@ export default function ContactModel({ opacity = 1, ...props }) {
                                     opacity={opacity}
                                     boundingBox={boundingBox}
                                 />
-                                <Outlines opacity={opacity} />
+                                <ModelOutlines opacity={opacity} />
                             </mesh>
                             <mesh
                                 name="thruster_06"
@@ -174,7 +174,7 @@ export default function ContactModel({ opacity = 1, ...props }) {
                                     opacity={opacity}
                                     boundingBox={boundingBox}
                                 />
-                                <Outlines opacity={opacity} />
+                                <ModelOutlines opacity={opacity} />
                             </mesh>
                             <mesh
                                 name="thruster_07"
@@ -187,7 +187,7 @@ export default function ContactModel({ opacity = 1, ...props }) {
                                     opacity={opacity}
                                     boundingBox={boundingBox}
                                 />
-                                <Outlines opacity={opacity} />
+                                <ModelOutlines opacity={opacity} />
                             </mesh>
                             <mesh
                                 name="thruster_08"
@@ -200,7 +200,7 @@ export default function ContactModel({ opacity = 1, ...props }) {
                                     opacity={opacity}
                                     boundingBox={boundingBox}
                                 />
-                                <Outlines opacity={opacity} />
+                                <ModelOutlines opacity={opacity} />
                             </mesh>
                             <mesh
                                 name="windows"
@@ -217,7 +217,7 @@ export default function ContactModel({ opacity = 1, ...props }) {
                                     opacity={opacity}
                                     boundingBox={boundingBox}
                                 />
-                                <Outlines opacity={opacity} />
+                                <ModelOutlines opacity={opacity} />
                             </mesh>
                         </mesh>
                     </group>
