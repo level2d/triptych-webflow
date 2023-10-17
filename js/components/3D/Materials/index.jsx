@@ -364,14 +364,10 @@ export const StarsMaterial = ({ boundingBox, opacity = 1 }) => {
     const shaderRef = useRef();
     const time = useRef(1.0);
     const {
-        uPerlinEnabled,
-        uPerlinResolution,
-        uPerlinYScale,
-        uPerlinSpeed,
-        uPerlinLightenFactor,
         uNoiseScale,
         uNoiseContrast,
         uNoiseScalarDistanceFactor,
+        uNoiseMultiplier,
         uGradientStop,
         uMatcapEnabled,
         uNoiseEnabled,
@@ -381,42 +377,12 @@ export const StarsMaterial = ({ boundingBox, opacity = 1 }) => {
         uClampColorMin,
     } = useControls({
         "Stars Shader": folder({
-            Perlin: folder({
-                uPerlinEnabled: true,
-                uPerlinResolution: {
-                    value: 8,
-                    min: 1,
-                    max: 50,
-                    step: 1,
-                },
-                uPerlinLightenFactor: {
-                    value: 0.3,
-                    min: 0,
-                    max: 1,
-                    step: 0.1,
-                },
-                uPerlinYScale: {
-                    value: 6.0,
-                    min: 1.0,
-                    max: 10.0,
-                    step: 1.0,
-                },
-                uPerlinSpeed: {
-                    value: 0.5,
-                    min: 0.1,
-                    max: 10,
-                    step: 0.1,
-                },
-            }),
-            Matcap: folder({
-                uMatcapEnabled: true,
-            }),
             Noise: folder({
                 uNoiseEnabled: true,
                 uNoiseScale: {
-                    value: 850,
+                    value: 100,
                     min: 10,
-                    max: 2000,
+                    max: 500,
                     step: 10,
                 },
                 uNoiseScalarDistanceFactor: {
@@ -431,13 +397,10 @@ export const StarsMaterial = ({ boundingBox, opacity = 1 }) => {
                     max: 1,
                     step: 0.1,
                 },
-            }),
-            Gradient: folder({
-                uGradientEnabled: true,
-                uGradientStop: {
-                    value: 0.21,
-                    min: 0.0,
-                    max: 1.0,
+                uNoiseMultiplier: {
+                    value: 1.5,
+                    min: 0,
+                    max: 10,
                     step: 0.01,
                 },
             }),
@@ -484,20 +447,13 @@ export const StarsMaterial = ({ boundingBox, opacity = 1 }) => {
 
     return (
         <starsShaderMaterial
-            uPerlinEnabled={uPerlinEnabled}
-            uPerlinResolution={uPerlinResolution}
-            uPerlinSpeed={uPerlinSpeed}
-            uPerlinYScale={uPerlinYScale}
-            uPerlinLightenFactor={uPerlinLightenFactor}
             uNoiseEnabled={uNoiseEnabled}
             uNoiseScale={uNoiseScale}
             uNoiseScalarDistanceFactor={uNoiseScalarDistanceFactor}
             uNoiseContrast={uNoiseContrast}
+            uNoiseMultiplier={uNoiseMultiplier}
             uBoundingBoxMin={boundingBox.min}
             uBoundingBoxMax={boundingBox.max}
-            uGradientStop={uGradientStop}
-            uMatcapEnabled={uMatcapEnabled}
-            uGradientEnabled={uGradientEnabled}
             uClampColorEnabled={uClampColorEnabled}
             uClampColorMax={uClampColorMax}
             uClampColorMin={uClampColorMin}

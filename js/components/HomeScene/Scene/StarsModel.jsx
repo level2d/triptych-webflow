@@ -36,12 +36,7 @@ function StarsModel(props) {
                 }}
                 ref={meshRef}
             >
-                {/* <StarsMaterial boundingBox={boundingBox} opacity={opacity} /> */}
-                <meshBasicMaterial
-                    color="#000000"
-                    opacity={opacity}
-                    transparent
-                />
+                <StarsMaterial boundingBox={boundingBox} opacity={opacity} />
             </mesh>
         </group>
     );
