@@ -22,7 +22,7 @@ import {
     StoriesModel,
     WorkModel,
 } from "@/js/components/3D/Models";
-import { Outlines2 } from "@/js/components/3D/Common";
+import { TriptychOutlines } from "@/js/components/3D/Common";
 import { TriptychMaterial } from "../../3D/Materials";
 import ReflectionModel from "./ReflectionModel";
 
@@ -65,14 +65,14 @@ function Model(props) {
                 }}
             >
                 <TriptychMaterial boundingBox={boundingBox} opacity={opacity} />
-                <Outlines2 opacity={opacity} visible={visible} />
+                <TriptychOutlines opacity={opacity} visible={visible} />
             </mesh>
             <mesh
                 geometry={nodes.water_objects.geometry}
                 // material={nodes.water_objects.material}
             >
                 <TriptychMaterial boundingBox={boundingBox} opacity={opacity} />
-                <Outlines2 opacity={opacity} visible={visible} />
+                <TriptychOutlines opacity={opacity} visible={visible} />
             </mesh>
             {/* <mesh
                 geometry={nodes.water.geometry}

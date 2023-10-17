@@ -7,7 +7,7 @@ import { useGLTF, useAnimations } from "@react-three/drei";
 import * as THREE from "three";
 
 import { GLB_ASSET_URLS } from "@/js/core/constants";
-import { Outlines } from "@/js/components/3D/Common";
+import { ModelOutlines } from "@/js/components/3D/Common";
 import {
     ItemMaterialYellow,
     ItemMaterialYellowDark,
@@ -79,7 +79,7 @@ export default function CareersModel({ opacity = 1, ...props }) {
                                 boundingBox={boundingBox}
                                 opacity={opacity}
                             />
-                            <Outlines opacity={opacity} />
+                            <ModelOutlines opacity={opacity} />
                             <mesh
                                 name="fluid"
                                 geometry={nodes.fluid.geometry}
@@ -91,7 +91,7 @@ export default function CareersModel({ opacity = 1, ...props }) {
                                     boundingBox={boundingBox}
                                     opacity={opacity}
                                 />
-                                <Outlines opacity={opacity} />
+                                <ModelOutlines opacity={opacity} />
                             </mesh>
                         </mesh>
                     </group>

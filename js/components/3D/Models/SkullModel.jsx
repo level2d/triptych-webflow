@@ -8,7 +8,7 @@ import * as THREE from "three";
 
 import { GLB_ASSET_URLS } from "@/js/core/constants";
 import { ItemMaterialViolet, ItemMaterialVioletDark } from "../Materials";
-import { Outlines } from "../Common";
+import { ModelOutlines } from "@/js/components/3D/Common";
 
 export default function SkullModel({ opacity = 1, ...props }) {
     const [mounted, setMounted] = useState(false);
@@ -73,7 +73,7 @@ export default function SkullModel({ opacity = 1, ...props }) {
                                 opacity={opacity}
                                 boundingBox={boundingBox}
                             />
-                            <Outlines opacity={opacity} />
+                            <ModelOutlines opacity={opacity} />
                         </mesh>
                         <mesh
                             name="skull002"
@@ -85,7 +85,7 @@ export default function SkullModel({ opacity = 1, ...props }) {
                                 opacity={opacity}
                                 boundingBox={boundingBox}
                             />
-                            <Outlines opacity={opacity} />
+                            <ModelOutlines opacity={opacity} />
                             <mesh
                                 name="sockets"
                                 geometry={nodes.sockets.geometry}
@@ -95,7 +95,7 @@ export default function SkullModel({ opacity = 1, ...props }) {
                                     opacity={opacity}
                                     boundingBox={boundingBox}
                                 />
-                                <Outlines opacity={opacity} />
+                                <ModelOutlines opacity={opacity} />
                             </mesh>
                         </mesh>
                     </group>
