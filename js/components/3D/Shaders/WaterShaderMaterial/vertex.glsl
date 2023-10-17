@@ -13,7 +13,7 @@ varying vec3 vN;
 void main() {
     vUv = uv;
 
-    // tweaks for gradient. Clamp vUv to bounding box
+    // Clamp vUv to bounding box
     vUv.y = (position.y - uBoundingBoxMin.y) / (uBoundingBoxMax.y - uBoundingBoxMin.y);
     vUv.x = (position.x - uBoundingBoxMin.x) / (uBoundingBoxMax.x - uBoundingBoxMin.x);
 

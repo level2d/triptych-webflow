@@ -267,14 +267,7 @@ export const WaterMaterial = ({ boundingBox, opacity = 1 }) => {
         uPerlinResolution,
         uPerlinYScale,
         uPerlinSpeed,
-        uPerlinLightenFactor,
-        uNoiseScale,
-        uNoiseContrast,
-        uNoiseScalarDistanceFactor,
-        uGradientStop,
-        uMatcapEnabled,
-        uNoiseEnabled,
-        uGradientEnabled,
+        uPerlinMultiplier,
         uClampColorEnabled,
         uClampColorMax,
         uClampColorMin,
@@ -288,16 +281,10 @@ export const WaterMaterial = ({ boundingBox, opacity = 1 }) => {
                     max: 50,
                     step: 1,
                 },
-                uPerlinLightenFactor: {
-                    value: 0.3,
-                    min: 0,
-                    max: 1,
-                    step: 0.1,
-                },
                 uPerlinYScale: {
                     value: 6.0,
                     min: 1.0,
-                    max: 10.0,
+                    max: 50.0,
                     step: 1.0,
                 },
                 uPerlinSpeed: {
@@ -306,38 +293,11 @@ export const WaterMaterial = ({ boundingBox, opacity = 1 }) => {
                     max: 10,
                     step: 0.1,
                 },
-            }),
-            Matcap: folder({
-                uMatcapEnabled: true,
-            }),
-            Noise: folder({
-                uNoiseEnabled: true,
-                uNoiseScale: {
-                    value: 850,
-                    min: 10,
-                    max: 2000,
-                    step: 10,
-                },
-                uNoiseScalarDistanceFactor: {
-                    value: 0.9,
-                    min: 0,
-                    max: 10,
+                uPerlinMultiplier: {
+                    value: 0.7,
+                    min: 0.1,
+                    max: 5,
                     step: 0.1,
-                },
-                uNoiseContrast: {
-                    value: 1.0,
-                    min: 0,
-                    max: 1,
-                    step: 0.1,
-                },
-            }),
-            Gradient: folder({
-                uGradientEnabled: true,
-                uGradientStop: {
-                    value: 0.21,
-                    min: 0.0,
-                    max: 1.0,
-                    step: 0.01,
                 },
             }),
             ColorClamp: folder({
@@ -387,19 +347,12 @@ export const WaterMaterial = ({ boundingBox, opacity = 1 }) => {
             uPerlinResolution={uPerlinResolution}
             uPerlinSpeed={uPerlinSpeed}
             uPerlinYScale={uPerlinYScale}
-            uPerlinLightenFactor={uPerlinLightenFactor}
-            uNoiseEnabled={uNoiseEnabled}
-            uNoiseScale={uNoiseScale}
-            uNoiseScalarDistanceFactor={uNoiseScalarDistanceFactor}
-            uNoiseContrast={uNoiseContrast}
-            uBoundingBoxMin={boundingBox.min}
-            uBoundingBoxMax={boundingBox.max}
-            uGradientStop={uGradientStop}
-            uMatcapEnabled={uMatcapEnabled}
-            uGradientEnabled={uGradientEnabled}
+            uPerlinMultiplier={uPerlinMultiplier}
             uClampColorEnabled={uClampColorEnabled}
             uClampColorMax={uClampColorMax}
             uClampColorMin={uClampColorMin}
+            uBoundingBoxMin={boundingBox.min}
+            uBoundingBoxMax={boundingBox.max}
             ref={shaderRef}
             key={WaterShaderMaterial.key}
             opacity={opacity}
