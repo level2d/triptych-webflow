@@ -29,7 +29,6 @@ function WaterModel(props) {
         <group {...props} dispose={null}>
             <mesh
                 name="WaterModel"
-                // material={nodes.water.material}
                 geometry={nodes.horizon_dome.geometry}
                 visible={visible}
                 onClick={(e) => {
