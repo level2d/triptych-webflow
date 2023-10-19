@@ -99,7 +99,7 @@ void main() {
         color += noiseColor;
         color = color * vec3(uNoiseMultiplier);
         color = round(color);
-        color = color - vec3(1.0);
+        color = vec3(1.0) - color;
     }
 
     if(uClampColorEnabled) {

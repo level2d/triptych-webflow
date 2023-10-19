@@ -259,7 +259,7 @@ export const ReflectionMaterial = ({ boundingBox, opacity = 1 }) => {
     );
 };
 
-export const WaterMaterial = ({ boundingBox, opacity = 1 }) => {
+export const WaterMaterial = ({ opacity = 1 }) => {
     const shaderRef = useRef();
     const time = useRef(1.0);
     const {
@@ -351,8 +351,6 @@ export const WaterMaterial = ({ boundingBox, opacity = 1 }) => {
             uClampColorEnabled={uClampColorEnabled}
             uClampColorMax={uClampColorMax}
             uClampColorMin={uClampColorMin}
-            uBoundingBoxMin={boundingBox.min}
-            uBoundingBoxMax={boundingBox.max}
             ref={shaderRef}
             key={WaterShaderMaterial.key}
             opacity={opacity}
@@ -360,7 +358,7 @@ export const WaterMaterial = ({ boundingBox, opacity = 1 }) => {
         />
     );
 };
-export const StarsMaterial = ({ boundingBox, opacity = 1 }) => {
+export const StarsMaterial = ({ opacity = 1 }) => {
     const shaderRef = useRef();
     const time = useRef(1.0);
     const {
@@ -368,10 +366,7 @@ export const StarsMaterial = ({ boundingBox, opacity = 1 }) => {
         uNoiseContrast,
         uNoiseScalarDistanceFactor,
         uNoiseMultiplier,
-        uGradientStop,
-        uMatcapEnabled,
         uNoiseEnabled,
-        uGradientEnabled,
         uClampColorEnabled,
         uClampColorMax,
         uClampColorMin,
@@ -452,8 +447,6 @@ export const StarsMaterial = ({ boundingBox, opacity = 1 }) => {
             uNoiseScalarDistanceFactor={uNoiseScalarDistanceFactor}
             uNoiseContrast={uNoiseContrast}
             uNoiseMultiplier={uNoiseMultiplier}
-            uBoundingBoxMin={boundingBox.min}
-            uBoundingBoxMax={boundingBox.max}
             uClampColorEnabled={uClampColorEnabled}
             uClampColorMax={uClampColorMax}
             uClampColorMin={uClampColorMin}
