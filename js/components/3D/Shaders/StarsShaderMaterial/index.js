@@ -16,6 +16,7 @@ export const StarsShaderMaterial = shaderMaterial(
         uNoiseContrast: 1.5,
         uNoiseScalarDistanceFactor: 1.5,
         uNoiseMultiplier: 1,
+        uNoiseSpeed: 0.1,
         // color clamp pass
         uClampColorEnabled: true,
         uClampColorMin: new THREE.Vector3(0, 0, 0),
