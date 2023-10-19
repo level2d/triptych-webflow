@@ -10,8 +10,6 @@ export const StarsShaderMaterial = shaderMaterial(
     {
         time: 1.0,
         opacity: 1.0,
-        uBoundingBoxMin: new THREE.Vector3(0, 0, 0),
-        uBoundingBoxMax: new THREE.Vector3(1, 1, 1),
         // noise pass
         uNoiseEnabled: true,
         uNoiseScale: 1000.0,
