@@ -20,6 +20,7 @@ uniform float uNoiseScale;
 uniform bool uNoiseEnabled;
 uniform float uNoiseContrast;
 uniform float uNoiseScalarDistanceFactor;
+uniform float uNoiseSpeed;
 uniform float uNoiseMultiplier;
 uniform bool uClampColorEnabled;
 uniform vec3 uClampColorMin;
@@ -57,7 +58,7 @@ vec2 voronoi(in vec3 x, in float time) {
                 // calculate a random point within the cell relative to 'n'(current cell coordinates)
                 vec3 o = hash3d(n + g);
                 // calculate the distance vector between the current pixel and the moving random point 'o'
-                vec3 r = g + (0.5 + 0.5 * sin(vec3(time) + 6.2831 * o)) - f;
+                vec3 r = g + (0.5 + 0.5 * sin(vec3(1.0, 1.0, time * uNoiseSpeed) + 6.2831 * o)) - f;
                 // calculate the scalar distance of r
                 float d = dot(r, r) * uNoiseScalarDistanceFactor;
 
@@ -78,7 +79,7 @@ vec2 voronoi(in vec3 x, in float time) {
 vec3 noise() {
 
     vec2 st = vUv * vec2(uNoiseScale);
-    vec2 res = voronoi(vec3(st * 3.0, 0.0), 0.0);
+    vec2 res = voronoi(vec3(st * 3.0, 0.0), time);
     // darken by pow
     vec3 color = vec3(pow(res.x, uNoiseContrast));
 
