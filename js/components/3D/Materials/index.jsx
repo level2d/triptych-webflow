@@ -276,25 +276,25 @@ export const WaterMaterial = ({ opacity = 1 }) => {
             Perlin: folder({
                 uPerlinEnabled: true,
                 uPerlinResolution: {
-                    value: 8,
+                    value: 45,
                     min: 1,
                     max: 50,
                     step: 1,
                 },
                 uPerlinYScale: {
-                    value: 6.0,
+                    value: 14,
                     min: 1.0,
                     max: 50.0,
                     step: 1.0,
                 },
                 uPerlinSpeed: {
-                    value: 0.5,
+                    value: 0.3,
                     min: 0.1,
                     max: 10,
                     step: 0.1,
                 },
                 uPerlinMultiplier: {
-                    value: 0.7,
+                    value: 0.4,
                     min: 0.1,
                     max: 5,
                     step: 0.1,
@@ -375,25 +375,25 @@ export const StarsMaterial = ({ opacity = 1 }) => {
             Noise: folder({
                 uNoiseEnabled: true,
                 uNoiseScale: {
-                    value: 100,
+                    value: 330,
                     min: 10,
                     max: 500,
                     step: 10,
                 },
                 uNoiseScalarDistanceFactor: {
-                    value: 0.9,
+                    value: 2.0,
                     min: 0,
                     max: 10,
                     step: 0.1,
                 },
                 uNoiseContrast: {
-                    value: 1.0,
+                    value: 0.2,
                     min: 0,
                     max: 1,
                     step: 0.1,
                 },
                 uNoiseMultiplier: {
-                    value: 1.5,
+                    value: 2.0,
                     min: 0,
                     max: 10,
                     step: 0.01,
