@@ -20,8 +20,6 @@ export const WaterShaderMaterial = shaderMaterial(
         uPerlinSpeed: 0.1,
         uPerlinYScale: 1.0,
         uPerlinMultiplier: 0.7,
-        uBoundingBoxMin: new THREE.Vector3(0, 0, 0),
-        uBoundingBoxMax: new THREE.Vector3(1, 1, 1),
         // color clamp pass
         uClampColorEnabled: true,
         uClampColorMin: new THREE.Vector3(0, 0, 0),
