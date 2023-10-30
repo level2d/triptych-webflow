@@ -128,6 +128,7 @@ export const createHomeSceneSlice = (set, get) => ({
     setLookAtMeshUuid: (uuid) => set(() => ({ lookAtMeshUuid: uuid })),
 
     lastOrbitDirection: "down",
+    isOrbiting: false,
 
     /**
      *
@@ -135,8 +136,10 @@ export const createHomeSceneSlice = (set, get) => ({
      */
     orbit: async (direction) => {
         const lastOrbitDirection = get().lastOrbitDirection;
+        const isOrbiting = get().isOrbiting;
         const cameraControls = get().getR3fStore().controls;
         if (!cameraControls) return;
+        if (isOrbiting) return;
 
         const scene = get().getR3fStore().scene;
         const paddingTop = get().paddingTop;
@@ -168,6 +171,7 @@ export const createHomeSceneSlice = (set, get) => ({
         const isFromRightUp = isFromRight && cameraPosition.y > 0;
         const isFromLeftUp = isFromLeft && cameraPosition.y > 0;
         const isFromHorizontalUp = isFromLeftUp || isFromRightUp;
+
         console.log({
             isFromUp,
             isFromDown,
@@ -177,6 +181,9 @@ export const createHomeSceneSlice = (set, get) => ({
             isFromLeftUp,
             isFromHorizontalUp,
         });
+
+        set({ isOrbiting: true });
+
         switch (direction) {
             case "up": {
                 if (isFromUp || isFromHorizontalUp) {
@@ -232,7 +239,10 @@ export const createHomeSceneSlice = (set, get) => ({
             });
         }
 
-        set({ lastOrbitDirection: direction });
+        set({
+            isOrbiting: false,
+            lastOrbitDirection: direction,
+        });
     },
     interactable: debug,
     introPlayed: false,
