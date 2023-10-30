@@ -11,6 +11,7 @@ import NavButton from "../NavButton";
 const NavArrows = ({ visible }) => {
     const el = useRef(null);
     const orbit = useStore((state) => state.orbit);
+    const disabled = useStore((state) => state.isOrbiting);
     useLayoutEffect(() => {
         const target = el.current;
         if (!target) {
@@ -44,6 +45,7 @@ const NavArrows = ({ visible }) => {
                     onClick={() => {
                         orbit("left");
                     }}
+                    disabled={disabled}
                 />
                 <div className={styles.middleButtons}>
                     <NavButton
@@ -51,12 +53,14 @@ const NavArrows = ({ visible }) => {
                         onClick={() => {
                             orbit("up");
                         }}
+                        disabled={disabled}
                     />
                     <NavButton
                         direction="down"
                         onClick={() => {
                             orbit("down");
                         }}
+                        disabled={disabled}
                     />
                 </div>
                 <NavButton
@@ -64,6 +68,7 @@ const NavArrows = ({ visible }) => {
                     onClick={() => {
                         orbit("right");
                     }}
+                    disabled={disabled}
                 />
             </div>
             <div className={styles.textWrapper}>
