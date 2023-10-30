@@ -91,7 +91,7 @@ const ARROWS = {
 };
 
 export default function NavButton({
-    enabled = true,
+    disabled = false,
     direction = "left",
     onClick = () => {},
     startingColorIndex = randomColorIndex(),
@@ -103,6 +103,7 @@ export default function NavButton({
     const [lastColorIndex, setLastColorIndex] = useState(startingColorIndex);
     const Component = ARROWS[direction];
     const _hotkey = hotkey ?? direction;
+    const hotKeyEnabled = !disabled;
 
     const theme = useMemo(() => {
         if (isActive) {
@@ -144,8 +145,8 @@ export default function NavButton({
                 setIsActive(false);
             }, 100);
         },
-        { enabled },
-        [enabled],
+        { enabled: hotKeyEnabled },
+        [hotKeyEnabled],
     );
 
     return (
@@ -156,6 +157,7 @@ export default function NavButton({
             onMouseLeave={handleMouseLeave}
             onMouseDown={handleMousedown}
             onMouseUp={handleMouseup}
+            disabled={disabled}
         >
             {children ?? <Component />}
         </Button>
