@@ -172,24 +172,22 @@ export const createHomeSceneSlice = (set, get) => ({
         const isFromLeftUp = isFromLeft && cameraPosition.y > 0;
         const isFromHorizontalUp = isFromLeftUp || isFromRightUp;
 
-        console.log({
-            isFromUp,
-            isFromDown,
-            isFromRight,
-            isFromLeft,
-            isFromRightUp,
-            isFromLeftUp,
-            isFromHorizontalUp,
-        });
-
-        set({ isOrbiting: true });
+        // console.log({
+        //     isFromUp,
+        //     isFromDown,
+        //     isFromRight,
+        //     isFromLeft,
+        //     isFromRightUp,
+        //     isFromLeftUp,
+        //     isFromHorizontalUp,
+        // });
 
         switch (direction) {
             case "up": {
                 if (isFromUp || isFromHorizontalUp) {
                     return; // short circuit
                 }
-                cameraControls.normalizeRotations();
+                set({ isOrbiting: true });
                 await cameraControls.rotate(
                     0,
                     THREE.MathUtils.degToRad(-90),
@@ -201,6 +199,7 @@ export const createHomeSceneSlice = (set, get) => ({
                 if (isFromDown || isFromLeft || isFromRight) {
                     return; // short circuit
                 }
+                set({ isOrbiting: true });
                 await cameraControls.rotate(
                     0,
                     THREE.MathUtils.degToRad(90),
@@ -210,6 +209,7 @@ export const createHomeSceneSlice = (set, get) => ({
             }
             case "left": {
                 if (isFromUp) return;
+                set({ isOrbiting: true });
                 await cameraControls.rotate(
                     THREE.MathUtils.degToRad(-45),
                     THREE.MathUtils.degToRad(isFromHorizontalUp ? 35 : -35),
@@ -220,6 +220,7 @@ export const createHomeSceneSlice = (set, get) => ({
             case "right":
             default: {
                 if (isFromUp) return;
+                set({ isOrbiting: true });
                 await cameraControls.rotate(
                     THREE.MathUtils.degToRad(45),
                     THREE.MathUtils.degToRad(isFromHorizontalUp ? 35 : -35),
@@ -238,6 +239,9 @@ export const createHomeSceneSlice = (set, get) => ({
                 paddingLeft: paddingLeft,
             });
         }
+
+        // Normalize rotations to prevent gimbal lock
+        cameraControls.normalizeRotations();
 
         set({
             isOrbiting: false,

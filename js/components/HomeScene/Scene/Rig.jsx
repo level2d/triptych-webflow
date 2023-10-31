@@ -6,6 +6,7 @@ import { folder, useControls } from "leva";
 
 import { debug } from "@/js/core/constants";
 import { useStore } from "@/js/lib/store";
+import { isDesktop } from "@/js/core/detect";
 
 export default function Rig() {
     const lookAtMesh = useRef(null);
@@ -45,6 +46,7 @@ export default function Rig() {
     });
 
     useFrame(({ camera, pointer, viewport }) => {
+        if (!isDesktop) return; // disable on mobile
         if (!lookAtMesh.current) return;
         const { height, width } = viewport.getCurrentViewport(
             camera,
@@ -103,6 +105,9 @@ export default function Rig() {
         if (!cameraControls) return;
         if (!debug) {
             cameraControls.disconnect();
+        } else {
+            // expose for debugging
+            window.cameraControls = cameraControls;
         }
     }, [cameraControls]);
 

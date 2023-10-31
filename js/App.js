@@ -63,6 +63,7 @@ export default class App {
     }
 
     initModules() {
+        this.core.detect.init();
         this.fancyImage.init();
         this.homeExperience.init();
         this.keepScrolling.init();

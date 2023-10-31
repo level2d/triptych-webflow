@@ -6,7 +6,9 @@ import { useStore } from "@/js/lib/store";
 import { debug } from "@/js/core/constants";
 import Rig from "./Rig";
 import Model from "./Model";
+import ModelMobile from "./ModelMobile";
 import { useThree } from "@react-three/fiber";
+import { isDesktop } from "@/js/core/detect";
 
 export default function Scene() {
     const isClickable = useStore((state) => state.isClickable);
@@ -32,7 +34,7 @@ export default function Scene() {
             {/* <Environment preset="sunset" blur={1} /> */}
 
             {/* models */}
-            <Model />
+            {isDesktop ? <Model /> : <ModelMobile />}
         </>
     );
 }
