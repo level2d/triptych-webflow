@@ -47,7 +47,7 @@ const NavArrows = ({ visible }) => {
                     }}
                     disabled={disabled}
                 />
-                <div className={styles.middleButtons}>
+                {/* <div className={styles.middleButtons}>
                     <NavButton
                         direction="up"
                         onClick={() => {
@@ -62,7 +62,7 @@ const NavArrows = ({ visible }) => {
                         }}
                         disabled={disabled}
                     />
-                </div>
+                </div> */}
                 <NavButton
                     direction="right"
                     onClick={() => {

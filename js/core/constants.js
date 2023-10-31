@@ -1,6 +1,6 @@
 // glbs
 import triptych_locations_url from "@/assets/3d/triptych_locations_05.glb";
-import triptych_mobile_locations_url from "@/assets/3d/triptych_mobile_locations_01.glb";
+import triptych_mobile_locations_url from "@/assets/3d/triptych_mobile_locations_03.glb";
 import careers_url from "@/assets/3d/careers_03.glb";
 import cdm_url from "@/assets/3d/cdm_02.glb";
 import contact_url from "@/assets/3d/contact_04.glb";
