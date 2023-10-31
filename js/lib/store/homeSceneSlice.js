@@ -187,7 +187,6 @@ export const createHomeSceneSlice = (set, get) => ({
                 if (isFromUp || isFromHorizontalUp) {
                     return; // short circuit
                 }
-                cameraControls.normalizeRotations();
                 set({ isOrbiting: true });
                 await cameraControls.rotate(
                     0,
@@ -240,6 +239,9 @@ export const createHomeSceneSlice = (set, get) => ({
                 paddingLeft: paddingLeft,
             });
         }
+
+        // Normalize rotations to prevent gimbal lock
+        cameraControls.normalizeRotations();
 
         set({
             isOrbiting: false,
