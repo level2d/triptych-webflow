@@ -172,8 +172,6 @@ export const createHomeSceneSlice = (set, get) => ({
         const isFromLeftUp = isFromLeft && cameraPosition.y > 0;
         const isFromHorizontalUp = isFromLeftUp || isFromRightUp;
 
-
-        set({ isOrbiting: true });
         // console.log({
         //     isFromUp,
         //     isFromDown,
@@ -190,6 +188,7 @@ export const createHomeSceneSlice = (set, get) => ({
                     return; // short circuit
                 }
                 cameraControls.normalizeRotations();
+                set({ isOrbiting: true });
                 await cameraControls.rotate(
                     0,
                     THREE.MathUtils.degToRad(-90),
@@ -201,6 +200,7 @@ export const createHomeSceneSlice = (set, get) => ({
                 if (isFromDown || isFromLeft || isFromRight) {
                     return; // short circuit
                 }
+                set({ isOrbiting: true });
                 await cameraControls.rotate(
                     0,
                     THREE.MathUtils.degToRad(90),
@@ -210,6 +210,7 @@ export const createHomeSceneSlice = (set, get) => ({
             }
             case "left": {
                 if (isFromUp) return;
+                set({ isOrbiting: true });
                 await cameraControls.rotate(
                     THREE.MathUtils.degToRad(-45),
                     THREE.MathUtils.degToRad(isFromHorizontalUp ? 35 : -35),
@@ -220,6 +221,7 @@ export const createHomeSceneSlice = (set, get) => ({
             case "right":
             default: {
                 if (isFromUp) return;
+                set({ isOrbiting: true });
                 await cameraControls.rotate(
                     THREE.MathUtils.degToRad(45),
                     THREE.MathUtils.degToRad(isFromHorizontalUp ? 35 : -35),
