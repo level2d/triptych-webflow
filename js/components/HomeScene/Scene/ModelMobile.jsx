@@ -16,9 +16,11 @@ import {
 } from "@/js/components/3D/Models";
 import { TriptychOutlines } from "@/js/components/3D/Common";
 import { TriptychMaterial } from "../../3D/Materials";
-import ReflectionModel from "./ReflectionModel";
+import ReflectionModelMobile from "./ReflectionModelMobile";
 import WaterModel from "./WaterModel";
 import StarsModel from "./StarsModel";
+import WaterModelMobile from "./WaterModelMobile";
+import StarsModelMobile from "./StarsModelMobile";
 
 function ModelMobile(props) {
     const { nodes /*, materials */ } = useGLTF(GLB_ASSET_URLS.Locations_Mobile);
@@ -69,11 +71,26 @@ function ModelMobile(props) {
                 <TriptychOutlines opacity={opacity} visible={visible} />
             </mesh>
 
-            {/* <WaterModel /> */}
+            {/* <mesh
+                geometry={nodes.water_mobile.geometry}
+                material={nodes.water_mobile.material}
+                position={[0, -11.044, 0]}
+                rotation={[-Math.PI, 0, -Math.PI]}
+                scale={-1}
+            /> */}
+            <ReflectionModelMobile />
 
-            {/* <StarsModel /> */}
+            {/* <mesh
+                geometry={nodes.horizon_dome.geometry}
+                material={nodes.horizon_dome.material}
+            /> */}
+            <WaterModelMobile />
 
-            {/* <ReflectionModel /> */}
+            {/* <mesh
+                geometry={nodes.stars.geometry}
+                material={nodes.stars.material}
+            /> */}
+            <StarsModelMobile />
 
             {/* <mesh
                 geometry={nodes.location_022.geometry}
