@@ -103,6 +103,9 @@ export default function Rig() {
         if (!cameraControls) return;
         if (!debug) {
             cameraControls.disconnect();
+        } else {
+            // expose for debugging
+            window.cameraControls = cameraControls;
         }
     }, [cameraControls]);
 
