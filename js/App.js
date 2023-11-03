@@ -10,6 +10,7 @@ import Sizes from "./class/Sizes";
 // modules
 import * as core from "./core";
 import {
+    BackgroundFx,
     FancyImage,
     HomeExperience,
     KeepScrolling,
@@ -32,6 +33,7 @@ export default class App {
         this.sizes = new Sizes();
         this.fancyImage = new FancyImage();
         this.homeExperience = new HomeExperience();
+        this.backgroundFx = new BackgroundFx();
         this.keepScrolling = new KeepScrolling();
         this.popQuote = new PopQuote();
         this.scrambleText = new ScrambleText();
@@ -66,6 +68,7 @@ export default class App {
         this.core.detect.init();
         this.fancyImage.init();
         this.homeExperience.init();
+        this.backgroundFx.init();
         this.keepScrolling.init();
         this.popQuote.init();
         this.scrambleText.init();
