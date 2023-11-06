@@ -39,6 +39,17 @@ const dom = {
     /**
      *
      * @public
+     * @member backgroundFx
+     * @memberof core.dom
+     * @description cached nodes for backgroundFx module
+     *
+     */
+      backgroundFx: $("[data-module='background-fx']"),
+
+
+    /**
+     *
+     * @public
      * @member keepScrolling
      * @memberof core.dom
      * @description cached nodes for keepScrolling module
