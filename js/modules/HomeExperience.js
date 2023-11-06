@@ -15,8 +15,7 @@ export default class HomeExperience {
         if (this.$target) {
             console.log("Module: HomeExperience: init");
 
-            //  renderToDOMElement(this.$target, HomeScene);
-            renderToDOMElement(this.$target, BgScene);
+             renderToDOMElement(this.$target, HomeScene);
         }
     }
 }
