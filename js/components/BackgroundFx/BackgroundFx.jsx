@@ -33,11 +33,12 @@ export default function BgScene() {
                         antialias: true,
                         alpha: true,
                     }}
+                    eventSource={document.body}
                 >
-                  				{/* <color args={["#6c87a1"]} attach="background" /> */}
+                    {/* <color args={["#6c87a1"]} attach="background" /> */}
 
                     <Suspense fallback={null}>
-                        <Scene/>
+                        <Scene />
                     </Suspense>
                 </Canvas>
             </div>
