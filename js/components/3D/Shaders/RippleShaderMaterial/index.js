@@ -15,15 +15,16 @@ export const RippleShaderMaterial = shaderMaterial(
         uPerlinResolution: 1,
         uPerlinSpeed: 0.1,
         uPerlinYScale: 1.0,
-        uPerlinMultiplier: 0.7,
+        uPerlinMultiplier: 1.5,
+        uDisplacement: null,
         // color clamp pass
         uClampColorEnabled: true,
         uClampColorMin: new THREE.Vector3(0, 0, 0),
         uClampColorMax: new THREE.Vector3(1, 1, 1),
-       uRadius: 0.5,
-        uAmplitude: 0.4,
-        uPeriod: 20.0,
-        uPhaseShift: 5.0
+        uRadius: 0.3,
+        uAmplitude: 2.0,
+        uPeriod: 0.4,
+        uPhaseShift: 0.1,
     },
     // Vertex Shader
     `${vertexShaderCode}`,

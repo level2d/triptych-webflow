@@ -1,7 +1,6 @@
 import HomeScene from "@/js/components/HomeScene/HomeScene";
 import { renderToDOMElement } from "@/js/util/react";
 import App from "@/js/App";
-import BgScene from "../components/BackgroundFx/BackgroundFx";
 
 export default class HomeExperience {
     $target = null;
