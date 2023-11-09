@@ -360,10 +360,11 @@ export const WaterMaterial = ({ opacity = 1 }) => {
     );
 };
 
-export const RippleMaterial = ({ opacity = 1 }) => {
+export const RippleMaterial = ({ opacity = 1}) => {
     const shaderRef = useRef();
     const time = useRef(1.0);
     const mousePos = useRef(new THREE.Vector2());
+
     const {
         uPerlinEnabled,
         uPerlinResolution,
@@ -382,46 +383,39 @@ export const RippleMaterial = ({ opacity = 1 }) => {
             Perlin: folder({
                 uPerlinEnabled: true,
                 uPerlinResolution: {
-                    value: 12,
+                    value: 8,
                     min: 1,
                     max: 50,
                     step: 1,
                 },
                 uPerlinYScale: {
-                    value: 15,
+                    value: 16,
                     min: 1.0,
                     max: 50.0,
                     step: 1.0,
                 },
                 uPerlinSpeed: {
-                    value: 0.1,
+                    value: 0.2,
                     min: 0.1,
                     max: 10,
                     step: 0.1,
                 },
                 uPerlinMultiplier: {
-                    value: 0.4,
+                    value: 0.9,
                     min: 0.1,
                     max: 5,
                     step: 0.1,
                 },
             }),
             Cursor: folder({
-                uPerlinEnabled: true,
-                uPerlinResolution: {
-                    value: 12,
-                    min: 1,
-                    max: 50,
-                    step: 1,
-                },
                 uRadius: {
-                    value: 0.5,
+                    value: 0.3,
                     min: 0,
                     max: 1,
                     step: 0.1,
                 },
                 uAmplitude: {
-                    value: 0.4,
+                    value: 1.4,
                     min: 0,
                     max: 10,
                     step: 0.2,
@@ -437,7 +431,7 @@ export const RippleMaterial = ({ opacity = 1 }) => {
                     min: 0,
                     max: 100,
                     step: 5,
-                }
+                },
             }),
             ColorClamp: folder({
                 uClampColorEnabled: true,
@@ -493,6 +487,7 @@ export const RippleMaterial = ({ opacity = 1 }) => {
             uClampColorEnabled={uClampColorEnabled}
             uClampColorMax={uClampColorMax}
             uClampColorMin={uClampColorMin}
+            uDisplacement={null}
             uRadius={uRadius}
             uAmplitude={uAmplitude}
             uPeriod={uPeriod}
