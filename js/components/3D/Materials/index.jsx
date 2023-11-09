@@ -383,25 +383,25 @@ export const RippleMaterial = ({ opacity = 1}) => {
             Perlin: folder({
                 uPerlinEnabled: true,
                 uPerlinResolution: {
-                    value: 8,
+                    value: 11,
                     min: 1,
                     max: 50,
                     step: 1,
                 },
                 uPerlinYScale: {
-                    value: 16,
+                    value: 7,
                     min: 1.0,
                     max: 50.0,
                     step: 1.0,
                 },
                 uPerlinSpeed: {
-                    value: 0.2,
+                    value: 0.4,
                     min: 0.1,
                     max: 10,
                     step: 0.1,
                 },
                 uPerlinMultiplier: {
-                    value: 0.9,
+                    value: 0.6,
                     min: 0.1,
                     max: 5,
                     step: 0.1,
@@ -409,7 +409,7 @@ export const RippleMaterial = ({ opacity = 1}) => {
             }),
             Cursor: folder({
                 uRadius: {
-                    value: 0.3,
+                    value: 1.0,
                     min: 0,
                     max: 1,
                     step: 0.1,
