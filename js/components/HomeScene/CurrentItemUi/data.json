@@ -59,7 +59,7 @@
         "description": "The FBI enlisted us to build an interactive game that teaches kids how to safely search the internet.",
         "cta": {
             "text": "Check it out",
-            "url": "/#"
+            "url": "/projects/fbi-sos"
         }
     },
     "ContactModel": {
@@ -77,7 +77,7 @@
         "description": "The Creative Discovery Museum commissioned Triptych to develop an interactive touchscreen game for their museum featuring a configurable robot.",
         "cta": {
             "text": "Get the details",
-            "url": "/#"
+            "url": "/projects/bits-big-day"
         }
     },
     "CareersModel": {
@@ -95,7 +95,7 @@
         "description": "Atlantic re:Think, The North Face, and Triptych recreate a Himalayan achievement.",
         "cta": {
             "text": "Check it out",
-            "url": "/#"
+            "url": "/projects/north-face"
         }
     },
     "EpbModel": {
@@ -104,7 +104,7 @@
         "description": "Chattanooga's Electric Power Board relies on our expertise to deliver a wide range of technical projects, from complex user experience design to websites like their World Quantum Day site. ",
         "cta": {
             "text": "Check it out",
-            "url": "/#"
+            "url": "/projects/epb"
         }
     }
 }

@@ -56,8 +56,13 @@ export default function CurrentItemUi() {
                     hotkey={["esc", "left"]}
                 ></NavButton>
                 {modelData && modelData.cta && (
-                    <NavButton hotkey="enter" disabled={!visible}>
-                        {modelData.cta.text} ↗
+                    <NavButton
+                        href={modelData.cta.url}
+                        hotkey="enter"
+                        disabled={!visible}
+                        isLink
+                    >
+                        {modelData.cta.text}
                     </NavButton>
                 )}
             </div>
