@@ -1,6 +1,7 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 import Button, { BUTTON_THEMES } from "@/js/components/HomeScene/Button";
+import Button2 from "@/js/components/HomeScene/Button2";
 
 const COLORS = [
     BUTTON_THEMES.yellow,
@@ -97,13 +98,20 @@ export default function NavButton({
     startingColorIndex = randomColorIndex(),
     hotkey = null,
     children,
+    isLink = false,
+    ...rest
 }) {
     const [isActive, setIsActive] = useState(false);
     const [colorIndex, setColorIndex] = useState(null);
     const [lastColorIndex, setLastColorIndex] = useState(startingColorIndex);
-    const Component = ARROWS[direction];
     const _hotkey = hotkey ?? direction;
     const hotKeyEnabled = !disabled;
+    const Component = ARROWS[direction];
+    let ButtonComponent = Button;
+
+    if (isLink) {
+        ButtonComponent = Button2;
+    }
 
     const theme = useMemo(() => {
         if (isActive) {
@@ -121,10 +129,14 @@ export default function NavButton({
         setColorIndex(newColorIndex);
     };
 
-    const handleMouseLeave = () => {
+    const handleMouseLeave = useCallback(() => {
         setLastColorIndex(colorIndex);
         setColorIndex(null);
-    };
+
+        if (isActive) {
+            setIsActive(false);
+        }
+    }, [colorIndex, isActive]);
 
     const handleMousedown = () => {
         setIsActive(true);
@@ -133,7 +145,7 @@ export default function NavButton({
     const handleMouseup = () => {
         setTimeout(() => {
             setIsActive(false);
-        }, 100);
+        }, 350);
     };
 
     useHotkeys(
@@ -143,14 +155,14 @@ export default function NavButton({
             onClick();
             setTimeout(() => {
                 setIsActive(false);
-            }, 100);
+            }, 350);
         },
         { enabled: hotKeyEnabled },
         [hotKeyEnabled],
     );
 
     return (
-        <Button
+        <ButtonComponent
             theme={theme}
             onClick={onClick}
             onMouseEnter={handleMouseEnter}
@@ -158,8 +170,10 @@ export default function NavButton({
             onMouseDown={handleMousedown}
             onMouseUp={handleMouseup}
             disabled={disabled}
+            as={isLink ? "a" : "button"}
+            {...rest}
         >
             {children ?? <Component />}
-        </Button>
+        </ButtonComponent>
     );
 }
