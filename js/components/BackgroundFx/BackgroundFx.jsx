@@ -38,7 +38,7 @@ export default function BgScene() {
                 >
                     <color args={["#000"]} attach="background" />
 
-                    <Suspense fallback={<Loading />}>
+                    <Suspense fallback={null}>
                             <Scene
                                 trailLength={30}
                                 trailSize={0.9}
