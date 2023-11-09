@@ -7,7 +7,7 @@ import RipplePlane from "./RipplePlane";
 import BgScene from './BgScene';
 
 export default function RippleScene(props) {
-    const { trailLength, trailSize, opacity } = useControls("Ripple Params", {
+    const { trailLength, trailSize, opacity, delay} = useControls("Ripple Params", {
         trailLength: {
             value: 30,
             step: 1,
@@ -15,17 +15,23 @@ export default function RippleScene(props) {
             max: 100,
         },
         trailSize: {
-            value: 0.9,
+            value: 0.2,
             step: 0.1,
             min: 0.1,
             max: 2.0,
         },
         opacity: {
-            value: 0.2,
+            value: 0.08,
             step: 0.01,
             min: 0,
             max: 1,
         },
+        delay:{
+            value: 120,
+            step: 10,
+            min: 0, 
+            max: 150
+        }
     });
     const { frequency = 0.01 } = props;
     const ripplesRef = useRef([]);
@@ -81,12 +87,17 @@ export default function RippleScene(props) {
     });
 
     const createRipple = (x, y) => {
-        const mesh = ripplesRef?.current?.[rippleIndex.current];
-        if (!mesh) return;
-        mesh.visible = true;
-        mesh.position.set(x, y, 0);
-        mesh.scale.x = mesh.scale.y = trailSize;
-        mesh.material.opacity = opacity;
+       const timer = setTimeout(()=>{
+
+            const mesh = ripplesRef?.current?.[rippleIndex.current];
+            if (!mesh) return;
+            mesh.visible = true;
+            mesh.position.set(x, y, 0);
+            mesh.scale.x = mesh.scale.y = trailSize;
+            mesh.material.opacity = opacity;
+        },delay)
+
+        return ()=> clearTimeout(timer);
     };
 
     return (
