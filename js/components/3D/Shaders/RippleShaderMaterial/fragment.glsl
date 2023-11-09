@@ -1,3 +1,16 @@
+// Perlin shader
+// https://shaderfrog.com/app/view/50
+
+// Matcap shader
+// @see: https://www.clicktorelease.com/blog/creating-spherical-environment-mapping-shader/
+
+// Gradient shader
+// @see: https://stackoverflow.com/questions/52614371/apply-color-gradient-to-material-on-mesh-three-js
+
+// Noise shader
+// @see: https://github.com/franky-adl/voronoi-sphere
+// @see: https://medium.com/geekculture/make-a-cool-plasma-ball-using-voronoi-effect-in-three-js-8a0477e3b745
+
 precision highp float;
 precision highp int;
 
@@ -12,7 +25,7 @@ uniform bool uClampColorEnabled;
 uniform vec3 uClampColorMin;
 uniform vec3 uClampColorMax;
 uniform float opacity;
-
+uniform sampler2D uDisplacement;
 uniform float uRadius;
 uniform float uAmplitude;
 uniform float uPeriod;
@@ -21,10 +34,7 @@ uniform float uPhaseShift;
 varying vec2 vScreenSpace;
 varying vec2 vUv;
 
-// Add a history buffer to store previous displacements
-const int historyLength = 50;
-vec3 historyBuffer[historyLength];
-int historyIndex = 0;
+float PI = 3.141592653589793;
 
 vec3 mod289(vec3 x) {
     return x - floor(x * (1.0 / 289.0)) * 289.0;
@@ -108,35 +118,9 @@ float snoise(vec3 v) {
     return clamp(42.0 * dot(m * m, vec4(dot(p0, x0), dot(p1, x1), dot(p2, x2), dot(p3, x3))), 0.0, 1.0);
 }
 
-
-vec3 colorClamp(vec3 color) {
-    return color = clamp(color, uClampColorMin, uClampColorMax);
-}
-
-
-
-vec3 perlinWithMouse() {
-     vec2 mouseOffset = vScreenSpace - uMouse;
-
-    // Calculate the distance from the fragment to the mouse position
-    float distanceToMouse = length(mouseOffset);
-
-    
-   vec2 scale = vec2(1.0, uPerlinYScale);
+vec3 perlin() {
+    vec2 scale = vec2(1.0, uPerlinYScale);
     vec2 position = vUv * (uPerlinResolution * scale);
-
-    // Apply displacement only if within the specified radius
-    if (distanceToMouse < uRadius) {
-        // Calculate the normalized direction vector from the fragment to the mouse
-        vec2 direction = (uMouse - vUv) / uRadius;
-        
-        // Amplify the displacement using the amplification factor
-        float amplificationFactor = (uRadius - distanceToMouse)* uAmplitude * sin(distanceToMouse * uPeriod - uPhaseShift * time);
-        
-        // Modify the position using the direction vector and amplification factor
-        position += direction * amplificationFactor;
-    }
-
     vec3 color = vec3(1.0);
     vec3 c = vec3(0.0);
 
@@ -145,22 +129,48 @@ vec3 perlinWithMouse() {
     return c;
 }
 
+vec3 colorClamp(vec3 color) {
+    return color = clamp(color, uClampColorMin, uClampColorMax);
+}
+
+vec3 perlinWithMouse() {
+    vec2 mouseOffset = vScreenSpace - uMouse;
+    float distanceToMouse = length(mouseOffset);
+
+    vec4 displacement = texture2D(uDisplacement, vUv);
+
+    float displacementFactor = displacement.r;
+
+    vec2 direction = (uMouse - vUv) / uRadius;
+
+    float amplificationFactor = (uAmplitude * sin(distanceToMouse * uPeriod - uPhaseShift * time)) * displacementFactor;
+
+    vec2 position = vUv * (uPerlinResolution * vec2(1.0, uPerlinYScale)) + direction * amplificationFactor;
+
+    vec3 color = vec3(1.0);
+    vec3 c = vec3(0.0);
+    c += color * snoise(vec3(position, time * uPerlinSpeed));
+
+    return c;
+}
+
 void main() {
-    
-vec3 perlinColor = perlinWithMouse();
- // Update the history buffer with the current displacement
-    historyBuffer[historyIndex] = perlinColor;
-    
-    // Advance the history index
-    historyIndex = (historyIndex + 1) % historyLength;
+    vec3 perlinColor = perlinWithMouse();
+
     // set a default color in case everything is turned off
     vec3 color = vec3(0, 0, 0);
-     for (int i = 0; i < historyLength; i++) {
-        color += historyBuffer[i] / float(historyLength);
-    }
 
+    vec4 displacement = texture2D(uDisplacement, vUv);
+
+    float theta = displacement.r * 2.0 * PI;
+
+    vec2 dir = vec2(sin(theta), cos(theta));
+
+    vec2 uv = vUv + dir * displacement.r * 0.1;
+
+    vec3 displacedColor = texture2D(uDisplacement, uv).rgb;
     if(uPerlinEnabled) {
-        color += perlinColor;
+        color += mix(perlinColor, displacement.rgb, 0.5);
         color = color * vec3(uPerlinMultiplier);
         color = clamp(color, vec3(0), vec3(1.0));
     }
@@ -169,6 +179,7 @@ vec3 perlinColor = perlinWithMouse();
         color = colorClamp(color);
     }
 
-    gl_FragColor = vec4(color, opacity);
+    color = mix(color, displacedColor, 0.1);
 
+    gl_FragColor = vec4(color, opacity);
 }
