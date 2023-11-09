@@ -5,6 +5,7 @@
     opacity: 0;
     height: 100%;
     visibility: hidden;
+    z-index: var(--z-index-ui);
 
     &__inner {
         position: relative;
