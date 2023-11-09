@@ -43,7 +43,7 @@ export default function HomeScene() {
                         alpha: true,
                     }}
                 >
-                    <Suspense fallback={<Loading />}>
+                    <Suspense fallback={null}>
                         {debug && debugModel ? (
                             <DebugModelScene model={debugModel} />
                         ) : (
@@ -52,6 +52,7 @@ export default function HomeScene() {
                     </Suspense>
                 </Canvas>
             </div>
+            <Loading />
             {!debugModel && <Nav />}
             {!debugModel && <CurrentItemUi />}
             <Leva hidden={!debug} collapsed oneLineLabels />
