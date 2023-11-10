@@ -160,6 +160,7 @@ Requirements:
 Here is the expected layout for the DOM elements:
 
 ```
+//NOTE: navigation elements (menus, etc.) will go outside of the content-wrapper
 <div class="background-fx" data-module="background-fx"></div>
 <div class="content-wrapper"> ...{content in here}... </div>
 ```

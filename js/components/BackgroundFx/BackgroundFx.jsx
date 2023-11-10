@@ -7,7 +7,6 @@ import { Leva } from "leva";
 import { debug } from "@/js/core/constants";
 
 import "../3D/Shaders";
-import Loading from "../HomeScene/Loading";
 
 const Scene = lazy(() => {
     return Promise.all([
@@ -40,14 +39,10 @@ export default function BgScene() {
                     <color args={["#000"]} attach="background" />
 
                     <Suspense fallback={null}>
-                            <Scene
-                                trailLength={30}
-                                trailSize={0.9}
-                                opacity={0.2}
-                            />
+                        <Scene trailLength={30} trailSize={0.9} opacity={0.2} />
                     </Suspense>
                 </Canvas>
-                    <Leva collapsed oneLineLabels hidden={!debug} />
+                <Leva collapsed oneLineLabels hidden={!debug} />
             </div>
         </div>
     );
