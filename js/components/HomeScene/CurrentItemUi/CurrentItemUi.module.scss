@@ -6,6 +6,7 @@
     height: 100%;
     visibility: hidden;
     z-index: var(--z-index-ui);
+    pointer-events: none;
 
     &__inner {
         position: relative;
@@ -19,11 +20,15 @@
         display: flex;
         height: 100%;
         flex-flow: column nowrap;
-        justify-content: center;
+        justify-content: flex-end;
         overflow-x: hidden;
         overflow-y: auto;
         gap: 3.75rem;
         padding: 0 var(--margin);
+
+        :global(.is-desktop) & {
+            justify-content: center;
+        }
 
         @media screen and (min-width: 768px) {
             max-width: 600px;
@@ -39,6 +44,7 @@
 
         & > * {
             z-index: var(--z-index-ui);
+            pointer-events: all;
         }
     }
 
