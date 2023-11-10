@@ -1,6 +1,6 @@
 .bg {
   --margin: 2rem;
-  --z-index-canvas: 1 --z-index-ui: 2;
+  // --z-index-canvas: 1 --z-index-ui: 2;
 
   @media screen and (min-width: 768px) {
       --margin: 5rem;
@@ -14,6 +14,6 @@
       position: relative;
       height: 100%;
       width: 100%;
-      z-index: var(--z-index-canvas);
+      // z-index: var(--z-index-canvas);
   }
 }

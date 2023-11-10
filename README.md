@@ -145,6 +145,47 @@ img[data-module="fancy-image"]{
 |------------- |---------- |------------------- |------------------------------------------------------------------ |
 | data-module | yes | "home-experience" | Tells our custom code where to render the Home Experience module |
 
+## Background FX
+
+**Attributes**
+| name | required | value | description |
+|------------- |---------- |------------------- |------------------------------------------------------------------ |
+| data-module | yes | "background-fx" | Tells our custom code where to render the BackgroundFx module |
+
+Requirements:
+
+-   This should be applied to a `div` element at the top of any page that should include the background FX module. Refer to the example below for necessary styles.
+-   All content for the page needs to be contained within a second `div`element as a sibling to the background FX element. Refer to the example below for necessary styles.
+
+Here is the expected layout for the DOM elements:
+
+```
+//NOTE: navigation elements (menus, etc.) will go outside of the content-wrapper
+<div class="background-fx" data-module="background-fx"></div>
+<div class="content-wrapper"> ...{content in here}... </div>
+```
+
+-   In addition, apply the necessary css styles to the elements:
+
+```
+<style>
+.background-fx{
+    position: absolute;
+    height: 100vh; (this may have to be tweaked to account for the entire page...)
+    width: 100vw;
+    z-index: 0;
+}
+
+.content-wrapper{
+    position: relative;
+    pointer-events: none;
+    height: 100vh;
+    width: 100vw;
+    z-index: 1;
+}
+</style>
+```
+
 ## Keep Scrolling
 
 **Attributes**
