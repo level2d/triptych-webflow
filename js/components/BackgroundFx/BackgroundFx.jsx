@@ -34,7 +34,8 @@ export default function BgScene() {
                         antialias: true,
                         alpha: true,
                     }}
-                    eventSource={document.body}
+                    eventPrefix="client"
+                    eventSource={window}
                 >
                     <color args={["#000"]} attach="background" />
 
