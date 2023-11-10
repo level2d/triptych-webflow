@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import gsap from "@/js/lib/gsap";
 import { debug } from "@/js/core/constants";
+import { isDesktop } from "@/js/core/detect";
 
 // Local cache
 const cameraPosition = new THREE.Vector3();
@@ -281,12 +282,14 @@ export const createComputedHomeSceneSlice = (state) => ({
     // parent triptych model
     cameraTargetUuid: state.currentBoxUuid ?? state.triptychModelUuid,
     // decrease padding when focussing a box
-    paddingTop: state.currentBoxUuid ? 0.01 : 0.2,
-    paddingRight: state.currentBoxUuid ? 0.01 : 0.1,
-    paddingBottom: state.currentBoxUuid ? 0.01 : 0.6,
+    paddingTop: state.currentBoxUuid ? (isDesktop ? 0.01 : 0) : 0.2,
+    paddingRight: state.currentBoxUuid ? (isDesktop ? 0.01 : 0) : 0.1,
+    paddingBottom: state.currentBoxUuid ? (isDesktop ? 0.01 : 0.1) : 0.6,
     paddingLeft: state.currentBoxUuid
-        ? INTERACTIVE_MODEL_NAMES.includes(state.currentBoxModelName)
-            ? 0.01
-            : 0.09
+        ? isDesktop
+            ? INTERACTIVE_MODEL_NAMES.includes(state.currentBoxModelName)
+                ? 0.01
+                : 0.09
+            : 0
         : 0.1,
 });
