@@ -6,12 +6,6 @@ import { isDesktop } from "@/js/core/detect";
 // Local cache
 const cameraPosition = new THREE.Vector3();
 const boundingBox = new THREE.Box3();
-const INTERACTIVE_MODEL_NAMES = [
-    "EyeModel",
-    "SkullModel",
-    "KeyModel",
-    "GyroModel",
-];
 
 /**
  *
@@ -285,11 +279,5 @@ export const createComputedHomeSceneSlice = (state) => ({
     paddingTop: state.currentBoxUuid ? (isDesktop ? 0.01 : 0) : 0.2,
     paddingRight: state.currentBoxUuid ? (isDesktop ? 0.01 : 0) : 0.1,
     paddingBottom: state.currentBoxUuid ? (isDesktop ? 0.01 : 0.1) : 0.6,
-    paddingLeft: state.currentBoxUuid
-        ? isDesktop
-            ? INTERACTIVE_MODEL_NAMES.includes(state.currentBoxModelName)
-                ? 0.01
-                : 0.09
-            : 0
-        : 0.1,
+    paddingLeft: state.currentBoxUuid ? (isDesktop ? 0.09 : 0) : 0.1,
 });
