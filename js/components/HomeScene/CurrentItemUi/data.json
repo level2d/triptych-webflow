@@ -106,5 +106,41 @@
             "text": "Check it out",
             "url": "/projects/epb"
         }
+    },
+    "GyroModel": {
+        "subtitle": "Case Study",
+        "title": "Listerhill",
+        "description": "Sem Tellus Magna Aenean Venenatis",
+        "cta": {
+            "text": "Check it out",
+            "url": "/projects/listerhill"
+        }
+    },
+    "KeyModel": {
+        "subtitle": "Case Study",
+        "title": "Universal Lighting",
+        "description": "Etiam Euismod Lorem Ridiculus Sollicitudin",
+        "cta": {
+            "text": "Check it out",
+            "url": "/projects/universal-lighting"
+        }
+    },
+    "SkullModel": {
+        "subtitle": "Case Study",
+        "title": "Meta",
+        "description": "Egestas Vestibulum Lorem Porta Euismod",
+        "cta": {
+            "text": "Check it out",
+            "url": "/projects/meta"
+        }
+    },
+    "EyeModel": {
+        "subtitle": "Case Study",
+        "title": "Microsoft",
+        "description": "Risus Ligula Sem Tellus Ultricies",
+        "cta": {
+            "text": "Check it out",
+            "url": "/projects/microsoft"
+        }
     }
 }
