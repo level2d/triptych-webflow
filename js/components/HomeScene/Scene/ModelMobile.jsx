@@ -17,8 +17,6 @@ import {
 import { TriptychOutlines } from "@/js/components/3D/Common";
 import { TriptychMaterial } from "../../3D/Materials";
 import ReflectionModelMobile from "./ReflectionModelMobile";
-import WaterModel from "./WaterModel";
-import StarsModel from "./StarsModel";
 import WaterModelMobile from "./WaterModelMobile";
 import StarsModelMobile from "./StarsModelMobile";
 
