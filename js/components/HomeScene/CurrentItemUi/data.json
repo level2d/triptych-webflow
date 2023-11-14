@@ -109,8 +109,8 @@
     },
     "GyroModel": {
         "subtitle": "Case Study",
-        "title": "Listerhill",
-        "description": "Sem Tellus Magna Aenean Venenatis",
+        "title": "Banking Designed for Fun",
+        "description": "We elevated Listerhill's digital presence to match their reputation.",
         "cta": {
             "text": "Check it out",
             "url": "/projects/listerhill"
@@ -118,8 +118,8 @@
     },
     "KeyModel": {
         "subtitle": "Case Study",
-        "title": "Universal Lighting",
-        "description": "Etiam Euismod Lorem Ridiculus Sollicitudin",
+        "title": "Smart Design for Universal Lighting",
+        "description": "We took their decades of experience and engineered creative solutions for a new website.",
         "cta": {
             "text": "Check it out",
             "url": "/projects/universal-lighting"
@@ -127,8 +127,8 @@
     },
     "SkullModel": {
         "subtitle": "Case Study",
-        "title": "Meta",
-        "description": "Egestas Vestibulum Lorem Porta Euismod",
+        "title": "Create Your Own Main Street",
+        "description": "Imagine a Main Street lined with all of your favorite brands and businesses you didn't know existed.",
         "cta": {
             "text": "Check it out",
             "url": "/projects/meta"
@@ -136,8 +136,8 @@
     },
     "EyeModel": {
         "subtitle": "Case Study",
-        "title": "Microsoft",
-        "description": "Risus Ligula Sem Tellus Ultricies",
+        "title": "Building the City of Tomorrow",
+        "description": "Triptych partnered with The Atlantic and Microsoft to craft a vision of the future.",
         "cta": {
             "text": "Check it out",
             "url": "/projects/microsoft"
