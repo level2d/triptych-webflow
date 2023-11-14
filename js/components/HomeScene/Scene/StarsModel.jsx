@@ -23,6 +23,7 @@ function StarsModel(props) {
                 onClick={(e) => {
                     e.stopPropagation();
                 }}
+                position={[0, 3.542, 0]}
                 ref={meshRef}
             >
                 <StarsMaterial opacity={opacity} />
