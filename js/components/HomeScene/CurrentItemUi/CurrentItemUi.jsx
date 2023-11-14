@@ -3,6 +3,7 @@ import { useStore } from "@/js/lib/store";
 import gsap, { SplitText } from "@/js/lib/gsap";
 import NavButton from "../NavButton";
 import data from "./data.json";
+import cx from "classnames";
 import styles from "./CurrentItemUi.module.scss";
 
 export default function CurrentItemUi() {
@@ -213,7 +214,11 @@ export default function CurrentItemUi() {
     }, [visible]);
 
     return (
-        <div className={styles.currentItemUi} ref={el} data-lenis-prevent>
+        <div
+            className={cx("current-item", styles.currentItemUi)}
+            data-lenis-prevent
+            ref={el}
+        >
             <div className={styles.currentItemUiInner}>
                 <div className={styles.currentItemUiContent}>
                     {/* titles */}
