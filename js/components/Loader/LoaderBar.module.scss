@@ -21,10 +21,12 @@
     position: absolute;
     height: 100%;
     width: 100%;
+    will-change: width, height;
 
     &--horizontal {
         border-bottom: solid 1px var(--color-black-2);
         display: flex;
+        width: auto;
 
         @media screen and (min-width: 991px) {
             display: none;
@@ -34,6 +36,7 @@
     &--vertical {
         display: none;
         border-right: solid 1px var(--color-black-2);
+        height: auto;
 
         @media screen and (min-width: 991px) {
             display: flex;

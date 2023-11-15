@@ -17,7 +17,8 @@ export default function LoadingBar() {
         }
         gsap.to(target, {
             width: `${progress * 100}%`,
-            duration: 0.2,
+            duration: 0.5,
+            ease: "Power2.inOutExpo",
         });
         return () => {
             gsap.killTweensOf(target);
@@ -31,7 +32,8 @@ export default function LoadingBar() {
         }
         gsap.to(target, {
             height: `${progress * 100}%`,
-            duration: 0.2,
+            duration: 0.5,
+            ease: "Power2.inOutExpo",
         });
         return () => {
             gsap.killTweensOf(target);
