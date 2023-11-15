@@ -1,0 +1,12 @@
+.loader-percentage-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    height: 100%;
+    width: 100%;
+
+    @media screen and (min-width: 991px) {
+        transform: rotate(-90deg);
+    }
+}

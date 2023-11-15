@@ -1,0 +1,42 @@
+.wrapper {
+    width: 100%;
+    height: 80px;
+
+    @media screen and (min-width: 991px) {
+        width: 80px;
+        height: 100%;
+    }
+}
+
+.loader-bar-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.loader-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+
+    &--horizontal {
+        border-bottom: solid 1px var(--color-black-2);
+        display: flex;
+
+        @media screen and (min-width: 991px) {
+            display: none;
+        }
+    }
+
+    &--vertical {
+        display: none;
+        border-right: solid 1px var(--color-black-2);
+
+        @media screen and (min-width: 991px) {
+            display: flex;
+        }
+    }
+}
