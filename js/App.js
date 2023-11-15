@@ -1,7 +1,6 @@
 //lib
 import gsap from "./lib/gsap";
 import lenis from "./lib/lenis";
-import { useStore } from "./lib/store";
 
 // class
 import Bus from "./class/Bus";
