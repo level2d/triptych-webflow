@@ -4,9 +4,13 @@ export const createLoaderSlice = (set, get) => ({
         set(() => ({ loaderLogoAnimationComplete: complete })),
     loaderProgress: 0.0,
     setLoaderProgress: (progress) => set(() => ({ loaderProgress: progress })),
+    loaderPageLoaded: false,
+    setLoaderPageLoaded: (loaded) => set(() => ({ loaderPageLoaded: loaded })),
 });
 
 export const createComputedLoaderSlice = (state) => ({
     loaderComplete:
-        state.loaderLogoAnimationComplete && state.loaderProgress === 1.0,
+        state.loaderPageLoaded &&
+        state.loaderLogoAnimationComplete &&
+        state.loaderProgress === 1.0,
 });

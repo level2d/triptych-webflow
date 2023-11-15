@@ -15,22 +15,7 @@ export default class Loader {
     bindListeners() {
         $(window).on("load", () => {
             console.log("Window: load");
-            let interval = setInterval(() => {
-                const currentProgress = useStore.getState().loaderProgress;
-                let nextProgress = currentProgress + 0.1;
-                nextProgress = Math.round(nextProgress * 10) / 10;
-                console.log({
-                    currentProgress,
-                    nextProgress,
-                });
-                if (currentProgress >= 1.0) {
-                    clearInterval(interval);
-                    interval = null;
-                    console.log("App: load");
-                } else {
-                    useStore.getState().setLoaderProgress(nextProgress);
-                }
-            }, 100);
+            useStore.getState().setLoaderPageLoaded(true);
         });
     }
 
