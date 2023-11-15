@@ -6,10 +6,17 @@ export default function LoaderPercentage() {
     const progress = useStore((state) => state.loaderProgress);
     return (
         <div className={styles.loaderPercentageWrapper}>
-            <div className={cx("loading-percentage percentage")}>
+            <div
+                className={cx(
+                    styles.loaderPercentageText,
+                    "loading-percentage percentage",
+                )}
+            >
                 {progress * 100}
             </div>
-            <div className={cx("percentage")}>%</div>
+            <div className={cx(styles.loaderPercentageText, "percentage")}>
+                %
+            </div>
         </div>
     );
 }
