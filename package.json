@@ -28,6 +28,7 @@
         "vite-plugin-mkcert": "^1.16.0"
     },
     "dependencies": {
+        "@lottiefiles/react-lottie-player": "^3.5.3",
         "@react-three/drei": "^9.83.1",
         "@react-three/fiber": "^8.14.1",
         "@studio-freight/lenis": "^1.0.19",
