@@ -13,6 +13,7 @@ export default function Loader() {
     const wrapper = useRef(null);
     const overlay1 = useRef(null);
     const overlay2 = useRef(null);
+    const overlay3 = useRef(null);
     const { progress: sceneProgress } = useProgress();
     const debouncedSceneProgress = useDebounce(sceneProgress, 50);
     const { loaderComplete, loaderProgress, setLoaderProgress } = useStore(
@@ -52,20 +53,34 @@ export default function Loader() {
     }, [loaderProgress, setLoaderProgress, pageHasScene]);
 
     useLayoutEffect(() => {
-        gsap.set([overlay1.current, overlay2.current], {
+        gsap.set([overlay1.current, overlay2.current, overlay3.current], {
             yPercent: 100,
         });
         if (!loaderComplete) {
             return;
         }
 
-        const timeline = gsap.timeline({ paused: true });
-        timeline.to([overlay1.current, overlay2.current], {
-            yPercent: -100,
-            duration: 0.25,
-            ease: "power2.inOut",
-            stagger: 0.15,
+        const timeline = gsap.timeline({
+            paused: true,
         });
+
+        timeline.to(overlay1.current, {
+            yPercent: 0,
+            duration: 0.4,
+            ease: "power2.inOut",
+        });
+
+        timeline.to(
+            [overlay2.current, overlay3.current],
+            {
+                yPercent: -100,
+                duration: 0.4,
+                ease: "power2.inOut",
+                stagger: 0.3,
+            },
+            "<0.2",
+        );
+
         timeline.to(
             wrapper.current,
             {
@@ -73,7 +88,7 @@ export default function Loader() {
                 duration: 0.25,
                 ease: "power2.inOut",
             },
-            "<0.25",
+            "<0.3",
         );
 
         timeline.play();
@@ -92,8 +107,9 @@ export default function Loader() {
                 <div className={styles.loaderLogoWrapper}>
                     <Logo />
                 </div>
-                <LoaderOverlay color="violet" ref={overlay1} />
-                <LoaderOverlay color="yellow" ref={overlay2} />
+                <LoaderOverlay color="black" ref={overlay1} />
+                <LoaderOverlay color="violet" ref={overlay2} />
+                <LoaderOverlay color="yellow" ref={overlay3} />
             </div>
         </div>
     );
