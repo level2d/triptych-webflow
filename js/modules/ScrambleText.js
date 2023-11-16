@@ -61,12 +61,14 @@ export default class ScrambleText {
     }
 
     init = () => {
-        if (this.$targets.length > 0) {
-            this.instances = Array.from(this.$targets).map(
-                (target) => new _ScrambleText(target),
-            );
+        this.app.bus.on("App: loaded", () => {
+            if (this.$targets.length > 0) {
+                this.instances = Array.from(this.$targets).map(
+                    (target) => new _ScrambleText(target),
+                );
 
-            console.log("Module: ScrambleText: init");
-        }
+                console.log("Module: ScrambleText: init");
+            }
+        });
     };
 }

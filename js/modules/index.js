@@ -1,3 +1,4 @@
+export { default as FadeInText } from "./FadeInText";
 export { default as FancyImage } from "./FancyImage";
 export { default as HomeExperience } from "./HomeExperience";
 export { default as BackgroundFx } from "./BackgroundFx";

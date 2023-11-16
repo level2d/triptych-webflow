@@ -336,12 +336,13 @@ export default class FancyImage {
     };
 
     init = () => {
-        if (this.$targets.length > 0) {
-            this.instances = Array.from(this.$targets).map(
-                (target) => new _FancyImage(target),
-            );
-
-            console.log("Module: FancyImage: init");
-        }
+        this.app.bus.on("App: loaded", () => {
+            if (this.$targets.length > 0) {
+                this.instances = Array.from(this.$targets).map(
+                    (target) => new _FancyImage(target),
+                );
+                console.log("Module: FancyImage: init");
+            }
+        });
     };
 }

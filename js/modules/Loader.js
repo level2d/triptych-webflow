@@ -4,6 +4,7 @@ import { useStore } from "@/js/lib/store";
 import App from "@/js/App";
 
 export default class Loader {
+    enabled = false;
     renderTarget = null;
     $target = null;
     app = null;
@@ -22,6 +23,7 @@ export default class Loader {
 
     init() {
         if (this.$target) {
+            this.enabled = true;
             this.bindListeners();
             this.renderTarget = document.createElement("div");
             this.renderTarget.id = "loader";
