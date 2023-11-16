@@ -10,7 +10,12 @@ class _FadeInText {
         this.init(node);
     }
 
+    bindEventListeners() {
+        this.app.bus.on("App: loaded", this.initTimeline.bind(this));
+    }
+
     initTimeline() {
+        console.log(this);
         this.timeline = gsap.timeline({
             scrollTrigger: {
                 trigger: this.el,
@@ -54,7 +59,7 @@ class _FadeInText {
         this.el = node;
         this.app = new App();
 
-        this.initTimeline();
+        this.bindEventListeners();
     }
 }
 

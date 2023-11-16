@@ -70,16 +70,22 @@ export default class App {
 
     initModules() {
         this.core.detect.init();
+        this.loader.init(); // init loader before everything else
         this.fadeInText.init();
         this.fancyImage.init();
         this.homeExperience.init();
         this.backgroundFx.init();
         this.keepScrolling.init();
-        this.loader.init();
         this.popQuote.init();
         this.scrambleText.init();
         this.test.init();
+
         console.log("Modules: init");
+
+        if (!this.loader.enabled) {
+            // fallback event if loader is disabled
+            this.app.bus.emit("App: loaded");
+        }
     }
 
     init() {
