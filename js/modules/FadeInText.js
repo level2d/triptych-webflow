@@ -2,7 +2,6 @@ import gsap, { SplitText } from "@/js/lib/gsap";
 import App from "@/js/App";
 
 class _FadeInText {
-    app = null;
     el = null;
     timeline = null;
     constructor(node) {
@@ -10,12 +9,7 @@ class _FadeInText {
         this.init(node);
     }
 
-    bindEventListeners() {
-        this.app.bus.on("App: loaded", this.initTimeline.bind(this));
-    }
-
     initTimeline() {
-        console.log(this);
         this.timeline = gsap.timeline({
             scrollTrigger: {
                 trigger: this.el,
@@ -59,7 +53,7 @@ class _FadeInText {
         this.el = node;
         this.app = new App();
 
-        this.bindEventListeners();
+        this.initTimeline();
     }
 }
 
@@ -73,11 +67,13 @@ export default class FadeInText {
     }
 
     init = () => {
-        if (this.$targets.length > 0) {
-            this.instances = Array.from(this.$targets).map(
-                (target) => new _FadeInText(target),
-            );
-            console.log("Module: FadeInText: init");
-        }
+        this.app.bus.on("App: loaded", () => {
+            if (this.$targets.length > 0) {
+                this.instances = Array.from(this.$targets).map(
+                    (target) => new _FadeInText(target),
+                );
+                console.log("Module: FadeInText: init");
+            }
+        });
     };
 }
