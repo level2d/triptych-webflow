@@ -78,6 +78,18 @@ See [here](https://github.com/vitejs/vite/issues/1984#issuecomment-778403608) fo
 
 # Modules
 
+## Loader
+
+Requirements:
+
+-   This module can only be used once per page
+-   Best approach is to add this to the `body` of the page you want it to show up on
+
+**Attributes**
+| name | required | value | default | description |
+|------------- |---------- |---------- |--------- |--------------------------------------------------------- |
+| data-module | yes | "loader" | n/a | Tells our custom code where to render the Loader module |
+
 ## Fancy Image
 
 Requirements:
