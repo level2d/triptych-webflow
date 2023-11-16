@@ -9,6 +9,16 @@
             img[data-module="fancy-image"] {
                 visibility: hidden;
             }
+            [data-module="loader"] {
+                background-color: #343434;
+            }
+            [data-module="loader"]:not(.is-ready) * {
+                visibility: hidden;
+            }
+            [data-module="loader"] #loader,
+            [data-module="loader"] #loader * {
+                visibility: visible;
+            }
         </style>
     </head>
     <body
