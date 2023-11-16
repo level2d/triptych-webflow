@@ -19,6 +19,24 @@ const dom = {
     /**
      *
      * @public
+     * @member body
+     * @memberof core.dom
+     * @description page body
+     *
+     */
+    body: $(document.body),
+
+    /**
+     * @public
+     * @member loader
+     * @memberof core.dom
+     * @description cached node for Loader module
+     */
+    loader: $("[data-module='loader']"),
+
+    /**
+     *
+     * @public
      * @member fancyImage
      * @memberof core.dom
      * @description cached nodes for fancyImage module
@@ -44,8 +62,7 @@ const dom = {
      * @description cached nodes for backgroundFx module
      *
      */
-      backgroundFx: $("[data-module='background-fx']"),
-
+    backgroundFx: $("[data-module='background-fx']"),
 
     /**
      *
