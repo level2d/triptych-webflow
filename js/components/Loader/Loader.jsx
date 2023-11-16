@@ -26,13 +26,13 @@ export default function Loader() {
         dom.homeExperience.length > 0 || dom.backgroundFx.length > 0;
 
     const sceneProgress = useMemo(() => {
-        return Math.round((progress / 100) * 100) / 100;
+        const _progress = Math.round((progress / 100) * 100) / 100;
+        return _progress;
     }, [progress]);
 
     useLayoutEffect(() => {
-        console.log({ loaderProgress });
         if (pageHasScene && sceneProgress < 1.0) {
-            setLoaderProgress(sceneProgress * 0.5);
+            setLoaderProgress(sceneProgress * 0.75);
         } else if (loaderProgress < 1.0) {
             const interval = setInterval(() => {
                 const currentProgress = loaderProgress;
