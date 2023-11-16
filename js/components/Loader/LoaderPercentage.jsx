@@ -12,7 +12,7 @@ export default function LoaderPercentage() {
                     "loading-percentage percentage",
                 )}
             >
-                {progress * 100}
+                {Math.round(progress * 100)}
             </div>
             <div className={cx(styles.loaderPercentageText, "percentage")}>
                 %
