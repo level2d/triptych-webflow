@@ -26,7 +26,7 @@
     &--horizontal {
         border-bottom: solid 1px var(--color-black-2);
         display: flex;
-        width: auto;
+        width: 0;
 
         @media screen and (min-width: 991px) {
             display: none;
@@ -36,7 +36,7 @@
     &--vertical {
         display: none;
         border-right: solid 1px var(--color-black-2);
-        height: auto;
+        height: 0;
 
         @media screen and (min-width: 991px) {
             display: flex;

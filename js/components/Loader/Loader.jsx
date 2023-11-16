@@ -9,7 +9,7 @@ import styles from "./Loader.module.scss";
 
 export default function Loader() {
     const { progress: sceneProgress } = useProgress();
-    const debouncedSceneProgress = useDebounce(sceneProgress, 100);
+    const debouncedSceneProgress = useDebounce(sceneProgress, 50);
     const { loaderProgress, setLoaderProgress } = useStore((state) => ({
         loaderProgress: state.loaderProgress,
         setLoaderProgress: state.setLoaderProgress,
@@ -18,11 +18,11 @@ export default function Loader() {
         dom.homeExperience.length > 0 || dom.backgroundFx.length > 0;
 
     useLayoutEffect(() => {
-        if (!pageHasScene) {
+        if (!pageHasScene || typeof debouncedSceneProgress !== "number") {
             return;
         }
 
-        setLoaderProgress(sceneProgress / 100);
+        setLoaderProgress(debouncedSceneProgress / 100);
     }, [debouncedSceneProgress, pageHasScene, setLoaderProgress]);
 
     useLayoutEffect(() => {
