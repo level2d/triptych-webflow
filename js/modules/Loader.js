@@ -24,7 +24,7 @@ export default class Loader {
             this.bindListeners();
             this.renderTarget = document.createElement("div");
             this.renderTarget.id = "loader";
-            this.$target.appendChild(this.renderTarget);
+            this.$target.prepend(this.renderTarget);
             renderToDOMElement(this.renderTarget, LoaderComponent);
             console.log("Module: Loader: init");
         }
