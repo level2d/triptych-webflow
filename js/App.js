@@ -84,7 +84,7 @@ export default class App {
 
         if (!this.loader.enabled) {
             // fallback event if loader is disabled
-            this.app.bus.emit("App: loaded");
+            this.bus.emit("App: loaded");
         }
     }
 
