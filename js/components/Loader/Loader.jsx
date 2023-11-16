@@ -7,8 +7,10 @@ import Logo from "./Logo";
 import { dom } from "@/js/core";
 import styles from "./Loader.module.scss";
 import LoaderOverlay from "./LoaderOverlay";
+import App from "@/js/App";
 
 export default function Loader() {
+    const app = useRef(new App());
     const wrapper = useRef(null);
     const overlay1 = useRef(null);
     const overlay2 = useRef(null);
@@ -56,6 +58,14 @@ export default function Loader() {
 
         const timeline = gsap.timeline({
             paused: true,
+            onStart: () => {
+                app.current.bus.emit("App: loaded");
+            },
+            onComplete: () => {
+                gsap.set(wrapper.current, {
+                    display: "none",
+                });
+            },
         });
 
         timeline.to(

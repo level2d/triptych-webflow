@@ -11,6 +11,7 @@ import Sizes from "./class/Sizes";
 import * as core from "./core";
 import {
     BackgroundFx,
+    FadeInText,
     FancyImage,
     HomeExperience,
     KeepScrolling,
@@ -32,6 +33,7 @@ export default class App {
         this.bus = new Bus();
         this.time = new Time();
         this.sizes = new Sizes();
+        this.fadeInText = new FadeInText();
         this.fancyImage = new FancyImage();
         this.homeExperience = new HomeExperience();
         this.backgroundFx = new BackgroundFx();
@@ -68,15 +70,22 @@ export default class App {
 
     initModules() {
         this.core.detect.init();
+        this.loader.init(); // init loader before everything else
+        this.fadeInText.init();
         this.fancyImage.init();
         this.homeExperience.init();
         this.backgroundFx.init();
         this.keepScrolling.init();
-        this.loader.init();
         this.popQuote.init();
         this.scrambleText.init();
         this.test.init();
+
         console.log("Modules: init");
+
+        if (!this.loader.enabled) {
+            // fallback event if loader is disabled
+            this.app.bus.emit("App: loaded");
+        }
     }
 
     init() {
