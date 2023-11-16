@@ -9,6 +9,10 @@ export default function LoadingBar() {
     const xBar = useRef(null);
     const yBar = useRef(null);
     const progress = useStore((state) => state.loaderProgress);
+    const complete = useStore((state) => state.loaderLoadingComplete);
+    const setLoaderLoadingComplete = useStore(
+        (state) => state.setLoaderLoadingComplete,
+    );
 
     useLayoutEffect(() => {
         const target = xBar.current;
@@ -19,11 +23,16 @@ export default function LoadingBar() {
             width: `${progress * 100}%`,
             duration: 0.5,
             ease: "Power2.inOutExpo",
+            onComplete: () => {
+                if (progress >= 1 && !complete) {
+                    setLoaderLoadingComplete(true);
+                }
+            },
         });
         return () => {
             gsap.killTweensOf(target);
         };
-    }, [progress]);
+    }, [progress, complete, setLoaderLoadingComplete]);
 
     useLayoutEffect(() => {
         const target = yBar.current;
@@ -34,11 +43,16 @@ export default function LoadingBar() {
             height: `${progress * 100}%`,
             duration: 0.5,
             ease: "Power2.inOutExpo",
+            onComplete: () => {
+                if (progress >= 1 && !complete) {
+                    setLoaderLoadingComplete(true);
+                }
+            },
         });
         return () => {
             gsap.killTweensOf(target);
         };
-    }, [progress]);
+    }, [progress, complete, setLoaderLoadingComplete]);
 
     return (
         <div className={styles.wrapper}>
