@@ -1,8 +1,7 @@
-import { useLayoutEffect, useRef } from "react";
+import { useLayoutEffect, useMemo, useRef } from "react";
 import { useProgress } from "@react-three/drei";
 import { useStore } from "@/js/lib/store";
 import gsap from "@/js/lib/gsap";
-import { useDebounce } from "usehooks-ts";
 import LoadingBar from "./LoaderBar";
 import Logo from "./Logo";
 import { dom } from "@/js/core";
@@ -13,8 +12,8 @@ export default function Loader() {
     const wrapper = useRef(null);
     const overlay1 = useRef(null);
     const overlay2 = useRef(null);
-    const { progress: sceneProgress } = useProgress();
-    const debouncedSceneProgress = useDebounce(sceneProgress, 50);
+    const { progress } = useProgress();
+
     const { loaderComplete, loaderProgress, setLoaderProgress } = useStore(
         (state) => ({
             loaderProgress: state.loaderProgress,
@@ -22,34 +21,30 @@ export default function Loader() {
             loaderComplete: state.loaderComplete,
         }),
     );
+
     const pageHasScene =
         dom.homeExperience.length > 0 || dom.backgroundFx.length > 0;
 
-    useLayoutEffect(() => {
-        if (!pageHasScene || typeof debouncedSceneProgress !== "number") {
-            return;
-        }
-
-        setLoaderProgress(debouncedSceneProgress / 100);
-    }, [debouncedSceneProgress, pageHasScene, setLoaderProgress]);
+    const sceneProgress = useMemo(() => {
+        return Math.round((progress / 100) * 100) / 100;
+    }, [progress]);
 
     useLayoutEffect(() => {
-        if (pageHasScene) {
-            return;
-        }
-        if (loaderProgress < 1.0) {
+        console.log({ loaderProgress });
+        if (pageHasScene && sceneProgress < 1.0) {
+            setLoaderProgress(sceneProgress * 0.5);
+        } else if (loaderProgress < 1.0) {
             const interval = setInterval(() => {
                 const currentProgress = loaderProgress;
-                let nextProgress = currentProgress + 0.1;
-                nextProgress = Math.round(nextProgress * 10) / 10;
+                let nextProgress = currentProgress + 0.01;
+                nextProgress = Math.round(nextProgress * 100) / 100;
                 setLoaderProgress(nextProgress);
-            }, 100);
-
+            }, 10);
             return () => {
                 clearInterval(interval);
             };
         }
-    }, [loaderProgress, setLoaderProgress, pageHasScene]);
+    }, [loaderProgress, setLoaderProgress, sceneProgress, pageHasScene]);
 
     useLayoutEffect(() => {
         gsap.set([overlay1.current, overlay2.current], {
