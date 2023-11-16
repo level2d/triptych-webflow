@@ -11,6 +11,7 @@ import Sizes from "./class/Sizes";
 import * as core from "./core";
 import {
     BackgroundFx,
+    FadeInText,
     FancyImage,
     HomeExperience,
     KeepScrolling,
@@ -32,6 +33,7 @@ export default class App {
         this.bus = new Bus();
         this.time = new Time();
         this.sizes = new Sizes();
+        this.fadeInText = new FadeInText();
         this.fancyImage = new FancyImage();
         this.homeExperience = new HomeExperience();
         this.backgroundFx = new BackgroundFx();
@@ -68,6 +70,7 @@ export default class App {
 
     initModules() {
         this.core.detect.init();
+        this.fadeInText.init();
         this.fancyImage.init();
         this.homeExperience.init();
         this.backgroundFx.init();
