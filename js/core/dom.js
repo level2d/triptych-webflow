@@ -27,6 +27,14 @@ const dom = {
     body: $(document.body),
 
     /**
+     * @public
+     * @member loader
+     * @memberof core.dom
+     * @description cached node for Loader module
+     */
+    loader: $("[data-module='loader']"),
+
+    /**
      *
      * @public
      * @member fancyImage

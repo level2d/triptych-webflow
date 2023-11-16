@@ -9,7 +9,7 @@ export default class Loader {
     app = null;
     constructor() {
         this.app = new App();
-        this.$target = this.app.core.dom.body;
+        this.$target = this.app.core.dom.loader[0];
     }
 
     bindListeners() {
@@ -24,7 +24,7 @@ export default class Loader {
             this.bindListeners();
             this.renderTarget = document.createElement("div");
             this.renderTarget.id = "loader";
-            this.$target[0].appendChild(this.renderTarget);
+            this.$target.appendChild(this.renderTarget);
             renderToDOMElement(this.renderTarget, LoaderComponent);
             console.log("Module: Loader: init");
         }
