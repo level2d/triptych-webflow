@@ -14,6 +14,7 @@ import {
     FancyImage,
     HomeExperience,
     KeepScrolling,
+    Loader,
     PopQuote,
     ScrambleText,
     test,
@@ -35,6 +36,7 @@ export default class App {
         this.homeExperience = new HomeExperience();
         this.backgroundFx = new BackgroundFx();
         this.keepScrolling = new KeepScrolling();
+        this.loader = new Loader();
         this.popQuote = new PopQuote();
         this.scrambleText = new ScrambleText();
         this.test = test;
@@ -70,6 +72,7 @@ export default class App {
         this.homeExperience.init();
         this.backgroundFx.init();
         this.keepScrolling.init();
+        this.loader.init();
         this.popQuote.init();
         this.scrambleText.init();
         this.test.init();

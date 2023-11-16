@@ -124,7 +124,11 @@ export default function CurrentItemUi() {
                     type: "chars, words",
                 });
                 tl.set(split.words, {
+                    className: "word",
                     overflow: "hidden",
+                });
+                tl.set(split.chars, {
+                    className: "letter",
                 });
                 tl.fromTo(
                     split.chars,
