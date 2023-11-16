@@ -16,6 +16,7 @@ export default class Loader {
         $(window).on("load", () => {
             console.log("Window: load");
             useStore.getState().setLoaderPageLoaded(true);
+            this.$target.classList.add("is-ready");
         });
     }
 

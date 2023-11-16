@@ -84,6 +84,22 @@ Requirements:
 
 -   This module can only be used once per page
 -   Best approach is to add this to the `body` of the page you want it to show up on
+-   Add the following styles to the global site header
+
+```html
+<style>
+    [data-module="loader"] {
+        background-color: #343434;
+    }
+    [data-module="loader"]:not(.is-ready) * {
+        visibility: hidden;
+    }
+    [data-module="loader"] #loader,
+    [data-module="loader"] #loader * {
+        visibility: visible;
+    }
+</style>
+```
 
 **Attributes**
 | name | required | value | default | description |
