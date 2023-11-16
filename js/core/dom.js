@@ -93,6 +93,16 @@ const dom = {
      *
      */
     scrambleText: $("[data-module='scramble-text']"),
+
+    /**
+     *
+     * @public
+     * @member fadeInText
+     * @memberof core.dom
+     * @description cached nodes for ScrambleText module
+     *
+     */
+    fadeInText: $("[data-module='fade-in-text']"),
 };
 
 export default dom;
