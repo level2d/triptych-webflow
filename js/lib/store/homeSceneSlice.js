@@ -279,5 +279,5 @@ export const createComputedHomeSceneSlice = (state) => ({
     paddingTop: state.currentBoxUuid ? (isDesktop ? 0.01 : 0) : 0.2,
     paddingRight: state.currentBoxUuid ? (isDesktop ? 0.01 : 0) : 0.1,
     paddingBottom: state.currentBoxUuid ? (isDesktop ? 0.01 : 0.1) : 0.6,
-    paddingLeft: state.currentBoxUuid ? (isDesktop ? 0.09 : 0) : 0.1,
+    paddingLeft: state.currentBoxUuid ? (isDesktop ? 0.13 : 0) : 0.1,
 });
