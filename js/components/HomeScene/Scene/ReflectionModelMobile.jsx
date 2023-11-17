@@ -31,7 +31,7 @@ function ReflectionModelMobile(props) {
                 name="ReflectionModel"
                 // material={nodes.water_mobile.material}
                 geometry={nodes.water_mobile.geometry}
-                position={[0, -11.044, 0]}
+                position={[0, -11.001, 0]}
                 visible={visible}
                 onClick={(e) => {
                     e.stopPropagation();
