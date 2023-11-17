@@ -263,6 +263,25 @@ class _FancyImage {
         this.DOM.container.classList.add("fancy-image--ready");
     };
 
+    initDeviceScrollTrigger = () => {
+        gsap.set(this.DOM.el, {
+            visibility: "visible",
+            opacity: 0,
+        });
+        this.scrollTrigger = ScrollTrigger.create({
+            trigger: this.DOM.el,
+            start: "top+=30% bottom-=30%",
+            onEnter: () => {
+                gsap.to(this.DOM.el, {
+                    opacity: 1,
+                    duration: 0.2,
+                    ease: "power2.inOut",
+                });
+            },
+            once: true,
+        });
+    };
+
     initScrollTrigger = () => {
         this.scrollTrigger = ScrollTrigger.create({
             trigger: this.DOM.el,
@@ -279,6 +298,11 @@ class _FancyImage {
         this.DOM.el = node;
         this.app = new App();
 
+        // if (!this.app.core.detect.isDesktop) {
+        //     this.initDeviceScrollTrigger();
+        //     return;
+        // }
+
         // settings from root el
         this.src = this.DOM.el.src;
         this.objectFit = this.DOM.el.dataset.objectFit ?? "contain"; // object fit mode
@@ -289,26 +313,17 @@ class _FancyImage {
             false;
         this.scaleFunc = intrinsicScale[this.objectFit];
 
-        // DOM
-        this.DOM.parentEl = this.DOM.el.parentElement;
-        this.DOM.parentEl.dataset.fancyImageParent = ""; // add parent positioning attribute
-
-        this.DOM.container = document.createElement("div");
-        this.DOM.container.classList.add("fancy-image");
-        this.DOM.parentEl.appendChild(this.DOM.container); // app as next sibling of source node
-
-        this.DOM.inner = document.createElement("div");
-        this.DOM.inner.classList.add("fancy-image__inner");
-        this.DOM.container.appendChild(this.DOM.inner);
-
+        // Load Image
         // I'm ashamed of this, but this was the only way to help with images not loading...
         let keepTrying;
         let tryCount = 1;
         let maxTries = 5;
+        let imageLoaded = false;
         do {
             try {
                 this.DOM.img = await imageFromURL(this.src);
                 keepTrying = false;
+                imageLoaded = true;
             } catch {
                 if (tryCount >= maxTries) {
                     console.warn(
@@ -324,6 +339,23 @@ class _FancyImage {
                 }
             }
         } while (keepTrying);
+
+        if (!imageLoaded) {
+            this.el.style.visibility = "visible";
+            return; // short circuit and just show the original image
+        }
+
+        // DOM
+        this.DOM.parentEl = this.DOM.el.parentElement;
+        this.DOM.parentEl.dataset.fancyImageParent = ""; // add parent positioning attribute
+
+        this.DOM.container = document.createElement("div");
+        this.DOM.container.classList.add("fancy-image");
+        this.DOM.parentEl.appendChild(this.DOM.container); // app as next sibling of source node
+
+        this.DOM.inner = document.createElement("div");
+        this.DOM.inner.classList.add("fancy-image__inner");
+        this.DOM.container.appendChild(this.DOM.inner);
 
         this.DOM.img.classList.add("fancy-image__img");
         this.DOM.inner.appendChild(this.DOM.img);
