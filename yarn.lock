@@ -942,7 +942,7 @@
     "@thi.ng/api" "^8.9.8"
     "@thi.ng/errors" "^2.4.2"
 
-"@thi.ng/distance@^2.4.29", "@thi.ng/distance@^2.4.30":
+"@thi.ng/distance@^2.4.30":
   version "2.4.30"
   resolved "https://registry.yarnpkg.com/@thi.ng/distance/-/distance-2.4.30.tgz#2db4c5c9e08475a3596ab62b7cbc797caaf8ee37"
   integrity sha512-/fOs5QYpml4p0eAe8cP4J/JN5dQnmPK8lpI7o3wnVoCZLCqFGO7+3v87FnB2wOjILZHwArdbCS48ajQl2C3x5Q==
@@ -978,7 +978,7 @@
   resolved "https://registry.yarnpkg.com/@thi.ng/hex/-/hex-2.3.20.tgz#6b262eccff7676ab096566879eac77dde14a13e4"
   integrity sha512-onrFEOLYFD6E/3CVWfRbZVVzakU4+s5lU6fnqJFUhEPAXapjPP1XZMQHU1KJ+0xI0ZitLiLAVWKgnmk7AmJMxg==
 
-"@thi.ng/k-means@^0.6.44", "@thi.ng/k-means@^0.6.45":
+"@thi.ng/k-means@^0.6.45":
   version "0.6.45"
   resolved "https://registry.yarnpkg.com/@thi.ng/k-means/-/k-means-0.6.45.tgz#40b7cb1e6e3dde683abe53addb5ecf4956493453"
   integrity sha512-DBugR6NjOi895xkROuMLJ9Vr7AE2Zbh90Zw+rWg5nBicxM5CPwZ5rZuQ9ytzyrzQM/2nvNUKFND1v+oLEpM2TQ==
@@ -1011,20 +1011,6 @@
     "@thi.ng/checks" "^3.4.8"
     "@thi.ng/math" "^5.7.3"
     "@thi.ng/pixel" "^5.0.0"
-
-"@thi.ng/pixel@^4.2.20":
-  version "4.3.4"
-  resolved "https://registry.yarnpkg.com/@thi.ng/pixel/-/pixel-4.3.4.tgz#d976d2d54e57a9d4e9f09778cd79d734e6c64cc3"
-  integrity sha512-cYj8Tq9480GU42ky5yRQHmLX05qLnMm9ygmXklf2ovsbBUq58QbDLB3yMOZ++vO6RilgKeffz0E+trfPJ1Zrjg==
-  dependencies:
-    "@thi.ng/api" "^8.9.8"
-    "@thi.ng/binary" "^3.3.37"
-    "@thi.ng/checks" "^3.4.8"
-    "@thi.ng/distance" "^2.4.29"
-    "@thi.ng/errors" "^2.4.2"
-    "@thi.ng/k-means" "^0.6.44"
-    "@thi.ng/math" "^5.7.3"
-    "@thi.ng/porter-duff" "^2.1.48"
 
 "@thi.ng/pixel@^5.0.0":
   version "5.0.0"

@@ -32,7 +32,7 @@
         "@react-three/drei": "^9.83.1",
         "@react-three/fiber": "^8.14.1",
         "@studio-freight/lenis": "^1.0.19",
-        "@thi.ng/pixel": "^4.2.20",
+        "@thi.ng/pixel": "^5.0.0",
         "@thi.ng/pixel-dither": "^1.1.71",
         "@types/three": "^0.156.0",
         "camera-controls": "^2.7.1",
