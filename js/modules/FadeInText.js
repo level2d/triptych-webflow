@@ -24,7 +24,6 @@ class _FadeInText {
 
         this.timeline.set(split.words, {
             className: "word",
-            overflow: "hidden",
         });
 
         this.timeline.set(split.chars, {

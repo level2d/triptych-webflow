@@ -245,6 +245,9 @@ class _FancyImage {
     showImage = () => {
         // Play pixel animation if applicable
         if (this.pixelAnimationEnabled) {
+            // Render first pixelated frame
+            this.renderPixelFrame();
+
             this.DOM.container.addEventListener(
                 "transitionend",
                 () => {
@@ -309,11 +312,6 @@ class _FancyImage {
         this.setFinalCanvas();
         this.setMediaSizes();
         this.renderFinalImg();
-
-        if (this.pixelAnimationEnabled) {
-            // Render first pixelated frame
-            this.renderPixelFrame();
-        }
 
         this.initScrollTrigger();
     };
