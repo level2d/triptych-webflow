@@ -1190,10 +1190,10 @@
   resolved "https://registry.yarnpkg.com/@types/stats.js/-/stats.js-0.17.3.tgz#705446e12ce0fad618557dd88236f51148b7a935"
   integrity sha512-pXNfAD3KHOdif9EQXZ9deK82HVNaXP5ZIF5RP2QG6OQFNTaY2YIetfrE9t528vEreGQvEPRDDc8muaoYeK0SxQ==
 
-"@types/three@^0.156.0":
-  version "0.156.0"
-  resolved "https://registry.yarnpkg.com/@types/three/-/three-0.156.0.tgz#cd49f2a12e858400962ea818d1e1c45e638141a8"
-  integrity sha512-733bXDSRdlrxqOmQuOmfC1UBRuJ2pREPk8sWnx9MtIJEVDQMx8U0NQO5MVVaOrjzDPyLI+cFPim2X/ss9v0+LQ==
+"@types/three@^0.158.2":
+  version "0.158.2"
+  resolved "https://registry.yarnpkg.com/@types/three/-/three-0.158.2.tgz#5c3bf3406cd474592e301daf991b49e46e1e6e0c"
+  integrity sha512-KPYbdLI8VPhu7qnHqsayfkuk58Qk+20l1U5HBK7uG50EjtrqeCreurNNpnatMZje29XRuTM1A+pGHGdDBHPyUQ==
   dependencies:
     "@types/stats.js" "*"
     "@types/webxr" "*"
@@ -2583,11 +2583,6 @@ levn@^0.4.1:
     prelude-ls "^1.2.1"
     type-check "~0.4.0"
 
-lil-gui@^0.18.2:
-  version "0.18.2"
-  resolved "https://registry.yarnpkg.com/lil-gui/-/lil-gui-0.18.2.tgz#e28a627be6a38bb80e9237817ad2c530eeb76279"
-  integrity sha512-DgdrLy3/KGC0PiQLKgOcJMPItP4xY4iWgJ9+91Zaxfr8GCTmMps05QS9w9jW7yspILlbscbquwjOwxmWnSx5Uw==
-
 locate-path@^6.0.0:
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/locate-path/-/locate-path-6.0.0.tgz#55321eb309febbc59c4801d931a72452a681d286"
@@ -3292,10 +3287,10 @@ three-stdlib@^2.28.0:
     fflate "^0.6.9"
     potpack "^1.0.1"
 
-three@^0.157.0:
-  version "0.157.0"
-  resolved "https://registry.yarnpkg.com/three/-/three-0.157.0.tgz#5baac531941fc8c4ca62d45ee4265652e03318d0"
-  integrity sha512-CeAwQrf4x3z0/e+MC4F+nXLW5t0gh3pw+L6CCBqpHvOq3bGYIgRYub7Pv0j/9wR+d++OiEglyZzWyuSYbwWGOA==
+three@^0.158.0:
+  version "0.158.0"
+  resolved "https://registry.yarnpkg.com/three/-/three-0.158.0.tgz#03ddd5b60ce9c31be8fb69f27a6d9efd49908ac3"
+  integrity sha512-TALj4EOpdDPF1henk2Q+s17K61uEAAWQ7TJB68nr7FKxqwyDr3msOt5IWdbGm4TaWKjrtWS8DJJWe9JnvsWOhQ==
 
 to-fast-properties@^2.0.0:
   version "2.0.0"
