@@ -2,7 +2,7 @@ import {
     canvas2d,
     GRAY8,
     intBufferFromImage,
-    imagePromise,
+    imageFromURL,
 } from "@thi.ng/pixel";
 import { ditherWith, ATKINSON } from "@thi.ng/pixel-dither";
 import * as intrinsicScale from "intrinsic-scale";
@@ -298,7 +298,7 @@ class _FancyImage {
         this.DOM.inner.classList.add("fancy-image__inner");
         this.DOM.container.appendChild(this.DOM.inner);
 
-        this.DOM.img = await imagePromise(this.src);
+        this.DOM.img = await imageFromURL(this.src);
         this.DOM.img.classList.add("fancy-image__img");
         this.DOM.inner.appendChild(this.DOM.img);
         this.imgRatio = this.DOM.img.naturalWidth / this.DOM.img.naturalHeight;
