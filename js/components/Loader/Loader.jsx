@@ -59,7 +59,9 @@ export default function Loader() {
         const timeline = gsap.timeline({
             paused: true,
             onStart: () => {
-                app.current.bus.emit("App: loaded");
+                setTimeout(() => {
+                    app.current.bus.emit("App: loaded");
+                }, 500);
             },
             onComplete: () => {
                 gsap.set(wrapper.current, {
