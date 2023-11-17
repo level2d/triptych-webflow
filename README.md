@@ -117,9 +117,9 @@ Requirements:
 
 E.g. this is wrong:
 
-```
-<img src="/image1-url.jpg" data-module="fancy-image">
-<img src="/image2-url.jpg" data-module="fancy-image">
+```html
+<img src="/image1-url.jpg" data-module="fancy-image" />
+<img src="/image2-url.jpg" data-module="fancy-image" />
 ```
 
 E.g. this is correct:
@@ -135,11 +135,11 @@ E.g. this is correct:
 
 -   You must add the following code block to the site head code to prevent a FOUT on page load
 
-```
+```html
 <style>
-img[data-module="fancy-image"]{
-    visibility: hidden;
-}
+    img[data-module="fancy-image"] {
+        visibility: hidden;
+    }
 </style>
 ```
 
@@ -187,30 +187,30 @@ Requirements:
 
 Here is the expected layout for the DOM elements:
 
-```
-//NOTE: navigation elements (menus, etc.) will go outside of the content-wrapper
+```html
+<!-- NOTE: navigation elements (menus, etc.) will go outside of the content-wrapper -->
 <div class="background-fx" data-module="background-fx"></div>
-<div class="content-wrapper"> ...{content in here}... </div>
+<div class="content-wrapper">...{content in here}...</div>
 ```
 
 -   In addition, apply the necessary css styles to the elements:
 
-```
+```html
 <style>
-.background-fx{
-    position: absolute;
-    height: 100vh; (this may have to be tweaked to account for the entire page...)
-    width: 100vw;
-    z-index: 0;
-}
+    .background-fx {
+        position: absolute;
+        height: 100vh;
+        (thismayhavetobetweakedtoaccountfortheentirepage...)width: 100vw;
+        z-index: 0;
+    }
 
-.content-wrapper{
-    position: relative;
-    pointer-events: none;
-    height: 100vh;
-    width: 100vw;
-    z-index: 1;
-}
+    .content-wrapper {
+        position: relative;
+        pointer-events: none;
+        height: 100vh;
+        width: 100vw;
+        z-index: 1;
+    }
 </style>
 ```
 
@@ -229,13 +229,13 @@ Requirements:
 
 E.g.:
 
-```
+```html
 <h1 data-module="scramble-text">My Heading</h1>
 ```
 
 or
 
-```
+```html
 <span data-module="scramble-text" data-text="Text to scramble"></span>
 ```
 
@@ -244,3 +244,20 @@ or
 |-------------|----------|-----------------|----------------------------------------------------------------|
 | data-module | yes | "scramble-text" | Tells our custom code where to render the Scramble Text module |
 | data-text. | no. | `string` | Optionally specify a string to scramble via a data attribute |
+
+## Fade In Text
+
+Requirements:
+
+-   You need to use this module on a node that contains text
+
+E.g.:
+
+```html
+<h1 data-module="fade-in-text">My Heading</h1>
+```
+
+**Attributes**
+| name | required | value | description |
+|-------------|----------|-----------------|----------------------------------------------------------------|
+| data-module | yes | "fade-in-text" | Tells our custom code where to render the Fade In Text module |
