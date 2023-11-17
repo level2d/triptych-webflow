@@ -263,25 +263,6 @@ class _FancyImage {
         this.DOM.container.classList.add("fancy-image--ready");
     };
 
-    initDeviceScrollTrigger = () => {
-        gsap.set(this.DOM.el, {
-            visibility: "visible",
-            opacity: 0,
-        });
-        this.scrollTrigger = ScrollTrigger.create({
-            trigger: this.DOM.el,
-            start: "top+=30% bottom-=30%",
-            onEnter: () => {
-                gsap.to(this.DOM.el, {
-                    opacity: 1,
-                    duration: 0.2,
-                    ease: "power2.inOut",
-                });
-            },
-            once: true,
-        });
-    };
-
     initScrollTrigger = () => {
         this.scrollTrigger = ScrollTrigger.create({
             trigger: this.DOM.el,
@@ -297,11 +278,6 @@ class _FancyImage {
         // root el
         this.DOM.el = node;
         this.app = new App();
-
-        // if (!this.app.core.detect.isDesktop) {
-        //     this.initDeviceScrollTrigger();
-        //     return;
-        // }
 
         // settings from root el
         this.src = this.DOM.el.src;
