@@ -301,7 +301,31 @@ class _FancyImage {
         this.DOM.inner.classList.add("fancy-image__inner");
         this.DOM.container.appendChild(this.DOM.inner);
 
-        this.DOM.img = await imageFromURL(this.src);
+        // I'm ashamed of this, but this was the only way to help with images not loading...
+        let keepTrying;
+        let tryCount = 1;
+        let maxTries = 3;
+        do {
+            try {
+                this.DOM.img = await imageFromURL(this.src);
+                keepTrying = false;
+            } catch {
+                if (tryCount <= maxTries) {
+                    console.warn(
+                        `Module: FancyImage: image url ${this.src} failed to load ${tryCount} times. Trying again.`,
+                    );
+                    keepTrying = true;
+                    tryCount++;
+                    return;
+                } else {
+                    console.error(
+                        `Module: FancyImage: image url ${this.src} failed to load ${tryCount} times. Giving up.`,
+                    );
+                    return;
+                }
+            }
+        } while (keepTrying && tryCount <= 3);
+
         this.DOM.img.classList.add("fancy-image__img");
         this.DOM.inner.appendChild(this.DOM.img);
         this.imgRatio = this.DOM.img.naturalWidth / this.DOM.img.naturalHeight;
