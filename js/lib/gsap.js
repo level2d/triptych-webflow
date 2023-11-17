@@ -21,4 +21,4 @@ ScrollTrigger.defaults({
 lenis.on("scroll", ScrollTrigger.update); // Update scroll trigger on lenis scroll
 
 export default gsap;
-export { SplitText };
+export { ScrollTrigger, SplitText };
