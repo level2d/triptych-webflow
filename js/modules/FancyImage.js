@@ -6,7 +6,7 @@ import {
 } from "@thi.ng/pixel";
 import { ditherWith, ATKINSON } from "@thi.ng/pixel-dither";
 import * as intrinsicScale from "intrinsic-scale";
-import ScrollTrigger from "gsap/ScrollTrigger";
+import gsap, { ScrollTrigger } from "@/js/lib/gsap";
 
 import App from "@/js/App";
 

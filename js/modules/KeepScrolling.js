@@ -1,4 +1,4 @@
-import ScrollTrigger from "gsap/ScrollTrigger";
+import { ScrollTrigger } from "@/js/lib/gsap";
 
 import App from "@/js/App";
 
