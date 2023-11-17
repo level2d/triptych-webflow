@@ -14,8 +14,8 @@ export default class Loader {
     }
 
     bindListeners() {
-        $(window).on("load", () => {
-            console.log("Window: load");
+        $(document).ready(() => {
+            console.log("Module: Loader: Document ready");
             useStore.getState().setLoaderPageLoaded(true);
             this.$target.classList.add("is-ready");
         });
