@@ -25,7 +25,7 @@ function WaterModel(props) {
                 onClick={(e) => {
                     e.stopPropagation();
                 }}
-                position={[0, 4.006, 0]}
+                position={[0, 0.017, 0]}
                 ref={meshRef}
             >
                 <WaterMaterial opacity={opacity} />
