@@ -69,19 +69,8 @@ function ModelMobile(props) {
                 <TriptychOutlines opacity={opacity} visible={visible} />
             </mesh>
 
-            {/* <mesh
-                geometry={nodes.water_mobile.geometry}
-                material={nodes.water_mobile.material}
-                position={[0, -11.044, 0]}
-                rotation={[-Math.PI, 0, -Math.PI]}
-                scale={-1}
-            /> */}
             <ReflectionModelMobile />
 
-            {/* <mesh
-                geometry={nodes.horizon_dome.geometry}
-                material={nodes.horizon_dome.material}
-            /> */}
             <WaterModelMobile />
 
             {/* <mesh
