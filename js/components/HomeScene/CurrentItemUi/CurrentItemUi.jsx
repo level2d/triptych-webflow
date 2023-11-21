@@ -47,7 +47,7 @@ export default function CurrentItemUi() {
             return null;
         }
         return (
-            <div className="body-display" ref={descEl}>
+            <div className="body-display current-item-description" ref={descEl}>
                 <p>{modelData.description}</p>
             </div>
         );
