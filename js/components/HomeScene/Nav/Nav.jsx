@@ -72,7 +72,7 @@ const NavArrows = ({ visible }) => {
                 />
             </div>
             <div className={styles.textWrapper}>
-                <span className={cx("subheading-regular", styles.text)}>
+                <span className={cx("hpe-nav-text", styles.text)}>
                     Use arrows to explore
                 </span>
             </div>
