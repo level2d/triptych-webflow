@@ -31,7 +31,7 @@ export default function GyroModel({ opacity = 1, ...props }) {
             const action = actions[name];
             switch (name) {
                 case "axis":
-                    action.play();
+                    // action.play(); // temp comment this out
                     break;
                 case "stumble":
                     action.loop = THREE.LoopOnce;
