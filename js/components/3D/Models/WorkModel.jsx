@@ -34,9 +34,6 @@ export default function WorkModel({ opacity = 1, ...props }) {
         names.forEach((name) => {
             const action = actions[name];
             switch (name) {
-                case "work_orbit":
-                    action.play();
-                    break;
                 case "glove_01":
                 case "glove_02":
                     action.loop = THREE.LoopOnce;

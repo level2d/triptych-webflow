@@ -32,9 +32,6 @@ export default function StoriesModel({ opacity = 1, ...props }) {
         names.forEach((name) => {
             const action = actions[name];
             switch (name) {
-                case "stories_orbit":
-                    action.play();
-                    break;
                 case "letter_01":
                 case "letter_02":
                 case "letter_03":
