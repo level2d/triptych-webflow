@@ -41,7 +41,6 @@ export default class Sizes extends EventEmitter {
     }
 
     handleWindowResizeEnd() {
-        console.log("resize end");
         this.emit("window resize end");
     }
 
