@@ -7,7 +7,7 @@ import {
     ReflectionShaderMaterial,
     StarsShaderMaterial,
     WaterShaderMaterial,
-    RippleShaderMaterial
+    RippleShaderMaterial,
 } from "../Shaders";
 import * as colors from "@/js/core/colors";
 import { useFrame } from "@react-three/fiber";
@@ -360,7 +360,7 @@ export const WaterMaterial = ({ opacity = 1 }) => {
     );
 };
 
-export const RippleMaterial = ({ opacity = 1}) => {
+export const RippleMaterial = ({ opacity = 1 }) => {
     const shaderRef = useRef();
     const time = useRef(1.0);
     const mousePos = useRef(new THREE.Vector2());
@@ -401,10 +401,10 @@ export const RippleMaterial = ({ opacity = 1}) => {
                     step: 0.1,
                 },
                 uPerlinMultiplier: {
-                    value: 0.6,
+                    value: 0.65,
                     min: 0.1,
-                    max: 5,
-                    step: 0.1,
+                    max: 3,
+                    step: 0.01,
                 },
             }),
             Cursor: folder({
@@ -473,7 +473,7 @@ export const RippleMaterial = ({ opacity = 1}) => {
         time.current = clock.getElapsedTime();
         shaderRef.current.uniforms.time.value = time.current;
         mousePos.current.x = pointer.x;
-        mousePos.current.y= pointer.y;
+        mousePos.current.y = pointer.y;
         shaderRef.current.uniforms.uMouse.value = mousePos.current;
     });
 
