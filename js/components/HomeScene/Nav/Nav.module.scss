@@ -7,6 +7,10 @@
     bottom: var(--margin);
     left: var(--margin);
     z-index: var(--z-index-ui);
+
+    @media screen and (min-width: 990px) {
+        left: calc(var(--margin) + 80px); // offset for navigation
+    }
 }
 
 .back-wrapper {
