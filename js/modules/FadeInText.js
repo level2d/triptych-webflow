@@ -4,9 +4,20 @@ import App from "@/js/App";
 class _FadeInText {
     el = null;
     timeline = null;
+    split = null;
     constructor(node) {
         this.app = new App();
         this.init(node);
+    }
+
+    setup() {
+        this.split = new SplitText(this.el, {
+            type: "chars, words",
+        });
+        gsap.set(this.split.chars, {
+            opacity: 0,
+            y: 100,
+        });
     }
 
     initTimeline() {
@@ -18,20 +29,16 @@ class _FadeInText {
             },
         });
 
-        const split = new SplitText(this.el, {
-            type: "chars, words",
-        });
-
-        this.timeline.set(split.words, {
+        this.timeline.set(this.split.words, {
             className: "word",
         });
 
-        this.timeline.set(split.chars, {
+        this.timeline.set(this.split.chars, {
             className: "letter",
         });
 
         this.timeline.fromTo(
-            split.chars,
+            this.split.chars,
             {
                 opacity: 0,
                 y: 100,
@@ -51,8 +58,10 @@ class _FadeInText {
     init(node) {
         this.el = node;
         this.app = new App();
-
-        this.initTimeline();
+        this.setup();
+        this.app.bus.on("App: loaded", () => {
+            this.initTimeline();
+        });
     }
 }
 
@@ -66,13 +75,11 @@ export default class FadeInText {
     }
 
     init = () => {
-        this.app.bus.on("App: loaded", () => {
-            if (this.$targets.length > 0) {
-                this.instances = Array.from(this.$targets).map(
-                    (target) => new _FadeInText(target),
-                );
-                console.log("Module: FadeInText: init");
-            }
-        });
+        if (this.$targets.length > 0) {
+            this.instances = Array.from(this.$targets).map(
+                (target) => new _FadeInText(target),
+            );
+            console.log("Module: FadeInText: init");
+        }
     };
 }
