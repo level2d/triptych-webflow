@@ -24,7 +24,7 @@ class _FadeInText {
         this.timeline = gsap.timeline({
             scrollTrigger: {
                 trigger: this.el,
-                start: "top+=30% bottom-=30%",
+                start: "top+=20% bottom-=20%",
                 once: true,
             },
         });
