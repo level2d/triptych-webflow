@@ -293,7 +293,7 @@ class _FancyImage {
         // I'm ashamed of this, but this was the only way to help with images not loading...
         let keepTrying;
         let tryCount = 1;
-        let maxTries = 5;
+        let maxTries = 10;
         let imageLoaded = false;
         do {
             try {
