@@ -3,7 +3,7 @@
     display: flex;
     justify-content: space-between;
     gap: var(--gap);
-    position: absolute;
+    position: fixed;
     bottom: var(--margin);
     left: var(--margin);
     z-index: var(--z-index-ui);
