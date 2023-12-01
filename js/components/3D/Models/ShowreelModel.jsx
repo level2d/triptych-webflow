@@ -26,10 +26,6 @@ export default function ShowreelModel({ opacity = 1, ...props }) {
         names.forEach((name) => {
             const action = actions[name];
             switch (name) {
-                case "showreel_orbit":
-                    // temp disable this one
-                    // action.play();
-                    break;
                 default:
                     break;
             }

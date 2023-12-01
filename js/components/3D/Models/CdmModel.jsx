@@ -36,9 +36,6 @@ export default function CdmModel({ opacity = 1, ...props }) {
         names.forEach((name) => {
             const action = actions[name];
             switch (name) {
-                case "cdm_orbit":
-                    action.play();
-                    break;
                 case "gasket_01":
                 case "gasket_02":
                 case "joystick_01":

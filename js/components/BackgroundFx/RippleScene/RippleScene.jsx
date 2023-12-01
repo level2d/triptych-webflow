@@ -23,7 +23,7 @@ export default function RippleScene(props) {
                 max: 2.0,
             },
             opacity: {
-                value: 0.08,
+                value: 0.15,
                 step: 0.01,
                 min: 0,
                 max: 1,

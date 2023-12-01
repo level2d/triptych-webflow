@@ -34,9 +34,6 @@ export default function CareersModel({ opacity = 1, ...props }) {
         names.forEach((name) => {
             const action = actions[name];
             switch (name) {
-                case "careers_orbit":
-                    action.play();
-                    break;
                 case "fluid":
                     action.setLoop(THREE.LoopOnce);
                     break;

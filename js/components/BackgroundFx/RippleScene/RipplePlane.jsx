@@ -6,13 +6,13 @@ import { forwardRef } from "react";
 const RipplePlane = forwardRef((props, ref) => {
     const { opacity, rippleSize } = useControls("Ripple Params", {
         opacity: {
-            value: 0.08,
+            value: 0.15,
             step: 0.01,
             min: 0,
             max: 1,
         },
         rippleSize: {
-            value: 200,
+            value: 165,
             step: 50,
             min: 100,
             max: 500,

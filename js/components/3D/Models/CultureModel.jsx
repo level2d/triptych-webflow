@@ -36,9 +36,6 @@ export default function Model({ opacity = 1, ...props }) {
         names.forEach((name) => {
             const action = actions[name];
             switch (name) {
-                case "culture_orbit":
-                    action.play();
-                    break;
                 case "explode_01":
                 case "explode_02":
                 case "explode_03":
