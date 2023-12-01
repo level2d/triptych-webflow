@@ -9,12 +9,14 @@ import {
 import { useThree } from "@react-three/fiber";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
-import { dampQ } from "maath/easing";
+import { dampE, dampQ } from "maath/easing";
 
 import { useStore } from "@/js/lib/store";
 
 export default function Box({ children, ...rest }) {
     const [mounted, setMounted] = useState(false);
+    const ref = useRef(null);
+
     const scene = useThree((state) => state.scene);
     const setIsClickable = useStore((state) => state.setIsClickable);
     const setCurrentBoxFromObject3d = useStore(
@@ -24,7 +26,6 @@ export default function Box({ children, ...rest }) {
     const lookAtMeshUuid = useStore((state) => state.lookAtMeshUuid);
     const opacity = useStore((state) => state.homeSceneOpacity);
     const lookAtVector = useRef(new THREE.Vector3());
-    const ref = useRef(null);
 
     const clickEnabled = useMemo(() => {
         return currentBoxUuid === null;
@@ -84,6 +85,14 @@ export default function Box({ children, ...rest }) {
         refClone.lookAt(lookAtVector.current);
         const toQuaternion = refClone.quaternion; // quaternion to lerp to
         dampQ(ref.current.quaternion, toQuaternion, 0.1, delta);
+
+        let rotationY = ref.current.children[0].rotation.y;
+        if (isCurrentBox) {
+            rotationY += 0.1;
+        } else {
+            rotationY = 0;
+        }
+        dampE(ref.current.children[0].rotation, [0, rotationY, 0], delta);
     });
 
     useEffect(() => {
