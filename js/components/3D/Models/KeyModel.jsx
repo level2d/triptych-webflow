@@ -35,9 +35,6 @@ export default function KeyModel({ opacity = 1, ...props }) {
         names.forEach((name) => {
             const action = actions[name];
             switch (name) {
-                case "key_orbit":
-                    action.play();
-                    break;
                 case "key_01":
                 case "key_02":
                 case "key_03":

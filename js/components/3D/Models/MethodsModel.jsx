@@ -33,9 +33,6 @@ export default function MethodsModel({ opacity = 1, ...props }) {
         names.forEach((name) => {
             const action = actions[name];
             switch (name) {
-                case "methods_orbit":
-                    action.play();
-                    break;
                 case "gear_01":
                 case "gear_02":
                 case "gear_03":
