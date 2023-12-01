@@ -437,9 +437,9 @@ export const RippleMaterial = ({ opacity = 1 }) => {
                 uClampColorEnabled: true,
                 uClampColorMin: {
                     value: {
-                        r: 52,
-                        g: 52,
-                        b: 52,
+                        r: 57,
+                        g: 57,
+                        b: 57,
                     },
                     onChange: (v) => {
                         const color = new THREE.Vector3(
