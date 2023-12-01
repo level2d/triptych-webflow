@@ -30,9 +30,6 @@ export default function EpbModel({ opacity = 1, ...props }) {
         names.forEach((name) => {
             const action = actions[name];
             switch (name) {
-                case "epb_orbit":
-                    action.play();
-                    break;
                 case "bolt_01":
                 case "bolt_02":
                     action.loop = THREE.LoopOnce;

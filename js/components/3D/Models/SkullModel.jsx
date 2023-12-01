@@ -30,9 +30,6 @@ export default function SkullModel({ opacity = 1, ...props }) {
         names.forEach((name) => {
             const action = actions[name];
             switch (name) {
-                case "skull_orbit":
-                    action.play();
-                    break;
                 case "jaw":
                     action.loop = THREE.LoopOnce;
                     break;

@@ -277,13 +277,13 @@ export const WaterMaterial = ({ opacity = 1 }) => {
             Perlin: folder({
                 uPerlinEnabled: true,
                 uPerlinResolution: {
-                    value: 45,
+                    value: 75,
                     min: 1,
-                    max: 50,
+                    max: 100,
                     step: 1,
                 },
                 uPerlinYScale: {
-                    value: 14,
+                    value: 21,
                     min: 1.0,
                     max: 50.0,
                     step: 1.0,
@@ -437,9 +437,9 @@ export const RippleMaterial = ({ opacity = 1 }) => {
                 uClampColorEnabled: true,
                 uClampColorMin: {
                     value: {
-                        r: 52,
-                        g: 52,
-                        b: 52,
+                        r: 57,
+                        g: 57,
+                        b: 57,
                     },
                     onChange: (v) => {
                         const color = new THREE.Vector3(

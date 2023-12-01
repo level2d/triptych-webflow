@@ -40,9 +40,6 @@ export default function ContactModel({ opacity = 1, ...props }) {
         names.forEach((name) => {
             const action = actions[name];
             switch (name) {
-                case "contact_orbit":
-                    action.play();
-                    break;
                 case "blade_01":
                 case "blade_02":
                 case "blade_03":

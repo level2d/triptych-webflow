@@ -30,9 +30,6 @@ export default function NorthfaceModel({ opacity = 1, ...props }) {
         names.forEach((name) => {
             const action = actions[name];
             switch (name) {
-                case "northface_orbit":
-                    action.play();
-                    break;
                 case "wind":
                     action.loop = THREE.LoopOnce;
                     break;

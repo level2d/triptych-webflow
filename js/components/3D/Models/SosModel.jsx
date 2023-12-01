@@ -30,7 +30,6 @@ export default function SosModel({ opacity = 1, ...props }) {
         names.forEach((name) => {
             const action = actions[name];
             switch (name) {
-                case "fish_orbit":
                 case "bob_01":
                 case "bob_02":
                     action.play();
