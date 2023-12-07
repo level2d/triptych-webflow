@@ -14,7 +14,7 @@ import {
     StoriesModel,
     WorkModel,
 } from "@/js/components/3D/Models";
-import { TriptychOutlines } from "@/js/components/3D/Common";
+import TriptychOutlines from "@/js/components/3D/Common/TriptychOutlines";
 import { TriptychMaterial } from "../../3D/Materials";
 import ReflectionModelMobile from "./ReflectionModelMobile";
 import WaterModelMobile from "./WaterModelMobile";
