@@ -1,6 +1,7 @@
 import { useCallback, useMemo, useState } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
-import Button, { BUTTON_THEMES } from "@/js/components/HomeScene/Button";
+import Button from "@/js/components/HomeScene/Button";
+import { BUTTON_THEMES } from "@/js/components/HomeScene/Button/constants";
 import Button2 from "@/js/components/HomeScene/Button2";
 
 const COLORS = [
