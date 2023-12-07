@@ -10,4 +10,6 @@ const init = () => {
     }
 };
 
-export { init };
+const test = { init };
+
+export default test;
