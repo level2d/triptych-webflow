@@ -1,6 +1,7 @@
 import {
     cloneElement,
     useCallback,
+    useEffect,
     useLayoutEffect,
     useMemo,
     useRef,
@@ -17,6 +18,9 @@ import { Sphere } from "@react-three/drei";
 
 export default function Box({ children, ...rest }) {
     const [isMounted, setMounted] = useState(false);
+    const [isDragging, setDragging] = useState(false);
+
+    const previousPointerPosition = useRef([0, 0]);
     const ref = useRef(null);
     const sphereRef = useRef(null);
 
@@ -59,6 +63,18 @@ export default function Box({ children, ...rest }) {
         setIsClickable(false);
     };
 
+    const handleSpherePointerDown = (e) => {
+        setDragging(true);
+    };
+
+    const handleSpherePointerUp = () => {
+        setDragging(false);
+    };
+
+    const handleSpherePointerLeave = () => {
+        setDragging(false);
+    };
+
     const Child = cloneElement(children, {
         opacity: isCurrentBox ? 1 : opacity, // override opacity when selected
     });
@@ -77,7 +93,7 @@ export default function Box({ children, ...rest }) {
         return null;
     }, [isMounted, scene, lookAtMeshUuid]);
 
-    useFrame(({ delta }) => {
+    useFrame(({ delta, pointer }) => {
         if (!refClone) return;
         if (!lookAtMesh) return;
 
@@ -95,6 +111,19 @@ export default function Box({ children, ...rest }) {
             rotationY = 0;
         }
         dampE(ref.current.children[0].rotation, [0, rotationY, 0], delta);
+
+        // Child click & drag logic
+        if (ref.current.children[0] && isCurrentBox && isDragging) {
+            const [prevX, prevY] = previousPointerPosition.current;
+            const [newX, newY] = [pointer.x, pointer.y];
+            const deltaX = newX - prevX;
+            const deltaY = newY - prevY;
+
+            ref.current.children[0].rotation.y += deltaX * 5;
+            ref.current.children[0].rotation.x += deltaY * 5;
+        }
+
+        previousPointerPosition.current = [pointer.x, pointer.y];
     });
 
     useLayoutEffect(() => {
@@ -118,7 +147,14 @@ export default function Box({ children, ...rest }) {
             onPointerLeave={handleGroupPointerLeave}
         >
             {Child}
-            <Sphere args={[0.75, 32, 32]} visible={debug} ref={sphereRef}>
+            <Sphere
+                args={[0.75, 32, 32]}
+                visible={debug}
+                onPointerDown={handleSpherePointerDown}
+                onPointerUp={handleSpherePointerUp}
+                onPointerLeave={handleSpherePointerLeave}
+                ref={sphereRef}
+            >
                 <meshBasicMaterial wireframe color={"red"} />
             </Sphere>
         </group>
