@@ -16,7 +16,7 @@ import { useStore } from "@/js/lib/store";
 import { Sphere } from "@react-three/drei";
 
 export default function Box({ children, ...rest }) {
-    const [mounted, setMounted] = useState(false);
+    const [isMounted, setMounted] = useState(false);
     const ref = useRef(null);
     const sphereRef = useRef(null);
 
@@ -64,18 +64,18 @@ export default function Box({ children, ...rest }) {
     });
 
     const refClone = useMemo(() => {
-        if (mounted) {
+        if (isMounted) {
             return ref.current.clone();
         }
         return null;
-    }, [mounted]);
+    }, [isMounted]);
 
     const lookAtMesh = useMemo(() => {
-        if (mounted) {
+        if (isMounted) {
             return scene.getObjectByProperty("uuid", lookAtMeshUuid);
         }
         return null;
-    }, [mounted, scene, lookAtMeshUuid]);
+    }, [isMounted, scene, lookAtMeshUuid]);
 
     useFrame(({ delta }) => {
         if (!refClone) return;
