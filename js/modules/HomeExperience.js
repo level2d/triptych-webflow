@@ -1,4 +1,4 @@
-import HomeScene from "@/js/components/HomeScene/HomeScene";
+import HomeScene from "@/js/components/HomeScene";
 import { renderToDOMElement } from "@/js/util/react";
 import App from "@/js/App";
 
@@ -14,7 +14,7 @@ export default class HomeExperience {
         if (this.$target) {
             console.log("Module: HomeExperience: init");
 
-             renderToDOMElement(this.$target, HomeScene);
+            renderToDOMElement(this.$target, HomeScene);
         }
     }
 }
