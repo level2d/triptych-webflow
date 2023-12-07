@@ -44,6 +44,9 @@ export default defineConfig((command, mode) => {
                     entryFileNames: "main.js",
                     esModule: false,
                     compact: true,
+                    treeshake: {
+                        moduleSideEffects: false,
+                    },
                     globals: {
                         // webflow sites have global jQuery
                         jquery: "window.jQuery",
