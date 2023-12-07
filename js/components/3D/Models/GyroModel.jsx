@@ -8,7 +8,7 @@ import * as THREE from "three";
 
 import { GLB_ASSET_URLS } from "@/js/core/constants";
 import { ItemMaterialViolet, ItemMaterialVioletDark } from "../Materials";
-import { ModelOutlines } from "@/js/components/3D/Common";
+import ModelOutlines from "@/js/components/3D/Common/ModelOutlines";
 
 export default function GyroModel({ opacity = 1, ...props }) {
     const [mounted, setMounted] = useState(false);

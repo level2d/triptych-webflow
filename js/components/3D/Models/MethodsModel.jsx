@@ -7,7 +7,7 @@ import { useGLTF, useAnimations } from "@react-three/drei";
 import * as THREE from "three";
 
 import { GLB_ASSET_URLS } from "@/js/core/constants";
-import { ModelOutlines } from "@/js/components/3D/Common";
+import ModelOutlines from "@/js/components/3D/Common/ModelOutlines";
 import { ItemMaterialYellow, ItemMaterialYellowDark } from "../Materials";
 
 export default function MethodsModel({ opacity = 1, ...props }) {

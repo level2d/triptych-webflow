@@ -11,7 +11,7 @@ import {
     ItemMaterialYellow,
     ItemMaterialYellowDark,
 } from "@/js/components/3D/Materials";
-import { ModelOutlines } from "@/js/components/3D/Common";
+import ModelOutlines from "@/js/components/3D/Common/ModelOutlines";
 
 export default function ContactModel({ opacity = 1, ...props }) {
     const [mounted, setMounted] = useState(false);
