@@ -11,11 +11,14 @@ import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { dampE, dampQ } from "maath/easing";
 
+import { debug } from "@/js/core/constants";
 import { useStore } from "@/js/lib/store";
+import { Sphere } from "@react-three/drei";
 
 export default function Box({ children, ...rest }) {
     const [mounted, setMounted] = useState(false);
     const ref = useRef(null);
+    const sphereRef = useRef(null);
 
     const scene = useThree((state) => state.scene);
     const setIsClickable = useStore((state) => state.setIsClickable);
@@ -35,11 +38,23 @@ export default function Box({ children, ...rest }) {
         return currentBoxUuid === ref.current?.children[0]?.uuid;
     }, [currentBoxUuid]);
 
-    const handlePointerEnter = (e) => {
+    const handleGroupClick = useCallback(
+        (e) => {
+            if (!clickEnabled) return;
+            e.stopPropagation(); // prevent ray from hitting meshes behind this one
+            // Use the first child's uuid.
+            // Need to do this because camera controls can't target a group
+            // only a mesh or object3d.
+            setCurrentBoxFromObject3d(ref.current.children[0]);
+        },
+        [clickEnabled, setCurrentBoxFromObject3d],
+    );
+
+    const handleGroupPointerEnter = (e) => {
         e.stopPropagation();
         setIsClickable(true);
     };
-    const handlePointerLeave = (e) => {
+    const handleGroupPointerLeave = (e) => {
         e.stopPropagation();
         setIsClickable(false);
     };
@@ -62,50 +77,50 @@ export default function Box({ children, ...rest }) {
         return null;
     }, [mounted, scene, lookAtMeshUuid]);
 
-    const handleClick = useCallback(
-        (e) => {
-            if (!clickEnabled) return;
-            e.stopPropagation(); // prevent ray from hitting meshes behind this one
-            // Use the first child's uuid.
-            // Need to do this because camera controls can't target a group
-            // only a mesh or object3d.
-            setCurrentBoxFromObject3d(ref.current.children[0]);
-        },
-        [clickEnabled, setCurrentBoxFromObject3d],
-    );
-
     useFrame(({ delta }) => {
         if (!refClone) return;
         if (!lookAtMesh) return;
 
+        // Group look-at logic
         lookAtMesh.getWorldPosition(lookAtVector.current);
-
         refClone.lookAt(lookAtVector.current);
         const toQuaternion = refClone.quaternion; // quaternion to lerp to
         dampQ(ref.current.quaternion, toQuaternion, 0.1, delta);
 
-        let rotationY = ref.current.rotation.y;
+        // Child rotation logic
+        let rotationY = ref.current.children[0].rotation.y;
         if (isCurrentBox) {
             rotationY += 0.1;
         } else {
             rotationY = 0;
         }
-        dampE(ref.current.rotation, [0, rotationY, 0], delta);
+        dampE(ref.current.children[0].rotation, [0, rotationY, 0], delta);
     });
 
     useLayoutEffect(() => {
         setMounted(true);
+
+        if (ref.current) {
+            sphereRef.current.position.copy(ref.current.children[0].position);
+        }
+
+        return () => {
+            setMounted(false);
+        };
     }, []);
 
     return (
         <group
             ref={ref}
             {...rest}
-            onClick={handleClick}
-            onPointerEnter={handlePointerEnter}
-            onPointerLeave={handlePointerLeave}
+            onClick={handleGroupClick}
+            onPointerEnter={handleGroupPointerEnter}
+            onPointerLeave={handleGroupPointerLeave}
         >
             {Child}
+            <Sphere args={[0.75, 32, 32]} visible={debug} ref={sphereRef}>
+                <meshBasicMaterial wireframe color={"red"} />
+            </Sphere>
         </group>
     );
 }
