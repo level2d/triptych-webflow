@@ -1,25 +1,23 @@
 //lib
-import gsap from "./lib/gsap";
-import lenis from "./lib/lenis";
+import gsap from "@/js/lib/gsap";
+import lenis from "@/js/lib/lenis";
 
 // class
-import Bus from "./class/Bus";
-import Time from "./class/Time";
-import Sizes from "./class/Sizes";
+import Bus from "@/js/class/Bus";
+import Time from "@/js/class/Time";
+import Sizes from "@/js/class/Sizes";
 
 // modules
-import * as core from "./core";
-import {
-    BackgroundFx,
-    FadeInText,
-    FancyImage,
-    HomeExperience,
-    KeepScrolling,
-    Loader,
-    PopQuote,
-    ScrambleText,
-    test,
-} from "./modules";
+import * as core from "@/js/core";
+import BackgroundFx from "@/js/modules/BackgroundFx";
+import FadeInText from "@/js/modules/FadeInText";
+import FancyImage from "@/js/modules/FancyImage";
+import HomeExperience from "@/js/modules/HomeExperience";
+import KeepScrolling from "@/js/modules/KeepScrolling";
+import Loader from "@/js/modules/Loader";
+import PopQuote from "@/js/modules/PopQuote";
+import ScrambleText from "@/js/modules/ScrambleText";
+import test from "@/js/modules/test";
 
 let _instance = null;
 export default class App {
