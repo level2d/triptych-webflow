@@ -1,14 +1,13 @@
 import * as THREE from "three";
 import { useControls, folder } from "leva";
 import { useRef } from "react";
-import {
-    ItemShaderMaterial,
-    TriptychShaderMaterial,
-    ReflectionShaderMaterial,
-    StarsShaderMaterial,
-    WaterShaderMaterial,
-    RippleShaderMaterial,
-} from "../Shaders";
+import ItemShaderMaterial from "@/js/components/3D/Shaders/ItemShaderMaterial";
+import TriptychShaderMaterial from "@/js/components/3D/Shaders/TriptychShaderMaterial";
+import ReflectionShaderMaterial from "@/js/components/3D/Shaders/ReflectionShaderMaterial";
+import StarsShaderMaterial from "@/js/components/3D/Shaders/StarsShaderMaterial";
+import WaterShaderMaterial from "@/js/components/3D/Shaders/WaterShaderMaterial";
+import RippleShaderMaterial from "@/js/components/3D/Shaders/RippleShaderMaterial";
+
 import * as colors from "@/js/core/colors";
 import { useFrame } from "@react-three/fiber";
 
