@@ -1,7 +1,7 @@
 import {
     cloneElement,
     useCallback,
-    useEffect,
+    useLayoutEffect,
     useMemo,
     useRef,
     useState,
@@ -46,8 +46,6 @@ export default function Box({ children, ...rest }) {
 
     const Child = cloneElement(children, {
         opacity: isCurrentBox ? 1 : opacity, // override opacity when selected
-        onPointerEnter: handlePointerEnter,
-        onPointerLeave: handlePointerLeave,
     });
 
     const refClone = useMemo(() => {
@@ -86,21 +84,27 @@ export default function Box({ children, ...rest }) {
         const toQuaternion = refClone.quaternion; // quaternion to lerp to
         dampQ(ref.current.quaternion, toQuaternion, 0.1, delta);
 
-        let rotationY = ref.current.children[0].rotation.y;
+        let rotationY = ref.current.rotation.y;
         if (isCurrentBox) {
             rotationY += 0.1;
         } else {
             rotationY = 0;
         }
-        dampE(ref.current.children[0].rotation, [0, rotationY, 0], delta);
+        dampE(ref.current.rotation, [0, rotationY, 0], delta);
     });
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         setMounted(true);
     }, []);
 
     return (
-        <group ref={ref} {...rest} onClick={handleClick}>
+        <group
+            ref={ref}
+            {...rest}
+            onClick={handleClick}
+            onPointerEnter={handlePointerEnter}
+            onPointerLeave={handlePointerLeave}
+        >
             {Child}
         </group>
     );
