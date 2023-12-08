@@ -1,12 +1,18 @@
-import { useEffect, useMemo, useRef } from "react";
-import { OrthographicCamera, CameraControls } from "@react-three/drei";
+import { CameraControls, OrthographicCamera } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
-import * as THREE from "three";
 import { folder, useControls } from "leva";
+import {
+    useCallback,
+    useEffect,
+    useLayoutEffect,
+    useMemo,
+    useRef,
+} from "react";
+import * as THREE from "three";
 
 import { debug } from "@/js/core/constants";
-import { useStore } from "@/js/lib/store";
 import { isDesktop } from "@/js/core/detect";
+import { useStore } from "@/js/lib/store";
 
 export default function Rig() {
     const lookAtMesh = useRef(null);
@@ -33,17 +39,28 @@ export default function Rig() {
         scene: state.scene,
     }));
 
-    const { lookAtMeshVisible, lookAtFactor } = useControls({
-        Rig: folder({
-            lookAtMeshVisible: false,
-            lookAtFactor: {
-                value: 8,
-                min: 0.1,
-                max: 20,
-                step: 0.1,
-            },
-        }),
-    });
+    const { lookAtMeshVisible, lookAtFactor, enableDebugControls } =
+        useControls({
+            Rig: folder({
+                lookAtMeshVisible: false,
+                lookAtFactor: {
+                    value: 8,
+                    min: 0.1,
+                    max: 20,
+                    step: 0.1,
+                },
+                enableDebugControls: debug,
+            }),
+        });
+
+    const handleCameraControlsOnStart = useCallback(
+        (e) => {
+            if (!enableDebugControls) {
+                e.target.cancel();
+            }
+        },
+        [enableDebugControls],
+    );
 
     useFrame(({ camera, pointer, viewport }) => {
         if (!isDesktop) return; // disable on mobile
@@ -103,12 +120,7 @@ export default function Rig() {
 
     useEffect(() => {
         if (!cameraControls) return;
-        if (!debug) {
-            cameraControls.disconnect();
-        } else {
-            // expose for debugging
-            window.cameraControls = cameraControls;
-        }
+        window.cameraControls = cameraControls;
     }, [cameraControls]);
 
     useEffect(() => {
@@ -136,7 +148,7 @@ export default function Rig() {
                     />
                 </mesh>
             </OrthographicCamera>
-            <CameraControls makeDefault />
+            <CameraControls makeDefault onStart={handleCameraControlsOnStart} />
         </>
     );
 }
