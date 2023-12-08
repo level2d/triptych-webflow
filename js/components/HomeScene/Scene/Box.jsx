@@ -120,7 +120,7 @@ export default function Box({ children, ...rest }) {
             const deltaY = newY - prevY;
 
             ref.current.children[0].rotation.y += deltaX * 5;
-            ref.current.children[0].rotation.x += deltaY * 5;
+            ref.current.children[0].rotation.x -= deltaY * 5;
         }
 
         previousPointerPosition.current = [pointer.x, pointer.y];
