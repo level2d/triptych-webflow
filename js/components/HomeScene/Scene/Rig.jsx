@@ -1,7 +1,7 @@
 import { CameraControls, OrthographicCamera } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
 import { folder, useControls } from "leva";
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
 
 import { debug } from "@/js/core/constants";
@@ -23,6 +23,7 @@ export default function Rig() {
         }),
     );
     const setLookAtMeshUuid = useStore((state) => state.setLookAtMeshUuid);
+    const currentBoxUuid = useStore((state) => state.currentBoxUuid);
     const {
         size: { width, height },
         controls: cameraControls,
@@ -47,18 +48,11 @@ export default function Rig() {
             }),
         });
 
-    const handleCameraControlsOnStart = useCallback(
-        (e) => {
-            if (!enableDebugControls) {
-                e.target.cancel();
-            }
-        },
-        [enableDebugControls],
-    );
-
     useFrame(({ camera, pointer, viewport }) => {
         if (!isDesktop) return; // disable on mobile
         if (!lookAtMesh.current) return;
+
+        // Pointer following logic
         const { height, width } = viewport.getCurrentViewport(
             camera,
             [0, 0, -1], // account for distance of lookAtMesh from camera
@@ -113,11 +107,6 @@ export default function Rig() {
     ]);
 
     useEffect(() => {
-        if (!cameraControls) return;
-        window.cameraControls = cameraControls;
-    }, [cameraControls]);
-
-    useEffect(() => {
         lookAtMesh.current.geometry.computeBoundingBox();
         const boxWidth =
             lookAtMesh.current.geometry.boundingBox.max.x -
@@ -128,6 +117,50 @@ export default function Rig() {
         boxSize.current.set(boxWidth, boxHeight);
         setLookAtMeshUuid(lookAtMesh.current.uuid);
     }, [setLookAtMeshUuid]);
+
+    useEffect(() => {
+        if (!cameraControls) return; // wait for cameraControls to be ready
+        if (enableDebugControls) return; // don't add event listeners if debug controls are enabled
+        if (currentBoxUuid) {
+            // if a box is selected, disable camera controls
+            const handleControlStart = (e) => {
+                e.target.cancel();
+            };
+
+            cameraControls.addEventListener("controlstart", handleControlStart);
+
+            return () => {
+                cameraControls.removeEventListener(
+                    "controlstart",
+                    handleControlStart,
+                );
+            };
+        } else {
+            // if no box is selected, enable camera controls, resetting camera position when controls end
+            const handleControlStart = (e) => {
+                cameraControls.saveState(); // save initial camera position
+            };
+
+            const handleControlEnd = () => {
+                if (!cameraControls) return;
+                cameraControls.reset(true); // reset camera back to saved position
+            };
+
+            cameraControls.addEventListener("controlstart", handleControlStart);
+            cameraControls.addEventListener("controlend", handleControlEnd);
+
+            return () => {
+                cameraControls.removeEventListener(
+                    "controlstart",
+                    handleControlStart,
+                );
+                cameraControls.removeEventListener(
+                    "controlend",
+                    handleControlEnd,
+                );
+            };
+        }
+    }, [cameraControls, enableDebugControls, currentBoxUuid]);
 
     return (
         <>
@@ -142,7 +175,7 @@ export default function Rig() {
                     />
                 </mesh>
             </OrthographicCamera>
-            <CameraControls makeDefault onStart={handleCameraControlsOnStart} />
+            <CameraControls makeDefault />
         </>
     );
 }
