@@ -279,7 +279,7 @@ export const WaterMaterial = ({ opacity = 1 }) => {
                 uPerlinResolution: {
                     value: 4,
                     min: 1,
-                    max: 100,
+                    max: 200,
                     step: 1,
                 },
                 uPerlinYScale: {
@@ -295,7 +295,7 @@ export const WaterMaterial = ({ opacity = 1 }) => {
                     step: 0.1,
                 },
                 uPerlinMultiplier: {
-                    value: 0.4,
+                    value: 0.3,
                     min: 0.1,
                     max: 5,
                     step: 0.1,
