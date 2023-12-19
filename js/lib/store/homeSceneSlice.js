@@ -124,9 +124,6 @@ export const createHomeSceneSlice = (set, get) => ({
 
     lastOrbitDirection: "down",
     isOrbiting: false,
-    cameraControlsState: null,
-    setCameraControlsState: (cameraControlsState) =>
-        set(() => ({ cameraControlsState })),
 
     /**
      *
@@ -244,7 +241,6 @@ export const createHomeSceneSlice = (set, get) => ({
         set({
             isOrbiting: false,
             lastOrbitDirection: direction,
-            cameraControlsState: cameraControls.toJSON(),
         });
     },
     interactable: debug,
