@@ -114,7 +114,7 @@ float snoise(vec3 v) {
 
 vec3 perlin() {
     vec2 scale = vec2(1.0, uPerlinYScale);
-    vec2 position = vUv * (uPerlinResolution * scale);
+    vec2 position = vScreenSpace * (uPerlinResolution * scale);
     vec3 color = vec3(1.0);
     vec3 c = vec3(0.0);
 
