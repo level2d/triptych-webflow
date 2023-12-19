@@ -142,9 +142,9 @@ export default function Rig() {
                 cameraControls.minPolarAngle = cameraControls.polarAngle; // limit camera rotation to 90 degrees
                 cameraControls.maxPolarAngle = cameraControls.polarAngle;
                 cameraControls.minAzimuthAngle =
-                    cameraControls.azimuthAngle - 25 * THREE.MathUtils.DEG2RAD;
+                    cameraControls.azimuthAngle - 45 * THREE.MathUtils.DEG2RAD;
                 cameraControls.maxAzimuthAngle =
-                    cameraControls.azimuthAngle + 25 * THREE.MathUtils.DEG2RAD;
+                    cameraControls.azimuthAngle + 45 * THREE.MathUtils.DEG2RAD;
             };
 
             const handleControlEnd = () => {
