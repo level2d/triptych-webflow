@@ -138,6 +138,7 @@ export default function Rig() {
         if (!cameraControlsState) {
             setCameraControlsState(cameraControls.toJSON());
         }
+        cameraControls.normalizeRotations(); // normalize camera rotation
         // if no box is selected, enable camera controls, resetting camera position when controls end
         cameraControls.minPolarAngle = cameraControls.polarAngle; // limit camera rotation to 90 degrees
         cameraControls.maxPolarAngle = cameraControls.polarAngle;
