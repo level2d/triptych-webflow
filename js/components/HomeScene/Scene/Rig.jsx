@@ -1,7 +1,7 @@
 import { CameraControls, OrthographicCamera } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
 import { folder, useControls } from "leva";
-import { useEffect, useMemo, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 
 import { debug } from "@/js/core/constants";
@@ -14,6 +14,12 @@ export default function Rig() {
     const boxSize = useRef(new THREE.Vector2());
     const intro = useStore((state) => state.intro);
     const cameraTargetUuid = useStore((state) => state.cameraTargetUuid);
+    const { cameraControlsState, setCameraControlsState } = useStore(
+        (state) => ({
+            cameraControlsState: state.cameraControlsState,
+            setCameraControlsState: state.setCameraControlsState,
+        }),
+    );
     const { paddingTop, paddingRight, paddingBottom, paddingLeft } = useStore(
         (state) => ({
             paddingTop: state.paddingTop,
@@ -118,59 +124,47 @@ export default function Rig() {
         setLookAtMeshUuid(lookAtMesh.current.uuid);
     }, [setLookAtMeshUuid]);
 
-    useEffect(() => {
+    const handleControlStart = useCallback(() => {
         if (!cameraControls) return; // wait for cameraControls to be ready
-        if (enableDebugControls) return; // don't add event listeners if debug controls are enabled
+        if (enableDebugControls) return; // don't do anything if debug controls are enabled)
         if (currentBoxUuid) {
             // if a box is selected, disable camera controls
-            const handleControlStart = (e) => {
+            cameraControls.addEventListener("controlstart", (e) => {
                 e.target.cancel();
-            };
-
-            cameraControls.addEventListener("controlstart", handleControlStart);
-
-            return () => {
-                cameraControls.removeEventListener(
-                    "controlstart",
-                    handleControlStart,
-                );
-            };
-        } else {
-            // if no box is selected, enable camera controls, resetting camera position when controls end
-            const handleControlStart = (e) => {
-                cameraControls.saveState(); // save initial camera position
-                cameraControls.minPolarAngle = cameraControls.polarAngle; // limit camera rotation to 90 degrees
-                cameraControls.maxPolarAngle = cameraControls.polarAngle;
-                cameraControls.minAzimuthAngle =
-                    cameraControls.azimuthAngle - 45 * THREE.MathUtils.DEG2RAD;
-                cameraControls.maxAzimuthAngle =
-                    cameraControls.azimuthAngle + 45 * THREE.MathUtils.DEG2RAD;
-            };
-
-            const handleControlEnd = () => {
-                cameraControls.minPolarAngle = 0; // reset min/max polar angle to defaults
-                cameraControls.maxPolarAngle = Math.PI;
-                cameraControls.minAzimuthAngle = -Infinity; // reset min/max azimuth angle to defaults
-                cameraControls.maxAzimuthAngle = Infinity;
-
-                cameraControls.reset(true); // reset camera back to saved position
-            };
-
-            cameraControls.addEventListener("controlstart", handleControlStart);
-            cameraControls.addEventListener("controlend", handleControlEnd);
-
-            return () => {
-                cameraControls.removeEventListener(
-                    "controlstart",
-                    handleControlStart,
-                );
-                cameraControls.removeEventListener(
-                    "controlend",
-                    handleControlEnd,
-                );
-            };
+            });
+            return;
         }
-    }, [cameraControls, enableDebugControls, currentBoxUuid]);
+        // save camera position when controls start only if previous state is null (e.g. page load)
+        if (!cameraControlsState) {
+            setCameraControlsState(cameraControls.toJSON());
+        }
+        // if no box is selected, enable camera controls, resetting camera position when controls end
+        cameraControls.minPolarAngle = cameraControls.polarAngle; // limit camera rotation to 90 degrees
+        cameraControls.maxPolarAngle = cameraControls.polarAngle;
+        cameraControls.minAzimuthAngle =
+            cameraControls.azimuthAngle - 45 * THREE.MathUtils.DEG2RAD;
+        cameraControls.maxAzimuthAngle =
+            cameraControls.azimuthAngle + 45 * THREE.MathUtils.DEG2RAD;
+    }, [
+        cameraControls,
+        enableDebugControls,
+        currentBoxUuid,
+        cameraControlsState,
+        setCameraControlsState,
+    ]);
+
+    const handleControlEnd = useCallback(async () => {
+        if (!cameraControls) return; // wait for cameraControls to be ready
+        if (enableDebugControls) return; // don't do anything if debug controls are enabled
+
+        // Reset camera position when controls end
+        cameraControls.minPolarAngle = 0; // reset min/max polar angle to defaults
+        cameraControls.maxPolarAngle = Math.PI;
+        cameraControls.minAzimuthAngle = -Infinity; // reset min/max azimuth angle to defaults
+        cameraControls.maxAzimuthAngle = Infinity;
+
+        await cameraControls.fromJSON(cameraControlsState, true);
+    }, [cameraControls, enableDebugControls, cameraControlsState]);
 
     return (
         <>
@@ -185,7 +179,11 @@ export default function Rig() {
                     />
                 </mesh>
             </OrthographicCamera>
-            <CameraControls makeDefault />
+            <CameraControls
+                makeDefault
+                onStart={handleControlStart}
+                onEnd={handleControlEnd}
+            />
         </>
     );
 }
