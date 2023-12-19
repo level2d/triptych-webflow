@@ -277,13 +277,13 @@ export const WaterMaterial = ({ opacity = 1 }) => {
             Perlin: folder({
                 uPerlinEnabled: true,
                 uPerlinResolution: {
-                    value: 100,
+                    value: 4,
                     min: 1,
                     max: 200,
                     step: 1,
                 },
                 uPerlinYScale: {
-                    value: 19,
+                    value: 9,
                     min: 1.0,
                     max: 50.0,
                     step: 1.0,
