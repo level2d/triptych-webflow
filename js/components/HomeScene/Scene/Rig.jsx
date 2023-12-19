@@ -9,17 +9,12 @@ import { isDesktop } from "@/js/core/detect";
 import { useStore } from "@/js/lib/store";
 
 export default function Rig() {
+    const [isControlled, setIsControlled] = useState(false); // whether camera is controlled by user
     const lookAtMesh = useRef(null);
     const cameraOrbitPoint = useRef(new THREE.Vector3());
     const boxSize = useRef(new THREE.Vector2());
     const intro = useStore((state) => state.intro);
     const cameraTargetUuid = useStore((state) => state.cameraTargetUuid);
-    const { cameraControlsState, setCameraControlsState } = useStore(
-        (state) => ({
-            cameraControlsState: state.cameraControlsState,
-            setCameraControlsState: state.setCameraControlsState,
-        }),
-    );
     const { paddingTop, paddingRight, paddingBottom, paddingLeft } = useStore(
         (state) => ({
             paddingTop: state.paddingTop,
@@ -124,38 +119,35 @@ export default function Rig() {
         setLookAtMeshUuid(lookAtMesh.current.uuid);
     }, [setLookAtMeshUuid]);
 
-    const handleControlStart = useCallback(() => {
-        if (!cameraControls) return; // wait for cameraControls to be ready
-        if (enableDebugControls) return; // don't do anything if debug controls are enabled)
-        if (currentBoxUuid) {
-            // if a box is selected, disable camera controls
-            cameraControls.addEventListener("controlstart", (e) => {
+    const handleControlStart = useCallback(
+        (e) => {
+            if (!cameraControls) return; // wait for cameraControls to be ready
+            if (enableDebugControls) return; // don't do anything if debug controls are enabled)
+            if (currentBoxUuid || isControlled) {
+                // if a box is selected, disable camera controls
                 e.target.cancel();
-            });
-            return;
-        }
-        // save camera position when controls start only if previous state is null (e.g. page load)
-        if (!cameraControlsState) {
-            setCameraControlsState(cameraControls.toJSON());
-        }
-        // if no box is selected, enable camera controls, resetting camera position when controls end
-        cameraControls.minPolarAngle = cameraControls.polarAngle; // limit camera rotation to 90 degrees
-        cameraControls.maxPolarAngle = cameraControls.polarAngle;
-        cameraControls.minAzimuthAngle =
-            cameraControls.azimuthAngle - 45 * THREE.MathUtils.DEG2RAD;
-        cameraControls.maxAzimuthAngle =
-            cameraControls.azimuthAngle + 45 * THREE.MathUtils.DEG2RAD;
-    }, [
-        cameraControls,
-        enableDebugControls,
-        currentBoxUuid,
-        cameraControlsState,
-        setCameraControlsState,
-    ]);
+
+                return;
+            }
+            cameraControls.saveState();
+            cameraControls.normalizeRotations(); // normalize camera rotation
+            // if no box is selected, enable camera controls, resetting camera position when controls end
+            cameraControls.minPolarAngle = cameraControls.polarAngle; // limit camera rotation to 90 degrees
+            cameraControls.maxPolarAngle = cameraControls.polarAngle;
+            cameraControls.minAzimuthAngle =
+                cameraControls.azimuthAngle - 45 * THREE.MathUtils.DEG2RAD;
+            cameraControls.maxAzimuthAngle =
+                cameraControls.azimuthAngle + 45 * THREE.MathUtils.DEG2RAD;
+
+            setIsControlled(true);
+        },
+        [cameraControls, enableDebugControls, currentBoxUuid, isControlled],
+    );
 
     const handleControlEnd = useCallback(async () => {
         if (!cameraControls) return; // wait for cameraControls to be ready
         if (enableDebugControls) return; // don't do anything if debug controls are enabled
+        if (currentBoxUuid) return; // don't do anything if a box is selected
 
         // Reset camera position when controls end
         cameraControls.minPolarAngle = 0; // reset min/max polar angle to defaults
@@ -163,8 +155,9 @@ export default function Rig() {
         cameraControls.minAzimuthAngle = -Infinity; // reset min/max azimuth angle to defaults
         cameraControls.maxAzimuthAngle = Infinity;
 
-        await cameraControls.fromJSON(cameraControlsState, true);
-    }, [cameraControls, enableDebugControls, cameraControlsState]);
+        await cameraControls.reset(true);
+        setIsControlled(false);
+    }, [cameraControls, enableDebugControls, currentBoxUuid]);
 
     return (
         <>
