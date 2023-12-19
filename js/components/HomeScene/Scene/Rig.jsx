@@ -1,7 +1,7 @@
 import { CameraControls, OrthographicCamera } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
 import { folder, useControls } from "leva";
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 
 import { debug } from "@/js/core/constants";
@@ -14,6 +14,12 @@ export default function Rig() {
     const boxSize = useRef(new THREE.Vector2());
     const intro = useStore((state) => state.intro);
     const cameraTargetUuid = useStore((state) => state.cameraTargetUuid);
+    const { cameraControlsState, setCameraControlsState } = useStore(
+        (state) => ({
+            cameraControlsState: state.cameraControlsState,
+            setCameraControlsState: state.setCameraControlsState,
+        }),
+    );
     const { paddingTop, paddingRight, paddingBottom, paddingLeft } = useStore(
         (state) => ({
             paddingTop: state.paddingTop,
@@ -23,6 +29,7 @@ export default function Rig() {
         }),
     );
     const setLookAtMeshUuid = useStore((state) => state.setLookAtMeshUuid);
+    const currentBoxUuid = useStore((state) => state.currentBoxUuid);
     const {
         size: { width, height },
         controls: cameraControls,
@@ -47,18 +54,11 @@ export default function Rig() {
             }),
         });
 
-    const handleCameraControlsOnStart = useCallback(
-        (e) => {
-            if (!enableDebugControls) {
-                e.target.cancel();
-            }
-        },
-        [enableDebugControls],
-    );
-
     useFrame(({ camera, pointer, viewport }) => {
         if (!isDesktop) return; // disable on mobile
         if (!lookAtMesh.current) return;
+
+        // Pointer following logic
         const { height, width } = viewport.getCurrentViewport(
             camera,
             [0, 0, -1], // account for distance of lookAtMesh from camera
@@ -113,11 +113,6 @@ export default function Rig() {
     ]);
 
     useEffect(() => {
-        if (!cameraControls) return;
-        window.cameraControls = cameraControls;
-    }, [cameraControls]);
-
-    useEffect(() => {
         lookAtMesh.current.geometry.computeBoundingBox();
         const boxWidth =
             lookAtMesh.current.geometry.boundingBox.max.x -
@@ -128,6 +123,48 @@ export default function Rig() {
         boxSize.current.set(boxWidth, boxHeight);
         setLookAtMeshUuid(lookAtMesh.current.uuid);
     }, [setLookAtMeshUuid]);
+
+    const handleControlStart = useCallback(() => {
+        if (!cameraControls) return; // wait for cameraControls to be ready
+        if (enableDebugControls) return; // don't do anything if debug controls are enabled)
+        if (currentBoxUuid) {
+            // if a box is selected, disable camera controls
+            cameraControls.addEventListener("controlstart", (e) => {
+                e.target.cancel();
+            });
+            return;
+        }
+        // save camera position when controls start only if previous state is null (e.g. page load)
+        if (!cameraControlsState) {
+            setCameraControlsState(cameraControls.toJSON());
+        }
+        // if no box is selected, enable camera controls, resetting camera position when controls end
+        cameraControls.minPolarAngle = cameraControls.polarAngle; // limit camera rotation to 90 degrees
+        cameraControls.maxPolarAngle = cameraControls.polarAngle;
+        cameraControls.minAzimuthAngle =
+            cameraControls.azimuthAngle - 45 * THREE.MathUtils.DEG2RAD;
+        cameraControls.maxAzimuthAngle =
+            cameraControls.azimuthAngle + 45 * THREE.MathUtils.DEG2RAD;
+    }, [
+        cameraControls,
+        enableDebugControls,
+        currentBoxUuid,
+        cameraControlsState,
+        setCameraControlsState,
+    ]);
+
+    const handleControlEnd = useCallback(async () => {
+        if (!cameraControls) return; // wait for cameraControls to be ready
+        if (enableDebugControls) return; // don't do anything if debug controls are enabled
+
+        // Reset camera position when controls end
+        cameraControls.minPolarAngle = 0; // reset min/max polar angle to defaults
+        cameraControls.maxPolarAngle = Math.PI;
+        cameraControls.minAzimuthAngle = -Infinity; // reset min/max azimuth angle to defaults
+        cameraControls.maxAzimuthAngle = Infinity;
+
+        await cameraControls.fromJSON(cameraControlsState, true);
+    }, [cameraControls, enableDebugControls, cameraControlsState]);
 
     return (
         <>
@@ -142,7 +179,11 @@ export default function Rig() {
                     />
                 </mesh>
             </OrthographicCamera>
-            <CameraControls makeDefault onStart={handleCameraControlsOnStart} />
+            <CameraControls
+                makeDefault
+                onStart={handleControlStart}
+                onEnd={handleControlEnd}
+            />
         </>
     );
 }
