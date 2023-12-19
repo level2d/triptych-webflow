@@ -1,6 +1,6 @@
 import * as THREE from "three";
 import { useControls, folder } from "leva";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import {
     ItemShaderMaterial,
     TriptychShaderMaterial,
@@ -14,6 +14,12 @@ import { useFrame } from "@react-three/fiber";
 
 export const TriptychMaterial = ({ boundingBox, opacity = 1 }) => {
     const shaderRef = useRef();
+
+    useEffect(() => {
+        if (shaderRef.current) {
+            console.log("shaderRef: ", shaderRef.current);
+        }
+    }, [shaderRef]);
     const {
         uNoiseScale,
         uNoiseContrast,

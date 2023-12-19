@@ -1,0 +1,27 @@
+.annotation {
+    // transform: translate3d(calc(50%), calc(-50%), 0);
+    text-align: left;
+    background: #181c20;
+    color: #8c92a4;
+    padding: 10px 15px;
+    border-radius: 5px;
+    user-select: none;
+    font-family: var(--leva-fonts-mono);
+}
+
+.labelCenter {
+    border-radius: 100%;
+    width: 8px;
+    height: 8px;
+    background: red;
+}
+
+// .annotation::before {
+//     content: "";
+//     position: absolute;
+//     top: 0;
+//     left: 0;
+//     height: 2px;
+//     width: 30px;
+//     background: #181c20;
+// }

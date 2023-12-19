@@ -39,7 +39,7 @@ vec3 matcap() {
 }
 
 vec3 gradient() {
-    float stop0 = smoothstep(vUv.y, 0.0, uGradientStop);
+    float stop0 = smoothstep(vUv.y, -10.0, uGradientStop);
 
     vec3 color = mix(uGradientColorA, uGradientColorB, stop0);
 

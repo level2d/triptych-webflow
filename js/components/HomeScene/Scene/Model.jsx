@@ -1,10 +1,13 @@
 import * as THREE from "three";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useGLTF } from "@react-three/drei";
+import { Html, useGLTF } from "@react-three/drei";
 import { GLB_ASSET_URLS } from "@/js/core/constants";
 import { useStore } from "@/js/lib/store";
+import gsap from "gsap";
+// import styles from "./styles/Model.module.scss";
 
 import Box from "./Box";
+import Label from "./Label";
 import {
     CareersModel,
     CdmModel,
@@ -33,6 +36,11 @@ function Model(props) {
     const setTriptychModelUuid = useStore(
         (state) => state.setTriptychModelUuid,
     );
+
+    const currentItemUiVisible = useStore(
+        (state) => state.currentItemUiVisible,
+    );
+
     const opacity = useStore((state) => state.homeSceneOpacity);
     const [boundingBox, setBoundingBox] = useState({
         min: new THREE.Vector3(0, 0, 0),
@@ -53,6 +61,37 @@ function Model(props) {
         // Sync store
         setTriptychModelUuid(tripTychRef.current.uuid);
     }, [setTriptychModelUuid]);
+
+    const careerLabelRef = useRef(null);
+    const cultureLabelRef = useRef(null);
+    const workLabelRef = useRef(null);
+
+    const onModelEnter = (ref) => {
+        if (ref.current) {
+            gsap.to(ref.current, {
+                opacity: 1,
+                duration: 0.5,
+                ease: "ease.inOut",
+                onStart: () => {
+                    ref.current.style.display = "block";
+                    ref.current.style.opacity = 0;
+                },
+            });
+        }
+    };
+
+    const onModelLeave = (ref) => {
+        if (ref.current) {
+            gsap.to(ref.current, {
+                opacity: 0,
+                duration: 0.5,
+                ease: "ease.inOut",
+                onComplete: () => {
+                    ref.current.style.display = "none";
+                },
+            });
+        }
+    };
 
     return (
         <group {...props} dispose={null} scale={0.1}>
@@ -77,20 +116,28 @@ function Model(props) {
                 <TriptychOutlines opacity={opacity} visible={visible} />
             </mesh>
 
-            <WaterModel />
-
-            <StarsModel />
-
-            <ReflectionModel />
-
-            {/* <mesh
-                geometry={nodes.location_015.geometry}
-                material={nodes.location_015.material}
-                position={[1, 1, -3]}
-            /> */}
-            <Box position={[1, 1, -3]}>
-                <CareersModel />
-            </Box>
+            <group>
+                <Box
+                    position={[1, 1, -3]}
+                    onModelEnter={() => onModelEnter(careerLabelRef)}
+                    onModelLeave={() => onModelLeave(careerLabelRef)}
+                >
+                    <>
+                        <CareersModel />
+                    </>
+                </Box>
+            </group>
+            {!currentItemUiVisible && (
+                <Html
+                    // occlude
+                    ref={careerLabelRef}
+                    key={"careersLabel"}
+                    position={[1.9, 1, -3]}
+                    // style={{ display: "none" }}
+                >
+                    <Label labelType="right" title={"CAREERS"} />
+                </Html>
+            )}
             {/* <mesh
                 geometry={nodes.location_014.geometry}
                 material={nodes.location_014.material}
@@ -177,10 +224,24 @@ function Model(props) {
                 material={nodes.location_005.material}
                 position={[3, -1, 3]}
             /> */}
-            <Box position={[3, -1, 3]}>
+            <Box
+                position={[3, -1, 3]}
+                onModelEnter={() => onModelEnter(workLabelRef)}
+                onModelLeave={() => onModelLeave(workLabelRef)}
+            >
                 <WorkModel />
             </Box>
-
+            {!currentItemUiVisible && (
+                <Html
+                    // occlude
+                    ref={workLabelRef}
+                    key={"workLabel"}
+                    position={[1, -1, 5]}
+                    // style={{ display: "none" }}
+                >
+                    <Label labelType="left" title="WORK" />
+                </Html>
+            )}
             {/* <mesh
                 geometry={nodes.location_004.geometry}
                 material={nodes.location_004.material}
@@ -189,15 +250,29 @@ function Model(props) {
             <Box position={[-1, -1, 1]}>
                 <ShowreelModel />
             </Box>
-
             {/* <mesh
                 geometry={nodes.location_003.geometry}
                 material={nodes.location_003.material}
                 position={[1, -1, -1]}
             /> */}
-            <Box position={[1, -1, -1]}>
+            <Box
+                position={[1, -1, -1]}
+                onModelEnter={() => onModelEnter(cultureLabelRef)}
+                onModelLeave={() => onModelLeave(cultureLabelRef)}
+            >
                 <CultureModel />
             </Box>
+            {!currentItemUiVisible && (
+                <Html
+                    // occlude
+                    ref={cultureLabelRef}
+                    key={"cultureLabel"}
+                    position={[1.9, -1, -1]}
+                    // style={{ display: "none" }}
+                >
+                    <Label labelType="inner-right" title="CULTURE" />
+                </Html>
+            )}
 
             {/* <mesh
                 geometry={nodes.location_002.geometry}
@@ -216,6 +291,12 @@ function Model(props) {
             <Box position={[1, 2.964, -3.531]}>
                 <EpbModel />
             </Box>
+
+            <WaterModel />
+
+            <StarsModel />
+
+            <ReflectionModel />
         </group>
     );
 }

@@ -1,0 +1,54 @@
+.label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 128px;
+    height: 128px;
+    pointer-events: none;
+    &.labelRight {
+        transform: translate3d(calc(-10%), calc(-75%), 0);
+    }
+    &.labelLeft {
+        transform: translate3d(calc(-10%), calc(-75%), 0) rotateY(180deg);
+    }
+    &.labelInnerRight {
+        width: 200px;
+    }
+    &.labelInnerLeft {
+        width: 200px;
+        transform: rotateY(180deg);
+    }
+}
+
+.labelText {
+    position: absolute;
+    padding: 2px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    max-width: 100px;
+    color: white;
+    pointer-events: none;
+    background: rgb(78, 77, 77);
+    border-radius: 2px;
+
+    &.labelRight {
+        top: -8px;
+        left: 100%;
+    }
+    &.labelLeft {
+        top: -8px;
+        left: 100%;
+        transform: rotateY(180deg);
+    }
+
+    &.labelInnerRight {
+        top: 2px;
+        left: 100%;
+    }
+    &.labelInnerLeft {
+        top: 2px;
+        left: 100%;
+        transform: rotateY(180deg);
+    }
+}

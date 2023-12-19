@@ -17,6 +17,7 @@ import { useStore } from "@/js/lib/store";
 import { Sphere } from "@react-three/drei";
 
 export default function Box({ children, ...rest }) {
+    const { onModelEnter = () => {}, onModelLeave = () => {} } = rest;
     const [isMounted, setMounted] = useState(false);
     const [isDragging, setDragging] = useState(false);
 
@@ -56,10 +57,12 @@ export default function Box({ children, ...rest }) {
 
     const handleGroupPointerEnter = (e) => {
         e.stopPropagation();
+        onModelEnter();
         setIsClickable(true);
     };
     const handleGroupPointerLeave = (e) => {
         e.stopPropagation();
+        onModelLeave();
         setIsClickable(false);
     };
 
@@ -149,7 +152,7 @@ export default function Box({ children, ...rest }) {
             {Child}
             <Sphere
                 args={[0.75, 32, 32]}
-                visible={debug}
+                visible={false}
                 onPointerDown={handleSpherePointerDown}
                 onPointerUp={handleSpherePointerUp}
                 onPointerLeave={handleSpherePointerLeave}
