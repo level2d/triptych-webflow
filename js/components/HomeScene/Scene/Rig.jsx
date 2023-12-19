@@ -139,10 +139,20 @@ export default function Rig() {
             // if no box is selected, enable camera controls, resetting camera position when controls end
             const handleControlStart = (e) => {
                 cameraControls.saveState(); // save initial camera position
+                cameraControls.minPolarAngle = cameraControls.polarAngle; // limit camera rotation to 90 degrees
+                cameraControls.maxPolarAngle = cameraControls.polarAngle;
+                cameraControls.minAzimuthAngle =
+                    cameraControls.azimuthAngle - 25 * THREE.MathUtils.DEG2RAD;
+                cameraControls.maxAzimuthAngle =
+                    cameraControls.azimuthAngle + 25 * THREE.MathUtils.DEG2RAD;
             };
 
             const handleControlEnd = () => {
-                if (!cameraControls) return;
+                cameraControls.minPolarAngle = 0; // reset min/max polar angle to defaults
+                cameraControls.maxPolarAngle = Math.PI;
+                cameraControls.minAzimuthAngle = -Infinity; // reset min/max azimuth angle to defaults
+                cameraControls.maxAzimuthAngle = Infinity;
+
                 cameraControls.reset(true); // reset camera back to saved position
             };
 
