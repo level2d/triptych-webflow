@@ -13,7 +13,6 @@ import {
     BackgroundFx,
     FadeInText,
     FancyImage,
-    HomeExperience,
     KeepScrolling,
     Loader,
     PopQuote,
@@ -35,7 +34,6 @@ export default class App {
         this.sizes = new Sizes();
         this.fadeInText = new FadeInText();
         this.fancyImage = new FancyImage();
-        this.homeExperience = new HomeExperience();
         this.backgroundFx = new BackgroundFx();
         this.keepScrolling = new KeepScrolling();
         this.loader = new Loader();
@@ -73,7 +71,6 @@ export default class App {
         this.loader.init(); // init loader before everything else
         this.fadeInText.init();
         this.fancyImage.init();
-        this.homeExperience.init();
         this.backgroundFx.init();
         this.keepScrolling.init();
         this.popQuote.init();
