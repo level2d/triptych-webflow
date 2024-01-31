@@ -282,7 +282,7 @@ E.g:
 
 ```html
 <!-- You can combined multiple triggers -->
-<button data-sountrack-trigger="subpages_soundtrack">I'm a Buttong</button>
+<button data-sountrack-trigger="subpages_soundtrack">I'm a Button</button>
 ```
 
 **Attributes**
