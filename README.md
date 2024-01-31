@@ -261,3 +261,31 @@ E.g.:
 | name | required | value | description |
 |-------------|----------|-----------------|----------------------------------------------------------------|
 | data-module | yes | "fade-in-text" | Tells our custom code where to render the Fade In Text module |
+
+## Sound Effects
+
+E.g:
+
+```html
+<!-- You can combined multiple triggers -->
+<button data-sfx-trigger="click hover">I'm a Buttong</button>
+```
+
+**Attributes**
+| name | required | value | description |
+|-------------|----------|-----------------|----------------------------------------------------------------|
+| data-sfx-trigger | yes | "hover", "click" | Tells our custom code what sound interactions trigger sound effects |
+
+## Soundtracks
+
+E.g:
+
+```html
+<!-- You can combined multiple triggers -->
+<button data-sountrack-trigger="subpages_soundtrack">I'm a Buttong</button>
+```
+
+**Attributes**
+| name | required | value | description |
+|-------------|----------|-----------------|----------------------------------------------------------------|
+| data-sountrack-trigger | yes | "subpages_soundtrack" | Tells our custom code what sound interactions trigger sound effects |
