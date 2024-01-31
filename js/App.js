@@ -19,6 +19,7 @@ import {
     Loader,
     PopQuote,
     ScrambleText,
+    Soundboard,
     test,
 } from "./modules";
 
@@ -43,6 +44,7 @@ export default class App {
         this.loader = new Loader();
         this.popQuote = new PopQuote();
         this.scrambleText = new ScrambleText();
+        this.soundboard = new Soundboard();
         this.test = test;
 
         this.update = this.update.bind(this);
@@ -81,6 +83,7 @@ export default class App {
         this.keepScrolling.init();
         this.popQuote.init();
         this.scrambleText.init();
+        this.soundboard.init();
         this.test.init();
 
         console.log("Modules: init");
