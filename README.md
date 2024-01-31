@@ -281,7 +281,6 @@ E.g:
 E.g:
 
 ```html
-<!-- You can combined multiple triggers -->
 <button data-sountrack-trigger="subpages_soundtrack">I'm a Button</button>
 ```
 
