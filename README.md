@@ -281,10 +281,10 @@ E.g:
 E.g:
 
 ```html
-<button data-sountrack-trigger="subpages_soundtrack">I'm a Button</button>
+<div data-sountrack-trigger="subpages_soundtrack">I'm a Button</div>
 ```
 
 **Attributes**
 | name | required | value | description |
 |-------------|----------|-----------------|----------------------------------------------------------------|
-| data-sountrack-trigger | yes | "subpages_soundtrack" | Tells our custom code what sound interactions trigger sound effects |
+| data-sountrack-trigger | yes | "subpages_soundtrack" | Tells our custom code what soundtrack to play |
