@@ -10,7 +10,7 @@ import Sizes from "./class/Sizes";
 // modules
 import * as core from "./core";
 import {
-    AudioToggle,
+    SoundIndicator,
     BackgroundFx,
     FadeInText,
     FancyImage,
@@ -35,7 +35,7 @@ export default class App {
         this.bus = new Bus();
         this.time = new Time();
         this.sizes = new Sizes();
-        this.audioToggle = new AudioToggle();
+        this.soundIndicator = new SoundIndicator();
         this.fadeInText = new FadeInText();
         this.fancyImage = new FancyImage();
         this.homeExperience = new HomeExperience();
@@ -75,7 +75,7 @@ export default class App {
     initModules() {
         this.core.detect.init();
         this.loader.init(); // init loader before everything else
-        this.audioToggle.init();
+        this.soundIndicator.init();
         this.fadeInText.init();
         this.fancyImage.init();
         this.homeExperience.init();

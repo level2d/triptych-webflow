@@ -1,8 +1,8 @@
-import { default as AudioToggleComponent } from "@/js/components/AudioToggle";
+import { default as SoundIndicatorComponent } from "@/js/components/SoundIndicator";
 import { renderToDOMElement } from "@/js/util/react";
 import App from "@/js/App";
 
-export default class AudioToggle {
+export default class SoundIndicator {
     enabled = false;
     renderTarget = null;
     $target = null;
@@ -21,7 +21,7 @@ export default class AudioToggle {
             this.renderTarget = document.createElement("div");
             this.renderTarget.id = "audio-toggle";
             this.$target.prepend(this.renderTarget);
-            renderToDOMElement(this.renderTarget, AudioToggleComponent);
+            renderToDOMElement(this.renderTarget, SoundIndicatorComponent);
             console.log("Module: Audio Toggle: init");
         }
     }

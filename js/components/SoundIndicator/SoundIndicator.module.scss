@@ -1,0 +1,32 @@
+.wrapper {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: var(--z-layer-above);
+}
+
+.inner {
+    position: relative;
+}
+
+.label {
+    cursor: pointer;
+    display: block;
+    position: relative;
+    aspect-ratio: 1 / 1;
+    margin: 0;
+    background: transparent;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+        background-color: var(--color-violet-2);
+    }
+
+    color: var(--color-white);
+}
+
+.input,
+.text {
+    position: absolute;
+    visibility: hidden;
+}

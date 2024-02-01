@@ -115,6 +115,15 @@ const dom = {
     homeIframe: $("[data-module='home-iframe']"),
 
     /**
+     * @public
+     * @member soundIndicator
+     * @memberof core.dom
+     * @description cached nodes for soundIndicator module
+     *
+     */
+    soundIndicator: $("[data-module='sound-indicator']"),
+
+    /**
      *
      * @public
      * @member sfxTrigger
