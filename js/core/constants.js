@@ -22,6 +22,11 @@ import work_url from "@/assets/3d/work_02.glb";
 import hatching_matcap_url from "@/assets/img/hatching_matcap_02.png";
 import matcap_rim_lit_url from "@/assets/img/matcap_rim_lit.jpg";
 
+// sounds
+import bump_url from "@/assets/audio/bump.mp3";
+import click_url from "@/assets/audio/minimal_click.mp3";
+import subpages_soundtrack_url from "@/assets/audio/subpages_triptych_soundtrack.mp3";
+
 export const GLB_ASSET_URLS = {
     // location meshes
     Locations: triptych_locations_url,
@@ -52,3 +57,9 @@ export const TEXTURE_ASSET_URLS = {
 export const debug = Boolean(
     new URLSearchParams(window.location.search).get("debug") === "true",
 );
+
+export const SOUNDS = {
+    bump: bump_url,
+    click: click_url,
+    subpages: subpages_soundtrack_url,
+};
