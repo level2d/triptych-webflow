@@ -12,7 +12,7 @@ export default class SoundIndicator {
     }
 
     init() {
-        if (this.$target[0]) {
+        if (this.$target?.length > 0) {
             this.enabled = true;
             renderToDOMElement(this.$target[0], SoundIndicatorComponent);
             console.log("Module: Audio Toggle: init");
