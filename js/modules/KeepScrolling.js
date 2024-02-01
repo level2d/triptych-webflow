@@ -34,7 +34,7 @@ export default class KeepScrolling {
             <div class="js-keep-scrolling keep-scrolling">
                 <div class="keep-scrolling__inner">
                     <div class="keep-scrolling__text">
-                        Keep Scrolling
+                        Scroll
                     </div>
                     <div class="keep-scrolling__arrow">
                         ${DownArrow}

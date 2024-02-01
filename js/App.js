@@ -10,6 +10,7 @@ import Sizes from "./class/Sizes";
 // modules
 import * as core from "./core";
 import {
+    SoundIndicator,
     BackgroundFx,
     FadeInText,
     FancyImage,
@@ -18,6 +19,7 @@ import {
     Loader,
     PopQuote,
     ScrambleText,
+    Soundboard,
     test,
 } from "./modules";
 
@@ -33,6 +35,7 @@ export default class App {
         this.bus = new Bus();
         this.time = new Time();
         this.sizes = new Sizes();
+        this.soundIndicator = new SoundIndicator();
         this.fadeInText = new FadeInText();
         this.fancyImage = new FancyImage();
         this.homeExperience = new HomeExperience();
@@ -41,6 +44,7 @@ export default class App {
         this.loader = new Loader();
         this.popQuote = new PopQuote();
         this.scrambleText = new ScrambleText();
+        this.soundboard = new Soundboard();
         this.test = test;
 
         this.update = this.update.bind(this);
@@ -71,6 +75,7 @@ export default class App {
     initModules() {
         this.core.detect.init();
         this.loader.init(); // init loader before everything else
+        this.soundIndicator.init();
         this.fadeInText.init();
         this.fancyImage.init();
         this.homeExperience.init();
@@ -78,6 +83,7 @@ export default class App {
         this.keepScrolling.init();
         this.popQuote.init();
         this.scrambleText.init();
+        this.soundboard.init();
         this.test.init();
 
         console.log("Modules: init");
