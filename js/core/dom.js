@@ -103,6 +103,48 @@ const dom = {
      *
      */
     fadeInText: $("[data-module='fade-in-text']"),
+
+    /**
+     *
+     * @public
+     * @member homeIframe
+     * @memberof core.dom
+     * @description cached nodes for iframes containing home experience
+     *
+     */
+    homeIframe: $("[data-module='home-iframe']"),
+
+    /**
+     * @public
+     * @member soundIndicator
+     * @memberof core.dom
+     * @description cached nodes for soundIndicator module
+     *
+     */
+    soundIndicator: $("[data-module='sound-indicator']"),
+
+    /**
+     *
+     * @public
+     * @member sfxTrigger
+     * @memberof core.dom
+     * @description cached nodes for soundboard module triggers
+     * @see modules/Soundboard.js
+     * @example "data-sfx-trigger='click hover'"
+     *
+     */
+    sfxTrigger: $("[data-sfx-trigger]"),
+
+    /**
+     *
+     * @public
+     * @member soundtrackTrigger
+     * @memberof core.dom
+     * @description cached nodes for soundboard soundtrack trigger
+     * @see modules/Soundboard.js
+     * @example "data-soundtrack-trigger='subpage_soundtrack'"
+     */
+    soundtrackTrigger: $("[data-soundtrack-trigger]"),
 };
 
 export default dom;
