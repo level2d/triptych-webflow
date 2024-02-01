@@ -30,10 +30,15 @@
     }
 
     &__logo-wrapper {
+        position: relative;
         display: flex;
         height: 100%;
         flex: auto;
         align-items: center;
         justify-content: center;
+
+        @media screen and (min-width: 992px) {
+            left: calc(var(--nav-width) * -0.5);
+        }
     }
 }
