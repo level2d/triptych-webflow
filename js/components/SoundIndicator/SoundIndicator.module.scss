@@ -1,8 +1,5 @@
 .wrapper {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    z-index: var(--z-layer-above);
+    position: relative;
 }
 
 .inner {
