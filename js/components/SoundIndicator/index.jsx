@@ -60,30 +60,26 @@ export default function SoundIndicator() {
 
     return (
         <div className={styles.wrapper}>
-            <div className={styles.inner}>
-                <label htmlFor="audio-toggle-input" className={styles.label}>
-                    <input
-                        type="checkbox"
-                        id="audio-toggle-input"
-                        className={styles.input}
-                        checked={muted}
-                        onChange={handleChange}
-                    />
-                    <span className={styles.text}>
-                        {muted ? "Unmute" : "Mute"}
-                    </span>
-                    {muted ? (
-                        <MutedIcon />
-                    ) : (
-                        <Player
-                            autoplay
-                            loop
-                            className={styles.logoPlayer}
-                            src={audioAnimationJSON}
-                        ></Player>
-                    )}
-                </label>
-            </div>
+            <label htmlFor="audio-toggle-input" className={styles.label}>
+                <input
+                    type="checkbox"
+                    id="audio-toggle-input"
+                    className={styles.input}
+                    checked={muted}
+                    onChange={handleChange}
+                />
+                <span className={styles.text}>{muted ? "Unmute" : "Mute"}</span>
+                {muted ? (
+                    <MutedIcon />
+                ) : (
+                    <Player
+                        autoplay
+                        loop
+                        className={styles.logoPlayer}
+                        src={audioAnimationJSON}
+                    ></Player>
+                )}
+            </label>
         </div>
     );
 }
