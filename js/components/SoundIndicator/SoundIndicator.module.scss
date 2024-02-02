@@ -1,16 +1,15 @@
 .wrapper {
     position: relative;
-}
-
-.inner {
-    position: relative;
+    aspect-ratio: 1 / 1;
 }
 
 .label {
+    position: relative;
+    height: 100%;
+    width: 100%;
     cursor: pointer;
     display: block;
     position: relative;
-    aspect-ratio: 1 / 1;
     margin: 0;
     background: transparent;
     transition: background-color 0.3s ease;
