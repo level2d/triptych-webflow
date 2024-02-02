@@ -1,0 +1,28 @@
+.wrapper {
+    position: relative;
+    aspect-ratio: 1 / 1;
+}
+
+.label {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    cursor: pointer;
+    display: block;
+    position: relative;
+    margin: 0;
+    background: transparent;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+        background-color: var(--color-violet-2);
+    }
+
+    color: var(--color-white);
+}
+
+.input,
+.text {
+    position: absolute;
+    visibility: hidden;
+}
