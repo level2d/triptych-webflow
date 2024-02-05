@@ -25,6 +25,8 @@ import {
 
 let _instance = null;
 export default class App {
+    muted = false;
+
     constructor() {
         // Singleton
         if (_instance) {
@@ -70,6 +72,9 @@ export default class App {
         this.time.on("tick", this.update);
         this.sizes.on("resize", this.resize);
         this.sizes.on("window resize end", this.resizeEnd);
+        this.bus.on("App: muted", (muted) => {
+            this.muted = muted;
+        });
     }
 
     initModules() {

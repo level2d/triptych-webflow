@@ -1,4 +1,4 @@
-import { Howl } from "howler";
+import { Howl, Howler } from "howler";
 
 import App from "@/js/App";
 
@@ -29,6 +29,24 @@ export default class Soundboard {
         });
     }
 
+    playSoundtracks() {
+        Array.from(this.$soundtrackTriggers).forEach((triggerEl) => {
+            const soundtrack = triggerEl.getAttribute(
+                "data-soundtrack-trigger",
+            );
+            this.sounds[soundtrack].play();
+        });
+    }
+
+    pauseSoundtracks() {
+        Array.from(this.$soundtrackTriggers).forEach((triggerEl) => {
+            const soundtrack = triggerEl.getAttribute(
+                "data-soundtrack-trigger",
+            );
+            this.sounds[soundtrack].pause();
+        });
+    }
+
     setMuteHomeExperience(isMuted) {
         if (this.homeIframe.length === 0) return;
         const data = isMuted ? "mute" : "unmute";
@@ -37,18 +55,44 @@ export default class Soundboard {
         });
     }
 
-    mute() {
-        this.setMuteHomeExperience(true);
-        Object.keys(this.sounds).forEach((sound) => {
-            this.sounds[sound].mute(true);
+    playHomeExperienceBgTrack() {
+        if (this.homeIframe.length === 0) return;
+        const data = "play";
+        Array.from(this.homeIframe).forEach((iframe) => {
+            iframe.contentWindow.postMessage(data, iframe.src);
         });
     }
 
-    unmute() {
-        this.setMuteHomeExperience(false);
-        Object.keys(this.sounds).forEach((sound) => {
-            this.sounds[sound].mute(false);
+    pauseHomeExperienceBgTrack() {
+        if (this.homeIframe.length === 0) return;
+        const data = "pause";
+        Array.from(this.homeIframe).forEach((iframe) => {
+            iframe.contentWindow.postMessage(data, iframe.src);
         });
+    }
+
+    mute() {
+        console.log("Muting");
+        this.setMuteHomeExperience(true);
+        Howler.mute(true);
+    }
+
+    unmute() {
+        console.log("Unmuting");
+        this.setMuteHomeExperience(false);
+        Howler.mute(false);
+    }
+
+    play() {
+        console.log("Playing");
+        this.playHomeExperienceBgTrack();
+        this.playSoundtracks();
+    }
+
+    pause() {
+        console.log("Pausing");
+        this.pauseHomeExperienceBgTrack();
+        this.pauseSoundtracks();
     }
 
     bindTriggers() {
@@ -77,38 +121,32 @@ export default class Soundboard {
     }
 
     bindListeners() {
-        this.app.bus.on("Module: Soundboard: mute", () => {
-            this.mute();
-        });
-
-        this.app.bus.on("Module: Soundboard: unmute", () => {
-            this.unmute();
-        });
-
-        document.addEventListener("visibilitychange", () => {
-            if (document.hidden) {
+        this.app.bus.on("App: muted", (muted) => {
+            if (muted) {
                 this.mute();
             } else {
                 this.unmute();
+                if (document.visibilityState !== "visible") {
+                    this.pause();
+                }
+            }
+        });
+
+        document.addEventListener("visibilitychange", () => {
+            if (document.visibilityState === "visible") {
+                this.play();
+            } else if (!this.app.muted) {
+                this.pause();
             }
         });
 
         this.bindTriggers();
     }
 
-    initSoundtracks() {
-        Array.from(this.$soundtrackTriggers).forEach((triggerEl) => {
-            const soundtrack = triggerEl.getAttribute(
-                "data-soundtrack-trigger",
-            );
-            this.sounds[soundtrack].play();
-        });
-    }
-
     init() {
         this.enabled = true;
         this.bindListeners();
-        this.initSoundtracks();
+        this.playSoundtracks();
         console.log("Module: Soundboard: init");
     }
 }
