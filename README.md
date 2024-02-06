@@ -267,8 +267,8 @@ E.g.:
 E.g:
 
 ```html
-<!-- You can combined multiple triggers -->
-<button data-sfx-trigger="click hover">I'm a Buttong</button>
+<!-- You can combine multiple triggers -->
+<button data-sfx-trigger="click hover">I'm a Button</button>
 ```
 
 **Attributes**
@@ -281,10 +281,10 @@ E.g:
 E.g:
 
 ```html
-<div data-sountrack-trigger="subpages_soundtrack">I'm a Button</div>
+<div data-sountrack-trigger="subpages_soundtrack">I'm a div</div>
 ```
 
 **Attributes**
 | name | required | value | description |
 |-------------|----------|-----------------|----------------------------------------------------------------|
-| data-sountrack-trigger | yes | "subpages_soundtrack" | Tells our custom code what soundtrack to play |
+| data-sountrack-trigger | yes | "subpages_soundtrack" | Tells our custom code what soundtrack to auto-play |
