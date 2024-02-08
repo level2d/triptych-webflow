@@ -8,7 +8,7 @@ export const SOUNDS = {
     bump: bump_url,
     click: click_url,
     subpages: subpages_soundtrack_url,
-    _404_: _404_soundtrack_url,
+    four_oh_four: _404_soundtrack_url,
 };
 
 export const debug = Boolean(
