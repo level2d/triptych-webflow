@@ -24,8 +24,7 @@ export default function Loader() {
         }),
     );
 
-    const pageHasScene =
-        dom.homeExperience.length > 0 || dom.backgroundFx.length > 0;
+    const pageHasScene = dom.backgroundFx.length > 0;
 
     const sceneProgress = useMemo(() => {
         const _progress = Math.round((progress / 100) * 100) / 100;
