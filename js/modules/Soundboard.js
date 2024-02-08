@@ -27,6 +27,10 @@ export default class Soundboard {
             src: [this.app.core.constants.SOUNDS.subpages],
             loop: true,
         });
+        this.sounds.four_oh_four_soundtrack = new Howl({
+            src: [this.app.core.constants.SOUNDS.four_oh_four],
+            loop: true,
+        });
     }
 
     playSoundtracks() {
