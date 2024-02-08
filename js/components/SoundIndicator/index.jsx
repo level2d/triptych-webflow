@@ -51,11 +51,7 @@ export default function SoundIndicator() {
     };
 
     useLayoutEffect(() => {
-        if (muted) {
-            app.current.bus.emit("Module: Soundboard: mute");
-        } else {
-            app.current.bus.emit("Module: Soundboard: unmute");
-        }
+        app.current.bus.emit("App: muted", muted);
     }, [muted]);
 
     return (
