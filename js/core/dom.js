@@ -47,16 +47,6 @@ const dom = {
     /**
      *
      * @public
-     * @member homeExperience
-     * @memberof core.dom
-     * @description cached nodes for homeExperience module
-     *
-     */
-    homeExperience: $("[data-module='home-experience']"),
-
-    /**
-     *
-     * @public
      * @member backgroundFx
      * @memberof core.dom
      * @description cached nodes for backgroundFx module

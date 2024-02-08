@@ -14,7 +14,6 @@ import {
     BackgroundFx,
     FadeInText,
     FancyImage,
-    HomeExperience,
     KeepScrolling,
     Loader,
     PopQuote,
@@ -40,7 +39,6 @@ export default class App {
         this.soundIndicator = new SoundIndicator();
         this.fadeInText = new FadeInText();
         this.fancyImage = new FancyImage();
-        this.homeExperience = new HomeExperience();
         this.backgroundFx = new BackgroundFx();
         this.keepScrolling = new KeepScrolling();
         this.loader = new Loader();
@@ -83,7 +81,6 @@ export default class App {
         this.soundIndicator.init();
         this.fadeInText.init();
         this.fancyImage.init();
-        this.homeExperience.init();
         this.backgroundFx.init();
         this.keepScrolling.init();
         this.popQuote.init();
