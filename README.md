@@ -287,4 +287,4 @@ E.g:
 **Attributes**
 | name | required | value | description |
 |-------------|----------|-----------------|----------------------------------------------------------------|
-| data-sountrack-trigger | yes | "subpages_soundtrack" , "four_oh_four_soundtrack" | Tells our custom code what soundtrack to auto-play |
+| data-sountrack-trigger | yes | "subpages_soundtrack" , "four_oh_four_soundtrack", "triptych_soundtrack" | Tells our custom code what soundtrack to auto-play |

@@ -11,6 +11,8 @@ export default class Soundboard {
         bump: null,
         click: null,
         subpages_soundtrack: null,
+        four_oh_four_soundtrack: null,
+        triptych_soundtrack: null,
     };
     constructor() {
         this.app = new App();
@@ -29,6 +31,10 @@ export default class Soundboard {
         });
         this.sounds.four_oh_four_soundtrack = new Howl({
             src: [this.app.core.constants.SOUNDS.four_oh_four],
+            loop: true,
+        });
+        this.sounds.triptych_soundtrack = new Howl({
+            src: [this.app.core.constants.SOUNDS.triptych],
             loop: true,
         });
     }
@@ -51,51 +57,23 @@ export default class Soundboard {
         });
     }
 
-    setMuteHomeExperience(isMuted) {
-        if (this.homeIframe.length === 0) return;
-        const data = isMuted ? "mute" : "unmute";
-        Array.from(this.homeIframe).forEach((iframe) => {
-            iframe.contentWindow.postMessage(data, iframe.src);
-        });
-    }
-
-    playHomeExperienceBgTrack() {
-        if (this.homeIframe.length === 0) return;
-        const data = "play";
-        Array.from(this.homeIframe).forEach((iframe) => {
-            iframe.contentWindow.postMessage(data, iframe.src);
-        });
-    }
-
-    pauseHomeExperienceBgTrack() {
-        if (this.homeIframe.length === 0) return;
-        const data = "pause";
-        Array.from(this.homeIframe).forEach((iframe) => {
-            iframe.contentWindow.postMessage(data, iframe.src);
-        });
-    }
-
     mute() {
         console.log("Muting");
-        this.setMuteHomeExperience(true);
         Howler.mute(true);
     }
 
     unmute() {
         console.log("Unmuting");
-        this.setMuteHomeExperience(false);
         Howler.mute(false);
     }
 
     play() {
         console.log("Playing");
-        this.playHomeExperienceBgTrack();
         this.playSoundtracks();
     }
 
     pause() {
         console.log("Pausing");
-        this.pauseHomeExperienceBgTrack();
         this.pauseSoundtracks();
     }
 
@@ -141,6 +119,34 @@ export default class Soundboard {
                 this.play();
             } else if (!this.app.muted) {
                 this.pause();
+            }
+        });
+
+        // Setup post message listeners
+        window.addEventListener("message", (e) => {
+            const { origin, data = null } = e;
+            // Only allow post message from valid domains
+            if (
+                !this.app.core.constants.VALID_DOMAINS.some((domain) =>
+                    origin.includes(domain),
+                )
+            )
+                return;
+
+            if (data && data.module === "soundboard") {
+                const { action = null, sound = null } = data;
+                if (action === "play" && sound) {
+                    switch (sound) {
+                        case "click":
+                            this.sounds.click.play();
+                            break;
+                        case "bump":
+                            this.sounds.bump.play();
+                            break;
+                        default:
+                            break;
+                    }
+                }
             }
         });
 
