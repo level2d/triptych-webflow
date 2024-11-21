@@ -14,8 +14,8 @@ export default class Soundboard {
         four_oh_four_soundtrack: null,
         triptych_soundtrack: null,
     };
-    constructor(app) {
-        this.app = app;
+    constructor() {
+        this.app = new App();
         this.$triggers = this.app.core.dom.sfxTrigger;
         this.$soundtrackTriggers = this.app.core.dom.soundtrackTrigger;
         this.homeIframe = this.app.core.dom.homeIframe;

@@ -1,11 +1,12 @@
 import gsap, { SplitText } from "@/js/lib/gsap";
+import App from "@/js/App";
 
 class _FadeInText {
     el = null;
     timeline = null;
     split = null;
-    constructor(app, node) {
-        this.app = app;
+    constructor(node) {
+        this.app = new App();
         this.init(node);
     }
 
@@ -54,9 +55,9 @@ class _FadeInText {
         );
     }
 
-    init(app, node) {
+    init(node) {
         this.el = node;
-        this.app = app;
+        this.app = new App();
         this.setup();
         this.app.bus.on("App: loaded", () => {
             this.initTimeline();
@@ -68,8 +69,8 @@ export default class FadeInText {
     app = null;
     $targets = null;
     instances = [];
-    constructor(app) {
-        this.app = app;
+    constructor() {
+        this.app = new App();
         this.$targets = this.app.core.dom.fadeInText;
     }
 

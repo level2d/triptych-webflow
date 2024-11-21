@@ -7,8 +7,10 @@ import Logo from "./Logo";
 import { dom } from "@/js/core";
 import styles from "./Loader.module.scss";
 import LoaderOverlay from "./LoaderOverlay";
+import App from "@/js/App";
 
-export default function Loader(app) {
+export default function Loader() {
+    const app = useRef(new App());
     const wrapper = useRef(null);
     const overlay1 = useRef(null);
     const overlay2 = useRef(null);
@@ -57,7 +59,7 @@ export default function Loader(app) {
             paused: true,
             onStart: () => {
                 setTimeout(() => {
-                    app.bus.emit("App: loaded");
+                    app.current.bus.emit("App: loaded");
                 }, 500);
             },
             onComplete: () => {

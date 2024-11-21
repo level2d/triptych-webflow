@@ -1,5 +1,7 @@
 import { ScrollTrigger } from "@/js/lib/gsap";
 
+import App from "@/js/App";
+
 const DownArrow = /* html */ `
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -22,8 +24,8 @@ export default class KeepScrolling {
     $target = null;
     el = null;
     scrollTrigger = null;
-    constructor(app) {
-        this.app = app;
+    constructor() {
+        this.app = new App();
         this.$target = this.app.core.dom.keepScrolling[0]; // only support 1 instance per page
     }
 

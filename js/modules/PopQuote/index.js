@@ -1,11 +1,13 @@
+import App from "@/js/App";
+
 import data from "./data.json";
 
 export default class Quotes {
     $target = null;
     quotes = data.quotes;
     currentQuote = null;
-    constructor(app) {
-        this.app = app;
+    constructor() {
+        this.app = new App();
         this.$target = this.app.core.dom.popQuote;
     }
 

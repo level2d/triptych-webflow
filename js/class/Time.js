@@ -5,22 +5,20 @@ export default class Time extends EventEmitter {
     delta = 0;
     constructor() {
         super();
+
+        this.tick = this.tick.bind(this);
         // Start loop in request animation to get positive value for delta
-        requestAnimationFrame(this.tick.bind(this));
+        requestAnimationFrame(this.tick);
     }
 
     tick(timestamp) {
         const elapsed = timestamp * 0.001; // Store value in seconds
-        const MAX_DELTA = 0.1; // 100ms cap
-        this.delta = Math.min(elapsed - this.elapsed, MAX_DELTA);
+        this.delta = elapsed - this.elapsed;
         this.elapsed = elapsed;
 
-        // Throttle updates
-        if (this.delta >= 1 / 60) {
-            // Target 60fps
-            this.emit("tick", this.delta, this.elapsed);
-        }
+        // emit
+        this.emit("tick");
 
-        requestAnimationFrame(this.tick.bind(this));
+        requestAnimationFrame(this.tick);
     }
 }
