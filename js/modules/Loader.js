@@ -1,15 +1,14 @@
 import { default as LoaderComponent } from "@/js/components/Loader";
 import { renderToDOMElement } from "@/js/util/react";
 import { useStore } from "@/js/lib/store";
-import App from "@/js/App";
 
 export default class Loader {
     enabled = false;
     renderTarget = null;
     $target = null;
     app = null;
-    constructor() {
-        this.app = new App();
+    constructor(app) {
+        this.app = app;
         this.$target = this.app.core.dom.loader[0];
     }
 
@@ -29,7 +28,6 @@ export default class Loader {
             this.renderTarget.id = "loader";
             this.$target.prepend(this.renderTarget);
             renderToDOMElement(this.renderTarget, LoaderComponent);
-            console.log("change is tracked");
             console.log("Module: Loader: init");
         }
     }

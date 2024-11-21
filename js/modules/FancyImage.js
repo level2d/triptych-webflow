@@ -46,8 +46,8 @@ class _FancyImage {
     pxIndex = 0;
     scrollTrigger = null;
 
-    constructor(node) {
-        this.init(node);
+    constructor(app, node) {
+        this.init(app, node);
     }
 
     resize = () => {
@@ -274,10 +274,10 @@ class _FancyImage {
         });
     };
 
-    init = async (node) => {
+    init = async (app, node) => {
         // root el
         this.DOM.el = node;
-        this.app = new App();
+        this.app = app;
 
         // settings from root el
         this.src = this.DOM.el.src;
@@ -352,8 +352,8 @@ export default class FancyImage {
     $targets = null;
     instances = [];
 
-    constructor() {
-        this.app = new App();
+    constructor(app) {
+        this.app = app;
         this.$targets = this.app.core.dom.fancyImage;
     }
 
@@ -369,7 +369,7 @@ export default class FancyImage {
             setTimeout(() => {
                 if (this.$targets.length > 0) {
                     this.instances = Array.from(this.$targets).map(
-                        (target) => new _FancyImage(target),
+                        (target) => new _FancyImage(this.app, target),
                     );
                     console.log("Module: FancyImage: init");
                 }

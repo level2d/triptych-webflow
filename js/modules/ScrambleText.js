@@ -1,7 +1,5 @@
 import gsap from "@/js/lib/gsap";
 
-import App from "@/js/App";
-
 class _ScrambleText {
     el = null;
     timeline = null;
@@ -55,8 +53,8 @@ export default class ScrambleText {
     app = null;
     $targets = null;
     instances = [];
-    constructor() {
-        this.app = new App();
+    constructor(app) {
+        this.app = app;
         this.$targets = this.app.core.dom.scrambleText;
     }
 

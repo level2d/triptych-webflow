@@ -6,8 +6,8 @@ export default class SoundIndicator {
     enabled = false;
     $target = null;
     app = null;
-    constructor() {
-        this.app = new App();
+    constructor({ app }) {
+        this.app = app;
         this.$target = this.app.core.dom.soundIndicator;
     }
 

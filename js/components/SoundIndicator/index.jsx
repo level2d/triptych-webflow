@@ -4,7 +4,6 @@ import { useLocalStorage } from "usehooks-ts";
 import { Player } from "@lottiefiles/react-lottie-player";
 
 import audioAnimationJSON from "@/assets/data/audio_play_lottie_01.json";
-import App from "@/js/App";
 
 const MutedIcon = () => {
     return (
@@ -42,8 +41,7 @@ const MutedIcon = () => {
     );
 };
 
-export default function SoundIndicator() {
-    const app = useRef(new App());
+export default function SoundIndicator({ app }) {
     const [muted, setMuted] = useLocalStorage("muted", false);
 
     const handleChange = () => {
@@ -51,8 +49,8 @@ export default function SoundIndicator() {
     };
 
     useLayoutEffect(() => {
-        app.current.bus.emit("App: muted", muted);
-    }, [muted]);
+        app.bus.emit("App: muted", muted);
+    }, [muted, app]);
 
     return (
         <div className={styles.wrapper}>

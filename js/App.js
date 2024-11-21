@@ -36,15 +36,15 @@ export default class App {
         this.bus = new Bus();
         this.time = new Time();
         this.sizes = new Sizes();
-        this.soundIndicator = new SoundIndicator();
-        this.fadeInText = new FadeInText();
-        this.fancyImage = new FancyImage();
-        this.backgroundFx = new BackgroundFx();
-        this.keepScrolling = new KeepScrolling();
-        this.loader = new Loader();
-        this.popQuote = new PopQuote();
-        this.scrambleText = new ScrambleText();
-        this.soundboard = new Soundboard();
+        this.soundIndicator = new SoundIndicator(this);
+        this.fadeInText = new FadeInText(this);
+        this.fancyImage = new FancyImage(this);
+        this.backgroundFx = new BackgroundFx(this);
+        this.keepScrolling = new KeepScrolling(this);
+        this.loader = new Loader(this);
+        this.popQuote = new PopQuote(this);
+        this.scrambleText = new ScrambleText(this);
+        this.soundboard = new Soundboard(this);
         this.test = test;
 
         this.update = this.update.bind(this);
