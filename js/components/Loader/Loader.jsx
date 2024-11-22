@@ -6,14 +6,11 @@ import LoadingBar from "./LoaderBar";
 import Logo from "./Logo";
 import { dom } from "@/js/core";
 import styles from "./Loader.module.scss";
-import LoaderOverlay from "./LoaderOverlay";
 import App from "@/js/App";
 
 export default function Loader() {
     const app = useRef(new App());
     const wrapper = useRef(null);
-    const overlay1 = useRef(null);
-    const overlay2 = useRef(null);
     const { progress } = useProgress();
 
     const { loaderComplete, loaderProgress, setLoaderProgress } = useStore(
@@ -36,7 +33,7 @@ export default function Loader() {
             let animationFrame;
 
             const updateProgress = () => {
-                progressRef.current = Math.min(progressRef.current + 0.01, 1.0);
+                progressRef.current = Math.min(progressRef.current + 0.1, 1.0);
                 setLoaderProgress(progressRef.current);
                 if (progressRef.current < 1.0) {
                     animationFrame = requestAnimationFrame(updateProgress);
@@ -50,9 +47,6 @@ export default function Loader() {
     }, [loaderProgress, setLoaderProgress, sceneProgress, pageHasScene]);
 
     useLayoutEffect(() => {
-        gsap.set([overlay1.current, overlay2.current], {
-            yPercent: 100,
-        });
         if (!loaderComplete) {
             return;
         }
@@ -77,16 +71,6 @@ export default function Loader() {
                 duration: 0.5,
                 ease: "power2.inOut",
             })
-            .to(
-                [overlay1.current, overlay2.current],
-                {
-                    yPercent: -100,
-                    duration: 0.25,
-                    ease: "power2.inOut",
-                    stagger: 0.1,
-                },
-                "<0.01",
-            )
             .play();
 
         return () => timeline.kill();
@@ -101,8 +85,6 @@ export default function Loader() {
                 <div className={styles.loaderLogoWrapper}>
                     <Logo />
                 </div>
-                <LoaderOverlay color="violet" ref={overlay1} />
-                <LoaderOverlay color="yellow" ref={overlay2} />
             </div>
         </div>
     );
