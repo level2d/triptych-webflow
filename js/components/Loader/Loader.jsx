@@ -4,7 +4,7 @@ import { useStore } from "@/js/lib/store";
 import gsap from "@/js/lib/gsap";
 import LoadingBar from "./LoaderBar";
 import Logo from "./Logo";
-// import { dom } from "@/js/core";
+import { dom } from "@/js/core";
 import styles from "./Loader.module.scss";
 import LoaderOverlay from "./LoaderOverlay";
 import App from "@/js/App";
@@ -24,39 +24,30 @@ export default function Loader() {
         }),
     );
 
-    // const pageHasScene = dom.backgroundFx.length > 0;
+    const pageHasScene = dom.backgroundFx.length > 0;
 
-    const sceneProgress = useMemo(() => {
-        const _progress = Math.round(progress) / 100;
-        return _progress;
-    }, [progress]);
+    const sceneProgress = useMemo(() => Math.round(progress) / 100, [progress]);
 
     useLayoutEffect(() => {
-        console.log("sceneProgress:", sceneProgress);
-    }, [sceneProgress]);
+        if (pageHasScene && sceneProgress < 1.0) {
+            setLoaderProgress(sceneProgress * 0.75);
+        } else if (loaderProgress < 1.0) {
+            const progressRef = { current: loaderProgress };
+            let animationFrame;
 
-    useLayoutEffect(() => {
-        // console.log("sceneProgress:", sceneProgress);
-        // console.log("loaderProgress: ", loaderProgress);
-        // if (pageHasScene && sceneProgress < 1.0) {
-        //     setLoaderProgress(sceneProgress * 0.75);
-        // } else
-        if (loaderProgress < 1.0) {
-            const interval = setInterval(() => {
-                const currentProgress = loaderProgress;
-                let nextProgress = currentProgress + 1;
-                nextProgress = Math.round(nextProgress * 100) / 100;
-                setLoaderProgress(nextProgress);
-            }, 1);
-            return () => {
-                clearInterval(interval);
+            const updateProgress = () => {
+                progressRef.current = Math.min(progressRef.current + 0.01, 1.0);
+                setLoaderProgress(progressRef.current);
+                if (progressRef.current < 1.0) {
+                    animationFrame = requestAnimationFrame(updateProgress);
+                }
             };
+
+            animationFrame = requestAnimationFrame(updateProgress);
+
+            return () => cancelAnimationFrame(animationFrame);
         }
-    }, [
-        loaderProgress,
-        setLoaderProgress,
-        // sceneProgress, pageHasScene
-    ]);
+    }, [loaderProgress, setLoaderProgress, sceneProgress, pageHasScene]);
 
     useLayoutEffect(() => {
         gsap.set([overlay1.current, overlay2.current], {
@@ -80,32 +71,25 @@ export default function Loader() {
             },
         });
 
-        timeline.to(
-            wrapper.current,
-            {
+        timeline
+            .to(wrapper.current, {
                 yPercent: -100,
                 duration: 0.5,
                 ease: "power2.inOut",
-            },
-            0,
-        );
+            })
+            .to(
+                [overlay1.current, overlay2.current],
+                {
+                    yPercent: -100,
+                    duration: 0.25,
+                    ease: "power2.inOut",
+                    stagger: 0.1,
+                },
+                "<0.01",
+            )
+            .play();
 
-        timeline.to(
-            [overlay1.current, overlay2.current],
-            {
-                yPercent: -100,
-                duration: 0.25,
-                ease: "power2.inOut",
-                stagger: 0.1,
-            },
-            "<0.01",
-        );
-
-        timeline.play();
-
-        return () => {
-            timeline.kill();
-        };
+        return () => timeline.kill();
     }, [loaderComplete]);
 
     return (
