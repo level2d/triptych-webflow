@@ -1,10 +1,10 @@
-import { useLayoutEffect, useMemo, useRef } from "react";
+import { useLayoutEffect, useRef } from "react";
 import { useProgress } from "@react-three/drei";
 import { useStore } from "@/js/lib/store";
 import gsap from "@/js/lib/gsap";
 import LoadingBar from "./LoaderBar";
 import Logo from "./Logo";
-import { dom } from "@/js/core";
+// import { dom } from "@/js/core";
 import styles from "./Loader.module.scss";
 import LoaderOverlay from "./LoaderOverlay";
 import App from "@/js/App";
@@ -24,28 +24,39 @@ export default function Loader() {
         }),
     );
 
-    const pageHasScene = dom.backgroundFx.length > 0;
+    // const pageHasScene = dom.backgroundFx.length > 0;
 
     const sceneProgress = useMemo(() => {
-        const _progress = Math.round((progress / 100) * 100) / 100;
+        const _progress = Math.round(progress) / 100;
         return _progress;
     }, [progress]);
 
     useLayoutEffect(() => {
-        if (pageHasScene && sceneProgress < 1.0) {
-            setLoaderProgress(sceneProgress * 0.75);
-        } else if (loaderProgress < 1.0) {
+        console.log("sceneProgress:", sceneProgress);
+    }, [sceneProgress]);
+
+    useLayoutEffect(() => {
+        // console.log("sceneProgress:", sceneProgress);
+        // console.log("loaderProgress: ", loaderProgress);
+        // if (pageHasScene && sceneProgress < 1.0) {
+        //     setLoaderProgress(sceneProgress * 0.75);
+        // } else
+        if (loaderProgress < 1.0) {
             const interval = setInterval(() => {
                 const currentProgress = loaderProgress;
-                let nextProgress = currentProgress + 0.01;
+                let nextProgress = currentProgress + 1;
                 nextProgress = Math.round(nextProgress * 100) / 100;
                 setLoaderProgress(nextProgress);
-            }, 10);
+            }, 1);
             return () => {
                 clearInterval(interval);
             };
         }
-    }, [loaderProgress, setLoaderProgress, sceneProgress, pageHasScene]);
+    }, [
+        loaderProgress,
+        setLoaderProgress,
+        // sceneProgress, pageHasScene
+    ]);
 
     useLayoutEffect(() => {
         gsap.set([overlay1.current, overlay2.current], {
@@ -83,11 +94,11 @@ export default function Loader() {
             [overlay1.current, overlay2.current],
             {
                 yPercent: -100,
-                duration: 0.5,
+                duration: 0.25,
                 ease: "power2.inOut",
-                stagger: 0.25,
+                stagger: 0.1,
             },
-            "<0.025",
+            "<0.01",
         );
 
         timeline.play();

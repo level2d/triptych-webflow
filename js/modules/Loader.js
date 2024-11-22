@@ -29,7 +29,6 @@ export default class Loader {
             this.renderTarget.id = "loader";
             this.$target.prepend(this.renderTarget);
             renderToDOMElement(this.renderTarget, LoaderComponent);
-            console.log("change is tracked");
             console.log("Module: Loader: init");
         }
     }
