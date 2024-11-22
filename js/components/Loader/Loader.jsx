@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef } from "react";
+import { useLayoutEffect, useMemo, useRef } from "react";
 import { useProgress } from "@react-three/drei";
 import { useStore } from "@/js/lib/store";
 import gsap from "@/js/lib/gsap";
